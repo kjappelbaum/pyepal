@@ -45,20 +45,20 @@ repos:
     rev: "" # Use the sha / tag you want to point at
     hooks:
       - id: mypy
-        exclude: versioneer.py|PyPal/_version.py|^docs/
+        exclude: versioneer.py|PyPAL/_version.py|^docs/
 
   - repo: local
     hooks:
       - id: isort
         name: isort
         language: system
-        exclude: versioneer.py|PyPal/_version.py|^docs/
+        exclude: versioneer.py|PyPAL/_version.py|^docs/
         types: [python]
         entry: isort
 
       - id: yapf
         name: yapf
-        exclude: versioneer.py|PyPal/_version.py|^docs/
+        exclude: versioneer.py|PyPAL/_version.py|^docs/
         entry: yapf
         language: system
         types: [python]
@@ -67,6 +67,6 @@ repos:
       - id: prospector
         language: system
         types: [file, python]
-        exclude: versioneer.py|PyPal/_version.py|^docs/
+        exclude: versioneer.py|PyPAL/_version.py|^docs/
         name: prospector
         entry: prospector
