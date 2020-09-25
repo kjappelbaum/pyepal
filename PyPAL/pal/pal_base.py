@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-from typing import Tuple
+"""Base class for PAL"""
 
 import numpy as np
 
 
-class PALBase:
-    def __init__(
+class PALBase:  # pytlint:disable=too-many-instance-attributes
+    """PAL base class"""
+
+    def __init__(  # pylint:disable=too-many-arguments
         self,
         X_design: np.array,
         models: list,
@@ -26,9 +28,10 @@ class PALBase:
         self.iteration = 0
         self.ndim = ndim
         self.design_space_size = len(X_design)
-        self.mu: np.array= None
+        self.means: np.array = None
         self.std: np.array = None
         self.design_space = X_design
+        self.beta = None
 
     @property
     def pareto_optimal_points(self):
@@ -51,22 +54,14 @@ class PALBase:
         return sum(self.pareto_optimal)
 
     def _update_beta(self):
-        self.beta = (
-            self.beta_scale
-            * 2
-            * np.log(
-                self.ndim
-                * self.design_space_size
-                * np.square(np.pi)
-                * np.square(self.iteration + 1)
-                / (6 * self.delta)
-            )
-        )
+        self.beta = (self.beta_scale * 2 *
+                     np.log(self.ndim * self.design_space_size * np.square(np.pi) * np.square(self.iteration + 1) /
+                            (6 * self.delta)))
 
     def _log(self):
         pass
 
-    def _should_optimize_hyperparameters(self, iteration: int) -> bool:
+    def _should_optimize_hyperparameters(self) -> bool:
         return True
 
     def _predict(self):
@@ -75,7 +70,7 @@ class PALBase:
     def _set_hyperparameters(self, X: np.array, y: np.array):
         pass
 
-    def _train(self, X_train: np.array, y_train: np.array) -> list:
+    def _train(self):
         pass
 
     def _update_hyperrectangles(self):
@@ -86,6 +81,8 @@ class PALBase:
 
     def run_one_step(self):
         """Inner part of the loop"""
+        if self._should_optimize_hyperparameters():
+            self._set_hyperparameters()
         self._train()
         self._predict()
         self._update_hyperrectangles()

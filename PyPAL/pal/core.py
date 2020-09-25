@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Core functions for PAL"""
 from typing import Sequence, Tuple, Union
 
 import numpy as np
