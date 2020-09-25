@@ -1,0 +1,21 @@
+section_regexps = [
+    (
+        'BREAKING', [r'^BREAKING']
+    ),
+    ('New', [
+        r'^feat',
+     ]),
+    ('Changes', [
+        r'^chore',
+     ]),
+    ('Fix', [
+        r'^fix',
+     ]),
+
+    ('Other', None ## Match all lines
+     ),
+
+]
+
+
+tag_filter_regexp = r'^v[0-9]+\.[0-9]+(\.[0-9]+)?'
