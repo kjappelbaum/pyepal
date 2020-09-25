@@ -5,7 +5,6 @@ import numpy as np
 
 
 class PALBase:
-
     def __init__(
         self,
         X_design: np.array,
@@ -21,14 +20,14 @@ class PALBase:
         self.pareto_optimal = np.array([False] * len(X_design))
         self.sampled = np.array([False] * len(X_design))
         self.unclassified = np.array([True] * len(X_design))
-        self.rectangle_ups = []
-        self.rectangle_lows = []
+        self.rectangle_ups: np.array = None
+        self.rectangle_lows: np.array = None
         self.models = models
         self.iteration = 0
         self.ndim = ndim
         self.design_space_size = len(X_design)
-        self.mu = []
-        self.std = []
+        self.mu: np.array= None
+        self.std: np.array = None
         self.design_space = X_design
 
     @property
@@ -52,9 +51,17 @@ class PALBase:
         return sum(self.pareto_optimal)
 
     def _update_beta(self):
-        self.beta = (self.beta_scale * 2 *
-                     np.log(self.ndim * self.design_space_size * np.square(np.pi) * np.square(self.iteration + 1) /
-                            (6 * self.delta)))
+        self.beta = (
+            self.beta_scale
+            * 2
+            * np.log(
+                self.ndim
+                * self.design_space_size
+                * np.square(np.pi)
+                * np.square(self.iteration + 1)
+                / (6 * self.delta)
+            )
+        )
 
     def _log(self):
         pass
