@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+"""Utilities for dealing with Pareto fronts in general"""
 import numpy as np
 from numba import jit
 
 
 @jit(nopython=True)
-def dominance_check(point1, point2):
+def dominance_check(point1, point2) -> bool:
     """One point dominates another if it is not worse in all objectives
     and strictly better in at least one. This here assumes we want to maximize"""
     if np.all(point1 >= point2) and np.any(point1 > point2):
@@ -14,7 +15,7 @@ def dominance_check(point1, point2):
 
 
 @jit(nopython=True)
-def dominance_check_jitted(point, array):
+def dominance_check_jitted(point: np.array, array: np.array) -> bool:
     """Check if poin dominates any point in array"""
     arr_sorted = array[array[:, 0].argsort()]
     for i in range(len(arr_sorted)):  # pylint:disable=consider-using-enumerate
@@ -24,7 +25,7 @@ def dominance_check_jitted(point, array):
 
 
 @jit(nopython=True)
-def dominance_check_jitted_2(array, point):
+def dominance_check_jitted_2(array: np.array, point: np.array) -> bool:
     """Check if any point in array dominates point"""
     arr_sorted = array[array[:, 0].argsort()[::-1]]
     for i in range(len(arr_sorted)):  # pylint:disable=consider-using-enumerate
@@ -61,4 +62,3 @@ def is_pareto_efficient(costs, return_mask=True):
 
 def iterator():
     ...
-

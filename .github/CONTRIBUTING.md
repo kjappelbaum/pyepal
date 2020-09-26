@@ -1,3 +1,7 @@
+# Contributing to PyPAL
+
+If you find a bug or have a feature request, please open an issue. For help, you can also use the Gitter chat.
+
 ## Development guidelines
 
 ### Commit messages
@@ -8,9 +12,9 @@
 
 Please install the pre-commit hooks to automatically
 
-- format the code with [yapf]()
-- sort the imports with [isort]()
-- lint the code with [prospector]()
+- format the code with [yapf](https://github.com/google/yapf#id1)
+- sort the imports with [isort](https://pycqa.github.io/isort/)
+- lint the code with [prospector](http://prospector.landscape.io/en/master/)
 
 ### New features
 

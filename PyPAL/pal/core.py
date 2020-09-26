@@ -111,15 +111,15 @@ def _union_one_dim(lows: Sequence, ups: Sequence, new_lows: Sequence, new_ups: S
     return np.array(out_lows), np.array(out_ups)
 
 
-def _pareto_classify(  # pylint:disable=too-many-arguments
-    pareto_optimal_0: list,
-    not_pareto_optimal_0: list,
-    unclassified_0: list,
+def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
+    pareto_optimal_0: np.array,
+    not_pareto_optimal_0: np.array,
+    unclassified_0: np.array,
     rectangle_lows: np.array,
     rectangle_ups: np.array,
     x_input: np.array,
     epsilon: list,
-) -> Tuple[list, list, list]:
+) -> Tuple[np.array, np.array, np.array]:
     """Performs the classification part of the algorithm
     (p. 4 of the PAL paper, see algorithm 1/2 of the epsilon-PAL paper)
 
@@ -166,7 +166,8 @@ def _pareto_classify(  # pylint:disable=too-many-arguments
         # We can only discard points that are unclassified so far
         # We cannot discard points that are part of p_pess(P \cup U)
         if (unclassified_t[i] == 1) and (i not in original_indices):
-            # If the upper bound of the hyperrectangle is not dominating anywhere the pareto pessimitic set, we can discard
+            # If the upper bound of the hyperrectangle is not dominating anywhere
+            # the pareto pessimitic set, we can discard
             if dominance_check_jitted_2(pareto_unclassified_pessimistic_points * (1 + epsilon), rectangle_ups[i]):
                 not_pareto_optimal_t[i] = 1
                 unclassified_t[i] = 0
@@ -201,11 +202,25 @@ def _pareto_classify(  # pylint:disable=too-many-arguments
 def _get_max_wt(
     rectangle_lows: np.array,
     rectangle_ups: np.array,
-    pareto_optimal_t: Sequence,
-    unclassified_t: Sequence,
-    sampled: List,
+    pareto_optimal_t: np.array,
+    unclassified_t: np.array,
+    sampled: np.array,
     x_input: np.array,
 ) -> int:
+    """Returns the index in design space with the maximum size of the hyperrectangle.
+    Samples only from unclassified or Pareto-optimal points.
+
+    Args:
+        rectangle_lows (np.array): Lower, pessimistic, bounds of the hyperrectangles
+        rectangle_ups (np.array): Upper, optimistic, bounds of the hyperrectangles
+        pareto_optimal_t (np.array): Mask array that is True for the Pareto optimal points
+        unclassified_t (np.array): Mask array that is True for the unclassified points
+        sampled (np.array): Mask array that is True for the sampled points
+        x_input (np.array): Design space
+
+    Returns:
+        int: index with maximum size of hyperrectangle
+    """
     max_uncertainity = 0
     maxid = -1
 

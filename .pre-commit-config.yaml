@@ -45,7 +45,7 @@ repos:
     rev: "" # Use the sha / tag you want to point at
     hooks:
       - id: mypy
-        exclude: versioneer.py|PyPAL/_version.py|^docs/
+        exclude: (versioneer.py|_version.py|^docs/)
 
   - repo: local
     hooks:
