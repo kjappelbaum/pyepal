@@ -57,3 +57,8 @@ def is_pareto_efficient(costs, return_mask=True):
         is_efficient_mask[is_efficient] = True
         return is_efficient_mask
     return is_efficient
+
+
+def iterator():
+    ...
+

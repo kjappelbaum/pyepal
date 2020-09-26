@@ -9,7 +9,10 @@ from .validate_inputs import (
     validate_epsilon,
     validate_delta,
     validate_beta_scale,
+    validate_goals,
+    base_validate_models,
 )
+from typing import List
 
 
 class PALBase:  # pytlint:disable=too-many-instance-attributes
@@ -23,7 +26,7 @@ class PALBase:  # pytlint:disable=too-many-instance-attributes
         epsilon: list = 0.5,
         delta: float = 0.05,
         beta_scale: float = 1 / 16,
-        goals: list = None,
+        goals: List[string] = None,
     ):
         self.ndim = validate_ndim(ndim)
         self.epsilon = validate_epsilon(epsilon, self.ndim)
@@ -35,14 +38,16 @@ class PALBase:  # pytlint:disable=too-many-instance-attributes
         self.unclassified = np.array([True] * len(X_design))
         self.rectangle_ups: np.array = None
         self.rectangle_lows: np.array = None
-        self.models = models
+        self.models = base_validate_models(models)
         self.iteration = 0
         self.design_space_size = len(X_design)
         self.means: np.array = None
         self.std: np.array = None
         self.design_space = X_design
         self.beta = None
-        self.goals = goals  # we should take here a list of maximize/minimize. In the algortihm itself we will always assume maximization but this gives the user to specify different goals for different objectives without the need of manually dealing with flipping the sign
+        self.goals = validate_goals(
+            goals
+        )  # we should take here a list of maximize/minimize. In the algortihm itself we will always assume maximization but this gives the user to specify different goals for different objectives without the need of manually dealing with flipping the sign
 
     def __repr__(self):
         return f"PyPAL at iteration {self.iteration}. {self.number_pareto_optimal_points} Pareto optimal points, {self.number_discarded_points} discarded points, {self.number_unclassified_points} unclassified points."
@@ -106,6 +111,9 @@ class PALBase:  # pytlint:disable=too-many-instance-attributes
         pass
 
     def _set_hyperparameters(self, X: np.array, y: np.array):
+        pass
+
+    def _turn_to_maximization(self):
         pass
 
     def _train(self):
