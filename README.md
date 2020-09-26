@@ -45,43 +45,30 @@ Coregionalized GPR models can harvest correlations between the objectives and al
 
 You will need to implement the `_train()` and `_predict()` functions if you inherit from `PALBase`. If you want to tune the hyperparameters of your models while new training points are added, you can implement a schedule by setting the `_should_optimize_hyperparameters()` function and the `_set_hyperparameters()` function which sets the hyperparameters for the model(s).
 
-A basic example of how a custom class can be implemented is the `PALGPy` class:
+A basic example of how a custom class can be implemented is the `PALSklearn` class:
 
 ```(python)
-class PALGPy(PALBase):
+class PALSklearn(PALBase):
+    """PAL class for a list of Sklearn (GPR) models, with one model per objective"""
+
     def __init__(self, *args, **kwargs):
-        self.restarts = kwargs.pop("restarts", 20) # if provided as keyword argument use it, otherwise use 20 as default
-        self.parallel = kwargs.pop("parallel", False)
-        assert isinstance(
-            self.parallel, bool
-        ), "the parallel keyword must be of type bool"
-        assert isinstance(
-            self.restarts, int
-        ), "the restarts keyword must be of type int"
-        super(PALGPy, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         validate_number_models(self.models, self.ndim)
 
-    def _set_data(self):
-        for model in self.models:
-            model.set_xy(self.design_space[self.sampled], self.y[self.sampled])
-
     def _train(self):
-        pass  # There is no training in instance based models
+        for i, model in enumerate(self.models):
+            model.fit(self.design_space[:, i], self.y[:, i])
 
     def _predict(self):
-        mus, stds = [], []
+        means, stds = [], []
         for model in self.models:
-            mu, std = model.predict(self.design_space)
-            mus.append(mu.reshape(-1, 1))
+            mean, std = model.predict(self.design_space, return_std=True)
+            means.append(mean.reshape(-1, 1))
             stds.append(std.reshape(-1, 1))
 
-        self.means = np.hstack(mus)
-        self.stds = np.hstack(stds)
-
-    def _set_hyperparameters(self):
-        for model in self.models:
-            model.optimize_restarts(self.restarts, parallel=self.parallel)
+        self.means = np.hstack(mean)
+        self.std = np.hstack(stds)
 ```
 
 For scheduling for the hyperparameter optimization we have some predefined schedules in the `PyPAL.pal.schedules` module.
