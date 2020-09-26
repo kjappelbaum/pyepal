@@ -31,6 +31,8 @@ The main logic is implemented in the `PALBase` class. There are some pre-built c
 
 #### scikit-learn
 
+If you want to use a list of [sklearn]() models, you cam use the `PALSklearn` class.
+
 #### GPy
 
 If you want to use a list of [GPy](https://sheffieldml.github.io/GPy/) models, you can use the `PALGPy` class.
