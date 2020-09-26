@@ -37,3 +37,5 @@ The main logic is implemented in the `PALBase` class. There are some pre-built c
 2. <a name="2"></a> Zuluaga, M.; Krause, A.; Sergent, G.; Puschel, M. Active Learning for Multi-Objective Optimization. 9.
 
 ## Acknowledgments
+
+The research was supported by the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (grant agreement 666983, MaGic), by the NCCR-MARVEL, funded by the Swiss National Science Foundation, and by the Swiss National Science Foundation (SNSF) under Grant 200021\_172759. Part of the work was performed during the Explore Together internship program at BASF. 
