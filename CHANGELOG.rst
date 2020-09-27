@@ -13,6 +13,7 @@ New
 Changes
 ~~~~~~~
 - Chore: updating README. [Kevin]
+- Chore: updating README. [Kevin]
 - Chore: updating pre-commit workflow. [Kevin]
 - Chore: updating pre-commit workflow. [Kevin]
 - Chore: updating pre-commit workflow. [Kevin]

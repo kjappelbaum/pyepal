@@ -87,4 +87,4 @@ For the theoretical guarantees to hold, you'll need to sample until all uncertai
 
 ## Acknowledgments
 
-The research was supported by the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (grant agreement 666983, MaGic), by the NCCR-MARVEL, funded by the Swiss National Science Foundation, and by the Swiss National Science Foundation (SNSF) under Grant 200021_172759. Part of the work was performed during the Explore Together internship program at BASF.
+The research was supported by the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme ([grant agreement 666983, MaGic](https://cordis.europa.eu/project/id/666983)), by the [NCCR-MARVEL](https://www.nccr-marvel.ch/), funded by the Swiss National Science Foundation, and by the Swiss National Science Foundation (SNSF) under Grant 200021_172759. Part of the work was performed during the [Explore Together internship program at BASF](https://www.basf.com/global/en/careers/students/explore-together.html).
