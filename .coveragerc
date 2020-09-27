@@ -8,7 +8,7 @@ omit =
         *_version
         *versioneer
 
-[html]
+[report]
 omit =
         *__init__*
         */usr/local/lib*
