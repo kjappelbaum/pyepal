@@ -2,6 +2,7 @@
 
 ![Python package](https://github.com/kjappelbaum/PyPAL/workflows/Python%20package/badge.svg)
 ![pre-commit](https://github.com/kjappelbaum/PyPAL/workflows/pre-commit/badge.svg)
+[![codecov](https://codecov.io/gh/kjappelbaum/PyPAL/branch/master/graph/badge.svg?token=BL2CF4HQ06)](https://codecov.io/gh/kjappelbaum/PyPAL)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/PyPAL)
 ![GitHub](https://img.shields.io/github/license/kjappelbaum/PyPAL)
 ![Gitter](https://img.shields.io/gitter/room/kjappelbaum/PyPAL)
