@@ -1,8 +1,15 @@
 # -*- coding: utf-8 -*-
+# pylint:disable=unused-import
 """Testing the PAL module"""
 import numpy as np
 
-from PyPAL.pal.core import _get_uncertainity_region, _union_one_dim
+from PyPAL.pal.core import (
+    _get_max_wt,
+    _get_uncertainity_region,
+    _get_uncertainity_regions,
+    _union,
+    _union_one_dim,
+)
 
 
 def test__get_uncertainity_region():
@@ -24,6 +31,26 @@ def test__get_uncertainity_region():
     low3, high3 = _get_uncertainity_region(mu, 1, 1)
     assert low3 == 0
     assert high3 == 2
+
+
+def test__get_uncertainity_regions():
+    """The test uncertainity regions for three dimensions"""
+    mu = 1  # pylint:disable=invalid-name
+    lows, highs = _get_uncertainity_regions([mu, mu, mu], [0, 1, 2], 1)
+    assert lows[0] == mu
+    assert highs[0] == mu
+    assert lows[1] == 0
+    assert highs[1] == 2
+    assert lows[2] == -1
+    assert highs[1] == 3
+
+    lows, highs = _get_uncertainity_regions([mu - 1, mu, mu], [0, 1, 2], 1)
+    assert lows[0] == mu - 1
+    assert highs[0] == mu - 1
+    assert lows[1] == 0
+    assert highs[1] == 2
+    assert lows[2] == -1
+    assert highs[1] == 3
 
 
 def test__union_one_dim():
