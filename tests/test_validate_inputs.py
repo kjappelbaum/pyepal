@@ -6,7 +6,9 @@ import pytest
 from PyPAL.pal.validate_inputs import (
     validate_beta_scale,
     validate_epsilon,
+    validate_goals,
     validate_ndim,
+    validate_number_models,
 )
 
 
@@ -42,3 +44,24 @@ def test_validate_beta_scale():
         validate_beta_scale(1.1)
     with pytest.raises(ValueError):
         validate_beta_scale(-1)
+
+
+def test_validate_goals():
+    """Test the goals validation"""
+    assert (validate_goals(["max", "min"], 2) == np.array([1, -1])).all()
+    with pytest.raises(ValueError):
+        validate_goals([2, 3], 2)
+    with pytest.raises(ValueError):
+        validate_goals([1], 2)
+    with pytest.raises(ValueError):
+        validate_goals(1, 1)
+
+
+def test_validate_number_models():
+    """Test the validation of the number of models"""
+    with pytest.raises(ValueError):
+        validate_number_models([1, 1], 1)
+    with pytest.raises(ValueError):
+        validate_number_models([1, 1], 3)
+
+    assert validate_number_models([1, 1], 2) is None

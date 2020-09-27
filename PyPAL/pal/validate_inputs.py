@@ -196,5 +196,7 @@ def validate_number_models(models: list, ndim: int):
     Raises:
         ValueError:  If the number of models does not equal the number of objectives
     """
-    if not isinstance(models, list) | len(models) != ndim:
+    if not isinstance(models, list):
+        raise ValueError("You must provide a list of models. One model per objective")
+    if len(models) != ndim:
         raise ValueError("You must provide a list of models. One model per objective")
