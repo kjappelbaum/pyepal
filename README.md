@@ -49,7 +49,7 @@ You will need to implement the `_train()` and `_predict()` functions if you inhe
 
 A basic example of how a custom class can be implemented is the `PALSklearn` class:
 
-```(python)
+```python
 class PALSklearn(PALBase):
     """PAL class for a list of Sklearn (GPR) models, with one model per objective"""
 
