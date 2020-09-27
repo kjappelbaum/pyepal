@@ -7,11 +7,15 @@ omit =
         *test*
         *_version
         *versioneer
+        *setup*
+        *examples/*
 
 [report]
 omit =
         *__init__*
         */usr/local/lib*
         *test*
-        *_version
-        *versioneer
+        *_version*
+        *versioneer*
+        *setup*
+        *examples/*
