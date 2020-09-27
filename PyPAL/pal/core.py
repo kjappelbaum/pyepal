@@ -118,7 +118,7 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     rectangle_lows: np.array,
     rectangle_ups: np.array,
     x_input: np.array,
-    epsilon: list,
+    epsilon: np.array,
 ) -> Tuple[np.array, np.array, np.array]:
     """Performs the classification part of the algorithm
     (p. 4 of the PAL paper, see algorithm 1/2 of the epsilon-PAL paper)

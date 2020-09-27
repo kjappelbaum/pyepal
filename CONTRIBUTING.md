@@ -1,6 +1,7 @@
 # Contributing to PyPAL
 
-If you find a bug or have a feature request, please open an issue. For help, you can also use the Gitter chat.
+If you find a bug or have a feature request, please open an issue. If you report a bug, please use the issue template.
+For help, you can also use the Gitter chat.
 
 ## Development guidelines
 
@@ -15,6 +16,8 @@ Please install the pre-commit hooks to automatically
 - format the code with [yapf](https://github.com/google/yapf#id1)
 - sort the imports with [isort](https://pycqa.github.io/isort/)
 - lint the code with [prospector](http://prospector.landscape.io/en/master/)
+
+We use type hints, which we feel is a good way of documentation and helps us find bugs using [mypy](http://mypy-lang.org/).
 
 ### New features
 
