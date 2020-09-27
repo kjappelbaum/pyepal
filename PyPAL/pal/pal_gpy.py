@@ -10,10 +10,14 @@ class PALGPy(PALBase):
     """PAL class for a list of GPy GPR models, with one model per objective"""
 
     def __init__(self, *args, **kwargs):
-        self.restarts = kwargs.pop('restarts', 20)
-        self.parallel = kwargs.pop('parallel', False)
-        assert isinstance(self.parallel, bool), 'the parallel keyword must be of type bool'
-        assert isinstance(self.restarts, int), 'the restarts keyword must be of type int'
+        self.restarts = kwargs.pop("restarts", 20)
+        self.parallel = kwargs.pop("parallel", False)
+        assert isinstance(
+            self.parallel, bool
+        ), "the parallel keyword must be of type bool"
+        assert isinstance(
+            self.restarts, int
+        ), "the restarts keyword must be of type int"
         super().__init__(*args, **kwargs)
 
         validate_number_models(self.models, self.ndim)
@@ -30,7 +34,7 @@ class PALGPy(PALBase):
         for model in self.models:
             mean, std = model.predict(self.design_space)
             means.append(mean.reshape(-1, 1))
-            stds.append(std.reshape(-1, 1))
+            stds.append(np.sqrt(std).reshape(-1, 1))
 
         self.means = np.hstack(mean)
         self.std = np.hstack(stds)

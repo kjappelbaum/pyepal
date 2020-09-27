@@ -13,7 +13,7 @@ For help, you can also use the Gitter chat.
 
 Please install the pre-commit hooks to automatically
 
-- format the code with [yapf](https://github.com/google/yapf#id1)
+- format the code with [black](https://github.com/psf/black)
 - sort the imports with [isort](https://pycqa.github.io/isort/)
 - lint the code with [prospector](http://prospector.landscape.io/en/master/)
 

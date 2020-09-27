@@ -8,7 +8,9 @@ from numba import jit
 from .utils import dominance_check_jitted_2, is_pareto_efficient
 
 
-def _get_uncertainity_region(mu: np.array, std: np.array, beta_sqrt: float) -> Tuple[np.array, np.array]:  # pylint:disable=invalid-name
+def _get_uncertainity_region(  # pylint:disable=invalid-name
+    mu: np.array, std: np.array, beta_sqrt: float
+) -> Tuple[np.array, np.array]:
     """
 
     Args:
@@ -23,9 +25,12 @@ def _get_uncertainity_region(mu: np.array, std: np.array, beta_sqrt: float) -> T
     return low_lim, high_lim
 
 
-def _get_uncertainity_regions(mus: np.array, stds: np.array, beta_sqrt: float) -> Union[np.array, np.array]:
+def _get_uncertainity_regions(
+    mus: np.array, stds: np.array, beta_sqrt: float
+) -> Union[np.array, np.array]:
     """
-    Compute the lower and upper bound of the uncertainty region for each dimension (=target)
+    Compute the lower and upper bound of the uncertainty region
+         for each dimension (=target)
 
     Args:
         mus (np.array): means
@@ -37,7 +42,7 @@ def _get_uncertainity_regions(mus: np.array, stds: np.array, beta_sqrt: float) -
     """
     low_lims, high_lims = [], []
 
-    for i in range(0, mus.shape[1]):  # pylint:disable=consider-using-enumerate (I find this clearer)
+    for i in range(0, mus.shape[1]):
         low_lim, high_lim = _get_uncertainity_region(mus[:, i], stds[:, i], beta_sqrt)
         low_lims.append(low_lim.reshape(-1, 1))
         high_lims.append(high_lim.reshape(-1, 1))
@@ -45,7 +50,9 @@ def _get_uncertainity_regions(mus: np.array, stds: np.array, beta_sqrt: float) -
     return np.hstack(low_lims), np.hstack(high_lims)
 
 
-def _union(lows: np.array, ups: np.array, new_lows: np.array, new_ups: np.array) -> Union[np.array, np.array]:
+def _union(
+    lows: np.array, ups: np.array, new_lows: np.array, new_ups: np.array
+) -> Union[np.array, np.array]:
     """Performing iterative intersection (eq. 6 in PAL paper) in all dimensions.
 
     Args:
@@ -60,8 +67,10 @@ def _union(lows: np.array, ups: np.array, new_lows: np.array, new_ups: np.array)
     out_lows = []
     out_ups = []
 
-    for i in range(0, lows.shape[1]):  # pylint:disable=consider-using-enumerate (I find this clearer)
-        low, up = _union_one_dim(lows[:, i], ups[:, i], new_lows[:, i], new_ups[:, i])  # pylint:disable=invalid-name
+    for i in range(0, lows.shape[1]):
+        low, up = _union_one_dim(  # pylint:disable=invalid-name
+            lows[:, i], ups[:, i], new_lows[:, i], new_ups[:, i]
+        )
         out_lows.append(low.reshape(-1, 1))
         out_ups.append(up.reshape(-1, 1))
 
@@ -71,12 +80,16 @@ def _union(lows: np.array, ups: np.array, new_lows: np.array, new_ups: np.array)
 
 
 @jit(nopython=True)
-def _union_one_dim(lows: Sequence, ups: Sequence, new_lows: Sequence, new_ups: Sequence) -> Tuple[np.array, np.array]:
+def _union_one_dim(
+    lows: Sequence, ups: Sequence, new_lows: Sequence, new_ups: Sequence
+) -> Tuple[np.array, np.array]:
     """Used to intersect the confidence regions, for eq. 6 of the PAL paper.
-    "The iterative intersection ensures that all uncertainty regions are non-increasing with t."
+    The iterative intersection ensures that all uncertainty regions
+    are non-increasing with t.
 
     We do not check for the ordering in this function.
-    We really assume that the lower limits are the lower limits and the upper limits are the upper limits.
+    We really assume that the lower limits are the lower limits
+    and the upper limits are the upper limits.
 
     All arrays must have the same length.
 
@@ -95,8 +108,10 @@ def _union_one_dim(lows: Sequence, ups: Sequence, new_lows: Sequence, new_ups: S
     for i, low in enumerate(lows):
         # In one dimension we can imagine the following cases where there
         # is zero intersection
-        # 1) |--old range--|   |--new range--|, i.e., lower new limit above old upper limit
-        # 2) |--new range--|   |--old range--|, i.e., upper new limit below lower old limit
+        # 1) |--old range--|   |--new range--|,
+        # i.e., lower new limit above old upper limit
+        # 2) |--new range--|   |--old range--|,
+        # i.e., upper new limit below lower old limit
         if (new_lows[i] >= ups[i]) or (new_ups[i] <= low):
             out_lows.append(new_lows[i])
             out_ups.append(new_ups[i])
@@ -123,19 +138,22 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     """Performs the classification part of the algorithm
     (p. 4 of the PAL paper, see algorithm 1/2 of the epsilon-PAL paper)
 
-    One core concept is that once a point is classified it does no longer change the class.
+    One core concept is that once a point is classified,
+    it does no longer change the class.
 
     Args:
-        pareto_optimal_0 (list): binary encoded list of points classified as Pareto optimal
-        not_pareto_optimal_0 (list): binary encoded list of points classified as non-Pareto optimal
-        unclassified_0 (list): binary encoded list of unclassified points
+        pareto_optimal_0 (np.array): boolean mask of points classified as Pareto optimal
+        not_pareto_optimal_0 (np.array): boolean mask of points
+            classified as non-Pareto optimal
+        unclassified_0 (np.array): boolean mask of unclassified points
         rectangle_lows (np.array): lower uncertainity boundaries
         rectangle_ups (np.array): upper uncertainity boundaries
         x_input (np.array): feature matrix
-        epsilon (list): granularity parameter (one per dimension)
+        epsilon (np.array): granularity parameter (one per dimension)
 
     Returns:
-        Tuple[list, list, list]: binary encoded list of Pareto optimal, non-Pareto optimal and unclassified points
+        Tuple[list, list, list]: binary encoded list of Pareto optimal,
+            non-Pareto optimal and unclassified points
     """
     pareto_optimal_t = pareto_optimal_0.copy()
     not_pareto_optimal_t = not_pareto_optimal_0.copy()
@@ -148,19 +166,27 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
         pareto_pessimistic_lows = rectangle_lows[pareto_indices]  # p_pess(P)
         for i in range(0, len(x_input)):
             if unclassified_t[i] == 1:
-                if dominance_check_jitted_2(pareto_pessimistic_lows * (1 + epsilon), rectangle_ups[i]):
+                if dominance_check_jitted_2(
+                    pareto_pessimistic_lows * (1 + epsilon), rectangle_ups[i]
+                ):
                     not_pareto_optimal_t[i] = 1
                     unclassified_t[i] = 0
 
     # ToDo: can be probably cleaned up a bit
-    pareto_unclassified_indices = np.where((pareto_optimal_0 == 1) | (unclassified_t == 1))[0]
+    pareto_unclassified_indices = np.where(
+        (pareto_optimal_0 == 1) | (unclassified_t == 1)
+    )[0]
 
     pareto_unclassified_lows = rectangle_lows[pareto_unclassified_indices]
 
     # assuming maximization
-    pareto_unclassified_pessimistic_mask = is_pareto_efficient(-pareto_unclassified_lows)  # disable:pylint:disable=invalid-name
+    pareto_unclassified_pessimistic_mask = is_pareto_efficient(
+        -pareto_unclassified_lows
+    )
     original_indices = pareto_unclassified_indices[pareto_unclassified_pessimistic_mask]
-    pareto_unclassified_pessimistic_points = pareto_unclassified_lows[pareto_unclassified_pessimistic_mask]  # pylint:disable=invalid-name
+    pareto_unclassified_pessimistic_points = pareto_unclassified_lows[
+        pareto_unclassified_pessimistic_mask
+    ]
 
     for i in range(0, len(x_input)):
         # We can only discard points that are unclassified so far
@@ -168,7 +194,9 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
         if (unclassified_t[i] == 1) and (i not in original_indices):
             # If the upper bound of the hyperrectangle is not dominating anywhere
             # the pareto pessimitic set, we can discard
-            if dominance_check_jitted_2(pareto_unclassified_pessimistic_points * (1 + epsilon), rectangle_ups[i]):
+            if dominance_check_jitted_2(
+                pareto_unclassified_pessimistic_points * (1 + epsilon), rectangle_ups[i]
+            ):
                 not_pareto_optimal_t[i] = 1
                 unclassified_t[i] = 0
 
@@ -184,11 +212,15 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     for i in range(0, len(x_input)):
         # again, we only care about unclassified points
         if unclassified_t[i] == 1:
-            # We need to make sure that unclassified_ups does not contain the current point
+            # We need to make sure that unclassified_ups
+            # does not contain the current point
             unclassified_ups[index_map[i]] = np.ma.masked
-            # If there is no other point which up is epsilon dominating the low of the current point,
+            # If there is no other point which up is epsilon dominating
+            # the low of the current point,
             # the current point is epsilon-accurate Pareto optimal
-            if not dominance_check_jitted_2(unclassified_ups, rectangle_lows[i] * (1 + epsilon)):
+            if not dominance_check_jitted_2(
+                unclassified_ups, rectangle_lows[i] * (1 + epsilon)
+            ):
                 pareto_optimal_t[i] = 1
                 unclassified_t[i] = 0
 
@@ -199,7 +231,7 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
 
 
 @jit(nopython=True)
-def _get_max_wt(
+def _get_max_wt(  # pylint:disable=too-many-arguments
     rectangle_lows: np.array,
     rectangle_ups: np.array,
     pareto_optimal_t: np.array,
@@ -213,7 +245,8 @@ def _get_max_wt(
     Args:
         rectangle_lows (np.array): Lower, pessimistic, bounds of the hyperrectangles
         rectangle_ups (np.array): Upper, optimistic, bounds of the hyperrectangles
-        pareto_optimal_t (np.array): Mask array that is True for the Pareto optimal points
+        pareto_optimal_t (np.array): Mask array that is True
+            for the Pareto optimal points
         unclassified_t (np.array): Mask array that is True for the unclassified points
         sampled (np.array): Mask array that is True for the sampled points
         x_input (np.array): Design space
@@ -225,10 +258,13 @@ def _get_max_wt(
     maxid = -1
 
     for i in range(0, len(x_input)):
-        # Among the points x ∈ Pt ∪ Ut, the one with the largest wt(x) is chosen as the next sample xt to be evaluated.
+        # Among the points x ∈ Pt ∪ Ut, the one with the largest wt(x)
+        # is chosen as the next sample xt to be evaluated.
         # Intuitively, this rule biases the sampling towards exploring,
         # and thus improving the model for, the points most likely to be Pareto-optimal.
-        if ((unclassified_t[i] == 1) or (pareto_optimal_t[i] == 1)) and not sampled[i] == 1:
+        if ((unclassified_t[i] == 1) or (pareto_optimal_t[i] == 1)) and not sampled[
+            i
+        ] == 1:
             # weight is the length of the diagonal of the uncertainity region
             uncertainity = np.linalg.norm(rectangle_ups[i, :] - rectangle_lows[i, :])
             if maxid == -1:
