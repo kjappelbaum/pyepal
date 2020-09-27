@@ -12,6 +12,7 @@ New
 
 Changes
 ~~~~~~~
+- Chore: added rc file for coverage. [Kevin]
 - Chore: added code coverage. [Kevin]
 - Chore: adding more test cases. [Kevin]
 - Chore: smaller logo. [Kevin]
@@ -41,6 +42,7 @@ Changes
 
 Fix
 ~~~
+- Omit for report of coverage. [Kevin]
 - Uncertainity region test no longer failing. [Kevin]
 - Should also work with 3.6. [Kevin]
 - Should also work with 3.6. [Kevin]
