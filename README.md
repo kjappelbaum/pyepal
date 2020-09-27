@@ -1,4 +1,4 @@
-# PyPAL
+![Logo](pypal_logo.png)
 
 ![Python package](https://github.com/kjappelbaum/PyPAL/workflows/Python%20package/badge.svg)
 ![pre-commit](https://github.com/kjappelbaum/PyPAL/workflows/pre-commit/badge.svg)
