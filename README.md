@@ -2,7 +2,6 @@
 
 ![Python package](https://github.com/kjappelbaum/PyPAL/workflows/Python%20package/badge.svg)
 ![pre-commit](https://github.com/kjappelbaum/PyPAL/workflows/pre-commit/badge.svg)
-
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/PyPAL)
 ![GitHub](https://img.shields.io/github/license/kjappelbaum/PyPAL)
 ![Gitter](https://img.shields.io/gitter/room/kjappelbaum/PyPAL)
@@ -15,7 +14,7 @@ Generalized Python implementation of the ε-PAL algorithm [[1](#1), [2](#2)].
 To install the latest development version from the head use
 
 ```(bash)
-pip install git+
+pip install git+https://github.com/kjappelbaum/PyPAL.git
 ```
 
 To install a stable release use
@@ -34,7 +33,7 @@ The main logic is implemented in the `PALBase` class. There are some pre-built c
 
 #### scikit-learn
 
-If you want to use a list of [sklearn]() models, you cam use the `PALSklearn` class.
+If you want to use a list of [sklearn](https://scikit-learn.org/stable/index.html) models, you cam use the `PALSklearn` class.
 
 #### GPy
 
