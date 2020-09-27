@@ -32,25 +32,38 @@ def test__get_uncertainity_region():
     assert low3 == 0
     assert high3 == 2
 
+    low4, high4 = _get_uncertainity_region(mu, 2, 1)
+    assert low4 == -1
+    assert high4 == 3
+
 
 def test__get_uncertainity_regions():
     """The test uncertainity regions for three dimensions"""
     mu = 1  # pylint:disable=invalid-name
-    lows, highs = _get_uncertainity_regions([mu, mu, mu], [0, 1, 2], 1)
+    lows, highs = _get_uncertainity_regions(
+        np.array([mu, mu, mu]).reshape(-1, 3), np.array([0, 1, 2]).reshape(-1, 3), 1
+    )
+    lows = lows.flatten()
+    highs = highs.flatten()
     assert lows[0] == mu
     assert highs[0] == mu
     assert lows[1] == 0
     assert highs[1] == 2
     assert lows[2] == -1
-    assert highs[1] == 3
+    assert highs[2] == 3
 
-    lows, highs = _get_uncertainity_regions([mu - 1, mu, mu], [0, 1, 2], 1)
+    lows, highs = _get_uncertainity_regions(
+        np.array([mu - 1, mu, mu]).reshape(-1, 3), np.array([0, 1, 2]).reshape(-1, 3), 1
+    )
+    lows = lows.flatten()
+    highs = highs.flatten()
+
     assert lows[0] == mu - 1
     assert highs[0] == mu - 1
     assert lows[1] == 0
     assert highs[1] == 2
     assert lows[2] == -1
-    assert highs[1] == 3
+    assert highs[2] == 3
 
 
 def test__union_one_dim():
@@ -85,3 +98,8 @@ def test__union_one_dim():
     )
     assert (low == np.array([0.5, 0.5, 0.5])).all()
     assert (up == np.array([1, 1, 1])).all()
+
+
+# def test__get_max_wt():
+#     """Testing the sampling function"""
+#     max_wt =
