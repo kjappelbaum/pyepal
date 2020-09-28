@@ -7,11 +7,30 @@ Changelog
 
 New
 ~~~
+- Feat: implemented update_train_set function. [Kevin]
 - Feat: implemented PALSklearn. [Kevin]
 - Feat: PALGPy class. [Kevin]
 
 Changes
 ~~~~~~~
+- Chore: added tests. [Kevin]
+- Chore: adding tests. [Kevin]
+- Chore: added tests. [Kevin]
+- Chore: added tests. [Kevin]
+- Chore: added tests. [Kevin]
+- Chore: added tests. [Kevin]
+- Chore: adding tests. [Kevin]
+- Chore: disabling numba for coverage report. [Kevin]
+- Chore: adding tests. [Kevin]
+- Chore: adding tests. [Kevin]
+- Chore: adding tests. [Kevin]
+- Chore: adding tests. [Kevin]
+- Chore: adding tests. [Kevin]
+- Chore: adding tests. [Kevin]
+- Chore: adding tests. [Kevin]
+- Chore: updating coveragerc. [Kevin]
+- Chore: scaled logo. [Kevin]
+- Chore: adding tests. [Kevin]
 - Chore: added rc file for coverage. [Kevin]
 - Chore: added code coverage. [Kevin]
 - Chore: adding more test cases. [Kevin]
@@ -42,6 +61,9 @@ Changes
 
 Fix
 ~~~
+- Coverage command in workflow was broken. [Kevin]
+- Pareto_classify did not for as expected #4. [Kevin]
+- Need GPy for the Pythonpackage workflow. [Kevin]
 - Omit for report of coverage. [Kevin]
 - Uncertainity region test no longer failing. [Kevin]
 - Should also work with 3.6. [Kevin]

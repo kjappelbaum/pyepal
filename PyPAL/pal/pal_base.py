@@ -48,8 +48,8 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.beta = None
         self.goals = validate_goals(goals, ndim)
         self.sampled_idx = 0
-        self.y = np.array(  # pylint:disable=invalid-name
-            [[np.nan] * self.design_space_size] * self.ndim
+        self.y = np.zeros(  # pylint:disable=invalid-name
+            (self.design_space_size, self.ndim)
         )
         self._has_train_set = False
 
@@ -112,6 +112,11 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
     def number_unclassified_points(self):
         """Return the number of unclassified points"""
         return sum(self.unclassified)
+
+    @property
+    def number_sampled_points(self):
+        """Return the number of sampled points"""
+        return sum(self.sampled)
 
     def _update_beta(self):
         """Update beta according to section 7.2. of the epsilon-PAL paper"""
@@ -195,10 +200,21 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.iteration += 1
         return sampled_idx
 
-    # ToDo: Implement me / think about most reasonable API
-    def update_train_set(self):
-        """Update the training set based on the included indices and measurements"""
+    def update_train_set(self, indices: np.ndarray, measurements: np.ndarray):
+        """Update training set following a measurement
+
+        Args:
+            indices (np.ndarray): Indices of design space at which
+                the measurements were taken
+            measurements (np.ndarray): Measured values, 2D array.
+                the length must equal the length of the inidices array.
+                the second direction must equal the number of objectives
+        """
         self._has_train_set = True
+        assert measurements.shape[1] == self.ndim
+        assert len(indices) == len(measurements)
+        self.y[indices] = measurements
+        self.sampled[indices] = True
 
     def sample(self) -> int:
         """Runs the sampling step based on the size of the hyperrectangle.
