@@ -3,6 +3,7 @@
 import warnings
 from typing import List, Union
 
+import GPy
 import numpy as np
 
 
@@ -200,3 +201,10 @@ def validate_number_models(models: list, ndim: int):
         raise ValueError("You must provide a list of models. One model per objective")
     if len(models) != ndim:
         raise ValueError("You must provide a list of models. One model per objective")
+
+
+def validate_gpy_model(models: list):
+    """Make sure that all elements of the list a GPRegression models"""
+    for model in models:
+        if not isinstance(model, GPy.models.GPRegression):
+            raise ValueError("The models must be an instance of GPy.model")

@@ -3,7 +3,7 @@
 import numpy as np
 
 from .pal_base import PALBase
-from .validate_inputs import validate_number_models
+from .validate_inputs import validate_gpy_model, validate_number_models
 
 
 class PALGPy(PALBase):
@@ -21,6 +21,7 @@ class PALGPy(PALBase):
         super().__init__(*args, **kwargs)
 
         validate_number_models(self.models, self.ndim)
+        validate_gpy_model(self.models)
 
     def _set_data(self):
         for model in self.models:

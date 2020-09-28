@@ -9,6 +9,7 @@ from PyPAL.pal.validate_inputs import (
     validate_delta,
     validate_epsilon,
     validate_goals,
+    validate_gpy_model,
     validate_ndim,
     validate_number_models,
 )
@@ -86,3 +87,9 @@ def test_validate_delta():
         validate_delta(-0.1)
 
     assert validate_delta(0.1) == 0.1
+
+
+def test_validate_gpy_models():
+    """Raise error when there models are not GPy models"""
+    with pytest.raises(ValueError):
+        validate_gpy_model(["m"])
