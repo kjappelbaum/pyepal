@@ -8,7 +8,7 @@ def test_linear():
     assert linear(10, 10)
     assert not linear(9, 10)
     assert not linear(11, 10)
-    assert not linear(0, 10)
+    assert linear(0, 10)
     assert not linear(8, 8)
 
 
