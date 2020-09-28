@@ -28,5 +28,8 @@ def test_pal_gpy(make_random_dataset):
     palgpy_instance.update_train_set(
         np.array([1, 2, 3, 4, 5]), y[np.array([1, 2, 3, 4, 5]), :]
     )
-
+    assert palgpy_instance.models[0].kern.variance.values[0] == 1
     palgpy_instance._train()  # pylint:disable=protected-access
+    assert palgpy_instance.models[0].kern.variance.values[0] == 1
+    palgpy_instance._set_hyperparameters()  # pylint:disable=protected-access
+    assert palgpy_instance.models[0].kern.variance.values[0] != 1
