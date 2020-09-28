@@ -54,3 +54,18 @@ def test_update_train_set(make_random_dataset):
     assert palinstance.sampled_idx == np.array([0])
     assert palinstance.number_sampled_points == 1
     assert (palinstance.y[0] == y[0, :]).all()
+
+
+def test_beta_update(make_random_dataset):
+    """testing that the beta update works"""
+    X, _ = make_random_dataset  # pylint:disable=invalid-name
+    palinstance = PALBase(X, ["model"], 3)
+
+    assert palinstance.beta is None
+
+    palinstance._update_beta()
+    assert palinstance.beta is not None
+
+    assert palinstance.beta == 1 / 16 * 2 * np.log(
+        3 * 100 * np.square(np.pi) * np.square(1) / (6 * 0.05)
+    )
