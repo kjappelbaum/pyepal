@@ -6,6 +6,7 @@ import pytest
 from PyPAL.pal.validate_inputs import (
     base_validate_models,
     validate_beta_scale,
+    validate_delta,
     validate_epsilon,
     validate_goals,
     validate_ndim,
@@ -74,3 +75,14 @@ def test_base_validate_models():
         base_validate_models([])
 
     assert ["m"] == base_validate_models(["m"])
+
+
+def test_validate_delta():
+    """Test the delta validation"""
+    with pytest.raises(ValueError):
+        validate_delta(1.1)
+
+    with pytest.raises(ValueError):
+        validate_delta(-0.1)
+
+    assert validate_delta(0.1) == 0.1
