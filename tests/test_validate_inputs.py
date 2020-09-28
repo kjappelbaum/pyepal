@@ -59,6 +59,8 @@ def test_validate_goals():
     with pytest.raises(ValueError):
         validate_goals(1, 1)
 
+    assert (validate_goals(None, 3) == np.array([1, 1, 1])).all()
+
 
 def test_validate_number_models():
     """Test the validation of the number of models"""

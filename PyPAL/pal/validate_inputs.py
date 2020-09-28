@@ -144,7 +144,7 @@ def validate_goals(  # pylint:disable=too-many-branches
             UserWarning,
         )
 
-        return ["max"] * ndim
+        return np.array([1] * ndim)
     if isinstance(goals, list):
         if len(goals) != ndim:
             raise ValueError("If goals is a list, the length must be equal to the ndim")

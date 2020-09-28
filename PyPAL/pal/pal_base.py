@@ -52,6 +52,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             (self.design_space_size, self.ndim)
         )
         self._has_train_set = False
+        self._y = self.y
 
     def __repr__(self):
         return f"PyPAL at iteration {self.iteration}. \
@@ -145,7 +146,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         pass
 
     def _turn_to_maximization(self):
-        pass
+        self.y = self._y * self.goals
 
     def _train(self):
         pass
@@ -213,8 +214,9 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self._has_train_set = True
         assert measurements.shape[1] == self.ndim
         assert len(indices) == len(measurements)
-        self.y[indices] = measurements
+        self._y[indices] = measurements
         self.sampled[indices] = True
+        self._turn_to_maximization()
 
     def sample(self) -> int:
         """Runs the sampling step based on the size of the hyperrectangle.

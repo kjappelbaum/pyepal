@@ -69,3 +69,19 @@ def test_beta_update(make_random_dataset):
     assert palinstance.beta == 1 / 16 * 2 * np.log(
         3 * 100 * np.square(np.pi) * np.square(1) / (6 * 0.05)
     )
+
+
+def test_turn_to_maximization(make_random_dataset):
+    """Test that flipping the sign for minimization problems works"""
+    X, y = make_random_dataset  # pylint:disable=invalid-name
+    palinstance = PALBase(X, ["model"], 3)
+
+    palinstance.update_train_set(np.array([0]), y[0, :].reshape(-1, 3))
+    assert (palinstance.y[0] == y[0, :]).all()
+    assert (palinstance._y[0] == y[0, :]).all()
+
+    palinstance = PALBase(X, ["model"], 3, goals=[1, 1, -1])
+
+    palinstance.update_train_set(np.array([0]), y[0, :].reshape(-1, 3))
+    assert (palinstance.y[0] == y[0, :] * np.array([1, 1, -1])).all()
+    assert (palinstance._y[0] == y[0, :]).all()
