@@ -21,4 +21,4 @@ We use type hints, which we feel is a good way of documentation and helps us fin
 
 ### New features
 
-Please make a new branch for the development of new features.
+Please make a new branch for the development of new features. Rebase on the upstream master and include a test for your new feature. (The CI checks for a drop in code coverage.)
