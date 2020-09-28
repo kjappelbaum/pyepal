@@ -100,6 +100,27 @@ def test__union_one_dim():
     assert (up == np.array([1, 1, 1])).all()
 
 
-# def test__get_max_wt():
-#     """Testing the sampling function"""
-#     max_wt =
+def test__get_max_wt():
+    """Testing the sampling function"""
+    lows = np.array(
+        [
+            [0.0, 0.0, 0.0, 0.0],
+            [-1.0, -1.0, -1.0, -1.0],
+            [-2.0, -2.0, -2.0, -2.0],
+            [2.0, 2.0, 2.0, 2.0],
+        ]
+    )
+    highs = np.array(
+        [
+            [1.0, 1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0, 1.0],
+            [2.0, 2.0, 2.0, 2.0],
+        ]
+    )
+    pareto_optimal = np.array([False, False, True, True])
+    sampled = np.array([False, False, False, False])
+    unclassified = np.array([True, True, False, False])
+
+    max_wt = _get_max_wt(lows, highs, pareto_optimal, unclassified, sampled)
+    assert max_wt == 2

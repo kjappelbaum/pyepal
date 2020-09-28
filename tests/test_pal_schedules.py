@@ -9,7 +9,7 @@ def test_linear():
     assert not linear(9, 10)
     assert not linear(11, 10)
     assert linear(0, 10)
-    assert not linear(8, 8)
+    assert not linear(8, 10)
 
 
 def test_exp_decay():

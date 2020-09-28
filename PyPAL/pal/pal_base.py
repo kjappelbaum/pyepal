@@ -209,7 +209,6 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             self.pareto_optimal,
             self.unclassified,
             self.sampled,
-            self.design_space,
         )
 
         return sampled_idx

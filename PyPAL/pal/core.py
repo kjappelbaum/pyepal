@@ -231,13 +231,12 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
 
 
 @jit(nopython=True)
-def _get_max_wt(  # pylint:disable=too-many-arguments
+def _get_max_wt(
     rectangle_lows: np.array,
     rectangle_ups: np.array,
     pareto_optimal_t: np.array,
     unclassified_t: np.array,
     sampled: np.array,
-    x_input: np.array,
 ) -> int:
     """Returns the index in design space with the maximum size of the hyperrectangle.
     Samples only from unclassified or Pareto-optimal points.
@@ -249,7 +248,6 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
             for the Pareto optimal points
         unclassified_t (np.array): Mask array that is True for the unclassified points
         sampled (np.array): Mask array that is True for the sampled points
-        x_input (np.array): Design space
 
     Returns:
         int: index with maximum size of hyperrectangle
@@ -257,7 +255,7 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
     max_uncertainity = 0
     maxid = -1
 
-    for i in range(0, len(x_input)):
+    for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
         # Among the points x ∈ Pt ∪ Ut, the one with the largest wt(x)
         # is chosen as the next sample xt to be evaluated.
         # Intuitively, this rule biases the sampling towards exploring,
