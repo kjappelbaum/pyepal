@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Testing the PALGPy class"""
+import numpy as np
 import pytest
 
 from PyPAL.models.gpr import build_model
@@ -23,3 +24,9 @@ def test_pal_gpy(make_random_dataset):
     palgpy_instance = PALGPy(X, [m0, m1, m2], 3)
     assert palgpy_instance.restarts == 20
     assert not palgpy_instance.parallel
+
+    palgpy_instance.update_train_set(
+        np.array([1, 2, 3, 4, 5]), y[np.array([1, 2, 3, 4, 5]), :]
+    )
+
+    palgpy_instance._train()  # pylint:disable=protected-access
