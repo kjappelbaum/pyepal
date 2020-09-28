@@ -29,7 +29,7 @@ setup(
             "isort",
             "gitchangelog",
         ],
-        "GPy": ["GPy"],
+        "GPy": ["GPy", "matplotlib"],
     },
     author="Kevin M. Jablonka, Brian Yoo, Berend Smit",
     author_email="kevin.jablonka@epfl.ch, brian.yoo@basf.com",
