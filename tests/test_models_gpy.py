@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Testing some of the model utilities"""
 import GPy
+import numpy as np
 
 from PyPAL.models.coregionalized import GPCoregionalizedRegression
 from PyPAL.models.gpr import (
@@ -8,6 +9,7 @@ from PyPAL.models.gpr import (
     build_model,
     predict,
     predict_coregionalized,
+    set_xy_coregionalized,
 )
 
 
@@ -56,3 +58,16 @@ def test_predict_coregionalized(make_random_dataset):
     assert len(prediction2[1]) == 100
     assert prediction2[0].shape[1] == 1
     assert prediction2[1].shape[1] == 1
+
+
+def test_set_xy_coregionalized(make_random_dataset):
+    """Test that the utility for updating the data of a coregionalized model works"""
+    X, y = make_random_dataset  # pylint:disable=invalid-name
+    m = build_coregionalized_model(X, y)  # pylint:disable=invalid-name
+    assert len(m.X) == 300
+
+    X = np.vstack([X, X])  # pylint:disable=invalid-name
+    y = np.vstack([y, y])  # pylint:disable=invalid-name
+
+    m = set_xy_coregionalized(m, X, y)  # pylint:disable=invalid-name
+    assert len(m.X) == 600
