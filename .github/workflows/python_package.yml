@@ -30,7 +30,7 @@ jobs:
         run: |
           pytest
       - name: coverage (numba deactivated)
-        run: pytest--cov=./ --cov-report=xml
+        run: pytest --cov=./ --cov-report=xml
         env:
           NUMBA_DISABLE_JIT: 1
 
