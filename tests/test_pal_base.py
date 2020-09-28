@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Testing the PAL base class"""
 # pylint:disable=protected-access
+import pytest
+
 from PyPAL.pal.pal_base import PALBase
 
 
@@ -10,6 +12,11 @@ def test_pal_base(make_random_dataset):
     assert palinstance.number_discarded_points == 0
     assert palinstance.number_pareto_optimal_points == 0
     assert palinstance.number_unclassified_points == 100
+
+    assert len(palinstance.discarded_points) == 0
+    assert len(palinstance.pareto_optimal_points) == 0
+    assert len(palinstance.unclassified_points) == 100
+
     assert (
         str(palinstance)
         == "PyPAL at iteration 0. \
@@ -27,3 +34,6 @@ def test_pal_base(make_random_dataset):
 
     assert palinstance._should_optimize_hyperparameters()
     assert not palinstance._has_train_set
+
+    with pytest.raises(ValueError):
+        palinstance.sample()

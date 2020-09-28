@@ -75,6 +75,11 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         return self.design_space[self.discarded]
 
     @property
+    def unclassified_points(self):
+        """Return the discarded points"""
+        return self.design_space[self.unclassified]
+
+    @property
     def pareto_optimal_indices(self):
         """Return the indices of the Pareto optimal points"""
         return np.where(
@@ -202,6 +207,12 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         Returns:
             int: Index of next point to evaulate in desing space
         """
+        if (self.rectangle_lows is None) | (self.rectangle_ups is None):
+            raise ValueError(
+                "You need to have uncertainity rectangles\
+                     before you can peform the sampling"
+            )
+
         sampled_idx = _get_max_wt(
             self.rectangle_lows,
             self.rectangle_ups,
