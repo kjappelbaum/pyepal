@@ -7,12 +7,16 @@ Changelog
 
 New
 ~~~
+- Feat: implemented turn_to_maximization. [Kevin]
 - Feat: implemented update_train_set function. [Kevin]
 - Feat: implemented PALSklearn. [Kevin]
 - Feat: PALGPy class. [Kevin]
 
 Changes
 ~~~~~~~
+- Chore: update contribution guide. [Kevin]
+- Chore: updated readme. [Kevin]
+- Chore: testing beta update. [Kevin]
 - Chore: added tests. [Kevin]
 - Chore: adding tests. [Kevin]
 - Chore: added tests. [Kevin]
@@ -61,6 +65,7 @@ Changes
 
 Fix
 ~~~
+- Training function for PALSklearn fixed. [Kevin]
 - Coverage command in workflow was broken. [Kevin]
 - Pareto_classify did not for as expected #4. [Kevin]
 - Need GPy for the Pythonpackage workflow. [Kevin]

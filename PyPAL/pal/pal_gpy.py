@@ -3,6 +3,7 @@
 import numpy as np
 
 from .pal_base import PALBase
+from .schedules import exp_decay
 from .validate_inputs import validate_gpy_model, validate_number_models
 
 
@@ -37,9 +38,12 @@ class PALGPy(PALBase):
             means.append(mean.reshape(-1, 1))
             stds.append(np.sqrt(std).reshape(-1, 1))
 
-        self.means = np.hstack(mean)
+        self.means = np.hstack(means)
         self.std = np.hstack(stds)
 
     def _set_hyperparameters(self):
         for model in self.models:
             model.optimize_restarts(self.restarts, parallel=self.parallel)
+
+    def _should_optimize_hyperparameters(self) -> bool:
+        return exp_decay(self.iteration, 2)

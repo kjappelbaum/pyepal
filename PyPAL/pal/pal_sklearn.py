@@ -19,7 +19,9 @@ class PALSklearn(PALBase):
 
     def _train(self):
         for i, model in enumerate(self.models):
-            model.fit(self.design_space[:, i], self.y[:, i])
+            model.fit(
+                self.design_space[self.sampled], self.y[self.sampled, i].reshape(-1, 1)
+            )
 
     def _predict(self):
         means, stds = [], []
@@ -28,7 +30,7 @@ class PALSklearn(PALBase):
             means.append(mean.reshape(-1, 1))
             stds.append(std.reshape(-1, 1))
 
-        self.means = np.hstack(mean)
+        self.means = np.hstack(means)
         self.std = np.hstack(stds)
 
     def _set_hyperparameters(self):
