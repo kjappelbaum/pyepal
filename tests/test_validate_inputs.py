@@ -4,6 +4,7 @@ import numpy as np
 import pytest
 
 from PyPAL.pal.validate_inputs import (
+    base_validate_models,
     validate_beta_scale,
     validate_epsilon,
     validate_goals,
@@ -65,3 +66,11 @@ def test_validate_number_models():
         validate_number_models([1, 1], 3)
 
     assert validate_number_models([1, 1], 2) is None
+
+
+def test_base_validate_models():
+    """Test that the basic validation of the models works"""
+    with pytest.raises(ValueError):
+        base_validate_models([])
+
+    assert ["m"] == base_validate_models(["m"])
