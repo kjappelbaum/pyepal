@@ -214,7 +214,6 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
         # again, we only care about unclassified points
         if unclassified_t[i] == 1:
-            print(unclassified_ups, rectangle_lows[i] * (1 + epsilon), index_map[i])
             # If there is no other point which up is epsilon dominating
             # the low of the current point,
             # the current point is epsilon-accurate Pareto optimal

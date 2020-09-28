@@ -4,8 +4,10 @@ import numpy as np
 
 from PyPAL.pal.utils import (
     dominance_check,
+    dominance_check_jitted,
     dominance_check_jitted_2,
     dominance_check_jitted_3,
+    is_pareto_efficient,
 )
 
 
@@ -17,6 +19,19 @@ def test_dominance_check():
     assert dominance_check(np.array([0, 1, 1]), np.array([0, 0, 0]))
 
     assert not dominance_check(np.array([4.5, 1]), np.array([3.7, 2]))
+
+
+def test_dominance_check_jitted():
+    """Test if the jitted dominance check works"""
+    array = np.array([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]])
+    point = np.array([1.0, 1.0, 1.0])
+
+    assert dominance_check_jitted(point, array)
+
+    array = np.array([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]])
+    point = np.array([-1.0, -1.0, -1.0])
+
+    assert not dominance_check(point, array)
 
 
 def test_dominance_check_jitted_2():
@@ -73,3 +88,9 @@ def test_dominance_check_jitted_3():
     point = np.array([3.7, 2])
 
     assert not dominance_check_jitted_3(array, point, 3)
+
+
+def test_is_pareto_efficient():
+    """Can we get the indices of the Pareto-efficient points?"""
+    array = np.array([[0, 0], [1, 0], [0, 1]])
+    assert (is_pareto_efficient(-array) == np.array([False, True, True])).all()

@@ -16,7 +16,7 @@ def dominance_check(point1, point2) -> bool:
 
 @jit(nopython=True)
 def dominance_check_jitted(point: np.array, array: np.array) -> bool:
-    """Check if poin dominates any point in array"""
+    """Check if point dominates any point in array"""
     arr_sorted = array[array[:, 0].argsort()]
     for i in range(len(arr_sorted)):  # pylint:disable=consider-using-enumerate
         if dominance_check(point, arr_sorted[i]):
