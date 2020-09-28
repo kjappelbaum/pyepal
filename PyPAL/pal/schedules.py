@@ -3,6 +3,8 @@
 that can be used to implement the _should_optimize_hyperparameters function"""
 import math
 
+import numpy as np
+
 
 def linear(iteration: int, frequency: int = 10) -> bool:
     """Optimize hyperparameters at equally spaced intervals
@@ -29,6 +31,10 @@ def exp_decay(iteration: int, base: int = 10) -> bool:
     Returns:
         bool: True if iteration is on the log scaled grid
     """
-    if math.log(iteration, base).is_integer():
+    if iteration == 0:
+        return True
+
+    result = math.log(iteration, base)
+    if np.abs(result - round(result)) < 0.00001:
         return True
     return False
