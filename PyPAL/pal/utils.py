@@ -34,6 +34,20 @@ def dominance_check_jitted_2(array: np.array, point: np.array) -> bool:
     return False
 
 
+@jit(nopython=True)
+def dominance_check_jitted_3(array: np.array, point: np.array, ignore_me: int) -> bool:
+    """Check if any point in array dominates point. ignore_me
+    since numba does not understand masked arrays"""
+    sorted_idx = array[:, 0].argsort()[::-1]
+    ignore_me = np.where(sorted_idx == ignore_me)[0]
+    arr_sorted = array[sorted_idx]
+    for i in range(len(arr_sorted)):  # pylint:disable=consider-using-enumerate
+        if i != ignore_me:
+            if dominance_check(arr_sorted[i], point):
+                return True
+    return False
+
+
 def is_pareto_efficient(costs, return_mask=True):
     # https://stackoverflow.com/questions/32791911/fast-calculation-of-pareto-front-in-python
     """

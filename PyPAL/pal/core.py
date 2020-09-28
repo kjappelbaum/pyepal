@@ -5,7 +5,11 @@ from typing import Sequence, Tuple, Union
 import numpy as np
 from numba import jit
 
-from .utils import dominance_check_jitted_2, is_pareto_efficient
+from .utils import (
+    dominance_check_jitted_2,
+    dominance_check_jitted_3,
+    is_pareto_efficient,
+)
 
 
 def _get_uncertainity_region(  # pylint:disable=invalid-name
@@ -132,7 +136,6 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     unclassified_0: np.array,
     rectangle_lows: np.array,
     rectangle_ups: np.array,
-    x_input: np.array,
     epsilon: np.array,
 ) -> Tuple[np.array, np.array, np.array]:
     """Performs the classification part of the algorithm
@@ -148,7 +151,6 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
         unclassified_0 (np.array): boolean mask of unclassified points
         rectangle_lows (np.array): lower uncertainity boundaries
         rectangle_ups (np.array): upper uncertainity boundaries
-        x_input (np.array): feature matrix
         epsilon (np.array): granularity parameter (one per dimension)
 
     Returns:
@@ -164,7 +166,7 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     if sum(pareto_optimal_0) > 0:
         pareto_indices = np.where(pareto_optimal_0 == 1)[0]
         pareto_pessimistic_lows = rectangle_lows[pareto_indices]  # p_pess(P)
-        for i in range(0, len(x_input)):
+        for i in range(0, len(unclassified_0)):
             if unclassified_t[i] == 1:
                 if dominance_check_jitted_2(
                     pareto_pessimistic_lows * (1 + epsilon), rectangle_ups[i]
@@ -188,7 +190,7 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
         pareto_unclassified_pessimistic_mask
     ]
 
-    for i in range(0, len(x_input)):
+    for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
         # We can only discard points that are unclassified so far
         # We cannot discard points that are part of p_pess(P \cup U)
         if (unclassified_t[i] == 1) and (i not in original_indices):
@@ -204,28 +206,23 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     # if there is no other point x' such that max(Rt(x')) >= min(Rt(x))
     # move x to Pareto
     unclassified_indices = np.where((unclassified_t == 1) | (pareto_optimal_t == 1))[0]
-    unclassified_ups = np.ma.array(rectangle_ups[unclassified_indices])
+    unclassified_ups = np.array(rectangle_ups[unclassified_indices])
+
+    index_map = {index: i for i, index in enumerate(unclassified_indices)}
 
     # The index map helps us to mask the current point from the unclassified_ups list
-    index_map = dict(zip(unclassified_indices, range(len(unclassified_ups))))
-
-    for i in range(0, len(x_input)):
+    for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
         # again, we only care about unclassified points
         if unclassified_t[i] == 1:
-            # We need to make sure that unclassified_ups
-            # does not contain the current point
-            unclassified_ups[index_map[i]] = np.ma.masked
+            print(unclassified_ups, rectangle_lows[i] * (1 + epsilon), index_map[i])
             # If there is no other point which up is epsilon dominating
             # the low of the current point,
             # the current point is epsilon-accurate Pareto optimal
-            if not dominance_check_jitted_2(
-                unclassified_ups, rectangle_lows[i] * (1 + epsilon)
+            if not dominance_check_jitted_3(
+                unclassified_ups, rectangle_lows[i] * (1 + epsilon), index_map[i]
             ):
                 pareto_optimal_t[i] = 1
                 unclassified_t[i] = 0
-
-            # now we can demask the entry
-            unclassified_ups[index_map[i]] = np.ma.nomask
 
     return pareto_optimal_t, not_pareto_optimal_t, unclassified_t
 

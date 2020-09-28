@@ -166,7 +166,6 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             self.unclassified,
             self.rectangle_lows,
             self.rectangle_ups,
-            self.design_space,
             self.epsilon,
         )
 

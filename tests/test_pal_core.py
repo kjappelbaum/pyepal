@@ -7,6 +7,7 @@ from PyPAL.pal.core import (
     _get_max_wt,
     _get_uncertainity_region,
     _get_uncertainity_regions,
+    _pareto_classify,
     _union,
     _union_one_dim,
 )
@@ -147,6 +148,70 @@ def test__get_max_wt():
     assert max_wt == 1
 
 
-# def test_pareto_classify():
-#     pareto_optimal = np.array([True, True, False, False, False])
-#     pass
+def test_pareto_classify():
+    """Test the Pareto classification case on a 2D case,
+    which I can easily draw and understand"""
+    pareto_optimal_points = np.array([[0.5, 2], [3, 1], [4, 0.5]])
+    discarded_points = np.array([[0.5, 0.5]])
+    unclassified_points = np.array([[3.8, 2.1], [2.4, 0.5], [2.4, 0.5], [0.5, 0.5]])
+
+    design_space = np.vstack(
+        [pareto_optimal_points, discarded_points, unclassified_points]
+    )
+
+    is_pareto_optimal = np.array(
+        [True] * len(pareto_optimal_points)
+        + [False] * len(discarded_points)
+        + [False] * len(unclassified_points)
+    )
+
+    is_discarded = np.array(
+        [False] * len(pareto_optimal_points)
+        + [True] * len(discarded_points)
+        + [False] * len(unclassified_points)
+    )
+
+    is_unclassified = np.array(
+        [False] * len(pareto_optimal_points)
+        + [False] * len(discarded_points)
+        + [True] * len(unclassified_points)
+    )
+
+    epsilon = np.array([0, 0])
+
+    stdev = np.array(
+        [
+            [0.5, 0.5],
+            [0.5, 0.5],
+            [0.5, 0.5],
+            [0.5, 0.5],
+            [0.1, 0.1],
+            [0.5, 0.5],
+            [0, 0],
+            [2.5, 2.5],
+        ]
+    )
+
+    rectangle_lows = design_space - stdev
+    rectangle_ups = design_space + stdev
+
+    pareto_optimal_t, discarded_t, unclassified_t = _pareto_classify(
+        is_pareto_optimal,
+        is_discarded,
+        is_unclassified,
+        rectangle_lows,
+        rectangle_ups,
+        epsilon,
+    )
+
+    assert (
+        pareto_optimal_t
+        == np.array([True, True, True, False, True, False, False, False])
+    ).all()
+    assert (
+        discarded_t == np.array([False, False, False, True, False, True, True, False])
+    ).all()
+    assert (
+        unclassified_t
+        == np.array([False, False, False, False, False, False, False, True])
+    ).all()
