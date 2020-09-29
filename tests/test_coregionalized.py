@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from PyPAL.models.coregionalized import GPCoregionalizedRegression
+from pypal.models.coregionalized import GPCoregionalizedRegression
 
 
 def test_gpcoregionalizedregression(make_random_dataset):

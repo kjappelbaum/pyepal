@@ -9,7 +9,7 @@ with open("requirements.txt", "r") as fh:
     REQUIREMENTS = [line.strip() for line in fh]
 
 setup(
-    name="PyPAL",
+    name="pypal",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     packages=find_packages(),

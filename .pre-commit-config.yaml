@@ -45,7 +45,7 @@ repos:
       - id: black
         language_version: python3
         name: black
-        exclude: versioneer.py|PyPAL/_version.py|^docs/
+        exclude: versioneer.py|pypal/_version.py|^docs/
         entry: black
         language: system
         types: [python]
@@ -53,13 +53,13 @@ repos:
       - id: isort
         name: isort
         language: system
-        exclude: versioneer.py|PyPAL/_version.py|^docs/
+        exclude: versioneer.py|pypal/_version.py|^docs/
         types: [python]
         entry: isort
 
       - id: prospector
         language: system
         types: [file, python]
-        exclude: versioneer.py|PyPAL/_version.py|^docs/
+        exclude: versioneer.py|pypal/_version.py|^docs/
         name: prospector
         entry: prospector

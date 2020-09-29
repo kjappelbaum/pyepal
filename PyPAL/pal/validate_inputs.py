@@ -6,6 +6,8 @@ from typing import List, Union
 import GPy
 import numpy as np
 
+from ..models.coregionalized import GPCoregionalizedRegression
+
 
 def validate_ndim(ndim: int) -> int:
     """Make sure that the number of dimensions makes sense
@@ -184,7 +186,7 @@ def base_validate_models(models: list) -> list:
     if models:
         return models
 
-    raise ValueError("You must provide some models to initialize PyPAL")
+    raise ValueError("You must provide some models to initialize pypal")
 
 
 def validate_number_models(models: list, ndim: int):
@@ -208,3 +210,13 @@ def validate_gpy_model(models: list):
     for model in models:
         if not isinstance(model, GPy.models.GPRegression):
             raise ValueError("The models must be an instance of GPy.model")
+
+
+def validate_coregionalized_gpy(models: list):
+    """Make sure that model is a coregionalized GPR model"""
+    if not isinstance(models, list):
+        raise ValueError("You must provide a list of models with one element")
+    if not isinstance(models[0], GPCoregionalizedRegression):
+        raise ValueError(
+            "Model must be a GPCoregionalized regression object from this package!"
+        )

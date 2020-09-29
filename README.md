@@ -1,12 +1,12 @@
 ![Logo](pypal_logo.png)
 
-![Python package](https://github.com/kjappelbaum/PyPAL/workflows/Python%20package/badge.svg)
-![pre-commit](https://github.com/kjappelbaum/PyPAL/workflows/pre-commit/badge.svg)
-[![codecov](https://codecov.io/gh/kjappelbaum/PyPAL/branch/master/graph/badge.svg?token=BL2CF4HQ06)](https://codecov.io/gh/kjappelbaum/PyPAL)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/PyPAL)
-![GitHub](https://img.shields.io/github/license/kjappelbaum/PyPAL)
-![Gitter](https://img.shields.io/gitter/room/kjappelbaum/PyPAL)
-![GitHub last commit](https://img.shields.io/github/last-commit/kjappelbaum/PyPAL)
+![Python package](https://github.com/kjappelbaum/pypal/workflows/Python%20package/badge.svg)
+![pre-commit](https://github.com/kjappelbaum/pypal/workflows/pre-commit/badge.svg)
+[![codecov](https://codecov.io/gh/kjappelbaum/pypal/branch/master/graph/badge.svg?token=BL2CF4HQ06)](https://codecov.io/gh/kjappelbaum/pypal)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pypal)
+![GitHub](https://img.shields.io/github/license/kjappelbaum/pypal)
+![Gitter](https://img.shields.io/gitter/room/kjappelbaum/pypal)
+![GitHub last commit](https://img.shields.io/github/last-commit/kjappelbaum/pypal)
 
 Generalized Python implementation of the ε-PAL algorithm [[1](#1), [2](#2)].
 
@@ -15,13 +15,13 @@ Generalized Python implementation of the ε-PAL algorithm [[1](#1), [2](#2)].
 To install the latest development version from the head use
 
 ```(bash)
-pip install git+https://github.com/kjappelbaum/PyPAL.git
+pip install git+https://github.com/kjappelbaum/pypal.git
 ```
 
 To install a stable release use
 
 ```(bash)
-pip install PyPAL
+pip install pypal
 ```
 
 Developers can install the extras `[testing, docs, pre-commit]`.
@@ -76,7 +76,7 @@ class PALSklearn(PALBase):
         self.std = np.hstack(stds)
 ```
 
-For scheduling for the hyperparameter optimization we have some predefined schedules in the `PyPAL.pal.schedules` module.
+For scheduling for the hyperparameter optimization we have some predefined schedules in the `pypal.pal.schedules` module.
 
 ### Test the algorithms
 

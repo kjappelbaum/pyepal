@@ -6,6 +6,7 @@ import numpy as np
 from ..models.gpr import predict_coregionalized, set_xy_coregionalized
 from .pal_base import PALBase
 from .schedules import exp_decay
+from .validate_inputs import validate_coregionalized_gpy
 
 
 class PALCoregionalized(PALBase):
@@ -21,6 +22,7 @@ class PALCoregionalized(PALBase):
             self.restarts, int
         ), "the restarts keyword must be of type int"
         super().__init__(*args, **kwargs)
+        validate_coregionalized_gpy(self.models)
 
     def _set_data(self):
         self.models[0] = set_xy_coregionalized(

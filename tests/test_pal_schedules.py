@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Testing the scheduling utility functions"""
-from PyPAL.pal.schedules import exp_decay, linear
+from pypal.pal.schedules import exp_decay, linear
 
 
 def test_linear():

@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF
 
-from PyPAL.pal.pal_sklearn import PALSklearn
+from pypal.pal.pal_sklearn import PALSklearn
 
 
 def test_pal_sklearn(make_random_dataset):

@@ -3,8 +3,8 @@
 import numpy as np
 import pytest
 
-from PyPAL.models.gpr import build_model
-from PyPAL.pal.pal_gpy import PALGPy
+from pypal.models.gpr import build_model
+from pypal.pal.pal_gpy import PALGPy
 
 
 def test_pal_gpy(make_random_dataset):

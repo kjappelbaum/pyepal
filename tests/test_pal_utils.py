@@ -2,7 +2,7 @@
 """Testing the Pareto front utilities"""
 import numpy as np
 
-from PyPAL.pal.utils import (
+from pypal.pal.utils import (
     dominance_check,
     dominance_check_jitted,
     dominance_check_jitted_2,

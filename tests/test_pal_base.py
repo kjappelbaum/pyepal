@@ -4,7 +4,7 @@
 import numpy as np
 import pytest
 
-from PyPAL.pal.pal_base import PALBase
+from pypal.pal.pal_base import PALBase
 
 
 def test_pal_base(make_random_dataset):
@@ -21,14 +21,14 @@ def test_pal_base(make_random_dataset):
 
     assert (
         str(palinstance)
-        == "PyPAL at iteration 0. \
+        == "pypal at iteration 0. \
         0 Pareto optimal points, \
         0 discarded points, \
         100 unclassified points."
     )
     assert (
         palinstance._log()
-        == "PyPAL at iteration 0. \
+        == "pypal at iteration 0. \
         0 Pareto optimal points, \
         0 discarded points, \
         100 unclassified points."

@@ -3,7 +3,7 @@
 """Testing the PAL module"""
 import numpy as np
 
-from PyPAL.pal.core import (
+from pypal.pal.core import (
     _get_max_wt,
     _get_uncertainity_region,
     _get_uncertainity_regions,

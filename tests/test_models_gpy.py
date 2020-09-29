@@ -3,8 +3,8 @@
 import GPy
 import numpy as np
 
-from PyPAL.models.coregionalized import GPCoregionalizedRegression
-from PyPAL.models.gpr import (
+from pypal.models.coregionalized import GPCoregionalizedRegression
+from pypal.models.gpr import (
     build_coregionalized_model,
     build_model,
     predict,

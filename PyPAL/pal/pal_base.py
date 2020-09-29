@@ -55,7 +55,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self._y = self.y
 
     def __repr__(self):
-        return f"PyPAL at iteration {self.iteration}. \
+        return f"pypal at iteration {self.iteration}. \
         {self.number_pareto_optimal_points} Pareto optimal points, \
         {self.number_discarded_points} discarded points, \
         {self.number_unclassified_points} unclassified points."

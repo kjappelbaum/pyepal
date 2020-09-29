@@ -3,9 +3,11 @@
 import numpy as np
 import pytest
 
-from PyPAL.pal.validate_inputs import (
+from pypal.models.gpr import build_coregionalized_model
+from pypal.pal.validate_inputs import (
     base_validate_models,
     validate_beta_scale,
+    validate_coregionalized_gpy,
     validate_delta,
     validate_epsilon,
     validate_goals,
@@ -95,3 +97,16 @@ def test_validate_gpy_models():
     """Raise error when there models are not GPy models"""
     with pytest.raises(ValueError):
         validate_gpy_model(["m"])
+
+
+def test_validate_coregionalized_gpy(make_random_dataset):
+    """Test that the check for coregionalized models works"""
+    X, y = make_random_dataset  # pylint:disable=invalid-name
+    model = build_coregionalized_model(X, y)
+    with pytest.raises(ValueError):
+        validate_coregionalized_gpy(model)
+
+    with pytest.raises(ValueError):
+        validate_coregionalized_gpy(["m"])
+
+    assert validate_coregionalized_gpy([model]) is None
