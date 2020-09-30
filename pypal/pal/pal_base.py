@@ -140,7 +140,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         return True
 
     def _predict(self):
-        pass
+        raise NotImplementedError("The predict function is not implemented")
 
     def _set_hyperparameters(self):
         pass

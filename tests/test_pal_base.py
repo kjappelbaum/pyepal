@@ -182,3 +182,16 @@ def test__update_hyperrectangles(make_random_dataset):
 
     assert palinstance.rectangle_lows[1][0] < -1
     assert palinstance.rectangle_ups[1][0] > 1
+
+
+def test_orchestration_run_one_step(make_random_dataset):
+    """Test if the orchestration works.
+    In the base class it should raise an error as without
+    prediction function we cannot do anything
+    """
+    X, y = make_random_dataset  # pylint:disable=invalid-name
+    palinstance = PALBase(X, ["model"], 3, beta_scale=1)
+    sample_idx = np.array([1, 2, 3, 4])
+    palinstance.update_train_set(sample_idx, y[sample_idx])
+    with pytest.raises(NotImplementedError):
+        _ = palinstance.run_one_step()
