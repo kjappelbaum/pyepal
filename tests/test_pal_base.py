@@ -153,3 +153,32 @@ def test_sample(make_random_dataset):
 
     sampled_idx = palinstance.sample()
     assert sampled_idx == 1
+
+
+def test__update_hyperrectangles(make_random_dataset):
+    """Testing if the updating of the hyperrectangles works as expected.
+    As above, the core functionality is tested in for the function with the logic.
+    Here, we're more interested in seeing how it works with the class object
+    """
+    X, _ = make_random_dataset  # pylint:disable=invalid-name
+    palinstance = PALBase(X, ["model"], 4, beta_scale=1)
+
+    palinstance.means = np.array([[0, 0, 1, 0], [0, 0, 0, 1]])
+    palinstance.std = np.array([[0, 0, 0, 0], [1, 0, 0, 0]])
+    with pytest.raises(TypeError):
+        # Beta is not defined
+        palinstance._update_hyperrectangles()
+
+    palinstance._update_beta()
+    palinstance._update_hyperrectangles()
+
+    assert palinstance.rectangle_lows is not None
+    assert palinstance.rectangle_ups is not None
+
+    assert palinstance.rectangle_lows[0][0] == 0
+    assert palinstance.rectangle_ups[0][0] == 0
+    assert palinstance.rectangle_lows[0][2] == 1
+    assert palinstance.rectangle_ups[0][2] == 1
+
+    assert palinstance.rectangle_lows[1][0] < -1
+    assert palinstance.rectangle_ups[1][0] > 1

@@ -45,10 +45,11 @@ def test_validate_epsilon():
 def test_validate_beta_scale():
     """Test beta scaling validation"""
     assert validate_beta_scale(1 / 9) == 1 / 9
-    with pytest.raises(ValueError):
-        validate_beta_scale(1.1)
+
     with pytest.raises(ValueError):
         validate_beta_scale(-1)
+
+    assert validate_beta_scale(1) == 1
 
 
 def test_validate_goals():

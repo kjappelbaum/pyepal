@@ -56,13 +56,13 @@ def validate_beta_scale(beta_scale: float) -> float:
         beta_scale (float): scaling factor for beta
 
     Raises:
-        ValueError: If beta is smaller than 0 or greater than 1
+        ValueError: If beta is smaller than 0
 
     Returns:
         float: scaling factor for beta
     """
-    if (beta_scale >= 1) | (beta_scale < 0):
-        raise ValueError("The beta_scale values must be in [0,1)")
+    if beta_scale < 0:
+        raise ValueError("The beta_scale values must be positive")
 
     return beta_scale
 
