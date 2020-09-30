@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Python PAL"""
 from ._version import get_versions
 from .pal.pal_base import PALBase
 from .pal.pal_coregionalized import PALCoregionalized
