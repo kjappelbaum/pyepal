@@ -215,3 +215,54 @@ def test_pareto_classify():
         unclassified_t
         == np.array([False, False, False, False, False, False, False, True])
     ).all()
+
+    # 3D arrays, but 3rd dimenension alsways 0
+
+    pareto_optimal_points = np.array([[0.5, 2, 0], [3, 1, 0], [4, 0.5, 0]])
+    discarded_points = np.array([[0.5, 0.5, 0]])
+    unclassified_points = np.array(
+        [[3.8, 2.1, 0], [2.4, 0.5, 0], [2.4, 0.5, 0], [0.5, 0.5, 0]]
+    )
+
+    design_space = np.vstack(
+        [pareto_optimal_points, discarded_points, unclassified_points]
+    )
+
+    epsilon = np.array([0, 0, 0])
+
+    stdev = np.array(
+        [
+            [0.5, 0.5, 0],
+            [0.5, 0.5, 0],
+            [0.5, 0.5, 0],
+            [0.5, 0.5, 0],
+            [0.1, 0.1, 0],
+            [0.5, 0.5, 0],
+            [0, 0, 0],
+            [2.5, 2.5, 0],
+        ]
+    )
+
+    rectangle_lows = design_space - stdev
+    rectangle_ups = design_space + stdev
+
+    pareto_optimal_t, discarded_t, unclassified_t = _pareto_classify(
+        is_pareto_optimal,
+        is_discarded,
+        is_unclassified,
+        rectangle_lows,
+        rectangle_ups,
+        epsilon,
+    )
+
+    assert (
+        pareto_optimal_t
+        == np.array([True, True, True, False, True, False, False, False])
+    ).all()
+    assert (
+        discarded_t == np.array([False, False, False, True, False, True, True, False])
+    ).all()
+    assert (
+        unclassified_t
+        == np.array([False, False, False, False, False, False, False, True])
+    ).all()
