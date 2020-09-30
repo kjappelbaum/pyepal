@@ -1,2 +1,2 @@
 include versioneer.py
-include PyPal/_version.py
+include pypal/_version.py
