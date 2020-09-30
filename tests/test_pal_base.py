@@ -85,3 +85,71 @@ def test_turn_to_maximization(make_random_dataset):
     palinstance.update_train_set(np.array([0]), y[0, :].reshape(-1, 3))
     assert (palinstance.y[0] == y[0, :] * np.array([1, 1, -1])).all()
     assert (palinstance._y[0] == y[0, :]).all()
+
+
+def test_sample(make_random_dataset):
+    """Test the sampling"""
+    X, _ = make_random_dataset  # pylint:disable=invalid-name
+    palinstance = PALBase(X, ["model"], 4)
+
+    lows = np.array(
+        [
+            [0.0, 0.0, 0.0, 0.0],
+            [-1.0, -1.0, -1.0, -1.0],
+            [-2.0, -2.0, -2.0, -2.0],
+            [2.0, 2.0, 2.0, 2.0],
+        ]
+    )
+    highs = np.array(
+        [
+            [1.0, 1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0, 1.0],
+            [2.0, 2.0, 2.0, 2.0],
+        ]
+    )
+    pareto_optimal = np.array([False, False, True, True])
+    sampled = np.array([False, False, False, False])
+    unclassified = np.array([True, True, False, False])
+
+    palinstance.rectangle_lows = lows
+    palinstance.rectangle_ups = highs
+    palinstance.sampled = sampled
+    palinstance.pareto_optimal = pareto_optimal
+    palinstance.unclassified = unclassified
+
+    sampled_idx = palinstance.sample()
+    assert sampled_idx == 2
+
+    pareto_optimal = np.array([False, False, True, True])
+    sampled = np.array([False, False, False, False])
+    unclassified = np.array([True, True, False, False])
+
+    palinstance.sampled = sampled
+    palinstance.pareto_optimal = pareto_optimal
+    palinstance.unclassified = unclassified
+
+    sampled_idx = palinstance.sample()
+    assert sampled_idx == 2
+
+    pareto_optimal = np.array([False, False, True, True])
+    sampled = np.array([False, False, True, False])
+    unclassified = np.array([True, True, False, False])
+
+    palinstance.sampled = sampled
+    palinstance.pareto_optimal = pareto_optimal
+    palinstance.unclassified = unclassified
+
+    sampled_idx = palinstance.sample()
+    assert sampled_idx == 1
+
+    pareto_optimal = np.array([False, False, False, True])
+    sampled = np.array([False, False, True, False])
+    unclassified = np.array([True, True, False, False])
+
+    palinstance.sampled = sampled
+    palinstance.pareto_optimal = pareto_optimal
+    palinstance.unclassified = unclassified
+
+    sampled_idx = palinstance.sample()
+    assert sampled_idx == 1
