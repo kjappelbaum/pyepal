@@ -26,5 +26,9 @@ def test_pal_coregionalized(make_random_dataset):
     pal_coregionalized._set_hyperparameters()  # pylint:disable=protected-access
 
     assert (
+        pal_coregionalized._should_optimize_hyperparameters()  # pylint:disable=protected-access
+    )
+
+    assert (
         pal_coregionalized.models[0].kern.B.kappa.values != np.array([0.5, 0.5, 0.5])
     ).any()

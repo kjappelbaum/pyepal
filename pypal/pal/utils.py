@@ -39,7 +39,7 @@ def dominance_check_jitted_3(array: np.array, point: np.array, ignore_me: int) -
     """Check if any point in array dominates point. ignore_me
     since numba does not understand masked arrays"""
     sorted_idx = array[:, 0].argsort()[::-1]
-    ignore_me = np.where(sorted_idx == ignore_me)[0]
+    ignore_me = np.where(sorted_idx == ignore_me)[0][0]
     arr_sorted = array[sorted_idx]
     for i in range(len(arr_sorted)):  # pylint:disable=consider-using-enumerate
         if i != ignore_me:
