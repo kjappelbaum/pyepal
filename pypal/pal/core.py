@@ -226,20 +226,25 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     return pareto_optimal_t, not_pareto_optimal_t, unclassified_t
 
 
+# ToDo: maybe add jitter to avoid issues when the prediction is exactly 0
 @jit(nopython=True)
-def _get_max_wt(
+def _get_max_wt(  # pylint:disable=too-many-arguments
     rectangle_lows: np.array,
     rectangle_ups: np.array,
+    means: np.array,
     pareto_optimal_t: np.array,
     unclassified_t: np.array,
     sampled: np.array,
 ) -> int:
-    """Returns the index in design space with the maximum size of the hyperrectangle.
+    """Returns the index in design space with the maximum size of the hyperrectangle
+    (scaled by the mean predictions, i.e., effectively,
+    we use the coefficient of variation).
     Samples only from unclassified or Pareto-optimal points.
 
     Args:
         rectangle_lows (np.array): Lower, pessimistic, bounds of the hyperrectangles
         rectangle_ups (np.array): Upper, optimistic, bounds of the hyperrectangles
+        means (np.array): Mean predictions
         pareto_optimal_t (np.array): Mask array that is True
             for the Pareto optimal points
         unclassified_t (np.array): Mask array that is True for the unclassified points
@@ -249,7 +254,7 @@ def _get_max_wt(
         int: index with maximum size of hyperrectangle
     """
     max_uncertainity = 0
-    maxid = -1
+    maxid = 0
 
     for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
         # Among the points x ∈ Pt ∪ Ut, the one with the largest wt(x)
@@ -260,12 +265,11 @@ def _get_max_wt(
             i
         ] == 1:
             # weight is the length of the diagonal of the uncertainity region
-            uncertainity = np.linalg.norm(rectangle_ups[i, :] - rectangle_lows[i, :])
-            if maxid == -1:
-                max_uncertainity = uncertainity
-                maxid = i
-            # the point with the largest weight is chosen as the next sample
-            elif uncertainity > max_uncertainity:
+            coeff_var = np.divide(
+                rectangle_ups[i, :] - rectangle_lows[i, :], means[i, :]
+            )
+            uncertainity = np.linalg.norm(coeff_var)
+            if uncertainity > max_uncertainity:
                 max_uncertainity = uncertainity
                 maxid = i
 

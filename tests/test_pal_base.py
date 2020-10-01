@@ -108,6 +108,9 @@ def test_sample(make_random_dataset):
             [2.0, 2.0, 2.0, 2.0],
         ]
     )
+
+    means = np.array([[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]])
+    palinstance.means = means
     pareto_optimal = np.array([False, False, True, True])
     sampled = np.array([False, False, False, False])
     unclassified = np.array([True, True, False, False])

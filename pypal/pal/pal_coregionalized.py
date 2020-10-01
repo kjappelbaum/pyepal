@@ -27,7 +27,7 @@ class PALCoregionalized(PALBase):
     def _set_data(self):
         self.models[0] = set_xy_coregionalized(
             self.models[0],
-            self.design_space_size[self.sampled_indices],
+            self.design_space[self.sampled_indices],
             self.y[self.sampled_indices],
         )
 

@@ -32,3 +32,20 @@ def test_pal_coregionalized(make_random_dataset):
     assert (
         pal_coregionalized.models[0].kern.B.kappa.values != np.array([0.5, 0.5, 0.5])
     ).any()
+
+
+def test_orchestration_run_one_step(make_random_dataset):
+    """Test if the orchestration works.
+    In the base class it should raise an error as without
+    prediction function we cannot do anything
+    """
+    # This random dataset is not really ideal for a Pareto test as there's only one
+    # optimal point it appears to me
+    # ToDo: Add second dataset
+    X, y = make_random_dataset  # pylint:disable=invalid-name
+    model = build_coregionalized_model(X, y)
+    palinstance = PALCoregionalized(X, [model], 3, beta_scale=1)
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    palinstance.update_train_set(sample_idx, y[sample_idx])
+    idx = palinstance.run_one_step()
+    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]

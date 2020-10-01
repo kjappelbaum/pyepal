@@ -180,7 +180,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             self.epsilon,
         )
 
-    def run_one_step(self) -> int:
+    def run_one_step(self) -> Union[int, None]:
         """Inner part of the loop"""
         if not self._has_train_set:
             raise ValueError(
@@ -195,11 +195,14 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self._update_beta()
         self._update_hyperrectangles()
         self._classify()
-        sampled_idx = self.sample()
-        self.sampled_idx = sampled_idx
-        self._log()
-        self.iteration += 1
-        return sampled_idx
+        if sum(self.unclassified):
+            sampled_idx = self.sample()
+            self.sampled_idx = sampled_idx
+            self._log()
+            self.iteration += 1
+            return sampled_idx
+        print("Done. No unclassified point left")
+        return None
 
     def update_train_set(self, indices: np.ndarray, measurements: np.ndarray):
         """Update training set following a measurement
@@ -234,6 +237,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         sampled_idx = _get_max_wt(
             self.rectangle_lows,
             self.rectangle_ups,
+            self.means,
             self.pareto_optimal,
             self.unclassified,
             self.sampled,
