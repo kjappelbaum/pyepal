@@ -52,14 +52,14 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
 
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
 
-    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
     model = build_coregionalized_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx])
 
     palinstance = PALCoregionalized(X_binh_korn, [model], 2, beta_scale=1)
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
-    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    assert sum(palinstance.sampled_idx) > 0
+    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    assert sum(palinstance.sampled) > 0
     assert sum(palinstance.unclassified) > 0
     assert sum(palinstance.discarded) > 0
