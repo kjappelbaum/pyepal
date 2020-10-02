@@ -48,15 +48,19 @@ def dominance_check_jitted_3(array: np.array, point: np.array, ignore_me: int) -
     return False
 
 
-def is_pareto_efficient(costs, return_mask=True):
-    # https://stackoverflow.com/questions/32791911/fast-calculation-of-pareto-front-in-python
-    """
-    Find the pareto-efficient points
-    :param costs: An (n_points, n_costs) array
-    :param return_mask: True to return a mask
-    :return: An array of indices of pareto-efficient points.
-        If return_mask is True, this will be an (n_points, ) boolean array
-        Otherwise it will be a (n_efficient_points, ) integer array of indices.
+def is_pareto_efficient(costs: np.array, return_mask: bool = True) -> np.array:
+    """Find the Pareto efficient points
+    Based on https://stackoverflow.com/questions/
+    32791911/fast-calculation-of-pareto-front-in-python
+
+    Args:
+        costs (np.array): An (n_points, n_costs) array
+        return_mask (bool, optional): True to return a mask,
+            Otherwise it will be a (n_efficient_points, ) integer array of indices.
+            Defaults to True.
+
+    Returns:
+        np.array: [description]
     """
     is_efficient = np.arange(costs.shape[0])
     n_points = costs.shape[0]
