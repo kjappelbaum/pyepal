@@ -3,12 +3,16 @@
 ![Python package](https://github.com/kjappelbaum/pypal/workflows/Python%20package/badge.svg)
 ![pre-commit](https://github.com/kjappelbaum/pypal/workflows/pre-commit/badge.svg)
 [![codecov](https://codecov.io/gh/kjappelbaum/pypal/branch/master/graph/badge.svg?token=BL2CF4HQ06)](https://codecov.io/gh/kjappelbaum/pypal)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pypal)
-![GitHub](https://img.shields.io/github/license/kjappelbaum/pypal)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 ![Gitter](https://img.shields.io/gitter/room/kjappelbaum/pypal)
 ![GitHub last commit](https://img.shields.io/github/last-commit/kjappelbaum/pypal)
 
 Generalized Python implementation of the ε-PAL algorithm [[1](#1), [2](#2)].
+
+For more detailed docs [go here](https://kjappelbaum.github.io/pypal/).
+
 
 ## Installation
 
