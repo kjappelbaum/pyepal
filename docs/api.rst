@@ -88,7 +88,7 @@ The models package
 -------------------
 
 Helper functions for GPR with GPy
-..................................
+...................................
 
 .. automodule:: pypal.models.gpr
     :members:
