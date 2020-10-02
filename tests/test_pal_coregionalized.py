@@ -34,18 +34,32 @@ def test_pal_coregionalized(make_random_dataset):
     ).any()
 
 
-def test_orchestration_run_one_step(make_random_dataset):
+def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     """Test if the orchestration works.
     In the base class it should raise an error as without
     prediction function we cannot do anything
     """
     # This random dataset is not really ideal for a Pareto test as there's only one
     # optimal point it appears to me
-    # ToDo: Add second dataset
     X, y = make_random_dataset  # pylint:disable=invalid-name
-    model = build_coregionalized_model(X, y)
-    palinstance = PALCoregionalized(X, [model], 3, beta_scale=1)
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    model = build_coregionalized_model(X[sample_idx], y[sample_idx])
+    palinstance = PALCoregionalized(X, [model], 3, beta_scale=1)
+
     palinstance.update_train_set(sample_idx, y[sample_idx])
     idx = palinstance.run_one_step()
     assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
+
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    model = build_coregionalized_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx])
+
+    palinstance = PALCoregionalized(X_binh_korn, [model], 2, beta_scale=1)
+
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    idx = palinstance.run_one_step()
+    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    assert sum(palinstance.sampled_idx) > 0
+    assert sum(palinstance.unclassified) > 0
+    assert sum(palinstance.discarded) > 0
