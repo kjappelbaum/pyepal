@@ -34,7 +34,40 @@ The main logic is implemented in the `PALBase` class. There are some pre-built c
 
 #### scikit-learn
 
-If you want to use a list of [sklearn](https://scikit-learn.org/stable/index.html) models, you cam use the `PALSklearn` class.
+If you want to use a list of [sklearn](https://scikit-learn.org/stable/index.html) models, you can use the `PALSklearn` class. To use it for one step,
+you can follow the following code snippet. The basic principle is the same for all the different `PAL` classes.
+
+```python
+from pypal import PALSklearn
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF, Matern
+
+# For each objective, initialize a model
+gpr_objective_0 = GaussianProcessRegressor(RBF())
+gpr_objective_1 = GaussianProcessRegressor(RBF())
+
+# The minimal input to create a PAL instance is a list of models,
+# the design space (X, in ML terms "feature matrix") and the number of objectives
+palsklearn_instance = PALSklearn(X, [gpr_objective_0, gpr_objective_1], 2)
+
+# the next step is to provide some intial measurements,
+# you can do this with the update_train_set function, which you one
+# also uses through the active learning process to update the training set.
+# For this, you provide a numpy array of indices in your design space
+# and the corresponding measurements
+sampled_indices = np.array([1,2,3])
+measurements = np.array([[1,2],
+                        [0.8, 1],
+                        [7,1]]
+                        )
+palsklearn_instance.update_train_set(sampled_indices, measurements)
+
+# Now, you're ready to run the first iteration,
+# this will return the next index to sample and update all the attributes
+# If there are no unclassified samples left, it will return None and
+# print a statement saying that the classification is completed
+index_to_sample = palsklearn_instance.run_one_step()
+```
 
 #### GPy
 
