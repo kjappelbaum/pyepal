@@ -15,6 +15,7 @@ Contents
 
    getting_started
    background
+   developer_notes
    api
 
 

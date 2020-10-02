@@ -14,7 +14,7 @@
   <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Background &#8212; pypal 0+untagged.87.gdfc1e72.dirty documentation</title>
+    <title>Developer notes &#8212; pypal 0+untagged.87.gdfc1e72.dirty documentation</title>
     <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -25,7 +25,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="The pypal API reference" href="api.html" />
-    <link rel="prev" title="Getting Started" href="getting_started.html" />
+    <link rel="prev" title="Background" href="background.html" />
 
 
 
@@ -43,10 +43,10 @@
           <a href="api.html" title="The pypal API reference"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="getting_started.html" title="Getting Started"
+          <a href="background.html" title="Background"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">pypal 0+untagged.87.gdfc1e72.dirty documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Background</a></li>
+        <li class="nav-item nav-item-this"><a href="">Developer notes</a></li>
       </ul>
     </div>
     <div class="container-wrapper">
@@ -56,16 +56,33 @@
       </div>
   <div id="left-column">
     <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Contents</h2>
+    <div class="sidebar-localtoc">
+      <ul>
+<li><a class="reference internal" href="#">Developer notes</a><ul>
+<li><a class="reference internal" href="#commit-messages">Commit messages</a></li>
+<li><a class="reference internal" href="#python-code">Python code</a></li>
+<li><a class="reference internal" href="#new-features">New features</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
   <h4>Previous topic</h4>
-  <p class="topless"><a href="getting_started.html"
-                        title="previous chapter">Getting Started</a></p>
+  <p class="topless"><a href="background.html"
+                        title="previous chapter">Background</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api.html"
                         title="next chapter">The pypal API reference</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/background.rst.txt"
+      <li><a href="_sources/developer_notes.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -91,14 +108,41 @@
             <ol class="breadcrumb">
               <li><a href="index.html">Docs</a></li>
 
-              <li>Background</li>
+              <li>Developer notes</li>
             </ol>
           </div>
 
           <div class="document clearer body">
 
-  <div class="section" id="background">
-<h1>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="developer-notes">
+<h1>Developer notes<a class="headerlink" href="#developer-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="commit-messages">
+<h2>Commit messages<a class="headerlink" href="#commit-messages" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>To automatically generate the changelog and version numbers we use <a class="reference external" href="https://www.conventionalcommits.org/en/v1.0.0-beta.2/">conventional commits</a></p></li>
+</ul>
+</div>
+<div class="section" id="python-code">
+<h2>Python code<a class="headerlink" href="#python-code" title="Permalink to this headline">¶</a></h2>
+<p>Please install the pre-commit hooks to automatically</p>
+<ul class="simple">
+<li><p>format the code with <a class="reference external" href="https://github.com/psf/black">black</a></p></li>
+<li><p>sort the imports with <a class="reference external" href="https://pycqa.github.io/isort/">isort</a></p></li>
+<li><p>lint the code with <a class="reference external" href="http://prospector.landscape.io/en/master/">prospector</a></p></li>
+</ul>
+<p>We use type hints, which we feel is a good way of documentation and helps us find bugs using <a class="reference external" href="http://mypy-lang.org/">mypy</a>.</p>
+</div>
+<div class="section" id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h2>
+<p>Please make a new branch for the development of new features. Rebase on the upstream master and include a test for your new feature. (The CI checks for a drop in code coverage.)</p>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>Currently, documentation is hosted on GitHub pages. Build it locally using <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> in the <code class="docutils literal notranslate"><span class="pre">doc</span></code> directory and then push it to GitHub pages using</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git subtree push --prefix docs/_build/html  origin gh-pages
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -107,7 +151,7 @@
   <div class="footer-relations">
 
       <div class="pull-left">
-        <a class="btn btn-default" href="getting_started.html" title="previous chapter (use the left arrow)">Getting Started</a>
+        <a class="btn btn-default" href="background.html" title="previous chapter (use the left arrow)">Background</a>
       </div>
 
       <div class="pull-right">
@@ -132,10 +176,10 @@
           <a href="api.html" title="The pypal API reference"
              >next</a> |</li>
         <li class="right" >
-          <a href="getting_started.html" title="Getting Started"
+          <a href="background.html" title="Background"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">pypal 0+untagged.87.gdfc1e72.dirty documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Background</a></li>
+        <li class="nav-item nav-item-this"><a href="">Developer notes</a></li>
       </ul>
     </div>
 <script type="text/javascript">
