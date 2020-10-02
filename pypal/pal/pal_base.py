@@ -24,7 +24,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         X_design: np.array,
         models: list,
         ndim: int,
-        epsilon: Union[list, float] = 0.5,
+        epsilon: Union[list, float] = 0.01,
         delta: float = 0.05,
         beta_scale: float = 1 / 16,
         goals: List[str] = None,

@@ -144,6 +144,9 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     One core concept is that once a point is classified,
     it does no longer change the class.
 
+    When we do the comparison with +/- epsilon we always use the absolute values!
+    Otherwise, we get inconcistent results depending on the sign!
+
     Args:
         pareto_optimal_0 (np.array): boolean mask of points classified as Pareto optimal
         not_pareto_optimal_0 (np.array): boolean mask of points
@@ -169,15 +172,13 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
         for i in range(0, len(unclassified_0)):
             if unclassified_t[i] == 1:
                 if dominance_check_jitted_2(
-                    pareto_pessimistic_lows * (1 + epsilon), rectangle_ups[i]
+                    pareto_pessimistic_lows + epsilon * np.abs(pareto_pessimistic_lows),
+                    rectangle_ups[i],
                 ):
                     not_pareto_optimal_t[i] = 1
                     unclassified_t[i] = 0
 
-    # ToDo: can be probably cleaned up a bit
-    pareto_unclassified_indices = np.where(
-        (pareto_optimal_0 == 1) | (unclassified_t == 1)
-    )[0]
+    pareto_unclassified_indices = np.where(pareto_optimal_0 | unclassified_t)[0]
 
     pareto_unclassified_lows = rectangle_lows[pareto_unclassified_indices]
 
@@ -197,7 +198,9 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
             # If the upper bound of the hyperrectangle is not dominating anywhere
             # the pareto pessimitic set, we can discard
             if dominance_check_jitted_2(
-                pareto_unclassified_pessimistic_points * (1 + epsilon), rectangle_ups[i]
+                pareto_unclassified_pessimistic_points
+                + epsilon * np.abs(pareto_unclassified_pessimistic_points),
+                rectangle_ups[i],
             ):
                 not_pareto_optimal_t[i] = 1
                 unclassified_t[i] = 0
@@ -205,7 +208,7 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     # now, update the pareto set
     # if there is no other point x' such that max(Rt(x')) >= min(Rt(x))
     # move x to Pareto
-    unclassified_indices = np.where((unclassified_t == 1) | (pareto_optimal_t == 1))[0]
+    unclassified_indices = np.where(unclassified_t | pareto_optimal_t)[0]
     unclassified_ups = np.array(rectangle_ups[unclassified_indices])
 
     index_map = {index: i for i, index in enumerate(unclassified_indices)}
@@ -218,7 +221,9 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
             # the low of the current point,
             # the current point is epsilon-accurate Pareto optimal
             if not dominance_check_jitted_3(
-                unclassified_ups, rectangle_lows[i] * (1 + epsilon), index_map[i]
+                unclassified_ups,
+                rectangle_lows[i] + epsilon * np.abs(rectangle_lows[i]),
+                index_map[i],
             ):
                 pareto_optimal_t[i] = 1
                 unclassified_t[i] = 0

@@ -2,6 +2,7 @@
 """PAL using GPy GPR models"""
 import numpy as np
 
+from ..models.gpr import predict
 from .pal_base import PALBase
 from .schedules import exp_decay
 from .validate_inputs import validate_gpy_model, validate_number_models
@@ -25,8 +26,10 @@ class PALGPy(PALBase):
         validate_gpy_model(self.models)
 
     def _set_data(self):
-        for model in self.models:
-            model.set_xy(self.design_space[self.sampled], self.y[self.sampled])
+        for i, model in enumerate(self.models):
+            model.set_XY(
+                self.design_space[self.sampled], self.y[self.sampled, i].reshape(-1, 1)
+            )
 
     def _train(self):
         pass  # There is no training in instance based models
@@ -34,9 +37,9 @@ class PALGPy(PALBase):
     def _predict(self):
         means, stds = [], []
         for model in self.models:
-            mean, std = model.predict(self.design_space)
+            mean, std = predict(model, self.design_space)
             means.append(mean.reshape(-1, 1))
-            stds.append(np.sqrt(std).reshape(-1, 1))
+            stds.append(std.reshape(-1, 1))
 
         self.means = np.hstack(means)
         self.std = np.hstack(stds)

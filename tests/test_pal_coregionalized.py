@@ -62,4 +62,4 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
     assert sum(palinstance.sampled) > 0
     assert sum(palinstance.unclassified) > 0
-    assert sum(palinstance.discarded) > 0
+    assert sum(palinstance.discarded) == 0

@@ -149,9 +149,10 @@ def test__get_max_wt():
     assert max_wt == 1
 
 
-def test_pareto_classify():
+def test_pareto_classify(binh_korn_points):  # pylint:disable=too-many-locals
     """Test the Pareto classification case on a 2D case,
     which I can easily draw and understand"""
+
     pareto_optimal_points = np.array([[0.5, 2], [3, 1], [4, 0.5]])
     discarded_points = np.array([[0.5, 0.5]])
     unclassified_points = np.array([[3.8, 2.1], [2.4, 0.5], [2.4, 0.5], [0.5, 0.5]])
@@ -267,3 +268,40 @@ def test_pareto_classify():
         unclassified_t
         == np.array([False, False, False, False, False, False, False, True])
     ).all()
+
+    # Now, also test it on a real Pareto frontier
+    _, y_binh_korn = binh_korn_points
+
+    # For no uncertainity, we need to classify all points as Pareto optimal,
+    # independent of epsilon
+    pareto_optimal_t, discarded_t, unclassified_t = _pareto_classify(
+        np.array([False] * len(y_binh_korn)),
+        np.array([False] * len(y_binh_korn)),
+        np.array([True] * len(y_binh_korn)),
+        y_binh_korn,
+        y_binh_korn,
+        np.array([0.01, 0.01]),
+    )
+
+    assert sum(pareto_optimal_t) == len(y_binh_korn)
+
+    pareto_optimal_t, discarded_t, unclassified_t = _pareto_classify(
+        np.array([False] * len(y_binh_korn)),
+        np.array([False] * len(y_binh_korn)),
+        np.array([True] * len(y_binh_korn)),
+        y_binh_korn,
+        y_binh_korn,
+        np.array([0.1, 0.1]),
+    )
+    assert sum(pareto_optimal_t) == len(y_binh_korn)
+
+    pareto_optimal_t, discarded_t, unclassified_t = _pareto_classify(
+        np.array([False] * len(y_binh_korn)),
+        np.array([False] * len(y_binh_korn)),
+        np.array([True] * len(y_binh_korn)),
+        y_binh_korn,
+        y_binh_korn,
+        np.array([0.8, 0.8]),
+    )
+
+    assert sum(pareto_optimal_t) == len(y_binh_korn)
