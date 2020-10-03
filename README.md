@@ -8,7 +8,7 @@
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pypal)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
-![Gitter](https://img.shields.io/gitter/room/kjappelbaum/pypal)
+[![Gitter](https://badges.gitter.im/kjappelbaum/pypal.svg)](https://gitter.im/kjappelbaum/pypal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/kjappelbaum/pypal)
 
 Generalized Python implementation of the ε-PAL algorithm [[1](#1), [2](#2)].
