@@ -305,3 +305,41 @@ def test_pareto_classify(binh_korn_points):  # pylint:disable=too-many-locals
     )
 
     assert sum(pareto_optimal_t) == len(y_binh_korn)
+
+    # Now, testing the scale invariance
+    lows = np.array(
+        [
+            [0.0, 0.0, 0.0, 0.0],
+            [-1.0, -1.0, -1.0, -1.0],
+            [-2.0, -2.0, -2.0, -2.0],
+            [2.0, 2.0, 2.0, 2.0],
+            [2.0, 2.0, 2.0, 2.0],
+        ]
+    )
+    highs = np.array(
+        [
+            [1.0, 1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0, 1.0],
+            [2.0, 2.0, 2.0, 2.0],
+            [2.0, 2.0, 2.0, 2.0],
+        ]
+    )
+
+    scale = np.array([1, 1000, 0.0001, 2])
+    means = np.array(
+        [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]
+    )
+    pareto_optimal = np.array([False, False, True, True, True])
+    sampled = np.array([False, False, False, False, False])
+    unclassified = np.array([True, True, False, False, False])
+
+    max_wt = _get_max_wt(
+        lows * scale,
+        highs * scale,
+        means * scale,
+        pareto_optimal,
+        unclassified,
+        sampled,
+    )
+    assert max_wt == 2
