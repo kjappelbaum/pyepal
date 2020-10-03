@@ -13,7 +13,6 @@ Generalized Python implementation of the ε-PAL algorithm [[1](#1), [2](#2)].
 
 For more detailed docs [go here](https://kjappelbaum.github.io/pypal/).
 
-
 ## Installation
 
 To install the latest development version from the head use
@@ -118,7 +117,23 @@ For scheduling for the hyperparameter optimization we have some predefined sched
 ### Test the algorithms
 
 If the full design space is known, you can use a while loop to fully explore the space.
-For the theoretical guarantees to hold, you'll need to sample until all uncertainties are below epsilon. In practice, it is usually enough to require as termination criterion that there a no unclassified samples left.
+For the theoretical guarantees to hold, you'll need to sample until all uncertainties are below epsilon. In practice, it is usually enough to require as termination criterion that there a no unclassified samples left. For this you could use the following snippet
+
+```python
+from pypal.utils import exhaust_loop
+from pypal.models.gpr import build_model
+
+# indices for initialization
+sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
+
+model_0 = build_model(X[sample_idx], y[sample_idx], 0)
+model_1 = build_model(X[sample_idx], y[sample_idx], 1)
+
+palinstance = PALGPy(X, [model_0, model_1], 2, beta_scale=1)
+palinstance.update_train_set(sample_idx, y[sample_idx])
+
+exhaust_loop(palinstance, y)
+```
 
 ## References
 

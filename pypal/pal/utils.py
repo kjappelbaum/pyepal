@@ -76,3 +76,29 @@ def is_pareto_efficient(costs: np.array, return_mask: bool = True) -> np.array:
         is_efficient_mask[is_efficient] = True
         return is_efficient_mask
     return is_efficient
+
+
+def exhaust_loop(palinstance, y: np.array):  # pylint:disable=invalid-name
+    """Helper function that takes an initialized PAL instance
+    and loops the sampling until there is no unclassified point left.
+    This is useful if all measurements are already taken and one
+    wants to test the algorithm with different hyperparameters.
+
+    Args:
+        palinstance (PALBase): A initialized instance of a class that
+            inherited from PALBase and implemented the ._train() and
+            ._predict() functions
+        y (np.array): Measurements.
+            The number of measurements must equal the number of
+            points in the design space.
+
+    Returns:
+        None. The PAL instance is updated in place
+    """
+    assert palinstance.design_space_size == len(
+        y
+    ), "The number of points in the design space must equal the number of measurements"
+    while sum(palinstance.unclassified):
+        idx = palinstance.run_one_step()
+        if idx is not None:
+            palinstance.update_train_set(np.array([idx]), y[idx : idx + 1, :])

@@ -2,11 +2,14 @@
 """Testing the Pareto front utilities"""
 import numpy as np
 
+from pypal import PALGPy
+from pypal.models.gpr import build_model
 from pypal.pal.utils import (
     dominance_check,
     dominance_check_jitted,
     dominance_check_jitted_2,
     dominance_check_jitted_3,
+    exhaust_loop,
     is_pareto_efficient,
 )
 
@@ -94,3 +97,24 @@ def test_is_pareto_efficient():
     """Can we get the indices of the Pareto-efficient points?"""
     array = np.array([[0, 0], [1, 0], [0, 1]])
     assert (is_pareto_efficient(-array) == np.array([False, True, True])).all()
+
+
+def test_exhaust_loop(binh_korn_points):
+    """Testing the exhaust loop"""
+    X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
+
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
+    model_0 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0)
+    model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
+
+    palinstance = PALGPy(X_binh_korn, [model_0, model_1], 2, beta_scale=1)
+
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+
+    exhaust_loop(palinstance, y_binh_korn)
+    assert sum(palinstance.unclassified) == 0
+    assert sum(palinstance.discarded) == 0
+    assert sum(palinstance.pareto_optimal) == 100
+    assert palinstance.number_pareto_optimal_points == 100
+    assert palinstance.number_discarded_points == 0
+    assert palinstance.number_sampled_points > 0

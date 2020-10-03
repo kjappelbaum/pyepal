@@ -14,7 +14,7 @@
   <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>The pypal API reference &#8212; pypal 0+untagged.87.gdfc1e72.dirty documentation</title>
+    <title>The pypal API reference &#8212; pypal 0+untagged.88.g7a512c0.dirty documentation</title>
     <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -24,7 +24,7 @@
     <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Background" href="background.html" />
+    <link rel="prev" title="Developer notes" href="developer_notes.html" />
 
 
 
@@ -39,9 +39,9 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="background.html" title="Background"
+          <a href="developer_notes.html" title="Developer notes"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pypal 0+untagged.87.gdfc1e72.dirty documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pypal 0+untagged.88.g7a512c0.dirty documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">The pypal API reference</a></li>
       </ul>
     </div>
@@ -81,8 +81,8 @@
   </div>
 </div>
   <h4>Previous topic</h4>
-  <p class="topless"><a href="background.html"
-                        title="previous chapter">Background</a></p>
+  <p class="topless"><a href="developer_notes.html"
+                        title="previous chapter">Developer notes</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -582,6 +582,30 @@ since numba does not understand masked arrays</p>
 </dd></dl>
 
 <dl class="py function">
+<dt id="pypal.pal.utils.exhaust_loop">
+<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">exhaust_loop</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.utils.exhaust_loop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function that takes an initialized PAL instance
+and loops the sampling until there is no unclassified point left.
+This is useful if all measurements are already taken and one
+wants to test the algorithm with different hyperparameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><em>PALBase</em></a>) – A initialized instance of a class that
+inherited from PALBase and implemented the ._train() and
+._predict() functions</p></li>
+<li><p><strong>y</strong> (<em>np.array</em>) – Measurements.
+The number of measurements must equal the number of
+points in the design space.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None. The PAL instance is updated in place</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="pypal.pal.utils.is_pareto_efficient">
 <code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">is_pareto_efficient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">costs</span></em>, <em class="sig-param"><span class="n">return_mask</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.utils.is_pareto_efficient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the Pareto efficient points
@@ -888,7 +912,7 @@ It return the standard deviation instead of the variance</p>
   <div class="footer-relations">
 
       <div class="pull-left">
-        <a class="btn btn-default" href="background.html" title="previous chapter (use the left arrow)">Background</a>
+        <a class="btn btn-default" href="developer_notes.html" title="previous chapter (use the left arrow)">Developer notes</a>
       </div>
 
     </div>
@@ -907,9 +931,9 @@ It return the standard deviation instead of the variance</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="background.html" title="Background"
+          <a href="developer_notes.html" title="Developer notes"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pypal 0+untagged.87.gdfc1e72.dirty documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pypal 0+untagged.88.g7a512c0.dirty documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">The pypal API reference</a></li>
       </ul>
     </div>
