@@ -10,6 +10,8 @@ from pypal.pal.utils import (
     dominance_check_jitted_2,
     dominance_check_jitted_3,
     exhaust_loop,
+    get_kmeans_samples,
+    get_maxmin_samples,
     is_pareto_efficient,
 )
 
@@ -140,3 +142,19 @@ def test_exhaust_loop(binh_korn_points):
     assert palinstance.number_pareto_optimal_points == 100
     assert palinstance.number_discarded_points == 0
     assert palinstance.number_sampled_points > 0
+
+
+def test_kmeans_samples(make_random_dataset):
+    """test generation of a set of points closest to the k centroids"""
+    X, y = make_random_dataset  # pylint:disable=invalid-name
+    solution = get_kmeans_samples(X, y, 10)
+    assert len(solution[0]) == 10
+    assert len(solution[1]) == 10
+
+
+def test_get_maxmin_samples(make_random_dataset):
+    """test generation of a set of maximally diverse points"""
+    X, y = make_random_dataset  # pylint:disable=invalid-name
+    solution = get_maxmin_samples(X, y, 10)
+    assert len(solution[0]) == 10
+    assert len(solution[1]) == 10
