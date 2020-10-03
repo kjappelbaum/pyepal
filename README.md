@@ -141,6 +141,8 @@ palinstance.update_train_set(sample_idx, y[sample_idx])
 exhaust_loop(palinstance, y)
 ```
 
+To measure the performance, you can use the `get_hypervolume` function from `pypal.pal.utils`. More indicators are implemented in packages like [deap](https://github.com/DEAP/deap), [pagmo](https://github.com/esa/pagmo), or [pymoo](https://github.com/msu-coinlab/pymoo/tree/master).
+
 ## References
 
 1. <a name="1"></a> Zuluaga, M.; Krause, A.; Püschel, M. E-PAL: An Active Learning Approach to the Multi-Objective Optimization Problem. Journal of Machine Learning Research 2016, 17 (104), 1–32.
@@ -148,4 +150,4 @@ exhaust_loop(palinstance, y)
 
 ## Acknowledgments
 
-The research was supported by the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme ([grant agreement 666983, MaGic](https://cordis.europa.eu/project/id/666983)), by the [NCCR-MARVEL](https://www.nccr-marvel.ch/), funded by the Swiss National Science Foundation, and by the Swiss National Science Foundation (SNSF) under Grant 200021_172759. Part of the work was performed during the [Explore Together internship program at BASF](https://www.basf.com/global/en/careers/students/explore-together.html).
+The research was supported by the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme ([grant agreement 666983, MaGic](https://cordis.europa.eu/project/id/666983)), by the [NCCR-MARVEL](https://www.nccr-marvel.ch/), funded by the Swiss National Science Foundation, and by the Swiss National Science Foundation (SNSF) under Grant 200021_172759. Part of the work was performed as part of the [Explore Together internship program at BASF](https://www.basf.com/global/en/careers/students/explore-together.html).
