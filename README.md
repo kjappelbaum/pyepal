@@ -63,8 +63,7 @@ palsklearn_instance = PALSklearn(X, [gpr_objective_0, gpr_objective_1], 2)
 sampled_indices = np.array([1,2,3])
 measurements = np.array([[1,2],
                         [0.8, 1],
-                        [7,1]]
-                        )
+                        [7,1]])
 palsklearn_instance.update_train_set(sampled_indices, measurements)
 
 # Now, you're ready to run the first iteration,
