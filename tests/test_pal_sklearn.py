@@ -10,7 +10,7 @@ from pypal.pal.pal_sklearn import PALSklearn
 def test_pal_sklearn(make_random_dataset):
     """Test that we can create a instanec of the PAL sklearn class"""
     X, y = make_random_dataset  # pylint:disable=invalid-name
-    gpr = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=1)
+    gpr = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
     pal_sklearn_instance = PALSklearn(X, [gpr, gpr, gpr], 3)
     pal_sklearn_instance.update_train_set(
         np.array([1, 2, 3, 4, 5]), y[np.array([1, 2, 3, 4, 5]), :]
@@ -28,9 +28,9 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     # This random dataset is not really ideal for a Pareto test as there's only one
     # optimal point it appears to me
     X, y = make_random_dataset  # pylint:disable=invalid-name
-    gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=1)
-    gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=1)
-    gpr_2 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=1)
+    gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
+    gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
+    gpr_2 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
 
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     palinstance = PALSklearn(X, [gpr_0, gpr_1, gpr_2], 3, beta_scale=1)

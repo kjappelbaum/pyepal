@@ -134,7 +134,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         )
 
     def _log(self):
-        return self.__repr__()
+        pass
 
     def _should_optimize_hyperparameters(self) -> bool:  # pylint:disable=no-self-use
         return True

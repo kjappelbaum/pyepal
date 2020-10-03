@@ -26,13 +26,6 @@ def test_pal_base(make_random_dataset):
         0 discarded points, \
         100 unclassified points."
     )
-    assert (
-        palinstance._log()
-        == "pypal at iteration 0. \
-        0 Pareto optimal points, \
-        0 discarded points, \
-        100 unclassified points."
-    )
 
     assert palinstance._should_optimize_hyperparameters()
     assert not palinstance._has_train_set
