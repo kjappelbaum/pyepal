@@ -126,12 +126,16 @@ from pypal.models.gpr import build_model
 # indices for initialization
 sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
 
+# build one model per objective
 model_0 = build_model(X[sample_idx], y[sample_idx], 0)
 model_1 = build_model(X[sample_idx], y[sample_idx], 1)
 
+# initialize the PAL instance
 palinstance = PALGPy(X, [model_0, model_1], 2, beta_scale=1)
 palinstance.update_train_set(sample_idx, y[sample_idx])
 
+# This will run the sampling and training as long as there
+# are unclassified samples
 exhaust_loop(palinstance, y)
 ```
 
