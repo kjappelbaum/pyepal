@@ -2,5 +2,5 @@ numpy
 numba
 sklearn
 GPy
-guzzle_sphinx_theme
+pydata-sphinx-theme
 sphinx-autodoc-typehints

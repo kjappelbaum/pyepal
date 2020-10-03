@@ -5,18 +5,31 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The pypal API reference &#8212; pypal 0+untagged.98.g9cf01e7.dirty documentation</title>
 
-  <!-- Licensed under the Apache 2.0 License -->
-  <link rel="stylesheet" type="text/css" href="_static/fonts/open-sans/stylesheet.css" />
-  <!-- Licensed under the SIL Open Font License -->
-  <link rel="stylesheet" type="text/css" href="_static/fonts/source-serif-pro/source-serif-pro.css" />
-  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
-    <title>The pypal API reference &#8212; pypal 0+untagged.88.g7a512c0.dirty documentation</title>
-    <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
+
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+
+
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  <link rel="preload" as="script" href="_static/js/index.30270b6e4c972e43c488.js">
+
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -25,98 +38,158 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Developer notes" href="developer_notes.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+
+
+        <li class="nav-item ">
+            <a class="nav-link" href="getting_started.html">Getting Started</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="background.html">Background</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="developer_notes.html">Developer notes</a>
+        </li>
+
+        <li class="nav-item active">
+            <a class="nav-link" href="">The pypal API reference</a>
+        </li>
+
+
+      </ul>
 
 
 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="developer_notes.html" title="Developer notes"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pypal 0+untagged.88.g7a512c0.dirty documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">The pypal API reference</a></li>
+
+      <ul class="navbar-nav">
+
+
       </ul>
     </div>
-    <div class="container-wrapper">
-
-      <div id="mobile-toggle">
-        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
-      </div>
-  <div id="left-column">
-    <div class="sphinxsidebar">
-<div class="sidebar-block">
-  <div class="sidebar-wrapper">
-    <h2>Contents</h2>
-    <div class="sidebar-localtoc">
-      <ul>
-<li><a class="reference internal" href="#">The pypal API reference</a><ul>
-<li><a class="reference internal" href="#the-pal-package">The PAL package</a><ul>
-<li><a class="reference internal" href="#module-pypal.pal.core">Core functions</a></li>
-<li><a class="reference internal" href="#module-pypal.pal.pal_base">Base class</a></li>
-<li><a class="reference internal" href="#module-pypal.pal.pal_gpy">For GPy models</a></li>
-<li><a class="reference internal" href="#module-pypal.pal.pal_coregionalized">For coregionalized GPy models</a></li>
-<li><a class="reference internal" href="#module-pypal.pal.pal_sklearn">For sklearn GPR models</a></li>
-<li><a class="reference internal" href="#module-pypal.pal.schedules">Schedules for hyperparameter optimization</a></li>
-<li><a class="reference internal" href="#module-pypal.pal.utils">Utilities for multiobjective optimization</a></li>
-<li><a class="reference internal" href="#module-pypal.pal.validate_inputs">Input validation</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#the-models-package">The models package</a><ul>
-<li><a class="reference internal" href="#module-pypal.models.gpr">Helper functions for GPR with GPy</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-    </div>
-  </div>
 </div>
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="developer_notes.html"
-                        title="previous chapter">Developer notes</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/api.rst.txt"
-            rel="nofollow">Show Source</a></li>
+    </nav>
+
+
+    <div class="container-xl">
+      <div class="row">
+
+          <div class="col-12 col-md-3 bd-sidebar">
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+  <div class="bd-toc-item active">
+
+
+  <ul class="nav bd-sidenav">
+
+
+
+
+
+
+
+
+
+
+
     </ul>
-   </div>
-<div class="sidebar-block">
-  <div class="sidebar-wrapper">
-    <div id="main-search">
-      <form class="form-inline" action="search.html" method="GET" role="form">
-        <div class="input-group">
-          <input name="q" type="text" class="form-control" placeholder="Search...">
-        </div>
-        <input type="hidden" name="check_keywords" value="yes" />
-        <input type="hidden" name="area" value="default" />
-      </form>
-    </div>
-  </div>
-</div>
 
-    </div>
-  </div>
-        <div id="right-column">
-
-          <div role="navigation" aria-label="breadcrumbs navigation">
-            <ol class="breadcrumb">
-              <li><a href="index.html">Docs</a></li>
-
-              <li>The pypal API reference</li>
-            </ol>
+</nav>
           </div>
 
-          <div class="document clearer body">
+
+
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#the-pal-package" class="nav-link">The PAL package</a><ul class="nav section-nav flex-column">
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#module-pypal.pal.core" class="nav-link">Core functions</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#module-pypal.pal.pal_base" class="nav-link">Base class</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#module-pypal.pal.pal_gpy" class="nav-link">For GPy models</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#module-pypal.pal.pal_coregionalized" class="nav-link">For coregionalized GPy models</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#module-pypal.pal.pal_sklearn" class="nav-link">For sklearn GPR models</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#module-pypal.pal.schedules" class="nav-link">Schedules for hyperparameter optimization</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#module-pypal.pal.utils" class="nav-link">Utilities for multiobjective optimization</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#module-pypal.pal.validate_inputs" class="nav-link">Input validation</a>
+        </li>
+
+            </ul>
+        </li>
+
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#the-models-package" class="nav-link">The models package</a><ul class="nav section-nav flex-column">
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#module-pypal.models.gpr" class="nav-link">Helper functions for GPR with GPy</a>
+        </li>
+
+            </ul>
+        </li>
+
+    </ul>
+</nav>
+
+
+
+          </div>
+
+
+
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+
+              <div>
 
   <div class="section" id="the-pypal-api-reference">
 <h1>The pypal API reference<a class="headerlink" href="#the-pypal-api-reference" title="Permalink to this headline">¶</a></h1>
@@ -606,6 +679,113 @@ points in the design space.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt id="pypal.pal.utils.get_hypervolume">
+<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">get_hypervolume</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pareto_front</span></em>, <em class="sig-param"><span class="n">reference_vector</span></em>, <em class="sig-param"><span class="n">prefactor</span><span class="o">=</span><span class="default_value">- 1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.utils.get_hypervolume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the hypervolume indicator of a Pareto front
+I multiply it with minus one as we assume that we want
+to maximize all objective and then we calculate the area</p>
+<p>f1
+|
+<a href="#id1"><span class="problematic" id="id2">|----|</span></a>
+|     -|
+|       -|
+———— f2</p>
+<p>But the code we use for the hv indicator assumes that the reference vector
+is larger than all the points in the Pareto front.
+For this reason, we then flip all the signs using prefactor</p>
+<p>This indicator is not needed for the epsilon-PAL algorithm itself
+but only to allow tracking a metric that might help the user to see
+if the algorithm converges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pypal.pal.utils.get_kmeans_samples">
+<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">get_kmeans_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">n_samples</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.utils.get_kmeans_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the samples that are closest to the k=n_samples centroids</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.array</em>) – Feature array, on which the KMeans clustering is run</p></li>
+<li><p><strong>y</strong> (<em>np.array</em>) – label array</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – number of samples are should be selected</p></li>
+<li><p><strong>passed to the KMeans</strong> (<em>**kwargs</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Feature array, label array, selected_indices</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[np.array, np.array, list]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pypal.pal.utils.get_maxmin_samples">
+<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">get_maxmin_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">n_samples</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'euclidean'</span></em>, <em class="sig-param"><span class="n">init</span><span class="o">=</span><span class="default_value">'mean'</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.utils.get_maxmin_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Greedy maxmin sampling, also known as Kennard-Stone sampling (1).
+Note that a greedy sampling is not guaranteed to give the ideal solution
+and the output will depend on the random initialization (if this is chosen).</p>
+<p>If you need a good solution, you can restart this algorithm multiple times
+with random initialization and different random seeds
+and use a coverage metric to quantify how well
+the space is covered. Some metrics are described in (2). In contrast to the
+code provided with (2) and (3) we do not consider the feature importance for the
+selection as this is typically not known beforehand.</p>
+<p>You might want to standardize your data before applying this sampling function.</p>
+<p>Some more sampling options are provided in our structure_comp (4) Python package.
+Also, this implementation here is quite memory hungry.</p>
+<p>References:
+(1) Kennard, R. W.; Stone, L. A. Computer Aided Design of Experiments.
+Technometrics 1969, 11 (1), 137–148. <a class="reference external" href="https://doi.org/10.1080/00401706.1969.10490666">https://doi.org/10.1080/00401706.1969.10490666</a>.
+(2) Moosavi, S. M.; Nandy, A.; Jablonka, K. M.; Ongari, D.; Janet,
+J. P.; Boyd, P. G.; Lee, Y.; Smit, B.; Kulik, H. J.
+Understanding the Diversity of the Metal-Organic Framework Ecosystem.
+Nature Communications 2020, 11 (1), 4068.
+<a class="reference external" href="https://doi.org/10.1038/s41467-020-17755-8">https://doi.org/10.1038/s41467-020-17755-8</a>.
+(3) Moosavi, S. M.; Chidambaram, A.; Talirz, L.; Haranczyk, M.; Stylianou, K. C.;
+Smit, B. Capturing Chemical Intuition in Synthesis of Metal-Organic Frameworks.
+Nat Commun 2019, 10 (1), 539. <a class="reference external" href="https://doi.org/10.1038/s41467-019-08483-9">https://doi.org/10.1038/s41467-019-08483-9</a>.
+(4) <a class="reference external" href="https://github.com/kjappelbaum/structure_comp">https://github.com/kjappelbaum/structure_comp</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.array</em>) – Feature array, this is the array
+that is used to perform the sampling</p></li>
+<li><p><strong>y</strong> (<em>np.array</em>) – Target array, is not used for sampling
+and only as   utility to provide the correct labels
+for the sampled feature rows.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – number of points that will be selected,
+needs to be lower than the length of X</p></li>
+<li><p><strong>metric</strong> (<em>str</em><em>, </em><em>optional</em>) – Distance metric to use for the maxmin calculation.
+Must be a valid option of scipy.spatial.distance.cdist
+(‘braycurtis’, ‘canberra’, ‘chebyshev’,
+‘cityblock’, ‘correlation’, ‘cosine’, ‘dice’,
+‘euclidean’, ‘hamming’, ‘jaccard’, ‘jensenshannon’, ‘kulsinski’,
+‘mahalanobis’, ‘matching’, ‘minkowski’, ‘rogerstanimoto’, ‘russellrao’,
+‘seuclidean’, ‘sokalmichener’, ‘sokalsneath’, ‘sqeuclidean’,
+‘wminkowski’, ‘yule’). Defaults to ‘euclidean’</p></li>
+<li><p><strong>init</strong> (<em>str</em><em>, </em><em>optional</em>) – either ‘mean’, ‘median’, or ‘random’.
+Determines how the initial point is chosen. Defaults to ‘center’</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – seed for the random number generator. Defaults to None.</p></li>
+<li><p><strong>passed to the cdist</strong> (<em>**kwargs</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Feature array, label array, selected_indices</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[np.array, np.array, list]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="pypal.pal.utils.is_pareto_efficient">
 <code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">is_pareto_efficient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">costs</span></em>, <em class="sig-param"><span class="n">return_mask</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.utils.is_pareto_efficient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the Pareto efficient points
@@ -907,44 +1087,32 @@ It return the standard deviation instead of the variance</p>
 </div>
 
 
-          </div>
+              </div>
 
-  <div class="footer-relations">
 
-      <div class="pull-left">
-        <a class="btn btn-default" href="developer_notes.html" title="previous chapter (use the left arrow)">Developer notes</a>
+              <div class='prev-next-bottom'>
+
+    <a class='left-prev' id="prev-link" href="developer_notes.html" title="previous page">Developer notes</a>
+
+              </div>
+
+          </main>
+
+
       </div>
+    </div>
 
-    </div>
-    <div class="clearer"></div>
 
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="developer_notes.html" title="Developer notes"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pypal 0+untagged.88.g7a512c0.dirty documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">The pypal API reference</a></li>
-      </ul>
-    </div>
-<script type="text/javascript">
-  $("#mobile-toggle a").click(function () {
-    $("#left-column").toggle();
-  });
-</script>
-<script type="text/javascript" src="_static/js/bootstrap.js"></script>
-  <div class="footer">
-    &copy; Copyright 2020, Kevin Maik Jablonka, Brian Yoo, Berend Smit. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  <script src="_static/js/index.30270b6e4c972e43c488.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Kevin Maik Jablonka, Brian Yoo, Berend Smit.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
   </div>
+</footer>
   </body>
 </html>

@@ -1,6 +1,6 @@
 var DOCUMENTATION_OPTIONS = {
     URL_ROOT: document.getElementById("documentation_options").getAttribute('data-url_root'),
-    VERSION: '0+untagged.88.g7a512c0.dirty',
+    VERSION: '0+untagged.98.g9cf01e7.dirty',
     LANGUAGE: 'None',
     COLLAPSE_INDEX: false,
     BUILDER: 'html',
@@ -8,5 +8,5 @@ var DOCUMENTATION_OPTIONS = {
     LINK_SUFFIX: '.html',
     HAS_SOURCE: true,
     SOURCELINK_SUFFIX: '.txt',
-    NAVIGATION_WITH_KEYS: false
+    NAVIGATION_WITH_KEYS: true
 };
