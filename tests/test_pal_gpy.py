@@ -66,3 +66,45 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
     assert sum(palinstance.sampled) > 0
     assert sum(palinstance.discarded) == 0
+
+
+def test_minimize_run_one_step(binh_korn_points):
+    """Test that the minimization argument does not behave weirdly"""
+    X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
+    y_binh_korn = -y_binh_korn
+
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
+    model_0 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0)
+    model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
+
+    palinstance = PALGPy(
+        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=["min", "min"]
+    )
+
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    idx = palinstance.run_one_step()
+    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    assert sum(palinstance.sampled) > 0
+    assert sum(palinstance.discarded) == 0
+
+    palinstance = PALGPy(
+        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=[-1, -1]
+    )
+
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    idx = palinstance.run_one_step()
+    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    assert sum(palinstance.sampled) > 0
+    assert sum(palinstance.discarded) == 0
+
+    y_binh_korn = y_binh_korn * np.array([-1, 1])
+
+    palinstance = PALGPy(
+        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=[1, -1]
+    )
+
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    idx = palinstance.run_one_step()
+    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    assert sum(palinstance.sampled) > 0
+    assert sum(palinstance.discarded) == 0

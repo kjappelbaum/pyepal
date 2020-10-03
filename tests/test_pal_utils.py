@@ -118,3 +118,25 @@ def test_exhaust_loop(binh_korn_points):
     assert palinstance.number_pareto_optimal_points == 100
     assert palinstance.number_discarded_points == 0
     assert palinstance.number_sampled_points > 0
+
+    # Now, with flipped signs
+
+    y_binh_korn = y_binh_korn * np.array([1, -1])
+
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
+    model_0 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0)
+    model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
+
+    palinstance = PALGPy(
+        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=["max", "min"]
+    )
+
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+
+    exhaust_loop(palinstance, y_binh_korn)
+    assert sum(palinstance.unclassified) == 0
+    assert sum(palinstance.discarded) == 0
+    assert sum(palinstance.pareto_optimal) == 100
+    assert palinstance.number_pareto_optimal_points == 100
+    assert palinstance.number_discarded_points == 0
+    assert palinstance.number_sampled_points > 0
