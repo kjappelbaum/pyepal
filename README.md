@@ -1,4 +1,6 @@
-![Logo](pypal_logo.png)
+<p align="center">
+ <img src="pypal_logo.png" />
+</p>
 
 ![Python package](https://github.com/kjappelbaum/pypal/workflows/Python%20package/badge.svg)
 ![pre-commit](https://github.com/kjappelbaum/pypal/workflows/pre-commit/badge.svg)

@@ -1,0 +1,6 @@
+numpy
+numba
+sklearn
+GPy
+guzzle_sphinx_theme
+sphinx-autodoc-typehints
