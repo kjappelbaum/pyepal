@@ -179,7 +179,6 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
                     unclassified_t[i] = False
 
     pareto_unclassified_indices = np.where(pareto_optimal_0 | unclassified_t)[0]
-
     pareto_unclassified_lows = rectangle_lows[pareto_unclassified_indices]
 
     # assuming maximization

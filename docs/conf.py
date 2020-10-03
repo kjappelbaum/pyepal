@@ -42,6 +42,8 @@ extensions = [
     "sphinx.ext.githubpages",
 ]
 
+autosummary_generate = True
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 
@@ -57,5 +59,11 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # a list of builtin themes.
 #
 html_theme = "pydata_sphinx_theme"
+html_logo = "../pypal_logo.png"
 
 # Register the theme as an extension to generate a sitemap.xml
+
+
+html_theme_options = {
+    "github_url": "https://github.com/kjappelbaum/pypal",
+}
