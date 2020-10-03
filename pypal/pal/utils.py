@@ -8,6 +8,8 @@ from scipy.spatial import distance
 from sklearn import metrics
 from sklearn.cluster import KMeans
 
+from ._hypervolume import HypervolumeIndicator
+
 
 @jit(nopython=True)
 def dominance_check(point1, point2) -> bool:
@@ -244,3 +246,30 @@ def get_maxmin_samples(  # pylint:disable=invalid-name, too-many-arguments
     greedy_indices = np.concatenate(greedy_indices).ravel()
 
     return X[greedy_indices, :], y[greedy_indices, :], greedy_indices
+
+
+def get_hypervolume(
+    pareto_front: np.array, reference_vector: np.array, prefactor: float = -1
+) -> float:
+    """Compute the hypervolume indicator of a Pareto front
+    I multiply it with minus one as we assume that we want
+    to maximize all objective and then we calculate the area
+
+    f1
+    |
+    |----|
+    |     -|
+    |       -|
+    ------------ f2
+
+    But the code we use for the hv indicator assumes that the reference vector
+    is larger than all the points in the Pareto front.
+    For this reason, we then flip all the signs using prefactor
+
+    This indicator is not needed for the epsilon-PAL algorithm itself
+    but only to allow tracking a metric that might help the user to see
+    if the algorithm converges.
+    """
+    hv_instance = HypervolumeIndicator(reference_vector)
+    volume = hv_instance.compute(pareto_front * prefactor)
+    return volume

@@ -9,6 +9,7 @@ omit =
         *versioneer
         *setup*
         *examples/*
+        *_hypervolume.py*
 
 [report]
 omit =
@@ -19,3 +20,4 @@ omit =
         *versioneer*
         *setup*
         *examples/*
+        *_hypervolume.py*

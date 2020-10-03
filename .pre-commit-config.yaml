@@ -38,14 +38,14 @@ repos:
     rev: "" # Use the sha / tag you want to point at
     hooks:
       - id: mypy
-        exclude: (versioneer.py|_version.py|^docs/)
+        exclude: (versioneer.py|_version.py|^docs/|pypal/pal/_hypervolume.py)
 
   - repo: local
     hooks:
       - id: black
         language_version: python3
         name: black
-        exclude: versioneer.py|pypal/_version.py|^docs/
+        exclude: versioneer.py|pypal/_version.py|^docs/|pypal/pal/_hypervolume.py
         entry: black
         language: system
         types: [python]
@@ -53,13 +53,13 @@ repos:
       - id: isort
         name: isort
         language: system
-        exclude: versioneer.py|pypal/_version.py|^docs/
+        exclude: versioneer.py|pypal/_version.py|^docs/|pypal/pal/_hypervolume.py
         types: [python]
         entry: isort
 
       - id: prospector
         language: system
         types: [file, python]
-        exclude: versioneer.py|pypal/_version.py|^docs/
+        exclude: versioneer.py|pypal/_version.py|^docs|pypal/pal/_hypervolume.py
         name: prospector
         entry: prospector

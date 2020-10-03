@@ -10,6 +10,7 @@ from pypal.pal.utils import (
     dominance_check_jitted_2,
     dominance_check_jitted_3,
     exhaust_loop,
+    get_hypervolume,
     get_kmeans_samples,
     get_maxmin_samples,
     is_pareto_efficient,
@@ -158,3 +159,15 @@ def test_get_maxmin_samples(make_random_dataset):
     solution = get_maxmin_samples(X, y, 10)
     assert len(solution[0]) == 10
     assert len(solution[1]) == 10
+
+
+def test_get_hypervolume():
+    """Test if the hypervolume calculation makes sense"""
+    point = np.array([[1, 1]])
+    assert get_hypervolume(point, np.array([0, 0])) == 1
+
+    point = np.array([[1, 1, 1]])
+    assert get_hypervolume(point, np.array([0, 0, 0])) == 1
+
+    points = np.array([[1, 1, 1], [0.5, 0.5, 0.5]])
+    assert get_hypervolume(points, np.array([0, 0, 0])) == 1
