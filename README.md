@@ -11,7 +11,7 @@
 [![Gitter](https://badges.gitter.im/kjappelbaum/pypal.svg)](https://gitter.im/kjappelbaum/pypal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/kjappelbaum/pypal)
 
-Generalized Python implementation of the ε-PAL algorithm [[1](#1), [2](#2)].
+Generalized Python implementation of a modified version of the ε-PAL algorithm [[1](#1), [2](#2)].
 
 For more detailed docs [go here](https://kjappelbaum.github.io/pypal/).
 

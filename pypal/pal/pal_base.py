@@ -44,6 +44,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.design_space_size = len(X_design)
         self.means: np.array = None
         self.std: np.array = None
+
         self.design_space = X_design
         self.beta = None
         self.goals = validate_goals(goals, ndim)
@@ -51,6 +52,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.y = np.zeros(  # pylint:disable=invalid-name
             (self.design_space_size, self.ndim)
         )
+        self.measurement_uncertainity = np.zeros((self.design_space_size, self.ndim))
         self._has_train_set = False
         self._y = self.y
 
@@ -181,6 +183,16 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             self.epsilon,
         )
 
+    def _replace_by_measurements(self):
+        """Implements one "trick". Instead of using the GPR
+        predictions for the sampled points we use the data that
+        was actually measured and the actual uncertainity.
+        This is different from the PAL implementation proposed
+        by Zuluaga et al. This could make issues when the measurements
+        are outliers"""
+        self.means[self.sampled] = self.y[self.sampled]
+        self.std[self.sampled] = self.measurement_uncertainity[self.sampled]
+
     def run_one_step(self) -> Union[int, None]:
         """Inner part of the loop"""
         if not self._has_train_set:
@@ -194,6 +206,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self._train()
         self._predict()
         self._update_beta()
+        self._replace_by_measurements()
         self._update_hyperrectangles()
         self._classify()
         if sum(self.unclassified):
@@ -205,7 +218,12 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         print("Done. No unclassified point left")
         return None
 
-    def update_train_set(self, indices: np.ndarray, measurements: np.ndarray):
+    def update_train_set(
+        self,
+        indices: np.ndarray,
+        measurements: np.ndarray,
+        measurement_uncertainity: np.ndarray = None,
+    ):
         """Update training set following a measurement
 
         Args:
@@ -214,11 +232,19 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             measurements (np.ndarray): Measured values, 2D array.
                 the length must equal the length of the inidices array.
                 the second direction must equal the number of objectives
+            measurement_uncertainity (np.ndarray): Uncertainity in the measuremens,
+                if not provided (None) will be zero. If it is not None, it must be
+                an array with the same shape as the measurements
         """
         self._has_train_set = True
         assert measurements.shape[1] == self.ndim
         assert len(indices) == len(measurements)
+        if measurement_uncertainity is not None:
+            assert measurement_uncertainity.shape == measurements.shape
+        else:
+            measurement_uncertainity = np.zeros(measurements.shape)
         self._y[indices] = measurements
+        self.measurement_uncertainity[indices] = measurement_uncertainity
         self.sampled[indices] = True
         self._turn_to_maximization()
 
