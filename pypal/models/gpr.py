@@ -65,7 +65,7 @@ def build_coregionalized_model(
     # Not constraining it would lead to a degeneracy
     m[".*ICM.*.variance"].constrain_fixed(1.0)
     # initialize the noise model
-    m[".*Gaussian_noise_*"] = 0.01
+    m[".*Gaussian_noise_*"] = 0.1
     return m
 
 
@@ -81,6 +81,7 @@ def build_model(
     m = GPy.models.GPRegression(
         X_train, y_train[:, index].reshape(-1, 1), kernel=K, normalizer=True, **kwargs
     )
+    m[".*Gaussian_noise_*"] = 0.1
     return m
 
 

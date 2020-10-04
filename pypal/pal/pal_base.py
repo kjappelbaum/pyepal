@@ -83,21 +83,22 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
     @property
     def pareto_optimal_indices(self):
         """Return the indices of the Pareto optimal points"""
-        return np.where(
-            self.pareto_optimal == True  # pylint:disable=singleton-comparison
-        )[0]
+        return np.where(self.pareto_optimal)[0]
 
     @property
     def sampled_indices(self):
         """Return the indices of the sampled points"""
-        return np.where(self.sampled == True)[0]  # pylint:disable=singleton-comparison
+        return np.where(self.sampled)[0]
 
     @property
     def discarded_indices(self):
         """Return the indices of the discarded points"""
-        return np.where(self.discarded == True)[  # pylint:disable=singleton-comparison
-            0
-        ]
+        return np.where(self.discarded)[0]
+
+    @property
+    def unclassified_indices(self):
+        """Return the indices of the unclassified points"""
+        return np.where(self.unclassified)[0]
 
     @property
     def number_pareto_optimal_points(self):

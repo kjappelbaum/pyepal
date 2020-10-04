@@ -172,8 +172,8 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
         for i in range(0, len(unclassified_0)):
             if unclassified_t[i] == 1:
                 if dominance_check_jitted_2(
-                    pareto_pessimistic_lows,
-                    rectangle_ups[i] + epsilon * rectangle_ups[i],
+                    pareto_pessimistic_lows + epsilon * rectangle_ups[i],
+                    rectangle_ups[i],
                 ):
                     not_pareto_optimal_t[i] = True
                     unclassified_t[i] = False
@@ -189,7 +189,6 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     pareto_unclassified_pessimistic_points = pareto_unclassified_lows[
         pareto_unclassified_pessimistic_mask
     ]
-
     for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
         # We can only discard points that are unclassified so far
         # We cannot discard points that are part of p_pess(P \cup U)
@@ -197,8 +196,9 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
             # If the upper bound of the hyperrectangle is not dominating anywhere
             # the pareto pessimitic set, we can discard
             if dominance_check_jitted_2(
-                pareto_unclassified_pessimistic_points,
-                rectangle_ups[i] + epsilon * np.abs(rectangle_ups[i]),
+                pareto_unclassified_pessimistic_points
+                + epsilon * np.abs(rectangle_ups[i]),
+                rectangle_ups[i],
             ):
                 not_pareto_optimal_t[i] = True
                 unclassified_t[i] = False
@@ -207,7 +207,7 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     # if there is no other point x' such that max(Rt(x')) >= min(Rt(x))
     # move x to Pareto
     unclassified_indices = np.where(unclassified_t | pareto_optimal_t)[0]
-    unclassified_ups = np.array(rectangle_ups[unclassified_indices])
+    unclassified_ups = rectangle_ups[unclassified_indices]
 
     index_map = {index: i for i, index in enumerate(unclassified_indices)}
 

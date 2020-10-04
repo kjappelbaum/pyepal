@@ -39,7 +39,7 @@ class PALCoregionalized(PALBase):
         for i in range(self.ndim):
             mean, std = predict_coregionalized(self.models[0], self.design_space, i)
             means.append(mean.reshape(-1, 1))
-            stds.append(np.sqrt(std).reshape(-1, 1))
+            stds.append(std.reshape(-1, 1))
 
         self.means = np.hstack(means)
         self.std = np.hstack(stds)
