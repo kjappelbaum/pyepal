@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.106.g11c73dd.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.107.g3c2c634.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -35,6 +35,7 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Background" href="background.html" />
@@ -146,7 +147,13 @@
         </li>
 
         <li class="nav-item toc-entry toc-h2">
-            <a href="#running-an-active-learning-experiment" class="nav-link">Running an active learning experiment</a>
+            <a href="#running-an-active-learning-experiment" class="nav-link">Running an active learning experiment</a><ul class="nav section-nav flex-column">
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#hyperparameter-optimization" class="nav-link">Hyperparameter optimization</a>
+        </li>
+
+            </ul>
         </li>
 
         <li class="nav-item toc-entry toc-h2">
@@ -219,12 +226,35 @@
 </pre></div>
 </div>
 <p>At this level you have a range of different options you can set.</p>
+<ul class="simple">
+<li><p><cite>epsilon</cite>: in a <cite>np.array</cite> you can provide one epsilon per dimension. This allows you to set looser tolerance for some objectives. Note that <span class="math notranslate nohighlight">\(\epsilon_i \in [0,1]\)</span>.</p></li>
+<li><p><cite>delta</cite>: allows you to specify the <span class="math notranslate nohighlight">\(\delta\)</span> hyperparameter (<span class="math notranslate nohighlight">\(\delta \in [0,1]\)</span>). Increasing this value will spped up the convergence.</p></li>
+<li><p><cite>beta_scale</cite>: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>.</p></li>
+<li><p><cite>goal</cite>: By default, <cite>pypal</cite> assumes that you want to maximize every objective. If this is not the case, you can set the <cite>goal</cite> argument using a list of “min” and “max”, using “min” to specifiy that you want to minimize the ith objective and “max” to inidicate that you want to maximize this objective.</p></li>
+</ul>
 </div></blockquote>
 </li>
 </ol>
+<div class="section" id="hyperparameter-optimization">
+<h3>Hyperparameter optimization<a class="headerlink" href="#hyperparameter-optimization" title="Permalink to this headline">¶</a></h3>
+<p>Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the <cite>_should_optimize_hyperparameter</cite> function that by default uses a schedule that will optimize the hyperparameter every 10th itertion. If you want to change this behavior, you can override this function.</p>
+</div>
 </div>
 <div class="section" id="implementing-a-new-pal-class">
 <h2>Implementing a new PAL class<a class="headerlink" href="#implementing-a-new-pal-class" title="Permalink to this headline">¶</a></h2>
+<p>If you want to use <cite>pypal</cite> with a model that we do not support yet, i.e., not <cite>GPy</cite> or <cite>sklearn</cite> Gaussian process regression, it is easy to write your own class. For this, you need to inherit from <cite>PALBase</cite> and implement your of <cite>_train</cite> and <cite>_predict</cite> functions (and maybe also the <cite>_set_hyperparameters</cite> and <cite>_should_optimize_hyperparameters</cite> functions) using the <cite>design_space</cite> and <cite>y</cite> attributes of the class.</p>
+<p>For instance, if we develop some multioutput model that has a <cite>train()</cite> and a <cite>predict()</cite> method we could simply do</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALBase</span>
+
+<span class="k">class</span> <span class="nc">PALMyModel</span><span class="p">(</span><span class="n">PALBase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that we typically provide the models, even if it is only one, in a list to keep the API consistent.</p>
 </div>
 </div>
 
