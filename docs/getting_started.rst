@@ -62,7 +62,7 @@ If you use a Gaussian process model built with `sklearn` or `GPy` you can use a 
 
     At this level you have a range of different options you can set.
 
-    - `epsilon`: in a `np.array` you can provide one epsilon per dimension. This allows you to set looser tolerance for some objectives. Note that :math:`\epsilon_i \in [0,1]`.
+    - `epsilon`: in a `np.array` you can provide one :math:`\epsilon` per dimension. This allows you to set looser tolerance for some objectives. Note that :math:`\epsilon_i \in [0,1]`.
     - `delta`: allows you to specify the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will spped up the convergence.
     - `beta_scale`: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`.
     - `goal`: By default, `pypal` assumes that you want to maximize every objective. If this is not the case, you can set the `goal` argument using a list of "min" and "max", using "min" to specifiy that you want to minimize the ith objective and "max" to inidicate that you want to maximize this objective.

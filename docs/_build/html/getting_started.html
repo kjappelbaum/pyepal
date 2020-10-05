@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.110.g2a9fff9.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.111.g2084595.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -231,7 +231,7 @@
 </div>
 <p>At this level you have a range of different options you can set.</p>
 <ul class="simple">
-<li><p><cite>epsilon</cite>: in a <cite>np.array</cite> you can provide one epsilon per dimension. This allows you to set looser tolerance for some objectives. Note that <span class="math notranslate nohighlight">\(\epsilon_i \in [0,1]\)</span>.</p></li>
+<li><p><cite>epsilon</cite>: in a <cite>np.array</cite> you can provide one <span class="math notranslate nohighlight">\(\epsilon\)</span> per dimension. This allows you to set looser tolerance for some objectives. Note that <span class="math notranslate nohighlight">\(\epsilon_i \in [0,1]\)</span>.</p></li>
 <li><p><cite>delta</cite>: allows you to specify the <span class="math notranslate nohighlight">\(\delta\)</span> hyperparameter (<span class="math notranslate nohighlight">\(\delta \in [0,1]\)</span>). Increasing this value will spped up the convergence.</p></li>
 <li><p><cite>beta_scale</cite>: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>.</p></li>
 <li><p><cite>goal</cite>: By default, <cite>pypal</cite> assumes that you want to maximize every objective. If this is not the case, you can set the <cite>goal</cite> argument using a list of “min” and “max”, using “min” to specifiy that you want to minimize the ith objective and “max” to inidicate that you want to maximize this objective.</p></li>
