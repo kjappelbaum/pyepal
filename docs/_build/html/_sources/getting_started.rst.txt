@@ -73,7 +73,20 @@ Usually, the hyperparameters of a machine learning model should be optimized as 
 
 Logging
 ........
+You will see basic information like the current iteration and the classficiation status if you print the `PAL` object
 
+.. code:: python
+
+    print(palinstance)
+
+    \\ returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.
+
+
+In case you want to also know the hypervolume, you can use the `get_hypervolume` function
+
+.. code:: python
+
+    hv = get_hypervolume(palinstance.means[palinstance.pareto_optimal])
 
 Implementing a new PAL class
 ------------------------------
