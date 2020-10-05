@@ -71,6 +71,9 @@ Hyperparameter optimization
 .............................
 Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the `_should_optimize_hyperparameter` function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.
 
+Logging
+........
+
 
 Implementing a new PAL class
 ------------------------------
