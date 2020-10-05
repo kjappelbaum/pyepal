@@ -5,7 +5,7 @@ import numpy as np
 
 from ..models.gpr import predict_coregionalized, set_xy_coregionalized
 from .pal_base import PALBase
-from .schedules import exp_decay
+from .schedules import linear
 from .validate_inputs import validate_coregionalized_gpy
 
 
@@ -48,4 +48,4 @@ class PALCoregionalized(PALBase):
         self.models[0].optimize_restarts(self.restarts, parallel=self.parallel)
 
     def _should_optimize_hyperparameters(self) -> bool:
-        return exp_decay(self.iteration, 2)
+        return linear(self.iteration, 10)

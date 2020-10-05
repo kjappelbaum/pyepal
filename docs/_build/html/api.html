@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The pypal API reference &#8212; pypal 0+untagged.100.g55de080.dirty documentation</title>
+    <title>The pypal API reference &#8212; pypal 0+untagged.106.g11c73dd.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -392,6 +392,17 @@ and the upper limits are the upper limits.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="pypal.pal.pal_base.PALBase._replace_by_measurements">
+<code class="sig-name descname">_replace_by_measurements</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase._replace_by_measurements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements one “trick”. Instead of using the GPR
+predictions for the sampled points we use the data that
+was actually measured and the actual uncertainity.
+This is different from the PAL implementation proposed
+by Zuluaga et al. This could make issues when the measurements
+are outliers</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="pypal.pal.pal_base.PALBase._update_beta">
 <code class="sig-name descname">_update_beta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase._update_beta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update beta according to section 7.2. of the epsilon-PAL paper</p>
@@ -494,6 +505,12 @@ I.e., favoring exploration.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="pypal.pal.pal_base.PALBase.unclassified_indices">
+<em class="property">property </em><code class="sig-name descname">unclassified_indices</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.unclassified_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the indices of the unclassified points</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="pypal.pal.pal_base.PALBase.unclassified_points">
 <em class="property">property </em><code class="sig-name descname">unclassified_points</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.unclassified_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the discarded points</p>
@@ -501,7 +518,7 @@ I.e., favoring exploration.</p>
 
 <dl class="py method">
 <dt id="pypal.pal.pal_base.PALBase.update_train_set">
-<code class="sig-name descname">update_train_set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">indices</span></em>, <em class="sig-param"><span class="n">measurements</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.update_train_set" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_train_set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">indices</span></em>, <em class="sig-param"><span class="n">measurements</span></em>, <em class="sig-param"><span class="n">measurement_uncertainity</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.update_train_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update training set following a measurement</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -511,6 +528,9 @@ the measurements were taken</p></li>
 <li><p><strong>measurements</strong> (<em>np.ndarray</em>) – Measured values, 2D array.
 the length must equal the length of the inidices array.
 the second direction must equal the number of objectives</p></li>
+<li><p><strong>measurement_uncertainity</strong> (<em>np.ndarray</em>) – Uncertainity in the measuremens,
+if not provided (None) will be zero. If it is not None, it must be
+an array with the same shape as the measurements</p></li>
 </ul>
 </dd>
 </dl>
@@ -715,29 +735,28 @@ if the algorithm converges.</p>
 
 <dl class="py function">
 <dt id="pypal.pal.utils.get_kmeans_samples">
-<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">get_kmeans_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">n_samples</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.utils.get_kmeans_samples" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">get_kmeans_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">n_samples</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.utils.get_kmeans_samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the samples that are closest to the k=n_samples centroids</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>X</strong> (<em>np.array</em>) – Feature array, on which the KMeans clustering is run</p></li>
-<li><p><strong>y</strong> (<em>np.array</em>) – label array</p></li>
 <li><p><strong>n_samples</strong> (<em>int</em>) – number of samples are should be selected</p></li>
 <li><p><strong>passed to the KMeans</strong> (<em>**kwargs</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Feature array, label array, selected_indices</p>
+<dd class="field-even"><p>selected_indices</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tuple[np.array, np.array, list]</p>
+<dd class="field-odd"><p>np.array</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="pypal.pal.utils.get_maxmin_samples">
-<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">get_maxmin_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">n_samples</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'euclidean'</span></em>, <em class="sig-param"><span class="n">init</span><span class="o">=</span><span class="default_value">'mean'</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.utils.get_maxmin_samples" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">get_maxmin_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">n_samples</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'euclidean'</span></em>, <em class="sig-param"><span class="n">init</span><span class="o">=</span><span class="default_value">'mean'</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.utils.get_maxmin_samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>Greedy maxmin sampling, also known as Kennard-Stone sampling (1).
 Note that a greedy sampling is not guaranteed to give the ideal solution
 and the output will depend on the random initialization (if this is chosen).</p>
@@ -767,9 +786,6 @@ Nat Commun 2019, 10 (1), 539. <a class="reference external" href="https://doi.or
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>X</strong> (<em>np.array</em>) – Feature array, this is the array
 that is used to perform the sampling</p></li>
-<li><p><strong>y</strong> (<em>np.array</em>) – Target array, is not used for sampling
-and only as   utility to provide the correct labels
-for the sampled feature rows.</p></li>
 <li><p><strong>n_samples</strong> (<em>int</em>) – number of points that will be selected,
 needs to be lower than the length of X</p></li>
 <li><p><strong>metric</strong> (<em>str</em><em>, </em><em>optional</em>) – Distance metric to use for the maxmin calculation.
@@ -787,10 +803,10 @@ Determines how the initial point is chosen. Defaults to ‘center’</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Feature array, label array, selected_indices</p>
+<dd class="field-even"><p>selected_indices</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tuple[np.array, np.array, list]</p>
+<dd class="field-odd"><p>np.array</p>
 </dd>
 </dl>
 </dd></dl>

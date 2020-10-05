@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """Utilities for dealing with Pareto fronts in general"""
-from typing import Tuple
 
 import numpy as np
 from numba import jit
@@ -112,20 +111,19 @@ def exhaust_loop(palinstance, y: np.array):  # pylint:disable=invalid-name
 
 
 def get_kmeans_samples(  # pylint:disable=invalid-name
-    X: np.array, y: np.array, n_samples: int, **kwargs
-) -> Tuple[np.array, np.array, list]:
+    X: np.array, n_samples: int, **kwargs
+) -> np.array:
     """Get the samples that are closest to the k=n_samples centroids
 
     Args:
         X (np.array): Feature array, on which the KMeans clustering is run
-        y (np.array): label array
         n_samples (int): number of samples are should be selected
         **kwargs passed to the KMeans
 
     Returns:
-        Tuple[np.array, np.array, list]: Feature array, label array, selected_indices
+        np.array:  selected_indices
     """
-    assert len(X) == len(y), "X and y need to have the same length"
+
     assert (
         len(X) > n_samples
     ), "The numbers of points that shall be selected (n_samples),\
@@ -140,18 +138,17 @@ def get_kmeans_samples(  # pylint:disable=invalid-name
     cluster_centers = kmeans.cluster_centers_
     closest, _ = metrics.pairwise_distances_argmin_min(cluster_centers, X)
 
-    return X[closest, :], y[closest, :], closest
+    return closest
 
 
-def get_maxmin_samples(  # pylint:disable=invalid-name, too-many-arguments
+def get_maxmin_samples(  # pylint:disable=invalid-name
     X: np.array,
-    y: np.array,
     n_samples: int,
     metric: str = "euclidean",
     init: str = "mean",
     seed: int = None,
     **kwargs
-) -> Tuple[np.array, np.array, list]:
+) -> np.array:
     """Greedy maxmin sampling, also known as Kennard-Stone sampling (1).
     Note that a greedy sampling is not guaranteed to give the ideal solution
     and the output will depend on the random initialization (if this is chosen).
@@ -185,10 +182,6 @@ def get_maxmin_samples(  # pylint:disable=invalid-name, too-many-arguments
         X (np.array): Feature array, this is the array
             that is used to perform the sampling
 
-        y (np.array): Target array, is not used for sampling
-            and only as   utility to provide the correct labels
-            for the sampled feature rows.
-
         n_samples (int): number of points that will be selected,
             needs to be lower than the length of X
 
@@ -208,10 +201,10 @@ def get_maxmin_samples(  # pylint:disable=invalid-name, too-many-arguments
         **kwargs passed to the cdist
 
     Returns:
-        Tuple[np.array, np.array, list]: Feature array, label array, selected_indices
+        np.array: selected_indices
     """
     np.random.seed(seed)
-    assert len(X) == len(y), "X and y need to have the same length"
+
     assert (
         len(X) > n_samples
     ), "The numbers of points that shall be selected (n_samples),\
@@ -245,7 +238,7 @@ def get_maxmin_samples(  # pylint:disable=invalid-name, too-many-arguments
 
     greedy_indices = np.concatenate(greedy_indices).ravel()
 
-    return X[greedy_indices, :], y[greedy_indices, :], greedy_indices
+    return greedy_indices
 
 
 def get_hypervolume(

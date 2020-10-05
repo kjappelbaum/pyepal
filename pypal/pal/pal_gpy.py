@@ -4,7 +4,7 @@ import numpy as np
 
 from ..models.gpr import predict
 from .pal_base import PALBase
-from .schedules import exp_decay
+from .schedules import linear
 from .validate_inputs import validate_gpy_model, validate_number_models
 
 
@@ -49,4 +49,4 @@ class PALGPy(PALBase):
             model.optimize_restarts(self.restarts, parallel=self.parallel)
 
     def _should_optimize_hyperparameters(self) -> bool:
-        return exp_decay(self.iteration, 2)
+        return linear(self.iteration, 10)

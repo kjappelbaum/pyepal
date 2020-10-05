@@ -147,18 +147,16 @@ def test_exhaust_loop(binh_korn_points):
 
 def test_kmeans_samples(make_random_dataset):
     """test generation of a set of points closest to the k centroids"""
-    X, y = make_random_dataset  # pylint:disable=invalid-name
-    solution = get_kmeans_samples(X, y, 10)
-    assert len(solution[0]) == 10
-    assert len(solution[1]) == 10
+    X, _ = make_random_dataset  # pylint:disable=invalid-name
+    solution = get_kmeans_samples(X, 10)
+    assert len(solution) == 10
 
 
 def test_get_maxmin_samples(make_random_dataset):
     """test generation of a set of maximally diverse points"""
-    X, y = make_random_dataset  # pylint:disable=invalid-name
-    solution = get_maxmin_samples(X, y, 10)
-    assert len(solution[0]) == 10
-    assert len(solution[1]) == 10
+    X, _ = make_random_dataset  # pylint:disable=invalid-name
+    solution = get_maxmin_samples(X, 10)
+    assert len(solution) == 10
 
 
 def test_get_hypervolume():

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.100.g55de080.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.106.g11c73dd.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -134,9 +134,24 @@
 
           <div class="d-none d-xl-block col-xl-2 bd-toc">
 
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
+
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#installation" class="nav-link">Installation</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#running-an-active-learning-experiment" class="nav-link">Running an active learning experiment</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#implementing-a-new-pal-class" class="nav-link">Implementing a new PAL class</a>
+        </li>
 
     </ul>
 </nav>
@@ -153,6 +168,64 @@
 
   <div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>You can install <cite>pypal</cite> from <cite>PyPi</cite> using</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pypal</span>
+</pre></div>
+</div>
+<p>We recommend that you install <cite>pypi</cite> in a dedicated <a class="reference external" href="https://docs.python.org/3/tutorial/venv.html">virtual environment</a> or <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">conda environment</a>.</p>
+<p>If you want to use the latest version from GitHub, you can install it using</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">kjappelbaum</span><span class="o">/</span><span class="n">pypal</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-an-active-learning-experiment">
+<h2>Running an active learning experiment<a class="headerlink" href="#running-an-active-learning-experiment" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>examples</cite> directory contains a <a class="reference external" href="https://github.com/kjappelbaum/pypal/blob/master/examples/test_pal.ipynb">Jupyter notebook with an example</a> that you can also run on MyBinder.</p>
+<p>If you use a Gaussian process model built with <cite>sklearn</cite> or <cite>GPy</cite> you can use a pre-built class and follow the following steps:</p>
+<ol class="arabic">
+<li><p>For each objective create a model (if you want to use a coregionalized model you of course only need to create one)</p></li>
+<li><p>Sample a few initial points from your design space. In practice, you can use the <cite>get_maxmin_samples</cite> or <cite>get_kmeans_samples</cite> utilities for that. Assuming that <cite>X</cite> is a <cite>np.array</cite> if the descriptors/features</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">get_kmeans_samples</span><span class="p">,</span> <span class="n">get_maxmin_samples</span>
+
+<span class="c1"># This selects the 10 points closest to the centroids of a k=10 means clustering</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">get_kmeans_samples</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># This selects the 10 farthest points in feature space</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">get_maxmin_samples</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Now, you can intialize the instance of one <cite>PAL</cite> class. If we use a <cite>sklearn</cite> Gaussian process model, we would use</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALSklearn</span>
+
+<span class="c1"># Each of these models is an instance of sklearn.gaussian_process.GaussianProcessRegressor</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">gpr0</span><span class="p">,</span> <span class="n">gpr1</span><span class="p">,</span> <span class="n">gpr2</span><span class="p">]</span>
+
+<span class="c1"># We always need to provide the feature matrix (X), a list of models, and the number of objectives</span>
+<span class="n">palinstance</span> <span class="o">=</span> <span class="n">PALSklearn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Now, we can also feed in the first measurements</span>
+<span class="c1"># this here assumes that in y you have all measurements and you now</span>
+<span class="c1"># provide the ones which index is in the indices array</span>
+<span class="n">palinstance</span><span class="o">.</span><span class="n">update_train_set</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
+
+<span class="c1"># Now you can run one step</span>
+<span class="n">next_idx</span> <span class="o">=</span> <span class="n">palinstance</span><span class="o">.</span><span class="n">run_one_step</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>At this level you have a range of different options you can set.</p>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="implementing-a-new-pal-class">
+<h2>Implementing a new PAL class<a class="headerlink" href="#implementing-a-new-pal-class" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 
