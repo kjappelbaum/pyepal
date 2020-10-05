@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.107.g3c2c634.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.110.g2a9fff9.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -153,6 +153,10 @@
             <a href="#hyperparameter-optimization" class="nav-link">Hyperparameter optimization</a>
         </li>
 
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#logging" class="nav-link">Logging</a>
+        </li>
+
             </ul>
         </li>
 
@@ -237,7 +241,10 @@
 </ol>
 <div class="section" id="hyperparameter-optimization">
 <h3>Hyperparameter optimization<a class="headerlink" href="#hyperparameter-optimization" title="Permalink to this headline">¶</a></h3>
-<p>Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the <cite>_should_optimize_hyperparameter</cite> function that by default uses a schedule that will optimize the hyperparameter every 10th itertion. If you want to change this behavior, you can override this function.</p>
+<p>Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the <cite>_should_optimize_hyperparameter</cite> function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.</p>
+</div>
+<div class="section" id="logging">
+<h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 <div class="section" id="implementing-a-new-pal-class">
