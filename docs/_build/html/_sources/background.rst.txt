@@ -11,7 +11,7 @@ This implementation has the following features:
 
 - This implementation is directly applicable to :math:`n`-dimensional problems.
 
-- It can be easily used with any kind of model. For example, one might replace the Gaussian process model with a neural network with `Dropout Monte Carlo <http://proceedings.mlr.press/v48/gal16.pdf>`_ for the uncertainity estimate.
+- It can be easily used with any kind of model. For example, one might replace the Gaussian process model with a neural network with `Dropout Monte Carlo <http://proceedings.mlr.press/v48/gal16.pdf>`_ for the uncertainty estimate.
 
 In our own work, we used this algorithm for materials discovery.
 

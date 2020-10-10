@@ -186,7 +186,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
     def _replace_by_measurements(self):
         """Implements one "trick". Instead of using the GPR
         predictions for the sampled points we use the data that
-        was actually measured and the actual uncertainity.
+        was actually measured and the actual uncertainty.
         This is different from the PAL implementation proposed
         by Zuluaga et al. This could make issues when the measurements
         are outliers"""
@@ -232,7 +232,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             measurements (np.ndarray): Measured values, 2D array.
                 the length must equal the length of the inidices array.
                 the second direction must equal the number of objectives
-            measurement_uncertainity (np.ndarray): Uncertainity in the measuremens,
+            measurement_uncertainity (np.ndarray): uncertainty in the measuremens,
                 if not provided (None) will be zero. If it is not None, it must be
                 an array with the same shape as the measurements
         """
@@ -257,7 +257,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         """
         if (self.rectangle_lows is None) | (self.rectangle_ups is None):
             raise ValueError(
-                "You need to have uncertainity rectangles\
+                "You need to have uncertainty rectangles\
                      before you can peform the sampling"
             )
 

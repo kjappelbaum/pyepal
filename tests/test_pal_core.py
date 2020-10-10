@@ -14,7 +14,7 @@ from pypal.pal.core import (
 
 
 def test__get_uncertainity_region():
-    """make sure that the uncertainity windows is computed in a reasonable way"""
+    """make sure that the uncertainty windows is computed in a reasonable way"""
     mu = 1  # pylint:disable=invalid-name
 
     low0, high0 = _get_uncertainity_region(mu, 0, 1)
@@ -39,7 +39,7 @@ def test__get_uncertainity_region():
 
 
 def test__get_uncertainity_regions():
-    """The test uncertainity regions for three dimensions"""
+    """The test uncertainty regions for three dimensions"""
     mu = 1  # pylint:disable=invalid-name
     lows, highs = _get_uncertainity_regions(
         np.array([mu, mu, mu]).reshape(-1, 3), np.array([0, 1, 2]).reshape(-1, 3), 1
@@ -68,7 +68,7 @@ def test__get_uncertainity_regions():
 
 
 def test__union_one_dim():
-    """Make sure that the intersection of the uncertainity regions works"""
+    """Make sure that the intersection of the uncertainty regions works"""
     zeros = np.array([0, 0, 0])
     zero_one_one = np.array([0, 1, 1])
     # Case 1: Everything is zero, we should also return zero
@@ -86,7 +86,7 @@ def test__union_one_dim():
     assert (low == zero_one_one).all()
     assert (up == zero_one_one).all()
 
-    # Case 3: Uncertainity regions do not intersect
+    # Case 3: uncertainty regions do not intersect
     low, up = _union_one_dim(  # pylint:disable=invalid-name
         [0, 0, 0], [1, 1, 1], [2, 2, 2], [3, 3, 3]
     )
@@ -272,7 +272,7 @@ def test_pareto_classify(binh_korn_points):  # pylint:disable=too-many-locals
     # Now, also test it on a real Pareto frontier
     _, y_binh_korn = binh_korn_points
 
-    # For no uncertainity, we need to classify all points as Pareto optimal,
+    # For no uncertainty, we need to classify all points as Pareto optimal,
     # independent of epsilon
     pareto_optimal_t, discarded_t, unclassified_t = _pareto_classify(
         np.array([False] * len(y_binh_korn)),

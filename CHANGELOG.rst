@@ -70,7 +70,7 @@ Fix
 - Pareto_classify did not for as expected #4. [Kevin]
 - Need GPy for the Pythonpackage workflow. [Kevin]
 - Omit for report of coverage. [Kevin]
-- Uncertainity region test no longer failing. [Kevin]
+- uncertainty region test no longer failing. [Kevin]
 - Should also work with 3.6. [Kevin]
 - Should also work with 3.6. [Kevin]
 - Should also work with 3.8. [Kevin]

@@ -152,8 +152,8 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
         not_pareto_optimal_0 (np.array): boolean mask of points
             classified as non-Pareto optimal
         unclassified_0 (np.array): boolean mask of unclassified points
-        rectangle_lows (np.array): lower uncertainity boundaries
-        rectangle_ups (np.array): upper uncertainity boundaries
+        rectangle_lows (np.array): lower uncertainty boundaries
+        rectangle_ups (np.array): upper uncertainty boundaries
         epsilon (np.array): granularity parameter (one per dimension)
 
     Returns:
@@ -267,13 +267,13 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
         if ((unclassified_t[i] == 1) or (pareto_optimal_t[i] == 1)) and not sampled[
             i
         ] == 1:
-            # weight is the length of the diagonal of the uncertainity region
+            # weight is the length of the diagonal of the uncertainty region
             coeff_var = np.divide(
                 rectangle_ups[i, :] - rectangle_lows[i, :], means[i, :]
             )
-            uncertainity = np.linalg.norm(coeff_var)
-            if uncertainity > max_uncertainity:
-                max_uncertainity = uncertainity
+            uncertainty = np.linalg.norm(coeff_var)
+            if uncertainty > max_uncertainity:
+                max_uncertainity = uncertainty
                 maxid = i
 
     return maxid

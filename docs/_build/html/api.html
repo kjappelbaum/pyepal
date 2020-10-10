@@ -297,8 +297,8 @@ Otherwise, we get inconcistent results depending on the sign!</p>
 <li><p><strong>not_pareto_optimal_0</strong> (<em>np.array</em>) – boolean mask of points
 classified as non-Pareto optimal</p></li>
 <li><p><strong>unclassified_0</strong> (<em>np.array</em>) – boolean mask of unclassified points</p></li>
-<li><p><strong>rectangle_lows</strong> (<em>np.array</em>) – lower uncertainity boundaries</p></li>
-<li><p><strong>rectangle_ups</strong> (<em>np.array</em>) – upper uncertainity boundaries</p></li>
+<li><p><strong>rectangle_lows</strong> (<em>np.array</em>) – lower uncertainty boundaries</p></li>
+<li><p><strong>rectangle_ups</strong> (<em>np.array</em>) – upper uncertainty boundaries</p></li>
 <li><p><strong>epsilon</strong> (<em>np.array</em>) – granularity parameter (one per dimension)</p></li>
 </ul>
 </dd>
@@ -397,7 +397,7 @@ and the upper limits are the upper limits.</p>
 <code class="sig-name descname">_replace_by_measurements</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase._replace_by_measurements" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements one “trick”. Instead of using the GPR
 predictions for the sampled points we use the data that
-was actually measured and the actual uncertainity.
+was actually measured and the actual uncertainty.
 This is different from the PAL implementation proposed
 by Zuluaga et al. This could make issues when the measurements
 are outliers</p>
@@ -529,7 +529,7 @@ the measurements were taken</p></li>
 <li><p><strong>measurements</strong> (<em>np.ndarray</em>) – Measured values, 2D array.
 the length must equal the length of the inidices array.
 the second direction must equal the number of objectives</p></li>
-<li><p><strong>measurement_uncertainity</strong> (<em>np.ndarray</em>) – Uncertainity in the measuremens,
+<li><p><strong>measurement_uncertainity</strong> (<em>np.ndarray</em>) – uncertainty in the measuremens,
 if not provided (None) will be zero. If it is not None, it must be
 an array with the same shape as the measurements</p></li>
 </ul>
