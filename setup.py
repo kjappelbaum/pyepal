@@ -31,11 +31,11 @@ setup(
         ],
         "GPy": ["GPy==1.9.9", "matplotlib"],
     },
-    author="Kevin M. Jablonka, Brian Yoo, Berend Smit",
+    author="Kevin M. Jablonka, Giriprasad Melpatti Jothiappan,\
+         Shefang Wang, Berend Smit, Brian Yoo",
     author_email="kevin.jablonka@epfl.ch, brian.yoo@basf.com",
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
         "Development Status :: 1 - Beta",
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
