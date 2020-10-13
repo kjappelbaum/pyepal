@@ -1,5 +1,8 @@
 ignore-paths:
   - docs
+  - versioneer.py
+  - pypal/_version.py
+  - pypal/pal/_hypervolume.py
 
 pylint:
   run: true
