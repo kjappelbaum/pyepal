@@ -29,6 +29,7 @@ class PALCoregionalized(PALBase):
             self.models[0],
             self.design_space[self.sampled_indices],
             self.y[self.sampled_indices],
+            self.sampled[self.sampled_indices],
         )
 
     def _train(self):

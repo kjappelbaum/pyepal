@@ -113,11 +113,16 @@ def predict_coregionalized(
     return mu_c0, np.sqrt(var_c0)
 
 
-def set_xy_coregionalized(model, X, y):
+def set_xy_coregionalized(model, X, y, mask=None):
     """Wrapper to update a coregionalized model with new data"""
     num_target = y.shape[1]
-    X_array = [X] * num_target
-    y_array = [y[:, i].reshape(-1, 1) for i in range(num_target)]
+    if mask is None:
+        X_array = [X] * num_target
+        y_array = [y[:, i].reshape(-1, 1) for i in range(num_target)]
+
+    else:
+        X_array = [X[mask[:, i]] for i in range(num_target)]
+        y_array = [y[mask[:, i], i].reshape(-1, 1) for i in range(num_target)]
 
     model.set_XY(X_array, y_array)
 
