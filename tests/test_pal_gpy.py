@@ -84,7 +84,7 @@ def test_minimize_run_one_step(binh_korn_points):
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
     assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
-    assert sum(palinstance.sampled) > 0
+    assert palinstance.number_sampled_points > 0
     assert sum(palinstance.discarded) == 0
 
     palinstance = PALGPy(
@@ -94,7 +94,7 @@ def test_minimize_run_one_step(binh_korn_points):
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
     assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
-    assert sum(palinstance.sampled) > 0
+    assert palinstance.number_sampled_points > 0
     assert sum(palinstance.discarded) == 0
 
     y_binh_korn = y_binh_korn * np.array([-1, 1])
@@ -106,5 +106,5 @@ def test_minimize_run_one_step(binh_korn_points):
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
     assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
-    assert sum(palinstance.sampled) > 0
+    assert palinstance.number_sampled_points > 0
     assert sum(palinstance.discarded) == 0
