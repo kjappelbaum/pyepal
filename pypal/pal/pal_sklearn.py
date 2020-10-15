@@ -20,7 +20,8 @@ class PALSklearn(PALBase):
     def _train(self):
         for i, model in enumerate(self.models):
             model.fit(
-                self.design_space[self.sampled], self.y[self.sampled, i].reshape(-1, 1)
+                self.design_space[self.sampled[:, i]],
+                self.y[self.sampled[:, i], i].reshape(-1, 1),
             )
 
     def _predict(self):

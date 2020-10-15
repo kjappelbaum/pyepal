@@ -35,7 +35,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.beta_scale = validate_beta_scale(beta_scale)
         self.pareto_optimal = np.array([False] * len(X_design))
         self.discarded = np.array([False] * len(X_design))
-        self.sampled = np.array([False] * len(X_design))
+        self.sampled = np.array([[False] * self.ndim] * len(X_design))
         self.unclassified = np.array([True] * len(X_design))
         self.rectangle_ups: np.array = None
         self.rectangle_lows: np.array = None
@@ -70,7 +70,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
     @property
     def sampled_points(self):
         """Return the sampled points"""
-        return self.design_space[self.sampled]
+        return self.design_space[self.sampled_indices]
 
     @property
     def discarded_points(self):
@@ -90,7 +90,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
     @property
     def sampled_indices(self):
         """Return the indices of the sampled points"""
-        return np.where(self.sampled)[0]
+        return np.unique(np.where(self.sampled)[0])
 
     @property
     def discarded_indices(self):
@@ -120,7 +120,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
     @property
     def number_sampled_points(self):
         """Return the number of sampled points"""
-        return sum(self.sampled)
+        return len(self.sampled_indices)
 
     def _update_beta(self):
         """Update beta according to section 7.2. of the epsilon-PAL paper"""
@@ -231,10 +231,14 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                 the measurements were taken
             measurements (np.ndarray): Measured values, 2D array.
                 the length must equal the length of the inidices array.
-                the second direction must equal the number of objectives
+                the second direction must equal the number of objectives.
+                If an objective is missing, provide np.nan. For example,
+                np.array([1, 1, np.nan])
             measurement_uncertainity (np.ndarray): uncertainty in the measuremens,
                 if not provided (None) will be zero. If it is not None, it must be
                 an array with the same shape as the measurements
+                If an objective is missing, provide np.nan.
+                For example, np.array([1, 1, np.nan])
         """
         self._has_train_set = True
         assert measurements.shape[1] == self.ndim
@@ -245,7 +249,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             measurement_uncertainity = np.zeros(measurements.shape)
         self._y[indices] = measurements
         self.measurement_uncertainity[indices] = measurement_uncertainity
-        self.sampled[indices] = True
+        self.sampled[indices] = ~np.isnan(measurements)
         self._turn_to_maximization()
 
     def sample(self) -> int:
@@ -267,7 +271,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             self.means,
             self.pareto_optimal,
             self.unclassified,
-            self.sampled,
+            self.sampled.sum(axis=1) > 0,
         )
 
         return sampled_idx

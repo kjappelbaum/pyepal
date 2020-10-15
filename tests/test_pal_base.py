@@ -41,7 +41,7 @@ def test_update_train_set(make_random_dataset):
     X, y = make_random_dataset  # pylint:disable=invalid-name
     palinstance = PALBase(X, ["model"], 3)
     assert not palinstance._has_train_set
-    assert sum(palinstance.sampled) == 0
+    assert palinstance.sampled.sum() == 0
 
     palinstance.update_train_set(np.array([0]), y[0, :].reshape(-1, 3))
     assert palinstance.sampled_idx == np.array([0])
@@ -105,7 +105,7 @@ def test_sample(make_random_dataset):
     means = np.array([[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]])
     palinstance.means = means
     pareto_optimal = np.array([False, False, True, True])
-    sampled = np.array([False, False, False, False])
+    sampled = np.array([[False] * 4, [False] * 4, [False] * 4, [False] * 4])
     unclassified = np.array([True, True, False, False])
 
     palinstance.rectangle_lows = lows
@@ -118,7 +118,7 @@ def test_sample(make_random_dataset):
     assert sampled_idx == 2
 
     pareto_optimal = np.array([False, False, True, True])
-    sampled = np.array([False, False, False, False])
+    sampled = np.array([[False] * 4, [False] * 4, [False] * 4, [False] * 4])
     unclassified = np.array([True, True, False, False])
 
     palinstance.sampled = sampled
@@ -129,7 +129,7 @@ def test_sample(make_random_dataset):
     assert sampled_idx == 2
 
     pareto_optimal = np.array([False, False, True, True])
-    sampled = np.array([False, False, True, False])
+    sampled = np.array([[False] * 4, [False] * 4, [True] * 4, [False] * 4])
     unclassified = np.array([True, True, False, False])
 
     palinstance.sampled = sampled
@@ -140,7 +140,7 @@ def test_sample(make_random_dataset):
     assert sampled_idx == 1
 
     pareto_optimal = np.array([False, False, False, True])
-    sampled = np.array([False, False, True, False])
+    sampled = np.array([[False] * 4, [False] * 4, [True] * 4, [False] * 4])
     unclassified = np.array([True, True, False, False])
 
     palinstance.sampled = sampled

@@ -28,7 +28,8 @@ class PALGPy(PALBase):
     def _set_data(self):
         for i, model in enumerate(self.models):
             model.set_XY(
-                self.design_space[self.sampled], self.y[self.sampled, i].reshape(-1, 1)
+                self.design_space[self.sampled[:, i]],
+                self.y[self.sampled[:, i], i].reshape(-1, 1),
             )
 
     def _train(self):
