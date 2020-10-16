@@ -70,6 +70,7 @@ If you use a Gaussian process model built with `sklearn` or `GPy` you can use a 
 In case you have missing observations, i.e., you measured only two of three outputs at some times you need to report the missing observations as `np.nan`, i.e., the call could look like
 
 .. code-block:: python
+
     palinstance.update_train_set(np.array([1,2]), np.array([1, 2, 3], [np.nan, 1, 2, 0]])
 
 for a case in which we performed measurements for samples 1 and 2 of our design space but didn't measure the first target for sample 2.

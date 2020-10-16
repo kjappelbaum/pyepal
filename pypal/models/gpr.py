@@ -69,6 +69,12 @@ def build_coregionalized_model(
     return m
 
 
+# def build_lvmgp(
+#     X_train: np.array, y_train: np.array, latent_dim: int = 3, kernel=None, **kwargs
+# ):
+#     ...
+
+
 def build_model(
     X_train: np.array, y_train: np.array, index: int = 0, kernel=None, **kwargs
 ) -> GPy.models.GPRegression:
