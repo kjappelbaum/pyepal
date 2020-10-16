@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Background &#8212; pypal 0+untagged.113.g7e71ac4 documentation</title>
+    <title>Background &#8212; pypal 0+untagged.126.g8ac2796.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -168,6 +168,7 @@
 <li><p>Instead of using the predicted <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> and <span class="math notranslate nohighlight">\(\hat{\sigma}\)</span> also for the sampled points we use the measured <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>.</p></li>
 <li><p>This implementation is directly applicable to <span class="math notranslate nohighlight">\(n\)</span>-dimensional problems.</p></li>
 <li><p>It can be easily used with any kind of model. For example, one might replace the Gaussian process model with a neural network with <a class="reference external" href="http://proceedings.mlr.press/v48/gal16.pdf">Dropout Monte Carlo</a> for the uncertainty estimate.</p></li>
+<li><p>The support for missing data is implemented. For example, if you measure for some points only some of the objectives there is nothing else you have to do other than providing <cite>np.nan</cite> for the missing measurements. The code will figure the rest out for you and if you use some models like coregionalized GPRs, or Latent Variable Multiple Output GPs, the models will try to use the correlations between the objectives to fill the gaps.</p></li>
 </ul>
 <p>In our own work, we used this algorithm for materials discovery.</p>
 <div class="section" id="intuition-behind-the-algorithm">

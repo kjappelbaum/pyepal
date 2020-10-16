@@ -13,6 +13,8 @@ This implementation has the following features:
 
 - It can be easily used with any kind of model. For example, one might replace the Gaussian process model with a neural network with `Dropout Monte Carlo <http://proceedings.mlr.press/v48/gal16.pdf>`_ for the uncertainty estimate.
 
+- The support for missing data is implemented. For example, if you measure for some points only some of the objectives there is nothing else you have to do other than providing `np.nan` for the missing measurements. The code will figure the rest out for you and if you use some models like coregionalized GPRs, or Latent Variable Multiple Output GPs, the models will try to use the correlations between the objectives to fill the gaps.
+
 In our own work, we used this algorithm for materials discovery.
 
 

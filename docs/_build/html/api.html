@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The pypal API reference &#8212; pypal 0+untagged.113.g7e71ac4 documentation</title>
+    <title>The pypal API reference &#8212; pypal 0+untagged.126.g8ac2796.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -528,10 +528,14 @@ I.e., favoring exploration.</p>
 the measurements were taken</p></li>
 <li><p><strong>measurements</strong> (<em>np.ndarray</em>) – Measured values, 2D array.
 the length must equal the length of the inidices array.
-the second direction must equal the number of objectives</p></li>
+the second direction must equal the number of objectives.
+If an objective is missing, provide np.nan. For example,
+np.array([1, 1, np.nan])</p></li>
 <li><p><strong>measurement_uncertainity</strong> (<em>np.ndarray</em>) – uncertainty in the measuremens,
 if not provided (None) will be zero. If it is not None, it must be
-an array with the same shape as the measurements</p></li>
+an array with the same shape as the measurements
+If an objective is missing, provide np.nan.
+For example, np.array([1, 1, np.nan])</p></li>
 </ul>
 </dd>
 </dl>
@@ -1105,7 +1109,7 @@ It return the standard deviation instead of the variance</p>
 
 <dl class="py function">
 <dt id="pypal.models.gpr.set_xy_coregionalized">
-<code class="sig-prename descclassname">pypal.models.gpr.</code><code class="sig-name descname">set_xy_coregionalized</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.models.gpr.set_xy_coregionalized" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pypal.models.gpr.</code><code class="sig-name descname">set_xy_coregionalized</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">mask</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.models.gpr.set_xy_coregionalized" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to update a coregionalized model with new data</p>
 </dd></dl>
 
