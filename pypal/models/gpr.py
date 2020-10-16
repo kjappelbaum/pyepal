@@ -69,10 +69,36 @@ def build_coregionalized_model(
     return m
 
 
-# def build_lvmgp(
-#     X_train: np.array, y_train: np.array, latent_dim: int = 3, kernel=None, **kwargs
-# ):
-#     ...
+def build_lvmogp(
+    X_train: np.array, y_train: np.array, latent_dim: int = 3, kernel=None, **kwargs
+):
+    """Wrapper for building a Latent Variable Multiple Output Gaussian Processes (LVMOGP)
+
+    Args:
+        X_train (np.array): [description]
+        y_train (np.array): [description]
+        latent_dim (int, optional): [description]. Defaults to 3.
+        kernel ([type], optional): [description]. Defaults to None.
+    """
+    NFEAT = X_train.shape[1]
+    num_targets = y_train.shape[1]
+    if isinstance(kernel, GPy.kern.src.kern.Kern):
+        K = kernel
+    else:
+        K = _get_matern_52_kernel(NFEAT)
+
+    target_indices = np.array(
+        [[i] * sum(~np.isnan(y_train[:, i])) for i in range(num_targets)]
+    ).flatten()
+    target_list = np.vstack([y_train[:, i].reshape(-1, 1) for i in range(num_targets)])
+    X_train_stacked = np.vstack([X_train] * num_targets)
+
+    assert len(target_indices) == len(target_list) == len(X_train_stacked)
+    model = GPy.models.gp_multiout_regression_md.GPMultioutRegressionMD(
+        X_train_stacked, target_list, target_indices, latent_dim, kernel=K, **kwargs
+    )
+
+    return model
 
 
 def build_model(
