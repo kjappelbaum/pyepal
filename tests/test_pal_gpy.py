@@ -108,3 +108,26 @@ def test_minimize_run_one_step(binh_korn_points):
     assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
     assert palinstance.number_sampled_points > 0
     assert sum(palinstance.discarded) == 0
+
+
+def test_orchestration_run_one_step_missing_data(binh_korn_points):
+    """Test that the model also works with missing observations"""
+    X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
+
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
+
+    model_0 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0)
+    model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
+
+    palinstance = PALGPy(X_binh_korn, [model_0, model_1], 2, beta_scale=1)
+
+    # make some of the observations missing
+    y_binh_korn[:10, 1] = np.nan
+
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+
+    idx = palinstance.run_one_step()
+    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    assert palinstance.number_sampled_points > 0
+    assert sum(palinstance.unclassified) > 0
+    assert sum(palinstance.discarded) == 0
