@@ -3,7 +3,7 @@ ignore-paths:
   - versioneer.py
   - pypal/_version.py
   - pypal/pal/_hypervolume.py
-  - pypal/models/coregionalized.py
+  - pypal/models/coregionalized.pys
 
 pylint:
   run: true
