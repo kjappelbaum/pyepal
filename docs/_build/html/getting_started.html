@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.129.geb1315e.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.132.ge526201 documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -157,6 +157,10 @@
             <a href="#logging" class="nav-link">Logging</a>
         </li>
 
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#exploring-a-space-where-all-objectives-are-known" class="nav-link">Exploring a space where all objectives are known</a>
+        </li>
+
             </ul>
         </li>
 
@@ -258,6 +262,18 @@
 </div>
 <p>In case you want to also know the hypervolume, you can use the <cite>get_hypervolume</cite> function</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hv</span> <span class="o">=</span> <span class="n">get_hypervolume</span><span class="p">(</span><span class="n">palinstance</span><span class="o">.</span><span class="n">means</span><span class="p">[</span><span class="n">palinstance</span><span class="o">.</span><span class="n">pareto_optimal</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exploring-a-space-where-all-objectives-are-known">
+<h3>Exploring a space where all objectives are known<a class="headerlink" href="#exploring-a-space-where-all-objectives-are-known" title="Permalink to this headline">¶</a></h3>
+<p>In some cases, you already know all measurements you may want to run PAL with different settings and test how the algorithm performs.
+In this case you can use the <cite>exhaust_loop</cite> wrapper.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALSklearn</span><span class="p">,</span> <span class="n">exhaust_loop</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">gpr0</span><span class="p">,</span> <span class="n">gpr1</span><span class="p">,</span> <span class="n">gpr2</span><span class="p">]</span>
+<span class="n">palinstance</span> <span class="o">=</span> <span class="n">PALSklearn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">exhaust_loop</span><span class="p">(</span><span class="n">palinstance</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
