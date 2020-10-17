@@ -87,7 +87,7 @@ You will see basic information like the current iteration and the classficiation
 
     print(palinstance)
 
-    \\ returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.
+    # returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.
 
 
 In case you want to also know the hypervolume, you can use the `get_hypervolume` function
