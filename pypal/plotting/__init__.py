@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """Plotting utilities"""
+import numpy as np
 from typing import Iterable
 
 import matplotlib.pyplot as plt
-import numpy as np
 
 plt.rcParams["font.family"] = "sans-serif"
 
