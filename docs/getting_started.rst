@@ -111,6 +111,10 @@ In this case you can use the `exhaust_loop` wrapper.
 
     exhaust_loop(palinstance, y)
 
+This will continue calling `run_one_step()` until there is no unclassified sample left.
+
+
+
 Implementing a new PAL class
 ------------------------------
 
