@@ -5,7 +5,12 @@ from .pal.pal_base import PALBase
 from .pal.pal_coregionalized import PALCoregionalized
 from .pal.pal_gpy import PALGPy
 from .pal.pal_sklearn import PALSklearn
-from .pal.utils import get_hypervolume, get_kmeans_samples, get_maxmin_samples
+from .pal.utils import (
+    exhaust_loop,
+    get_hypervolume,
+    get_kmeans_samples,
+    get_maxmin_samples,
+)
 
 __version__ = get_versions()["version"]
 del get_versions
