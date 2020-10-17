@@ -238,7 +238,7 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
     pareto_optimal_t: np.array,
     unclassified_t: np.array,
     sampled: np.array,
-) -> int:
+) -> Tuple[int, np.array]:
     """Returns the index in design space with the maximum size of the hyperrectangle
     (scaled by the mean predictions, i.e., effectively,
     we use the coefficient of variation).
@@ -255,9 +255,12 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
 
     Returns:
         int: index with maximum size of hyperrectangle
+        uncertainty_wts (np.array): array of uncertainty widths for remaining unclassified
+        points
     """
     max_uncertainty = 0
     maxid = 0
+    uncertainty_wts = []
 
     for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
         # Among the points x ∈ Pt ∪ Ut, the one with the largest wt(x)
@@ -271,9 +274,14 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
             coeff_var = np.divide(
                 rectangle_ups[i, :] - rectangle_lows[i, :], means[i, :]
             )
+            print(rectangle_ups[i, :], rectangle_lows[i, :], means[i, :])
             uncertainty = np.linalg.norm(coeff_var)
+            uncertainty_wts.append(uncertainty)
             if uncertainty > max_uncertainty:
                 max_uncertainty = uncertainty
                 maxid = i
 
-    return maxid
+    return maxid, np.array(uncertainty_wts)
+
+
+

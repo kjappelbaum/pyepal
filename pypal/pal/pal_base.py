@@ -39,6 +39,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.unclassified = np.array([True] * len(X_design))
         self.rectangle_ups: np.array = None
         self.rectangle_lows: np.array = None
+        self.uncertainty_wts: np.array = None
         self.models = base_validate_models(models)
         self.iteration = 0
         self.design_space_size = len(X_design)
@@ -265,7 +266,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                      before you can peform the sampling"
             )
 
-        sampled_idx = _get_max_wt(
+        sampled_idx, uncertainty_wts = _get_max_wt(
             self.rectangle_lows,
             self.rectangle_ups,
             self.means,
@@ -273,5 +274,6 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             self.unclassified,
             self.sampled.sum(axis=1) > 0,
         )
+        self.uncertainty_wts = uncertainty_wts
 
         return sampled_idx

@@ -124,28 +124,28 @@ def test__get_max_wt():
     sampled = np.array([False, False, False, False])
     unclassified = np.array([True, True, False, False])
 
-    max_wt = _get_max_wt(lows, highs, means, pareto_optimal, unclassified, sampled)
+    max_wt, _ = _get_max_wt(lows, highs, means, pareto_optimal, unclassified, sampled)
     assert max_wt == 2
 
     pareto_optimal = np.array([False, False, True, True])
     sampled = np.array([False, False, False, False])
     unclassified = np.array([True, True, False, False])
 
-    max_wt = _get_max_wt(lows, highs, means, pareto_optimal, unclassified, sampled)
+    max_wt, _ = _get_max_wt(lows, highs, means, pareto_optimal, unclassified, sampled)
     assert max_wt == 2
 
     pareto_optimal = np.array([False, False, True, True])
     sampled = np.array([False, False, True, False])
     unclassified = np.array([True, True, False, False])
 
-    max_wt = _get_max_wt(lows, highs, means, pareto_optimal, unclassified, sampled)
+    max_wt, _ = _get_max_wt(lows, highs, means, pareto_optimal, unclassified, sampled)
     assert max_wt == 1
 
     pareto_optimal = np.array([False, False, False, True])
     sampled = np.array([False, False, True, False])
     unclassified = np.array([True, True, False, False])
 
-    max_wt = _get_max_wt(lows, highs, means, pareto_optimal, unclassified, sampled)
+    max_wt, _ = _get_max_wt(lows, highs, means, pareto_optimal, unclassified, sampled)
     assert max_wt == 1
 
 
