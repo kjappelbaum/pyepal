@@ -56,7 +56,9 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
     model = build_coregionalized_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx])
 
-    palinstance = PALCoregionalized(X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01)
+    palinstance = PALCoregionalized(
+        X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01
+    )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
@@ -68,7 +70,9 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
 
     # testing batch sampling
     model = build_coregionalized_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx])
-    palinstance = PALCoregionalized(X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01)
+    palinstance = PALCoregionalized(
+        X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01
+    )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
@@ -90,7 +94,9 @@ def test_orchestration_run_one_step_missing_data(binh_korn_points):
         X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0
     )
 
-    palinstance = PALCoregionalized(X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01)
+    palinstance = PALCoregionalized(
+        X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01
+    )
 
     # make some of the observations missing
     y_binh_korn[:10, 1] = np.nan
