@@ -114,6 +114,26 @@ In this case you can use the `exhaust_loop` wrapper.
 This will continue calling `run_one_step()` until there is no unclassified sample left.
 
 
+Batch sampling
+................
+
+By default, the `run_one_step` function of the PAL classes will return a `np.array` with only one index for the point in the design space for which the next experiment should be performed. In some cases, you want to run multiple experiments in batches before you run a new iteration of the PyPAL. In this case, you use the `batch_size` keyword argument and change it to a integer greater than one.
+
+.. code-block:: python
+
+    next_idx = palinstance.run_one_step(batch_size=10)
+    # next_idx will be a np.array of length 10
+
+Of course, also the `exhaust_loop` supports the `batch_size` keyword argument
+
+.. code-block:: python
+
+    palinstance = PALSklearn(X, models, 3)
+
+    # sample always 10 points and do this until there is no unclassified
+    # point left
+    exhaust_loop(palinstance, y, batch_size=10)
+
 
 Implementing a new PAL class
 ------------------------------

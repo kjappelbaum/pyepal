@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The pypal API reference &#8212; pypal 0+untagged.135.g973312a.dirty documentation</title>
+    <title>The pypal API reference &#8212; pypal 0+untagged.139.g37667f6 documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -371,13 +371,30 @@ and the upper limits are the upper limits.</p>
 <p>Base class for PAL</p>
 <dl class="py class">
 <dt id="pypal.pal.pal_base.PALBase">
-<em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_base.</code><code class="sig-name descname">PALBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.0625</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_base.</code><code class="sig-name descname">PALBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>PAL base class</p>
 <dl class="py method">
 <dt id="pypal.pal.pal_base.PALBase.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.0625</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the PAL instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_design</strong> (<em>np.array</em>) – Design space (feature matrix)</p></li>
+<li><p><strong>models</strong> (<em>list</em>) – Machine learning models</p></li>
+<li><p><strong>ndim</strong> (<em>int</em>) – Number of objectives</p></li>
+<li><p><strong>epsilon</strong> (<em>Union</em><em>[</em><em>list</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Epsilon hyperparameter.
+Defaults to 0.01.</p></li>
+<li><p><strong>delta</strong> (<em>float</em><em>, </em><em>optional</em>) – Delta hyperparameter. Defaults to 0.05.</p></li>
+<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta. Defaults to 1/9.</p></li>
+<li><p><strong>goals</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – If a list, provide “min” for every objective
+that shall be minimized and “max” for every objective
+that shall be maximized. Defaults to None, which means
+that the code maximizes all objectives.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -469,21 +486,44 @@ hyperrectangles is decreasing.</p>
 
 <dl class="py method">
 <dt id="pypal.pal.pal_base.PALBase.run_one_step">
-<code class="sig-name descname">run_one_step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.run_one_step" title="Permalink to this definition">¶</a></dt>
-<dd><p>Inner part of the loop</p>
+<code class="sig-name descname">run_one_step</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.run_one_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>[summary]</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of indices that will be returned.
+Defaults to 1.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – In case the PAL instance was not initialized with
+    measurements.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Returns array of indices if there are</dt><dd><p>unclassified points that can be sample left.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Union[np.array, None]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pypal.pal.pal_base.PALBase.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.sample" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">exclude_idx</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs the sampling step based on the size of the hyperrectangle.
 I.e., favoring exploration.</p>
 <dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>exclude_idx</strong> (<em>Union</em><em>[</em><em>np.array</em><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – Points in design space to exclude from sampling.
+Defaults to None.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – In case there are no uncertainity rectangles,
+    i.e., when the _predict has not been successfully called.</p>
+</dd>
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Index of next point to evaulate in desing space</p>
 </dd>
@@ -555,7 +595,24 @@ For example, np.array([1, 1, np.nan])</p></li>
 <dl class="py method">
 <dt id="pypal.pal.pal_gpy.PALGPy.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_gpy.PALGPy.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dd><p>Initialize the PAL instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_design</strong> (<em>np.array</em>) – Design space (feature matrix)</p></li>
+<li><p><strong>models</strong> (<em>list</em>) – Machine learning models</p></li>
+<li><p><strong>ndim</strong> (<em>int</em>) – Number of objectives</p></li>
+<li><p><strong>epsilon</strong> (<em>Union</em><em>[</em><em>list</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Epsilon hyperparameter.
+Defaults to 0.01.</p></li>
+<li><p><strong>delta</strong> (<em>float</em><em>, </em><em>optional</em>) – Delta hyperparameter. Defaults to 0.05.</p></li>
+<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta. Defaults to 1/9.</p></li>
+<li><p><strong>goals</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – If a list, provide “min” for every objective
+that shall be minimized and “max” for every objective
+that shall be maximized. Defaults to None, which means
+that the code maximizes all objectives.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -572,7 +629,24 @@ For example, np.array([1, 1, np.nan])</p></li>
 <dl class="py method">
 <dt id="pypal.pal.pal_coregionalized.PALCoregionalized.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_coregionalized.PALCoregionalized.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dd><p>Initialize the PAL instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_design</strong> (<em>np.array</em>) – Design space (feature matrix)</p></li>
+<li><p><strong>models</strong> (<em>list</em>) – Machine learning models</p></li>
+<li><p><strong>ndim</strong> (<em>int</em>) – Number of objectives</p></li>
+<li><p><strong>epsilon</strong> (<em>Union</em><em>[</em><em>list</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Epsilon hyperparameter.
+Defaults to 0.01.</p></li>
+<li><p><strong>delta</strong> (<em>float</em><em>, </em><em>optional</em>) – Delta hyperparameter. Defaults to 0.05.</p></li>
+<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta. Defaults to 1/9.</p></li>
+<li><p><strong>goals</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – If a list, provide “min” for every objective
+that shall be minimized and “max” for every objective
+that shall be maximized. Defaults to None, which means
+that the code maximizes all objectives.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -589,7 +663,24 @@ For example, np.array([1, 1, np.nan])</p></li>
 <dl class="py method">
 <dt id="pypal.pal.pal_sklearn.PALSklearn.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_sklearn.PALSklearn.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dd><p>Initialize the PAL instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_design</strong> (<em>np.array</em>) – Design space (feature matrix)</p></li>
+<li><p><strong>models</strong> (<em>list</em>) – Machine learning models</p></li>
+<li><p><strong>ndim</strong> (<em>int</em>) – Number of objectives</p></li>
+<li><p><strong>epsilon</strong> (<em>Union</em><em>[</em><em>list</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Epsilon hyperparameter.
+Defaults to 0.01.</p></li>
+<li><p><strong>delta</strong> (<em>float</em><em>, </em><em>optional</em>) – Delta hyperparameter. Defaults to 0.05.</p></li>
+<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta. Defaults to 1/9.</p></li>
+<li><p><strong>goals</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – If a list, provide “min” for every objective
+that shall be minimized and “max” for every objective
+that shall be maximized. Defaults to None, which means
+that the code maximizes all objectives.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -691,7 +782,7 @@ since numba does not understand masked arrays</p>
 
 <dl class="py function">
 <dt id="pypal.pal.utils.exhaust_loop">
-<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">exhaust_loop</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.utils.exhaust_loop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">exhaust_loop</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.utils.exhaust_loop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper function that takes an initialized PAL instance
 and loops the sampling until there is no unclassified point left.
 This is useful if all measurements are already taken and one
@@ -705,6 +796,8 @@ inherited from PALBase and implemented the ._train() and
 <li><p><strong>y</strong> (<em>np.array</em>) – Measurements.
 The number of measurements must equal the number of
 points in the design space.</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of indices that will be returned.
+Defaults to 10.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
