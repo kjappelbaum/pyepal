@@ -247,7 +247,6 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             for _ in range(batch_size):
                 sampled_idx = self.sample(exclude_idx=samples)
                 samples = np.append(samples, [sampled_idx])
-                print(sampled_idx, samples)
                 self._log()
 
             self.sampled_idx = samples

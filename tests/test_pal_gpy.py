@@ -47,7 +47,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     model_0 = build_model(X[sample_idx], y[sample_idx], 0)
     model_1 = build_model(X[sample_idx], y[sample_idx], 1)
     model_2 = build_model(X[sample_idx], y[sample_idx], 2)
-    palinstance = PALGPy(X, [model_0, model_1, model_2], 3, beta_scale=1)
+    palinstance = PALGPy(X, [model_0, model_1, model_2], 3, beta_scale=1, epsilon=0.01)
 
     palinstance.update_train_set(sample_idx, y[sample_idx])
     idx = palinstance.run_one_step()
@@ -59,7 +59,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     model_0 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0)
     model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
 
-    palinstance = PALGPy(X_binh_korn, [model_0, model_1], 2, beta_scale=1)
+    palinstance = PALGPy(X_binh_korn, [model_0, model_1], 2, beta_scale=1, epsilon=0.01)
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
@@ -78,7 +78,12 @@ def test_minimize_run_one_step(binh_korn_points):
     model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
 
     palinstance = PALGPy(
-        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=["min", "min"]
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        goals=["min", "min"],
+        epsilon=0.01,
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -89,7 +94,7 @@ def test_minimize_run_one_step(binh_korn_points):
     assert sum(palinstance.discarded) == 0
 
     palinstance = PALGPy(
-        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=[-1, -1]
+        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=[-1, -1], epsilon=0.01
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -102,7 +107,7 @@ def test_minimize_run_one_step(binh_korn_points):
     y_binh_korn = y_binh_korn * np.array([-1, 1])
 
     palinstance = PALGPy(
-        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=[1, -1]
+        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=[1, -1], epsilon=0.01
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -115,7 +120,7 @@ def test_minimize_run_one_step(binh_korn_points):
     # Testing batch sampling
 
     palinstance = PALGPy(
-        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=[1, -1]
+        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=[1, -1], epsilon=0.01
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -137,7 +142,7 @@ def test_orchestration_run_one_step_missing_data(binh_korn_points):
     model_0 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0)
     model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
 
-    palinstance = PALGPy(X_binh_korn, [model_0, model_1], 2, beta_scale=1)
+    palinstance = PALGPy(X_binh_korn, [model_0, model_1], 2, beta_scale=1, epsilon=0.01)
 
     # make some of the observations missing
     y_binh_korn[:10, 1] = np.nan
