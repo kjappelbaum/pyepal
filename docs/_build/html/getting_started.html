@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.129.geb1315e.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.135.g973312a.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -157,6 +157,10 @@
             <a href="#logging" class="nav-link">Logging</a>
         </li>
 
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#exploring-a-space-where-all-objectives-are-known" class="nav-link">Exploring a space where all objectives are known</a>
+        </li>
+
             </ul>
         </li>
 
@@ -253,13 +257,26 @@
 <p>You will see basic information like the current iteration and the classficiation status if you print the <cite>PAL</cite> object</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">palinstance</span><span class="p">)</span>
 
-\\ <span class="n">returns</span><span class="p">:</span> <span class="n">pypal</span> <span class="n">at</span> <span class="n">iteration</span> <span class="mf">1.</span> <span class="mi">10</span> <span class="n">Pareto</span> <span class="n">optimal</span> <span class="n">points</span><span class="p">,</span> <span class="mi">1304</span> <span class="n">discarded</span> <span class="n">points</span><span class="p">,</span> <span class="mi">200</span> <span class="n">unclassified</span> <span class="n">points</span><span class="o">.</span>
+<span class="c1"># returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.</span>
 </pre></div>
 </div>
 <p>In case you want to also know the hypervolume, you can use the <cite>get_hypervolume</cite> function</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hv</span> <span class="o">=</span> <span class="n">get_hypervolume</span><span class="p">(</span><span class="n">palinstance</span><span class="o">.</span><span class="n">means</span><span class="p">[</span><span class="n">palinstance</span><span class="o">.</span><span class="n">pareto_optimal</span><span class="p">])</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="exploring-a-space-where-all-objectives-are-known">
+<h3>Exploring a space where all objectives are known<a class="headerlink" href="#exploring-a-space-where-all-objectives-are-known" title="Permalink to this headline">¶</a></h3>
+<p>In some cases, you already know all measurements you may want to run PAL with different settings and test how the algorithm performs.
+In this case you can use the <cite>exhaust_loop</cite> wrapper.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALSklearn</span><span class="p">,</span> <span class="n">exhaust_loop</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">gpr0</span><span class="p">,</span> <span class="n">gpr1</span><span class="p">,</span> <span class="n">gpr2</span><span class="p">]</span>
+<span class="n">palinstance</span> <span class="o">=</span> <span class="n">PALSklearn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">exhaust_loop</span><span class="p">(</span><span class="n">palinstance</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will continue calling <cite>run_one_step()</cite> until there is no unclassified sample left.</p>
 </div>
 </div>
 <div class="section" id="implementing-a-new-pal-class">

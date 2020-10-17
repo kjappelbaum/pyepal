@@ -87,7 +87,7 @@ You will see basic information like the current iteration and the classficiation
 
     print(palinstance)
 
-    \\ returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.
+    # returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.
 
 
 In case you want to also know the hypervolume, you can use the `get_hypervolume` function
@@ -95,6 +95,25 @@ In case you want to also know the hypervolume, you can use the `get_hypervolume`
 .. code:: python
 
     hv = get_hypervolume(palinstance.means[palinstance.pareto_optimal])
+
+
+Exploring a space where all objectives are known
+.................................................
+
+In some cases, you already know all measurements you may want to run PAL with different settings and test how the algorithm performs.
+In this case you can use the `exhaust_loop` wrapper.
+
+.. code-block:: python
+
+    from pypal import PALSklearn, exhaust_loop
+    models = [gpr0, gpr1, gpr2]
+    palinstance = PALSklearn(X, models, 3)
+
+    exhaust_loop(palinstance, y)
+
+This will continue calling `run_one_step()` until there is no unclassified sample left.
+
+
 
 Implementing a new PAL class
 ------------------------------

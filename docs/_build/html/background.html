@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Background &#8212; pypal 0+untagged.129.geb1315e.dirty documentation</title>
+    <title>Background &#8212; pypal 0+untagged.135.g973312a.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -161,7 +161,7 @@
 
   <div class="section" id="background">
 <h1>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h1>
-<p>This package implements a modified version of the <a class="reference external" href="https://jmlr.org/papers/v17/15-047.html">ε-PAL algorithm from Zuluaga et al.</a> in an object oriented interface for finding the Pareto efficient points in any number of dimensions with any model that can output a standard deviation and a mean.</p>
+<p>This package implements a modified version of the <a class="reference external" href="https://jmlr.org/papers/v17/15-047.html">ε-PAL algorithm from Zuluaga et al.</a> in an object-oriented interface for finding the Pareto efficient points in any number of dimensions with any model that can output a standard deviation and a mean.</p>
 <p>This implementation has the following features:</p>
 <ul class="simple">
 <li><p>We make sure that the sampling is scale invariant and that the algorithm can deal with positive and negative objective values.</p></li>
@@ -173,6 +173,16 @@
 <p>In our own work, we used this algorithm for materials discovery.</p>
 <div class="section" id="intuition-behind-the-algorithm">
 <h2>Intuition behind the algorithm<a class="headerlink" href="#intuition-behind-the-algorithm" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="_images/pal_schema.png"><img alt="Schema illustrating the PAL algorithm" src="_images/pal_schema.png" style="width: 600px;" /></a>
+<p>The PAL algorithm iterates the following steps:</p>
+<ol class="loweralpha simple">
+<li><p>Training a machine learning model to predict means and standard deviations for all points of the design space. This can be used to construct hyperrectangles.</p></li>
+<li><p>Using those points, we can use the Pareto dominance relation to classify points as Pareto optimal or to discard them.
+In some cases, e.g., when hyperrectangles overlap, we will not be able to perform a classification with confidence.
+This is different from many Bayesian optimization approaches, that introduce some expected improvement function to that introduce a total order in the design space and hence bias the search.</p></li>
+<li><p>Since in step b we discard many points (with confidence) the effective design space shrinks. We now can sample the next experiment from the Pareto optimal and unclassified points. Since the ultimate goal is to perform a classification of the full design space—with confidence—we sample the point with the largest hyperrectangle.</p></li>
+<li><p>Retraining a model with this new measurement will reduce the width of the hyperrectangles.</p></li>
+</ol>
 </div>
 </div>
 

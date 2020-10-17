@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The pypal API reference &#8212; pypal 0+untagged.129.geb1315e.dirty documentation</title>
+    <title>The pypal API reference &#8212; pypal 0+untagged.135.g973312a.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -238,8 +238,8 @@ for the Pareto optimal points</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.core._get_uncertainity_region">
-<code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_get_uncertainity_region</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mu</span></em>, <em class="sig-param"><span class="n">std</span></em>, <em class="sig-param"><span class="n">beta_sqrt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.core._get_uncertainity_region" title="Permalink to this definition">¶</a></dt>
+<dt id="pypal.pal.core._get_uncertainty_region">
+<code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_get_uncertainty_region</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mu</span></em>, <em class="sig-param"><span class="n">std</span></em>, <em class="sig-param"><span class="n">beta_sqrt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.core._get_uncertainty_region" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -258,8 +258,8 @@ for the Pareto optimal points</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.core._get_uncertainity_regions">
-<code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_get_uncertainity_regions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mus</span></em>, <em class="sig-param"><span class="n">stds</span></em>, <em class="sig-param"><span class="n">beta_sqrt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.core._get_uncertainity_regions" title="Permalink to this definition">¶</a></dt>
+<dt id="pypal.pal.core._get_uncertainty_regions">
+<code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_get_uncertainty_regions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mus</span></em>, <em class="sig-param"><span class="n">stds</span></em>, <em class="sig-param"><span class="n">beta_sqrt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.core._get_uncertainty_regions" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Compute the lower and upper bound of the uncertainty region</dt><dd><p>for each dimension (=target)</p>
 </dd>
@@ -519,7 +519,7 @@ I.e., favoring exploration.</p>
 
 <dl class="py method">
 <dt id="pypal.pal.pal_base.PALBase.update_train_set">
-<code class="sig-name descname">update_train_set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">indices</span></em>, <em class="sig-param"><span class="n">measurements</span></em>, <em class="sig-param"><span class="n">measurement_uncertainity</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.update_train_set" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_train_set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">indices</span></em>, <em class="sig-param"><span class="n">measurements</span></em>, <em class="sig-param"><span class="n">measurement_uncertainty</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.update_train_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update training set following a measurement</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -531,7 +531,7 @@ the length must equal the length of the inidices array.
 the second direction must equal the number of objectives.
 If an objective is missing, provide np.nan. For example,
 np.array([1, 1, np.nan])</p></li>
-<li><p><strong>measurement_uncertainity</strong> (<em>np.ndarray</em>) – uncertainty in the measuremens,
+<li><p><strong>measurement_uncertainty</strong> (<em>np.ndarray</em>) – uncertainty in the measuremens,
 if not provided (None) will be zero. If it is not None, it must be
 an array with the same shape as the measurements
 If an objective is missing, provide np.nan.
