@@ -1,7 +1,7 @@
 Background
 ===========
 
-This package implements a modified version of the `ε-PAL algorithm from Zuluaga et al. <https://jmlr.org/papers/v17/15-047.html>`_ in an object oriented interface for finding the Pareto efficient points in any number of dimensions with any model that can output a standard deviation and a mean.
+This package implements a modified version of the `ε-PAL algorithm from Zuluaga et al. <https://jmlr.org/papers/v17/15-047.html>`_ in an object-oriented interface for finding the Pareto efficient points in any number of dimensions with any model that can output a standard deviation and a mean.
 
 This implementation has the following features:
 
@@ -22,16 +22,18 @@ Intuition behind the algorithm
 --------------------------------
 
 .. image:: _static/pal_schema.png
-  :width: 400
+  :width: 600
   :alt: Schema illustrating the PAL algorithm
 
-The PAL algorithm iterates the the following steps:
+
+The PAL algorithm iterates the following steps:
 
 a. Training a machine learning model to predict means and standard deviations for all points of the design space. This can be used to construct hyperrectangles.
 
-b. Using those points, we can use the Pareto dominance relation to classify points as Pareto optimal or to discard them. In some cases, e.g., when hyperrectangles overlap, we will not be able to perform a classification with confidence.
-This is different from many Bayesian optimization approaches, that introduce some expected improvement function to that introduce a total order in the design space and hence bias the search.
+b. Using those points, we can use the Pareto dominance relation to classify points as Pareto optimal or to discard them.
+   In some cases, e.g., when hyperrectangles overlap, we will not be able to perform a classification with confidence.
+   This is different from many Bayesian optimization approaches, that introduce some expected improvement function to that introduce a total order in the design space and hence bias the search.
 
-c. Since in step b we discard many points (with confidence) the effective design space shrinks. We now can sample the next experiment from the Pareto optimal and unclassified points. Since the ultimate goal is to perform a classification of the full design space---with confidence---we sample the point with the largest hyperrectangle.
+c. Since in step b we discard many points (with confidence) the effective design space shrinks. We now can sample the next experiment from the Pareto optimal and unclassified points. Since the ultimate goal is to perform a classification of the full design space—with confidence—we sample the point with the largest hyperrectangle.
 
 d. Retraining a model with this new measurement will reduce the width of the hyperrectangles.
