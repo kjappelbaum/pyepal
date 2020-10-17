@@ -5,43 +5,43 @@ import numpy as np
 
 from pypal.pal.core import (
     _get_max_wt,
-    _get_uncertainity_region,
-    _get_uncertainity_regions,
+    _get_uncertainty_region,
+    _get_uncertainty_regions,
     _pareto_classify,
     _union,
     _union_one_dim,
 )
 
 
-def test__get_uncertainity_region():
+def test__get_uncertainty_region():
     """make sure that the uncertainty windows is computed in a reasonable way"""
     mu = 1  # pylint:disable=invalid-name
 
-    low0, high0 = _get_uncertainity_region(mu, 0, 1)
+    low0, high0 = _get_uncertainty_region(mu, 0, 1)
     assert low0 == mu
     assert high0 == mu
 
-    low1, high1 = _get_uncertainity_region(mu, 1, 0)
+    low1, high1 = _get_uncertainty_region(mu, 1, 0)
     assert low1 == mu
     assert high1 == mu
 
-    low2, high2 = _get_uncertainity_region(mu, 0, 0)
+    low2, high2 = _get_uncertainty_region(mu, 0, 0)
     assert low2 == mu
     assert high2 == mu
 
-    low3, high3 = _get_uncertainity_region(mu, 1, 1)
+    low3, high3 = _get_uncertainty_region(mu, 1, 1)
     assert low3 == 0
     assert high3 == 2
 
-    low4, high4 = _get_uncertainity_region(mu, 2, 1)
+    low4, high4 = _get_uncertainty_region(mu, 2, 1)
     assert low4 == -1
     assert high4 == 3
 
 
-def test__get_uncertainity_regions():
+def test__get_uncertainty_regions():
     """The test uncertainty regions for three dimensions"""
     mu = 1  # pylint:disable=invalid-name
-    lows, highs = _get_uncertainity_regions(
+    lows, highs = _get_uncertainty_regions(
         np.array([mu, mu, mu]).reshape(-1, 3), np.array([0, 1, 2]).reshape(-1, 3), 1
     )
     lows = lows.flatten()
@@ -53,7 +53,7 @@ def test__get_uncertainity_regions():
     assert lows[2] == -1
     assert highs[2] == 3
 
-    lows, highs = _get_uncertainity_regions(
+    lows, highs = _get_uncertainty_regions(
         np.array([mu - 1, mu, mu]).reshape(-1, 3), np.array([0, 1, 2]).reshape(-1, 3), 1
     )
     lows = lows.flatten()

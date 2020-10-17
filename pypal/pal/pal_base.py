@@ -5,7 +5,7 @@ from typing import List, Union
 
 import numpy as np
 
-from .core import _get_max_wt, _get_uncertainity_regions, _pareto_classify, _union
+from .core import _get_max_wt, _get_uncertainty_regions, _pareto_classify, _union
 from .validate_inputs import (
     base_validate_models,
     validate_beta_scale,
@@ -52,7 +52,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.y = np.zeros(  # pylint:disable=invalid-name
             (self.design_space_size, self.ndim)
         )
-        self.measurement_uncertainity = np.zeros((self.design_space_size, self.ndim))
+        self.measurement_uncertainty = np.zeros((self.design_space_size, self.ndim))
         self._has_train_set = False
         self._y = self.y
 
@@ -164,7 +164,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         then it uses iterative intersection to ensure that the size of the
         hyperrectangles is decreasing.
         """
-        lows, ups = _get_uncertainity_regions(self.means, self.std, np.sqrt(self.beta))
+        lows, ups = _get_uncertainty_regions(self.means, self.std, np.sqrt(self.beta))
         if self.iteration == 0:
             # initialization
             self.rectangle_lows, self.rectangle_ups = lows, ups
@@ -191,7 +191,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         by Zuluaga et al. This could make issues when the measurements
         are outliers"""
         self.means[self.sampled] = self.y[self.sampled]
-        self.std[self.sampled] = self.measurement_uncertainity[self.sampled]
+        self.std[self.sampled] = self.measurement_uncertainty[self.sampled]
 
     def run_one_step(self) -> Union[int, None]:
         """Inner part of the loop"""
@@ -222,7 +222,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self,
         indices: np.ndarray,
         measurements: np.ndarray,
-        measurement_uncertainity: np.ndarray = None,
+        measurement_uncertainty: np.ndarray = None,
     ):
         """Update training set following a measurement
 
@@ -234,7 +234,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                 the second direction must equal the number of objectives.
                 If an objective is missing, provide np.nan. For example,
                 np.array([1, 1, np.nan])
-            measurement_uncertainity (np.ndarray): uncertainty in the measuremens,
+            measurement_uncertainty (np.ndarray): uncertainty in the measuremens,
                 if not provided (None) will be zero. If it is not None, it must be
                 an array with the same shape as the measurements
                 If an objective is missing, provide np.nan.
@@ -243,12 +243,12 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self._has_train_set = True
         assert measurements.shape[1] == self.ndim
         assert len(indices) == len(measurements)
-        if measurement_uncertainity is not None:
-            assert measurement_uncertainity.shape == measurements.shape
+        if measurement_uncertainty is not None:
+            assert measurement_uncertainty.shape == measurements.shape
         else:
-            measurement_uncertainity = np.zeros(measurements.shape)
+            measurement_uncertainty = np.zeros(measurements.shape)
         self._y[indices] = measurements
-        self.measurement_uncertainity[indices] = measurement_uncertainity
+        self.measurement_uncertainty[indices] = measurement_uncertainty
         self.sampled[indices] = ~np.isnan(measurements)
         self._turn_to_maximization()
 

@@ -12,7 +12,7 @@ from .utils import (
 )
 
 
-def _get_uncertainity_region(  # pylint:disable=invalid-name
+def _get_uncertainty_region(  # pylint:disable=invalid-name
     mu: np.array, std: np.array, beta_sqrt: float
 ) -> Tuple[np.array, np.array]:
     """
@@ -29,7 +29,7 @@ def _get_uncertainity_region(  # pylint:disable=invalid-name
     return low_lim, high_lim
 
 
-def _get_uncertainity_regions(
+def _get_uncertainty_regions(
     mus: np.array, stds: np.array, beta_sqrt: float
 ) -> Union[np.array, np.array]:
     """
@@ -47,7 +47,7 @@ def _get_uncertainity_regions(
     low_lims, high_lims = [], []
 
     for i in range(0, mus.shape[1]):
-        low_lim, high_lim = _get_uncertainity_region(mus[:, i], stds[:, i], beta_sqrt)
+        low_lim, high_lim = _get_uncertainty_region(mus[:, i], stds[:, i], beta_sqrt)
         low_lims.append(low_lim.reshape(-1, 1))
         high_lims.append(high_lim.reshape(-1, 1))
 
@@ -256,7 +256,7 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
     Returns:
         int: index with maximum size of hyperrectangle
     """
-    max_uncertainity = 0
+    max_uncertainty = 0
     maxid = 0
 
     for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
@@ -272,8 +272,8 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
                 rectangle_ups[i, :] - rectangle_lows[i, :], means[i, :]
             )
             uncertainty = np.linalg.norm(coeff_var)
-            if uncertainty > max_uncertainity:
-                max_uncertainity = uncertainty
+            if uncertainty > max_uncertainty:
+                max_uncertainty = uncertainty
                 maxid = i
 
     return maxid

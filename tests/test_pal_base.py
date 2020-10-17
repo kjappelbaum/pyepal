@@ -197,10 +197,10 @@ def test__replace_by_measurements(make_random_dataset):
     """Test that replacing the mean/std by the measured ones works"""
     X, y = make_random_dataset  # pylint:disable=invalid-name
     palinstance = PALBase(X, ["model"], 3, beta_scale=1)
-    assert palinstance.measurement_uncertainity.sum() == 0
+    assert palinstance.measurement_uncertainty.sum() == 0
     sample_idx = np.array([1, 2, 3, 4])
     palinstance.update_train_set(sample_idx, y[sample_idx], y[sample_idx])
-    palinstance.means = palinstance.measurement_uncertainity
-    palinstance.std = palinstance.measurement_uncertainity
+    palinstance.means = palinstance.measurement_uncertainty
+    palinstance.std = palinstance.measurement_uncertainty
     palinstance._replace_by_measurements()
     assert (palinstance.y == palinstance.std).all()
