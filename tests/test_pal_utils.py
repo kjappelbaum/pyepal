@@ -144,6 +144,21 @@ def test_exhaust_loop(binh_korn_points):
     assert palinstance.number_discarded_points == 0
     assert palinstance.number_sampled_points > 0
 
+    # Test batch sampling
+    palinstance = PALGPy(
+        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=["max", "min"]
+    )
+
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+
+    exhaust_loop(palinstance, y_binh_korn, batch_size=10)
+    assert sum(palinstance.unclassified) == 0
+    assert sum(palinstance.discarded) == 0
+    assert sum(palinstance.pareto_optimal) == 100
+    assert palinstance.number_pareto_optimal_points == 100
+    assert palinstance.number_discarded_points == 0
+    assert palinstance.number_sampled_points > 0
+
 
 def test_kmeans_samples(make_random_dataset):
     """test generation of a set of points closest to the k centroids"""
