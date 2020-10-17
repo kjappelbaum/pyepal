@@ -334,7 +334,7 @@ def test_pareto_classify(binh_korn_points):  # pylint:disable=too-many-locals
     sampled = np.array([False, False, False, False, False])
     unclassified = np.array([True, True, False, False, False])
 
-    max_wt = _get_max_wt(
+    max_wt, _ = _get_max_wt(
         lows * scale,
         highs * scale,
         means * scale,
