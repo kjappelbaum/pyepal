@@ -277,3 +277,15 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
                 maxid = i
 
     return maxid
+
+
+def _uncertainty(rectangle_ups, rectangle_lows, means):
+    """Hyperrectangle sizes"""
+    if (rectangle_lows is None) or (rectangle_ups is None):
+        raise ValueError(
+            "You must have trained a model and\
+             run the prediction to calculate hyperrectangle"
+        )
+    coeff_var = np.nan_to_num(np.divide(rectangle_ups - rectangle_lows, means))
+    uncertainty = np.linalg.norm(coeff_var, axis=1)
+    return uncertainty
