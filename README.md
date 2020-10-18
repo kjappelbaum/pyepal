@@ -33,7 +33,7 @@ Developers can install the extras `[testing, docs, pre-commit]`.
 
 ## Usage
 
-The main logic is implemented in the `PALBase` class. There are some pre-built classes for common use-cases (`GPy`, `sklearn`) that inherit from this class.
+The main logic is implemented in the `PALBase` class. There are some prebuilt classes for common use cases (`GPy`, `sklearn`) that inherit from this class.
 
 ### Pre-Built classes
 
@@ -55,7 +55,7 @@ gpr_objective_1 = GaussianProcessRegressor(RBF())
 # the design space (X, in ML terms "feature matrix") and the number of objectives
 palsklearn_instance = PALSklearn(X, [gpr_objective_0, gpr_objective_1], 2)
 
-# the next step is to provide some intial measurements,
+# the next step is to provide some initial measurements,
 # you can do this with the update_train_set function, which you one
 # also uses through the active learning process to update the training set.
 # For this, you provide a numpy array of indices in your design space
@@ -118,7 +118,7 @@ For scheduling for the hyperparameter optimization we have some predefined sched
 ### Test the algorithms
 
 If the full design space is known, you can use a while loop to fully explore the space.
-For the theoretical guarantees to hold, you'll need to sample until all uncertainties are below epsilon. In practice, it is usually enough to require as termination criterion that there a no unclassified samples left. For this you could use the following snippet
+For the theoretical guarantees to hold, you'll need to sample until all uncertainties are below epsilon. In practice, it is usually enough to require as termination criterion that there are no unclassified samples left. For this you could use the following snippet
 
 ```python
 from pypal.utils import exhaust_loop
