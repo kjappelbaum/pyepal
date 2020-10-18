@@ -10,7 +10,7 @@ You can install `pypal` from `PyPi` using
 
     pip install pypal
 
-We recommend that you install `pypi` in a dedicated `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ or `conda environment <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_.
+We recommend that you install `pypal` in a dedicated `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ or `conda environment <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_.
 
 If you want to use the latest version from GitHub, you can install it using
 
