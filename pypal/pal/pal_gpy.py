@@ -1,11 +1,20 @@
 # -*- coding: utf-8 -*-
 """PAL using GPy GPR models"""
+import concurrent.futures
+from functools import partial
+
 import numpy as np
 
 from ..models.gpr import predict
 from .pal_base import PALBase
 from .schedules import linear
-from .validate_inputs import validate_gpy_model, validate_number_models
+from .validate_inputs import validate_gpy_model, validate_njobs, validate_number_models
+
+
+def _train_model_picklable(i, models, restarts):
+    model = models[i]
+    model.optimize_restarts(restarts)
+    return model
 
 
 class PALGPy(PALBase):
@@ -13,10 +22,11 @@ class PALGPy(PALBase):
 
     def __init__(self, *args, **kwargs):
         self.restarts = kwargs.pop("restarts", 20)
-        self.parallel = kwargs.pop("parallel", False)
-        assert isinstance(
-            self.parallel, bool
-        ), "the parallel keyword must be of type bool"
+
+        n_jobs = kwargs.pop("n_jobs", 1)
+        validate_njobs(n_jobs)
+        self.n_jobs = n_jobs
+
         assert isinstance(
             self.restarts, int
         ), "the restarts keyword must be of type int"
@@ -46,8 +56,17 @@ class PALGPy(PALBase):
         self.std = np.hstack(stds)
 
     def _set_hyperparameters(self):
-        for model in self.models:
-            model.optimize_restarts(self.restarts, parallel=self.parallel)
+        models = []
+
+        train_model_pickleable_partial = partial(
+            _train_model_picklable, models=self.models, restarts=self.restarts
+        )
+        with concurrent.futures.ProcessPoolExecutor(
+            max_workers=self.n_jobs
+        ) as executor:
+            for model in executor.map(train_model_pickleable_partial, range(self.ndim)):
+                models.append(model)
+        self.models = models
 
     def _should_optimize_hyperparameters(self) -> bool:
         return linear(self.iteration, 10)

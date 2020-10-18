@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The pypal API reference &#8212; pypal 0+untagged.139.g37667f6 documentation</title>
+    <title>The pypal API reference &#8212; pypal 0+untagged.149.g806fb80.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -387,7 +387,10 @@ and the upper limits are the upper limits.</p>
 <li><p><strong>epsilon</strong> (<em>Union</em><em>[</em><em>list</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Epsilon hyperparameter.
 Defaults to 0.01.</p></li>
 <li><p><strong>delta</strong> (<em>float</em><em>, </em><em>optional</em>) – Delta hyperparameter. Defaults to 0.05.</p></li>
-<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta. Defaults to 1/9.</p></li>
+<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta.
+If not equal to 1, the theoretical guarantees do not necessarily hold.
+Also note that the parametrization depends on the kernel type.
+Defaults to 1/9.</p></li>
 <li><p><strong>goals</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – If a list, provide “min” for every objective
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
@@ -521,11 +524,11 @@ I.e., favoring exploration.</p>
 Defaults to None.</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – In case there are no uncertainity rectangles,
+<dd class="field-even"><p><strong>ValueError</strong> – In case there are no uncertainty rectangles,
     i.e., when the _predict has not been successfully called.</p>
 </dd>
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Index of next point to evaulate in desing space</p>
+<dd class="field-odd"><p>Index of next point to evaluate in design space</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>int</p>
@@ -567,7 +570,7 @@ Defaults to None.</p>
 <li><p><strong>indices</strong> (<em>np.ndarray</em>) – Indices of design space at which
 the measurements were taken</p></li>
 <li><p><strong>measurements</strong> (<em>np.ndarray</em>) – Measured values, 2D array.
-the length must equal the length of the inidices array.
+the length must equal the length of the indices array.
 the second direction must equal the number of objectives.
 If an objective is missing, provide np.nan. For example,
 np.array([1, 1, np.nan])</p></li>
@@ -605,7 +608,10 @@ For example, np.array([1, 1, np.nan])</p></li>
 <li><p><strong>epsilon</strong> (<em>Union</em><em>[</em><em>list</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Epsilon hyperparameter.
 Defaults to 0.01.</p></li>
 <li><p><strong>delta</strong> (<em>float</em><em>, </em><em>optional</em>) – Delta hyperparameter. Defaults to 0.05.</p></li>
-<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta. Defaults to 1/9.</p></li>
+<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta.
+If not equal to 1, the theoretical guarantees do not necessarily hold.
+Also note that the parametrization depends on the kernel type.
+Defaults to 1/9.</p></li>
 <li><p><strong>goals</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – If a list, provide “min” for every objective
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
@@ -639,7 +645,10 @@ that the code maximizes all objectives.</p></li>
 <li><p><strong>epsilon</strong> (<em>Union</em><em>[</em><em>list</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Epsilon hyperparameter.
 Defaults to 0.01.</p></li>
 <li><p><strong>delta</strong> (<em>float</em><em>, </em><em>optional</em>) – Delta hyperparameter. Defaults to 0.05.</p></li>
-<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta. Defaults to 1/9.</p></li>
+<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta.
+If not equal to 1, the theoretical guarantees do not necessarily hold.
+Also note that the parametrization depends on the kernel type.
+Defaults to 1/9.</p></li>
 <li><p><strong>goals</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – If a list, provide “min” for every objective
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
@@ -654,7 +663,7 @@ that the code maximizes all objectives.</p></li>
 </div>
 <div class="section" id="module-pypal.pal.pal_sklearn">
 <span id="for-sklearn-gpr-models"></span><h3>For sklearn GPR models<a class="headerlink" href="#module-pypal.pal.pal_sklearn" title="Permalink to this headline">¶</a></h3>
-<p>PAL using GPy GPR models</p>
+<p>PAL using Sklearn GPR models</p>
 <dl class="py class">
 <dt id="pypal.pal.pal_sklearn.PALSklearn">
 <em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_sklearn.</code><code class="sig-name descname">PALSklearn</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_sklearn.PALSklearn" title="Permalink to this definition">¶</a></dt>
@@ -673,7 +682,10 @@ that the code maximizes all objectives.</p></li>
 <li><p><strong>epsilon</strong> (<em>Union</em><em>[</em><em>list</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Epsilon hyperparameter.
 Defaults to 0.01.</p></li>
 <li><p><strong>delta</strong> (<em>float</em><em>, </em><em>optional</em>) – Delta hyperparameter. Defaults to 0.05.</p></li>
-<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta. Defaults to 1/9.</p></li>
+<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta.
+If not equal to 1, the theoretical guarantees do not necessarily hold.
+Also note that the parametrization depends on the kernel type.
+Defaults to 1/9.</p></li>
 <li><p><strong>goals</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – If a list, provide “min” for every objective
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
@@ -1080,6 +1092,12 @@ and ‘min’ for minimization</p></li>
 <dd class="field-even"><p>int</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pypal.pal.validate_inputs.validate_njobs">
+<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_njobs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">njobs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.validate_inputs.validate_njobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure that njobs is an int &gt; 1</p>
 </dd></dl>
 
 <dl class="py function">

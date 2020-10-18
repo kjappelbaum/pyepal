@@ -9,7 +9,7 @@ from .pal_base import PALBase
 from .validate_inputs import validate_njobs, validate_number_models
 
 
-def _train_model_pickleable(i, models, design_space, objectives, sampled):
+def _train_model_picklable(i, models, design_space, objectives, sampled):
     model = models[i]
     model.fit(
         design_space[sampled[:, i]],
@@ -34,7 +34,7 @@ class PALSklearn(PALBase):
 
     def _train(self):
         train_single_partial = partial(
-            _train_model_pickleable,
+            _train_model_picklable,
             models=self.models,
             design_space=self.design_space,
             objectives=self.y,
