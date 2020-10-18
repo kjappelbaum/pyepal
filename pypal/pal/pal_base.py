@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Base class for PAL"""
 
+import logging
 import warnings
 from copy import deepcopy
 from typing import List, Union
@@ -23,6 +24,9 @@ from .validate_inputs import (
     validate_goals,
     validate_ndim,
 )
+
+PAL_LOGGER = logging.getLogger("PALLogger")
+PAL_LOGGER.setLevel(logging.INFO)
 
 
 class PALBase:  # pylint:disable=too-many-instance-attributes
@@ -323,19 +327,23 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         return None
 
     def _compare_mae_variance(self):
-        mae = self._crossvalidate()
+        mae = np.nan_to_num(self._crossvalidate(), nan=np.inf)
         self._predict()
         mean_std = self.std.mean()
-        if mae > mean_std:
+        if mae >= mean_std:
             warnings.warn(
-                "The mean absolute error in crossvalidation is\
-                {:.2f}, the mean variance is {:.2f}. \
-                Your model might not be predictive and/or overconfident. \
-                In the docs, \
-                you find hints on how to make GPRs more robust.".format(
+                """The mean absolute error in crossvalidation is {:.2f},
+the mean variance is {:.2f}.
+Your model might not be predictive and/or overconfident.
+In the docs, you find hints on how to make GPRs more robust.""".format(
                     mae, mean_std
                 ),
                 UserWarning,
+            )
+        else:
+            PAL_LOGGER.info(
+                "The mean absolute error in crossvalidation is\
+                {:.2f}, the mean variance is {:.2f}."
             )
 
     def update_train_set(
