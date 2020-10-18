@@ -146,7 +146,7 @@ One fact that one needs to keep in mind is that :math:`\epsilon`-PAL will not wo
 This problem is exacerbated in conjunction with :math:`\beta_\mathrm{scale} < 1`. To make your model more robust you can try:
 
 - to set reasonable bounds on the lengthscale parameters
-- to increase the regularization parameter/noise kernel `alpha` in :code:`sklearn`
+- to increase the regularization parameter/noise kernel (:code:`alpha` in :code:`sklearn`)
 - increase the number of datapoints, especially the coverage of the design space
 - `to use a kernel that suits your problem <https://www.cs.toronto.edu/~duvenaud/cookbook/>`_
 - automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting
