@@ -38,7 +38,9 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             epsilon (Union[list, float], optional): Epsilon hyperparameter.
                 Defaults to 0.01.
             delta (float, optional): Delta hyperparameter. Defaults to 0.05.
-            beta_scale (float, optional): Scaling parameter for beta. Defaults to 1/9.
+            beta_scale (float, optional): Scaling parameter for beta.
+                If not equal to 1, the theoretical guarantees do not necessarily hold.
+                Defaults to 1/9.
             goals (List[str], optional): If a list, provide "min" for every objective
                 that shall be minimized and "max" for every objective
                 that shall be maximized. Defaults to None, which means
@@ -230,7 +232,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         """
         if not self._has_train_set:
             raise ValueError(
-                "You need to provide a points to train the model on.\
+                "You need to provide a set of points to train the model on.\
                Before the first iteration, call the update_train_set() function."
             )
         self._set_data()
@@ -269,7 +271,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             indices (np.ndarray): Indices of design space at which
                 the measurements were taken
             measurements (np.ndarray): Measured values, 2D array.
-                the length must equal the length of the inidices array.
+                the length must equal the length of the indices array.
                 the second direction must equal the number of objectives.
                 If an objective is missing, provide np.nan. For example,
                 np.array([1, 1, np.nan])
@@ -302,11 +304,11 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                 Defaults to None.
 
         Raises:
-            ValueError: In case there are no uncertainity rectangles,
+            ValueError: In case there are no uncertainty rectangles,
                 i.e., when the _predict has not been successfully called.
 
         Returns:
-            int: Index of next point to evaulate in desing space
+            int: Index of next point to evaluate in design space
         """
         if (self.rectangle_lows is None) | (self.rectangle_ups is None):
             raise ValueError(
@@ -315,7 +317,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             )
 
         # We count a point as sampled if at least one objective has
-        # been measured, i.e. self.sampled is a N * number objectives
+        # been measured, i.e., self.sampled is a N * number objectives
         # array in which some columns can be false if a measurement
         # has not been performed
         sampled_mask = self.sampled.sum(axis=1) > 0

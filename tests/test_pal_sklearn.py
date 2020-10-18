@@ -76,7 +76,7 @@ def test_orchestration_run_one_step_batch(binh_korn_points):
     # scaling up beta
     gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
     gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
-    palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 9)
+    palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 3)
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
@@ -89,7 +89,7 @@ def test_orchestration_run_one_step_batch(binh_korn_points):
     # smaller initial set
     gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
     gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
-    palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 9)
+    palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 3)
     sample_idx = np.array([1, 10, 20, 40, 70, 90])
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
