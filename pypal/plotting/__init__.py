@@ -178,8 +178,8 @@ def make_jointplot(  # pylint:disable=invalid-name
                 plot_pareto_front_2d(
                     y[:, row],
                     y[:, column],
-                    palinstance.std[:, row],
-                    palinstance.std[:, column],
+                    palinstance.std[:, row] * palinstance.beta,
+                    palinstance.std[:, column] * palinstance.beta,
                     palinstance,
                     ax=ax[row, column],
                 )
