@@ -2,7 +2,7 @@
 """Testing the PAL sklearn class"""
 import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import RBF
+from sklearn.gaussian_process.kernels import RBF, Matern
 
 from pypal.pal.pal_sklearn import PALSklearn
 
@@ -55,7 +55,9 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     assert sum(palinstance.discarded) == 0
 
 
-def test_orchestration_run_one_step_batch(binh_korn_points):
+def test_orchestration_run_one_step_batch(  # pylint:disable=too-many-statements
+    binh_korn_points,
+):
     """Test the batch sampling"""
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
@@ -102,6 +104,19 @@ def test_orchestration_run_one_step_batch(binh_korn_points):
     # smaller initial set and beta scale
     gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
     gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
+    palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 9)
+    sample_idx = np.array([1, 10, 20, 40, 70, 90])
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    idx = palinstance.run_one_step(batch_size=10)
+    for index in idx:
+        assert index not in [1, 10, 20, 40, 70, 90]
+    assert palinstance.number_sampled_points > 0
+    assert sum(palinstance.unclassified) > 0
+    assert sum(palinstance.discarded) == 0
+
+    # smaller initial set and beta scale and different kernel
+    gpr_0 = GaussianProcessRegressor(Matern(), normalize_y=True, n_restarts_optimizer=2)
+    gpr_1 = GaussianProcessRegressor(Matern(), normalize_y=True, n_restarts_optimizer=2)
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 9)
     sample_idx = np.array([1, 10, 20, 40, 70, 90])
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
