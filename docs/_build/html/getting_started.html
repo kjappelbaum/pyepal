@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.156.gf60edd1 documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.158.ge637aa3.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -202,10 +202,10 @@
 <div class="section" id="running-an-active-learning-experiment">
 <h2>Running an active learning experiment<a class="headerlink" href="#running-an-active-learning-experiment" title="Permalink to this headline">¶</a></h2>
 <p>The <cite>examples</cite> directory contains a <a class="reference external" href="https://github.com/kjappelbaum/pypal/blob/master/examples/test_pal.ipynb">Jupyter notebook with an example</a> that you can also run on MyBinder.</p>
-<p>If you use a Gaussian process model built with <cite>sklearn</cite> or <cite>GPy</cite> you can use a pre-built class and follow the following steps:</p>
+<p>If you use a Gaussian process model built with <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> or <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> you can use a pre-built class and follow the following steps:</p>
 <ol class="arabic">
 <li><p>For each objective create a model (if you want to use a coregionalized model you, of course, only need to create one)</p></li>
-<li><p>Sample a few initial points from your design space. In practice, you can use the <cite>get_maxmin_samples</cite> or <cite>get_kmeans_samples</cite> utilities for that. Assuming that <cite>X</cite> is a <cite>np.array</cite> if the descriptors/features</p>
+<li><p>Sample a few initial points from your design space. In practice, you can use the <code class="code docutils literal notranslate"><span class="pre">get_maxmin_samples</span></code> or <code class="code docutils literal notranslate"><span class="pre">get_kmeans_samples</span></code> utilities for that. Assuming that <code class="code docutils literal notranslate"><span class="pre">X</span></code> is a <code class="code docutils literal notranslate"><span class="pre">np.array</span></code> if the descriptors/features</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">get_kmeans_samples</span><span class="p">,</span> <span class="n">get_maxmin_samples</span>
 
@@ -218,7 +218,7 @@
 </div>
 </div></blockquote>
 </li>
-<li><p>Now, you can intialize the instance of one <cite>PAL</cite> class. If we use a <cite>sklearn</cite> Gaussian process model, we would use</p>
+<li><p>Now, you can intialize the instance of one <code class="code docutils literal notranslate"><span class="pre">PAL</span></code> class. If we use a <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> Gaussian process model, we would use</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALSklearn</span>
 
@@ -239,36 +239,36 @@
 </div>
 <p>At this level you have a range of different options you can set.</p>
 <ul>
-<li><p><cite>epsilon</cite>: in a <cite>np.array</cite> you can provide one <span class="math notranslate nohighlight">\(\epsilon\)</span> per dimension. This allows you to set looser tolerance for some objectives. Note that <span class="math notranslate nohighlight">\(\epsilon_i \in [0,1]\)</span>.</p></li>
-<li><p><cite>delta</cite>: allows you to specify the <span class="math notranslate nohighlight">\(\delta\)</span> hyperparameter (<span class="math notranslate nohighlight">\(\delta \in [0,1]\)</span>). Increasing this value will spped up the convergence.</p></li>
-<li><p><cite>beta_scale</cite>: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>. As shown in the figure below, <span class="math notranslate nohighlight">\(\beta\)</span> depends on <span class="math notranslate nohighlight">\(\delta\)</span> and scaling beta down will drastically reduce the size of the uncertainity rectangles</p>
+<li><p><code class="code docutils literal notranslate"><span class="pre">epsilon</span></code>: in a <code class="code docutils literal notranslate"><span class="pre">np.ndarray</span></code> you can provide one <span class="math notranslate nohighlight">\(\epsilon\)</span> per dimension. This allows you to set looser tolerance for some objectives. Note that <span class="math notranslate nohighlight">\(\epsilon_i \in [0,1]\)</span>.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">delta</span></code>: allows you to specify the <span class="math notranslate nohighlight">\(\delta\)</span> hyperparameter (<span class="math notranslate nohighlight">\(\delta \in [0,1]\)</span>). Increasing this value will spped up the convergence.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">beta_scale</span></code>: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>. As shown in the figure below, <span class="math notranslate nohighlight">\(\beta\)</span> depends on <span class="math notranslate nohighlight">\(\delta\)</span> and scaling beta down will drastically reduce the size of the uncertainity rectangles</p>
 <blockquote>
 <div><a class="reference internal image-reference" href="_images/beta.png"><img alt="Beta as function of hyperparameters" src="_images/beta.png" style="width: 600px;" /></a>
 </div></blockquote>
 </li>
-<li><p><cite>goal</cite>: By default, <cite>pypal</cite> assumes that you want to maximize every objective. If this is not the case, you can set the <cite>goal</cite> argument using a list of “min” and “max”, using “min” to specify that you want to minimize the ith objective and “max” to indicate that you want to maximize this objective.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">goal</span></code>: By default, <cite>pypal</cite> assumes that you want to maximize every objective. If this is not the case, you can set the <code class="code docutils literal notranslate"><span class="pre">goal</span></code> argument using a list of “min” and “max”, using “min” to specify that you want to minimize the ith objective and “max” to indicate that you want to maximize this objective.</p></li>
 </ul>
 </div></blockquote>
 </li>
 </ol>
-<p>In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as <cite>np.nan</cite>, i.e., the call could look like</p>
+<p>In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as <code class="code docutils literal notranslate"><span class="pre">np.nan</span></code>, i.e., the call could look like</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">palinstance</span><span class="o">.</span><span class="n">update_train_set</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
 </pre></div>
 </div>
 <p>for a case in which we performed measurements for samples 1 and 2 of our design space but didn’t measure the first target for sample 2.</p>
 <div class="section" id="hyperparameter-optimization">
 <h3>Hyperparameter optimization<a class="headerlink" href="#hyperparameter-optimization" title="Permalink to this headline">¶</a></h3>
-<p>Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process, you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the <cite>_should_optimize_hyperparameter</cite> function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.</p>
+<p>Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process, you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the <code class="code docutils literal notranslate"><span class="pre">_should_optimize_hyperparameter</span></code> function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.</p>
 </div>
 <div class="section" id="logging">
 <h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h3>
-<p>You will see basic information like the current iteration and the classification status if you print the <cite>PAL</cite> object</p>
+<p>You will see basic information like the current iteration and the classification status if you print the <code class="code docutils literal notranslate"><span class="pre">PAL</span></code> object</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">palinstance</span><span class="p">)</span>
 
 <span class="c1"># returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.</span>
 </pre></div>
 </div>
-<p>In case you want to also know the hypervolume, you can use the <cite>get_hypervolume</cite> function</p>
+<p>In case you want to also know the hypervolume, you can use the <code class="code docutils literal notranslate"><span class="pre">get_hypervolume</span></code> function</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hv</span> <span class="o">=</span> <span class="n">get_hypervolume</span><span class="p">(</span><span class="n">palinstance</span><span class="o">.</span><span class="n">means</span><span class="p">[</span><span class="n">palinstance</span><span class="o">.</span><span class="n">pareto_optimal</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -276,7 +276,7 @@
 <div class="section" id="exploring-a-space-where-all-objectives-are-known">
 <h3>Exploring a space where all objectives are known<a class="headerlink" href="#exploring-a-space-where-all-objectives-are-known" title="Permalink to this headline">¶</a></h3>
 <p>In some cases, you already know all measurements you may want to run PAL with different settings and test how the algorithm performs.
-In this case you can use the <cite>exhaust_loop</cite> wrapper.</p>
+In this case you can use the <code class="code docutils literal notranslate"><span class="pre">exhaust_loop</span></code> wrapper.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALSklearn</span><span class="p">,</span> <span class="n">exhaust_loop</span>
 <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">gpr0</span><span class="p">,</span> <span class="n">gpr1</span><span class="p">,</span> <span class="n">gpr2</span><span class="p">]</span>
 <span class="n">palinstance</span> <span class="o">=</span> <span class="n">PALSklearn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -284,11 +284,11 @@ In this case you can use the <cite>exhaust_loop</cite> wrapper.</p>
 <span class="n">exhaust_loop</span><span class="p">(</span><span class="n">palinstance</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This will continue calling <cite>run_one_step()</cite> until there is no unclassified sample left.</p>
+<p>This will continue calling <code class="code docutils literal notranslate"><span class="pre">run_one_step()</span></code> until there is no unclassified sample left.</p>
 </div>
 <div class="section" id="batch-sampling">
 <h3>Batch sampling<a class="headerlink" href="#batch-sampling" title="Permalink to this headline">¶</a></h3>
-<p>By default, the <cite>run_one_step</cite> function of the PAL classes will return a <cite>np.array</cite> with only one index for the point in the design space for which the next experiment should be performed. In some cases, you want to run multiple experiments in batches before you run a new iteration of the PyPAL. In this case, you use the <cite>batch_size</cite> keyword argument and change it to an integer greater than one.</p>
+<p>By default, the <code class="code docutils literal notranslate"><span class="pre">run_one_step</span></code> function of the PAL classes will return a <code class="code docutils literal notranslate"><span class="pre">np.ndarray</span></code> with only one index for the point in the design space for which the next experiment should be performed. In some cases, you want to run multiple experiments in batches before you run a new iteration of the PyPAL. In this case, you use the <code class="code docutils literal notranslate"><span class="pre">batch_size</span></code> keyword argument and change it to an integer greater than one.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">next_idx</span> <span class="o">=</span> <span class="n">palinstance</span><span class="o">.</span><span class="n">run_one_step</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="c1"># next_idx will be a np.array of length 10</span>
 </pre></div>
@@ -305,8 +305,8 @@ In this case you can use the <cite>exhaust_loop</cite> wrapper.</p>
 </div>
 <div class="section" id="implementing-a-new-pal-class">
 <h2>Implementing a new PAL class<a class="headerlink" href="#implementing-a-new-pal-class" title="Permalink to this headline">¶</a></h2>
-<p>If you want to use <cite>pypal</cite> with a model that we do not support yet, i.e., not <cite>GPy</cite> or <cite>sklearn</cite> Gaussian process regression, it is easy to write your own class. For this, you need to inherit from <cite>PALBase</cite> and implement your of <cite>_train</cite> and <cite>_predict</cite> functions (and maybe also the <cite>_set_hyperparameters</cite> and <cite>_should_optimize_hyperparameters</cite> functions) using the <cite>design_space</cite> and <cite>y</cite> attributes of the class.</p>
-<p>For instance, if we develop some multioutput model that has a <cite>train()</cite> and a <cite>predict()</cite> method we could simply do</p>
+<p>If you want to use <cite>pypal</cite> with a model that we do not support yet, i.e., not <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> or <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> Gaussian process regression, it is easy to write your own class. For this, you need to inherit from <cite>PALBase</cite> and implement your of <code class="code docutils literal notranslate"><span class="pre">_train</span></code> and <code class="code docutils literal notranslate"><span class="pre">_predict</span></code> functions (and maybe also the <code class="code docutils literal notranslate"><span class="pre">_set_hyperparameters</span></code> and <code class="code docutils literal notranslate"><span class="pre">_should_optimize_hyperparameters</span></code> functions) using the <code class="code docutils literal notranslate"><span class="pre">design_space</span></code> and <code class="code docutils literal notranslate"><span class="pre">y</span></code> attributes of the class.</p>
+<p>For instance, if we develop some multioutput model that has a <code class="code docutils literal notranslate"><span class="pre">train()</span></code> and a <code class="code docutils literal notranslate"><span class="pre">predict()</span></code> method we could simply do</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALBase</span>
 
 <span class="k">class</span> <span class="nc">PALMyModel</span><span class="p">(</span><span class="n">PALBase</span><span class="p">):</span>

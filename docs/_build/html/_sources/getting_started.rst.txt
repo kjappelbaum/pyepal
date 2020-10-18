@@ -24,11 +24,11 @@ Running an active learning experiment
 
 The `examples` directory contains a `Jupyter notebook with an example <https://github.com/kjappelbaum/pypal/blob/master/examples/test_pal.ipynb>`_ that you can also run on MyBinder.
 
-If you use a Gaussian process model built with `sklearn` or `GPy` you can use a pre-built class and follow the following steps:
+If you use a Gaussian process model built with :code:`sklearn` or :code:`GPy` you can use a pre-built class and follow the following steps:
 
 1. For each objective create a model (if you want to use a coregionalized model you, of course, only need to create one)
 
-2. Sample a few initial points from your design space. In practice, you can use the `get_maxmin_samples` or `get_kmeans_samples` utilities for that. Assuming that `X` is a `np.array` if the descriptors/features
+2. Sample a few initial points from your design space. In practice, you can use the :code:`get_maxmin_samples` or :code:`get_kmeans_samples` utilities for that. Assuming that :code:`X` is a :code:`np.array` if the descriptors/features
 
     .. code-block:: python
 
@@ -40,7 +40,7 @@ If you use a Gaussian process model built with `sklearn` or `GPy` you can use a 
         # This selects the 10 farthest points in feature space
         indices = get_maxmin_samples(X, 10)
 
-3. Now, you can intialize the instance of one `PAL` class. If we use a `sklearn` Gaussian process model, we would use
+3. Now, you can intialize the instance of one :code:`PAL` class. If we use a :code:`sklearn` Gaussian process model, we would use
 
     .. code-block:: python
 
@@ -62,17 +62,17 @@ If you use a Gaussian process model built with `sklearn` or `GPy` you can use a 
 
     At this level you have a range of different options you can set.
 
-    - `epsilon`: in a `np.array` you can provide one :math:`\epsilon` per dimension. This allows you to set looser tolerance for some objectives. Note that :math:`\epsilon_i \in [0,1]`.
-    - `delta`: allows you to specify the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will spped up the convergence.
-    - `beta_scale`: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`. As shown in the figure below, :math:`\beta` depends on :math:`\delta` and scaling beta down will drastically reduce the size of the uncertainity rectangles
+    - :code:`epsilon`: in a :code:`np.ndarray` you can provide one :math:`\epsilon` per dimension. This allows you to set looser tolerance for some objectives. Note that :math:`\epsilon_i \in [0,1]`.
+    - :code:`delta`: allows you to specify the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will spped up the convergence.
+    - :code:`beta_scale`: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`. As shown in the figure below, :math:`\beta` depends on :math:`\delta` and scaling beta down will drastically reduce the size of the uncertainity rectangles
 
         .. image:: _static/beta.png
             :width: 600
             :alt: Beta as function of hyperparameters
 
-    - `goal`: By default, `pypal` assumes that you want to maximize every objective. If this is not the case, you can set the `goal` argument using a list of "min" and "max", using "min" to specify that you want to minimize the ith objective and "max" to indicate that you want to maximize this objective.
+    - :code:`goal`: By default, `pypal` assumes that you want to maximize every objective. If this is not the case, you can set the :code:`goal` argument using a list of "min" and "max", using "min" to specify that you want to minimize the ith objective and "max" to indicate that you want to maximize this objective.
 
-In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as `np.nan`, i.e., the call could look like
+In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as :code:`np.nan`, i.e., the call could look like
 
 .. code-block:: python
 
@@ -82,11 +82,11 @@ for a case in which we performed measurements for samples 1 and 2 of our design 
 
 Hyperparameter optimization
 .............................
-Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process, you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the `_should_optimize_hyperparameter` function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.
+Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process, you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the :code:`_should_optimize_hyperparameter` function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.
 
 Logging
 ........
-You will see basic information like the current iteration and the classification status if you print the `PAL` object
+You will see basic information like the current iteration and the classification status if you print the :code:`PAL` object
 
 .. code:: python
 
@@ -95,7 +95,7 @@ You will see basic information like the current iteration and the classification
     # returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.
 
 
-In case you want to also know the hypervolume, you can use the `get_hypervolume` function
+In case you want to also know the hypervolume, you can use the :code:`get_hypervolume` function
 
 .. code:: python
 
@@ -106,7 +106,7 @@ Exploring a space where all objectives are known
 .................................................
 
 In some cases, you already know all measurements you may want to run PAL with different settings and test how the algorithm performs.
-In this case you can use the `exhaust_loop` wrapper.
+In this case you can use the :code:`exhaust_loop` wrapper.
 
 .. code-block:: python
 
@@ -116,13 +116,13 @@ In this case you can use the `exhaust_loop` wrapper.
 
     exhaust_loop(palinstance, y)
 
-This will continue calling `run_one_step()` until there is no unclassified sample left.
+This will continue calling :code:`run_one_step()` until there is no unclassified sample left.
 
 
 Batch sampling
 ................
 
-By default, the `run_one_step` function of the PAL classes will return a `np.array` with only one index for the point in the design space for which the next experiment should be performed. In some cases, you want to run multiple experiments in batches before you run a new iteration of the PyPAL. In this case, you use the `batch_size` keyword argument and change it to an integer greater than one.
+By default, the :code:`run_one_step` function of the PAL classes will return a :code:`np.ndarray` with only one index for the point in the design space for which the next experiment should be performed. In some cases, you want to run multiple experiments in batches before you run a new iteration of the PyPAL. In this case, you use the :code:`batch_size` keyword argument and change it to an integer greater than one.
 
 .. code-block:: python
 
@@ -143,9 +143,9 @@ Of course, also the `exhaust_loop` supports the `batch_size` keyword argument
 Implementing a new PAL class
 ------------------------------
 
-If you want to use `pypal` with a model that we do not support yet, i.e., not `GPy` or `sklearn` Gaussian process regression, it is easy to write your own class. For this, you need to inherit from `PALBase` and implement your of `_train` and `_predict` functions (and maybe also the `_set_hyperparameters` and `_should_optimize_hyperparameters` functions) using the `design_space` and `y` attributes of the class.
+If you want to use `pypal` with a model that we do not support yet, i.e., not :code:`GPy` or :code:`sklearn` Gaussian process regression, it is easy to write your own class. For this, you need to inherit from `PALBase` and implement your of :code:`_train` and :code:`_predict` functions (and maybe also the :code:`_set_hyperparameters` and :code:`_should_optimize_hyperparameters` functions) using the :code:`design_space` and :code:`y` attributes of the class.
 
-For instance, if we develop some multioutput model that has a `train()` and a `predict()` method we could simply do
+For instance, if we develop some multioutput model that has a :code:`train()` and a :code:`predict()` method we could simply do
 
 .. code-block:: python
 
