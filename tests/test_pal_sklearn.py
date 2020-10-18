@@ -54,7 +54,13 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     assert sum(palinstance.unclassified) > 0
     assert sum(palinstance.discarded) == 0
 
-    # Test batch sampling
+
+def test_orchestration_run_one_step_batch(binh_korn_points):
+    """Test the batch sampling"""
+    X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
+    gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1)
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -68,12 +74,27 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     assert sum(palinstance.discarded) == 0
 
     # scaling up beta
+    gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
+    gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 9)
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
     for index in idx:
         assert index not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    assert palinstance.number_sampled_points > 0
+    assert sum(palinstance.unclassified) > 0
+    assert sum(palinstance.discarded) == 0
+
+    # smaller initial set
+    gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
+    gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=2)
+    palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 9)
+    sample_idx = np.array([1, 10, 20, 40, 70, 90])
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    idx = palinstance.run_one_step(batch_size=10)
+    for index in idx:
+        assert index not in [1, 10, 20, 40, 70, 90]
     assert palinstance.number_sampled_points > 0
     assert sum(palinstance.unclassified) > 0
     assert sum(palinstance.discarded) == 0
