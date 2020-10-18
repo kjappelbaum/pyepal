@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.150.g8d8072f documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.156.gf60edd1 documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -241,7 +241,7 @@
 <ul>
 <li><p><cite>epsilon</cite>: in a <cite>np.array</cite> you can provide one <span class="math notranslate nohighlight">\(\epsilon\)</span> per dimension. This allows you to set looser tolerance for some objectives. Note that <span class="math notranslate nohighlight">\(\epsilon_i \in [0,1]\)</span>.</p></li>
 <li><p><cite>delta</cite>: allows you to specify the <span class="math notranslate nohighlight">\(\delta\)</span> hyperparameter (<span class="math notranslate nohighlight">\(\delta \in [0,1]\)</span>). Increasing this value will spped up the convergence.</p></li>
-<li><p><cite>beta_scale</cite>: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>. As shown in the figure below, <span class="math notranslate nohighlight">\(\beta\)</span> depends on <span class="math notranslate nohighlight">\(\delta\)</span></p>
+<li><p><cite>beta_scale</cite>: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>. As shown in the figure below, <span class="math notranslate nohighlight">\(\beta\)</span> depends on <span class="math notranslate nohighlight">\(\delta\)</span> and scaling beta down will drastically reduce the size of the uncertainity rectangles</p>
 <blockquote>
 <div><a class="reference internal image-reference" href="_images/beta.png"><img alt="Beta as function of hyperparameters" src="_images/beta.png" style="width: 600px;" /></a>
 </div></blockquote>

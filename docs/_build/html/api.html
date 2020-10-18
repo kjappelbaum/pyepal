@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The pypal API reference &#8212; pypal 0+untagged.150.g8d8072f documentation</title>
+    <title>The pypal API reference &#8212; pypal 0+untagged.156.gf60edd1 documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -316,6 +316,12 @@ classified as non-Pareto optimal</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt id="pypal.pal.core._uncertainty">
+<code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_uncertainty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rectangle_ups</span></em>, <em class="sig-param"><span class="n">rectangle_lows</span></em>, <em class="sig-param"><span class="n">means</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.core._uncertainty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hyperrectangle sizes</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="pypal.pal.core._union">
 <code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_union</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lows</span></em>, <em class="sig-param"><span class="n">ups</span></em>, <em class="sig-param"><span class="n">new_lows</span></em>, <em class="sig-param"><span class="n">new_ups</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.core._union" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performing iterative intersection (eq. 6 in PAL paper) in all dimensions.</p>
@@ -449,6 +455,12 @@ hyperrectangles is decreasing.</p>
 <dt id="pypal.pal.pal_base.PALBase.discarded_points">
 <em class="property">property </em><code class="sig-name descname">discarded_points</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.discarded_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the discarded points</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pypal.pal.pal_base.PALBase.hyperrectangle_sizes">
+<em class="property">property </em><code class="sig-name descname">hyperrectangle_sizes</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.hyperrectangle_sizes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the sizes of the hyperrectangles</p>
 </dd></dl>
 
 <dl class="py method">
@@ -598,7 +610,7 @@ For example, np.array([1, 1, np.nan])</p></li>
 <dl class="py method">
 <dt id="pypal.pal.pal_gpy.PALGPy.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_gpy.PALGPy.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize the PAL instance</p>
+<dd><p>Contruct the PALGPy instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -616,6 +628,10 @@ Defaults to 1/9.</p></li>
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
 that the code maximizes all objectives.</p></li>
+<li><p><strong>restarts</strong> (<em>int</em>) – Number of random restarts that are used for hyperparameter
+optimization. Defaults to 20.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em>) – Number of parallel processes that are used to fit
+the GPR models. Defaults to 1.</p></li>
 </ul>
 </dd>
 </dl>
@@ -635,7 +651,7 @@ that the code maximizes all objectives.</p></li>
 <dl class="py method">
 <dt id="pypal.pal.pal_coregionalized.PALCoregionalized.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_coregionalized.PALCoregionalized.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize the PAL instance</p>
+<dd><p>Construct the PALCoregionalized instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -653,6 +669,10 @@ Defaults to 1/9.</p></li>
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
 that the code maximizes all objectives.</p></li>
+<li><p><strong>restarts</strong> (<em>int</em>) – Number of random restarts that are used for hyperparameter
+optimization. Defaults to 20.</p></li>
+<li><p><strong>parallel</strong> (<em>bool</em>) – If true, model hyperparameters are optimized in parallel,
+using the GPy implementation. Defaults to False.</p></li>
 </ul>
 </dd>
 </dl>
@@ -672,7 +692,7 @@ that the code maximizes all objectives.</p></li>
 <dl class="py method">
 <dt id="pypal.pal.pal_sklearn.PALSklearn.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_sklearn.PALSklearn.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize the PAL instance</p>
+<dd><p>Construct the PALSklearn instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -690,6 +710,8 @@ Defaults to 1/9.</p></li>
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
 that the code maximizes all objectives.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em>) – Number of parallel processes that are used to fit
+the GPR models. Defaults to 1.</p></li>
 </ul>
 </dd>
 </dl>
