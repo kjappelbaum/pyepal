@@ -26,7 +26,7 @@ The `examples` directory contains a `Jupyter notebook with an example <https://g
 
 If you use a Gaussian process model built with `sklearn` or `GPy` you can use a pre-built class and follow the following steps:
 
-1. For each objective create a model (if you want to use a coregionalized model you of course only need to create one)
+1. For each objective create a model (if you want to use a coregionalized model you, of course, only need to create one)
 
 2. Sample a few initial points from your design space. In practice, you can use the `get_maxmin_samples` or `get_kmeans_samples` utilities for that. Assuming that `X` is a `np.array` if the descriptors/features
 
@@ -64,7 +64,12 @@ If you use a Gaussian process model built with `sklearn` or `GPy` you can use a 
 
     - `epsilon`: in a `np.array` you can provide one :math:`\epsilon` per dimension. This allows you to set looser tolerance for some objectives. Note that :math:`\epsilon_i \in [0,1]`.
     - `delta`: allows you to specify the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will spped up the convergence.
-    - `beta_scale`: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`.
+    - `beta_scale`: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`. As shown in the figure below, :math:`\beta` depends on :math:`\delta`
+
+        .. image:: _static/beta.png
+            :width: 600
+            :alt: Beta as function of hyperparameters
+
     - `goal`: By default, `pypal` assumes that you want to maximize every objective. If this is not the case, you can set the `goal` argument using a list of "min" and "max", using "min" to specify that you want to minimize the ith objective and "max" to indicate that you want to maximize this objective.
 
 In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as `np.nan`, i.e., the call could look like
@@ -156,7 +161,7 @@ For instance, if we develop some multioutput model that has a `train()` and a `p
 
 Note that we typically provide the models, even if it is only one, in a list to keep the API consistent.
 
-In some instances, you might want to perform a operation in parallel, e.g., train the models for different objectives in parallel. One convient way to do this in Python is `concurrent.futures <https://docs.python.org/3/library/concurrent.futures.html>`_. The only hitch is that this approach requires that the function is picklable. To ensure is, you may want to implement the function that is to be run in parallel outside the class. For example, you could use the following design pattern
+In some instances, you might want to perform an operation in parallel, e.g., train the models for different objectives in parallel. One convenient way to do this in Python is `concurrent.futures <https://docs.python.org/3/library/concurrent.futures.html>`_. The only hitch is that this approach requires that the function is picklable. To ensure is, you may want to implement the function that is to be run in parallel outside the class. For example, you could use the following design pattern
 
 .. code-block:: python
 
