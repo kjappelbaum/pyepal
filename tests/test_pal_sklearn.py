@@ -55,25 +55,14 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     assert sum(palinstance.discarded) == 0
 
     # Test batch sampling
-
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1)
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
     assert len(idx) == 10
     assert len(np.unique(idx)) == 10
-    assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
-    assert palinstance.number_sampled_points > 0
-    assert sum(palinstance.unclassified) > 0
-    assert sum(palinstance.discarded) == 0
-
-    # Batch sampling binh-korn
-
-    palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1)
-
-    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
-    idx = palinstance.run_one_step(batch_size=10)
-    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    for index in idx:
+        assert index not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
     assert palinstance.number_sampled_points > 0
     assert sum(palinstance.unclassified) > 0
     assert sum(palinstance.discarded) == 0
@@ -83,7 +72,8 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
-    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    for index in idx:
+        assert index not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
     assert palinstance.number_sampled_points > 0
     assert sum(palinstance.unclassified) > 0
     assert sum(palinstance.discarded) == 0
