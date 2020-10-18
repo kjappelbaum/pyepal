@@ -14,7 +14,7 @@ def test_pal_base(make_random_dataset):
     assert palinstance.number_pareto_optimal_points == 0
     assert palinstance.number_unclassified_points == 100
     assert palinstance.number_sampled_points == 0
-
+    assert palinstance.should_cross_validate()
     assert len(palinstance.discarded_points) == 0
     assert len(palinstance.pareto_optimal_points) == 0
     assert len(palinstance.unclassified_points) == 100

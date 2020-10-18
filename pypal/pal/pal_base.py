@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Base class for PAL"""
 
+import warnings
 from copy import deepcopy
 from typing import List, Union
 
@@ -210,19 +211,31 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             replace=False,
         )
         for sampled_idx in sample_subset:
-            self.sampled = sampled_original.copy()
-            self.sampled[sampled_idx, :] = False
+            # make sure that we do not run into errors due to np.nan
+            if self.y[sampled_idx].sum() == self.ndim:
+                # copy here is important, otherewise all
+                # points we set to False remain False
+                self.sampled = sampled_original.copy()
+                self.sampled[sampled_idx, :] = False
 
-            self._set_data()
-            if self._should_optimize_hyperparameters():
-                self._set_hyperparameters()
-            self._train()
-            self._predict()
-            error = mean_absolute_error(self.y[sampled_idx], self.means[sampled_idx])
-            errors.append(error)
+                self._set_data()
+                if self._should_optimize_hyperparameters():
+                    self._set_hyperparameters()
+                self._train()
+                self._predict()
+                error = mean_absolute_error(
+                    self.y[sampled_idx], self.means[sampled_idx]
+                )
+                errors.append(error)
 
         self.sampled = sampled_original
         return np.array(errors).mean()
+
+    def should_cross_validate(self):
+        """Override for more complex cross validation schedules"""
+        if self.iteration == 1:
+            return True
+        return False
 
     def _update_hyperrectangles(self):
         """Computes new hyperrectangles based on beta,
@@ -280,11 +293,17 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                 "You need to provide a set of points to train the model on.\
                Before the first iteration, call the update_train_set() function."
             )
+
         self._set_data()
+        if self.should_cross_validate():
+            self._compare_mae_variance()
+
         if self._should_optimize_hyperparameters():
             self._set_hyperparameters()
+
         self._train()
         self._predict()
+
         self._update_beta()
         self._replace_by_measurements()
         self._update_hyperrectangles()
@@ -302,6 +321,22 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             return samples
         print("Done. No unclassified point left")
         return None
+
+    def _compare_mae_variance(self):
+        mae = self._crossvalidate()
+        self._predict()
+        mean_std = self.std.mean()
+        if mae > mean_std:
+            warnings.warn(
+                "The mean absolute error in crossvalidation is\
+                {:.2f}, the mean variance is {:.2f}. \
+                Your model might not be predictive and/or overconfident. \
+                In the docs, \
+                you find hints on how to make GPRs more robust.".format(
+                    mae, mean_std
+                ),
+                UserWarning,
+            )
 
     def update_train_set(
         self,
