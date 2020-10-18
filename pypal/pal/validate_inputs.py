@@ -220,3 +220,11 @@ def validate_coregionalized_gpy(models: list):
         raise ValueError(
             "Model must be a GPCoregionalized regression object from this package!"
         )
+
+
+def validate_njobs(njobs: int):
+    """Make sure that njobs is an int > 1"""
+    if not isinstance(njobs, int):
+        raise ValueError("njobs musst be of type int")
+    if njobs < 1:
+        raise ValueError("njobs must be a number greater equal 1")

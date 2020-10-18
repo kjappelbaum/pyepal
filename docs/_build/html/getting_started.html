@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.139.g37667f6 documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.149.g806fb80.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -242,23 +242,23 @@
 <li><p><cite>epsilon</cite>: in a <cite>np.array</cite> you can provide one <span class="math notranslate nohighlight">\(\epsilon\)</span> per dimension. This allows you to set looser tolerance for some objectives. Note that <span class="math notranslate nohighlight">\(\epsilon_i \in [0,1]\)</span>.</p></li>
 <li><p><cite>delta</cite>: allows you to specify the <span class="math notranslate nohighlight">\(\delta\)</span> hyperparameter (<span class="math notranslate nohighlight">\(\delta \in [0,1]\)</span>). Increasing this value will spped up the convergence.</p></li>
 <li><p><cite>beta_scale</cite>: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>.</p></li>
-<li><p><cite>goal</cite>: By default, <cite>pypal</cite> assumes that you want to maximize every objective. If this is not the case, you can set the <cite>goal</cite> argument using a list of “min” and “max”, using “min” to specifiy that you want to minimize the ith objective and “max” to inidicate that you want to maximize this objective.</p></li>
+<li><p><cite>goal</cite>: By default, <cite>pypal</cite> assumes that you want to maximize every objective. If this is not the case, you can set the <cite>goal</cite> argument using a list of “min” and “max”, using “min” to specify that you want to minimize the ith objective and “max” to indicate that you want to maximize this objective.</p></li>
 </ul>
 </div></blockquote>
 </li>
 </ol>
-<p>In case you have missing observations, i.e., you measured only two of three outputs at some times you need to report the missing observations as <cite>np.nan</cite>, i.e., the call could look like</p>
+<p>In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as <cite>np.nan</cite>, i.e., the call could look like</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">palinstance</span><span class="o">.</span><span class="n">update_train_set</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
 </pre></div>
 </div>
 <p>for a case in which we performed measurements for samples 1 and 2 of our design space but didn’t measure the first target for sample 2.</p>
 <div class="section" id="hyperparameter-optimization">
 <h3>Hyperparameter optimization<a class="headerlink" href="#hyperparameter-optimization" title="Permalink to this headline">¶</a></h3>
-<p>Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the <cite>_should_optimize_hyperparameter</cite> function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.</p>
+<p>Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process, you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the <cite>_should_optimize_hyperparameter</cite> function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.</p>
 </div>
 <div class="section" id="logging">
 <h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h3>
-<p>You will see basic information like the current iteration and the classficiation status if you print the <cite>PAL</cite> object</p>
+<p>You will see basic information like the current iteration and the classification status if you print the <cite>PAL</cite> object</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">palinstance</span><span class="p">)</span>
 
 <span class="c1"># returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.</span>
@@ -284,7 +284,7 @@ In this case you can use the <cite>exhaust_loop</cite> wrapper.</p>
 </div>
 <div class="section" id="batch-sampling">
 <h3>Batch sampling<a class="headerlink" href="#batch-sampling" title="Permalink to this headline">¶</a></h3>
-<p>By default, the <cite>run_one_step</cite> function of the PAL classes will return a <cite>np.array</cite> with only one index for the point in the design space for which the next experiment should be performed. In some cases, you want to run multiple experiments in batches before you run a new iteration of the PyPAL. In this case, you use the <cite>batch_size</cite> keyword argument and change it to a integer greater than one.</p>
+<p>By default, the <cite>run_one_step</cite> function of the PAL classes will return a <cite>np.array</cite> with only one index for the point in the design space for which the next experiment should be performed. In some cases, you want to run multiple experiments in batches before you run a new iteration of the PyPAL. In this case, you use the <cite>batch_size</cite> keyword argument and change it to an integer greater than one.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">next_idx</span> <span class="o">=</span> <span class="n">palinstance</span><span class="o">.</span><span class="n">run_one_step</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="c1"># next_idx will be a np.array of length 10</span>
 </pre></div>
@@ -314,6 +314,45 @@ In this case you can use the <cite>exhaust_loop</cite> wrapper.</p>
 </pre></div>
 </div>
 <p>Note that we typically provide the models, even if it is only one, in a list to keep the API consistent.</p>
+<p>In some instances, you might want to perform a operation in parallel, e.g., train the models for different objectives in parallel. One convient way to do this in Python is <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html">concurrent.futures</a>. The only hitch is that this approach requires that the function is picklable. To ensure is, you may want to implement the function that is to be run in parallel outside the class. For example, you could use the following design pattern</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALBase</span>
+<span class="kn">import</span> <span class="nn">concurrent.futures</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="k">def</span> <span class="nf">_train_model_picklable</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">design_space</span><span class="p">,</span> <span class="n">objectives</span><span class="p">,</span> <span class="n">sampled</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+        <span class="n">design_space</span><span class="p">[</span><span class="n">sampled</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]],</span>
+        <span class="n">objectives</span><span class="p">[</span><span class="n">sampled</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="k">class</span> <span class="nc">MyPal</span><span class="p">(</span><span class="n">PALBase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;n_jobs&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">validate_njobs</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">validate_number_models</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">train_single_partial</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+            <span class="n">_train_model_picklable</span><span class="p">,</span>
+            <span class="n">models</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span>
+            <span class="n">design_space</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">,</span>
+            <span class="n">objectives</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+            <span class="n">sampled</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">(</span>
+            <span class="n">max_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">train_single_partial</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">)):</span>
+                <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">models</span>
+</pre></div>
+</div>
 </div>
 </div>
 

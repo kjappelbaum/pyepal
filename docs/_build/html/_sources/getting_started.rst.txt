@@ -65,9 +65,9 @@ If you use a Gaussian process model built with `sklearn` or `GPy` you can use a 
     - `epsilon`: in a `np.array` you can provide one :math:`\epsilon` per dimension. This allows you to set looser tolerance for some objectives. Note that :math:`\epsilon_i \in [0,1]`.
     - `delta`: allows you to specify the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will spped up the convergence.
     - `beta_scale`: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`.
-    - `goal`: By default, `pypal` assumes that you want to maximize every objective. If this is not the case, you can set the `goal` argument using a list of "min" and "max", using "min" to specifiy that you want to minimize the ith objective and "max" to inidicate that you want to maximize this objective.
+    - `goal`: By default, `pypal` assumes that you want to maximize every objective. If this is not the case, you can set the `goal` argument using a list of "min" and "max", using "min" to specify that you want to minimize the ith objective and "max" to indicate that you want to maximize this objective.
 
-In case you have missing observations, i.e., you measured only two of three outputs at some times you need to report the missing observations as `np.nan`, i.e., the call could look like
+In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as `np.nan`, i.e., the call could look like
 
 .. code-block:: python
 
@@ -77,11 +77,11 @@ for a case in which we performed measurements for samples 1 and 2 of our design 
 
 Hyperparameter optimization
 .............................
-Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the `_should_optimize_hyperparameter` function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.
+Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process, you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the `_should_optimize_hyperparameter` function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.
 
 Logging
 ........
-You will see basic information like the current iteration and the classficiation status if you print the `PAL` object
+You will see basic information like the current iteration and the classification status if you print the `PAL` object
 
 .. code:: python
 
@@ -117,7 +117,7 @@ This will continue calling `run_one_step()` until there is no unclassified sampl
 Batch sampling
 ................
 
-By default, the `run_one_step` function of the PAL classes will return a `np.array` with only one index for the point in the design space for which the next experiment should be performed. In some cases, you want to run multiple experiments in batches before you run a new iteration of the PyPAL. In this case, you use the `batch_size` keyword argument and change it to a integer greater than one.
+By default, the `run_one_step` function of the PAL classes will return a `np.array` with only one index for the point in the design space for which the next experiment should be performed. In some cases, you want to run multiple experiments in batches before you run a new iteration of the PyPAL. In this case, you use the `batch_size` keyword argument and change it to an integer greater than one.
 
 .. code-block:: python
 
@@ -155,3 +155,44 @@ For instance, if we develop some multioutput model that has a `train()` and a `p
 
 
 Note that we typically provide the models, even if it is only one, in a list to keep the API consistent.
+
+In some instances, you might want to perform a operation in parallel, e.g., train the models for different objectives in parallel. One convient way to do this in Python is `concurrent.futures <https://docs.python.org/3/library/concurrent.futures.html>`_. The only hitch is that this approach requires that the function is picklable. To ensure is, you may want to implement the function that is to be run in parallel outside the class. For example, you could use the following design pattern
+
+.. code-block:: python
+
+    from pypal import PALBase
+    import concurrent.futures
+    from functools import partial
+
+    def _train_model_picklable(i, models, design_space, objectives, sampled):
+        model = models[i]
+        model.fit(
+            design_space[sampled[:, i]],
+            objectives[sampled[:, i], i].reshape(-1, 1),
+        )
+        return model
+
+    class MyPal(PALBase):
+        def __init__(self, *args, **kwargs):
+            n_jobs = kwargs.pop("n_jobs", 1)
+            validate_njobs(n_jobs)
+            self.n_jobs = n_jobs
+            super().__init__(*args, **kwargs)
+
+            validate_number_models(self.models, self.ndim)
+
+        def _train(self):
+            train_single_partial = partial(
+                _train_model_picklable,
+                models=self.models,
+                design_space=self.design_space,
+                objectives=self.y,
+                sampled=self.sampled,
+            )
+            models = []
+            with concurrent.futures.ProcessPoolExecutor(
+                max_workers=self.n_jobs
+            ) as executor:
+                for model in executor.map(train_single_partial, range(self.ndim)):
+                    models.append(model)
+            self.models = models
