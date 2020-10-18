@@ -40,6 +40,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             delta (float, optional): Delta hyperparameter. Defaults to 0.05.
             beta_scale (float, optional): Scaling parameter for beta.
                 If not equal to 1, the theoretical guarantees do not necessarily hold.
+                Also note that the parametrization depends on the kernel type.
                 Defaults to 1/9.
             goals (List[str], optional): If a list, provide "min" for every objective
                 that shall be minimized and "max" for every objective
@@ -57,7 +58,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.rectangle_ups: np.array = None
         self.rectangle_lows: np.array = None
         self.models = base_validate_models(models)
-        self.iteration = 0
+        self.iteration = 1
         self.design_space_size = len(X_design)
         # means/std are the model predictions
         self.means: np.array = None
@@ -187,7 +188,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         hyperrectangles is decreasing.
         """
         lows, ups = _get_uncertainty_regions(self.means, self.std, np.sqrt(self.beta))
-        if self.iteration == 0:
+        if self.iteration == 1:
             # initialization
             self.rectangle_lows, self.rectangle_ups = lows, ups
         else:

@@ -21,7 +21,7 @@ def test_pal_base(make_random_dataset):
 
     assert (
         str(palinstance)
-        == "pypal at iteration 0. \
+        == "pypal at iteration 1. \
         0 Pareto optimal points, \
         0 discarded points, \
         100 unclassified points."
@@ -60,7 +60,7 @@ def test_beta_update(make_random_dataset):
     assert palinstance.beta is not None
 
     assert palinstance.beta == 1 / 9 * 2 * np.log(
-        3 * 100 * np.square(np.pi) * np.square(1) / (6 * 0.05)
+        3 * 100 * np.square(np.pi) * np.square(2) / (6 * 0.05)
     )
 
 

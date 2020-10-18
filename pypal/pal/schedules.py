@@ -16,6 +16,8 @@ def linear(iteration: int, frequency: int = 10) -> bool:
     Returns:
         bool: True if iteration can be divided by frequency without remainder
     """
+    if iteration == 1:
+        return True
     if iteration % frequency == 0:
         return True
     return False
@@ -31,7 +33,7 @@ def exp_decay(iteration: int, base: int = 10) -> bool:
     Returns:
         bool: True if iteration is on the log scaled grid
     """
-    if iteration == 0:
+    if iteration == 1:
         return True
 
     result = math.log(iteration, base)
