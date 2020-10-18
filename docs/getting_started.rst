@@ -26,7 +26,7 @@ The `examples` directory contains a `Jupyter notebook with an example <https://g
 
 If you use a Gaussian process model built with `sklearn` or `GPy` you can use a pre-built class and follow the following steps:
 
-1. For each objective create a model (if you want to use a coregionalized model you of course only need to create one)
+1. For each objective create a model (if you want to use a coregionalized model you, of course, only need to create one)
 
 2. Sample a few initial points from your design space. In practice, you can use the `get_maxmin_samples` or `get_kmeans_samples` utilities for that. Assuming that `X` is a `np.array` if the descriptors/features
 
@@ -156,7 +156,7 @@ For instance, if we develop some multioutput model that has a `train()` and a `p
 
 Note that we typically provide the models, even if it is only one, in a list to keep the API consistent.
 
-In some instances, you might want to perform a operation in parallel, e.g., train the models for different objectives in parallel. One convient way to do this in Python is `concurrent.futures <https://docs.python.org/3/library/concurrent.futures.html>`_. The only hitch is that this approach requires that the function is picklable. To ensure is, you may want to implement the function that is to be run in parallel outside the class. For example, you could use the following design pattern
+In some instances, you might want to perform an operation in parallel, e.g., train the models for different objectives in parallel. One convenient way to do this in Python is `concurrent.futures <https://docs.python.org/3/library/concurrent.futures.html>`_. The only hitch is that this approach requires that the function is picklable. To ensure is, you may want to implement the function that is to be run in parallel outside the class. For example, you could use the following design pattern
 
 .. code-block:: python
 
