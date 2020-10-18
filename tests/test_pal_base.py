@@ -19,6 +19,9 @@ def test_pal_base(make_random_dataset):
     assert len(palinstance.pareto_optimal_points) == 0
     assert len(palinstance.unclassified_points) == 100
 
+    with pytest.raises(ValueError):
+        palinstance.hyperrectangle_sizes  # pylint:disable=pointless-statement
+
     assert (
         str(palinstance)
         == "pypal at iteration 1. \
@@ -178,6 +181,8 @@ def test__update_hyperrectangles(make_random_dataset):
 
     assert palinstance.rectangle_lows[1][0] < -1
     assert palinstance.rectangle_ups[1][0] > 1
+
+    assert len(palinstance.hyperrectangle_sizes) == len(palinstance.means)
 
 
 def test_orchestration_run_one_step(make_random_dataset):

@@ -8,6 +8,7 @@ from pypal.pal.core import (
     _get_uncertainty_region,
     _get_uncertainty_regions,
     _pareto_classify,
+    _uncertainty,
     _union,
     _union_one_dim,
 )
@@ -343,3 +344,31 @@ def test_pareto_classify(binh_korn_points):  # pylint:disable=too-many-locals
         sampled,
     )
     assert max_wt == 2
+
+
+def test__uncertainty():
+    """Test the calculation of the hyperrectangle sizes"""
+    lows = np.array(
+        [
+            [0.0, 0.0, 0.0, 0.0],
+            [-1.0, -1.0, -1.0, -1.0],
+            [-2.0, -2.0, -2.0, -2.0],
+            [2.0, 2.0, 2.0, 2.0],
+            [2.0, 2.0, 2.0, 2.0],
+        ]
+    )
+    highs = np.array(
+        [
+            [1.0, 1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0, 1.0],
+            [2.0, 2.0, 2.0, 2.0],
+            [2.0, 2.0, 2.0, 2.0],
+        ]
+    )
+    means = np.array(
+        [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]
+    )
+
+    uncertainites = _uncertainty(highs, lows, means)
+    assert len(uncertainites) == len(means)

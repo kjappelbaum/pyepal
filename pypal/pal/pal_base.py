@@ -5,7 +5,13 @@ from typing import List, Union
 
 import numpy as np
 
-from .core import _get_max_wt, _get_uncertainty_regions, _pareto_classify, _union
+from .core import (
+    _get_max_wt,
+    _get_uncertainty_regions,
+    _pareto_classify,
+    _uncertainty,
+    _union,
+)
 from .validate_inputs import (
     base_validate_models,
     validate_beta_scale,
@@ -144,6 +150,11 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
     def number_sampled_points(self):
         """Return the number of sampled points"""
         return len(self.sampled_indices)
+
+    @property
+    def hyperrectangle_sizes(self):
+        """Return the sizes of the hyperrectangles"""
+        return _uncertainty(self.rectangle_ups, self.rectangle_lows, self.means)
 
     def _update_beta(self):
         """Update beta according to section 7.2. of the epsilon-PAL paper"""
