@@ -230,3 +230,4 @@ def test_crossvalidate(binh_korn_points):
     assert (palinstance.sampled == original_sample_mask).all()
 
     assert isinstance(cross_val_error, float)
+    assert np.abs(cross_val_error) > 0

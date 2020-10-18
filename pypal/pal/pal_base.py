@@ -216,7 +216,8 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         )
         for sampled_idx in sample_subset:
             # make sure that we do not run into errors due to np.nan
-            if self.y[sampled_idx].sum() == self.ndim:
+            if self.sampled[sampled_idx].sum() == self.ndim:
+                print("cross validating")
                 # copy here is important, otherewise all
                 # points we set to False remain False
                 self.sampled = sampled_original.copy()
