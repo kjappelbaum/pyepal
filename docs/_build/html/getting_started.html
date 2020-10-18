@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.160.gcbda9d8 documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.161.g056e023.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -169,6 +169,10 @@
         </li>
 
         <li class="nav-item toc-entry toc-h2">
+            <a href="#caveats-and-tricks-with-gaussian-processes" class="nav-link">Caveats and tricks with Gaussian processes</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h2">
             <a href="#implementing-a-new-pal-class" class="nav-link">Implementing a new PAL class</a>
         </li>
 
@@ -240,7 +244,7 @@
 <p>At this level you have a range of different options you can set.</p>
 <ul>
 <li><p><code class="code docutils literal notranslate"><span class="pre">epsilon</span></code>: in a <code class="code docutils literal notranslate"><span class="pre">np.ndarray</span></code> you can provide one <span class="math notranslate nohighlight">\(\epsilon\)</span> per dimension. This allows you to set looser tolerance for some objectives. Note that <span class="math notranslate nohighlight">\(\epsilon_i \in [0,1]\)</span>.</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">delta</span></code>: allows you to specify the <span class="math notranslate nohighlight">\(\delta\)</span> hyperparameter (<span class="math notranslate nohighlight">\(\delta \in [0,1]\)</span>). Increasing this value will spped up the convergence.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">delta</span></code>: allows you to specify the <span class="math notranslate nohighlight">\(\delta\)</span> hyperparameter (<span class="math notranslate nohighlight">\(\delta \in [0,1]\)</span>). Increasing this value will speed up the convergence.</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">beta_scale</span></code>: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>. As shown in the figure below, <span class="math notranslate nohighlight">\(\beta\)</span> depends on <span class="math notranslate nohighlight">\(\delta\)</span> and scaling beta down will drastically reduce the size of the uncertainity rectangles</p>
 <blockquote>
 <div><a class="reference internal image-reference" href="_images/beta.png"><img alt="Beta as function of hyperparameters" src="_images/beta.png" style="width: 600px;" /></a>
@@ -302,6 +306,19 @@ In this case you can use the <code class="code docutils literal notranslate"><sp
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="caveats-and-tricks-with-gaussian-processes">
+<h2>Caveats and tricks with Gaussian processes<a class="headerlink" href="#caveats-and-tricks-with-gaussian-processes" title="Permalink to this headline">¶</a></h2>
+<p>One fact that one needs to keep in mind is that <span class="math notranslate nohighlight">\(\epsilon\)</span>-PAL will not work with the predictive variance does not make sense, for example, when the model is overconfident.
+This problem is exacerbated in conjunction with <span class="math notranslate nohighlight">\(\beta_\mathrm{scale} &lt; 1\)</span>. To make your model more robust you can try:</p>
+<ul class="simple">
+<li><p>to set reasonable bounds on the lengthscale parameters</p></li>
+<li><p>to increase the regularization parameter/noise kernel <cite>alpha</cite> in <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code></p></li>
+<li><p>increase the number of datapoints, especially the coverage of the design space</p></li>
+<li><p><a class="reference external" href="https://www.cs.toronto.edu/~duvenaud/cookbook/">to use a kernel that suits your problem</a></p></li>
+<li><p>automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting</p></li>
+</ul>
+<p>We also recommend to cross-validate your Gaussian process model and to check that the predicted variances make sense.</p>
 </div>
 <div class="section" id="implementing-a-new-pal-class">
 <h2>Implementing a new PAL class<a class="headerlink" href="#implementing-a-new-pal-class" title="Permalink to this headline">¶</a></h2>

@@ -63,7 +63,7 @@ If you use a Gaussian process model built with :code:`sklearn` or :code:`GPy` yo
     At this level you have a range of different options you can set.
 
     - :code:`epsilon`: in a :code:`np.ndarray` you can provide one :math:`\epsilon` per dimension. This allows you to set looser tolerance for some objectives. Note that :math:`\epsilon_i \in [0,1]`.
-    - :code:`delta`: allows you to specify the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will spped up the convergence.
+    - :code:`delta`: allows you to specify the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will speed up the convergence.
     - :code:`beta_scale`: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`. As shown in the figure below, :math:`\beta` depends on :math:`\delta` and scaling beta down will drastically reduce the size of the uncertainity rectangles
 
         .. image:: _static/beta.png
@@ -139,6 +139,19 @@ Of course, also the `exhaust_loop` supports the `batch_size` keyword argument
     # point left
     exhaust_loop(palinstance, y, batch_size=10)
 
+Caveats and tricks with Gaussian processes
+-------------------------------------------
+
+One fact that one needs to keep in mind is that :math:`\epsilon`-PAL will not work with the predictive variance does not make sense, for example, when the model is overconfident.
+This problem is exacerbated in conjunction with :math:`\beta_\mathrm{scale} < 1`. To make your model more robust you can try:
+
+- to set reasonable bounds on the lengthscale parameters
+- to increase the regularization parameter/noise kernel `alpha` in :code:`sklearn`
+- increase the number of datapoints, especially the coverage of the design space
+- `to use a kernel that suits your problem <https://www.cs.toronto.edu/~duvenaud/cookbook/>`_
+- automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting
+
+We also recommend to cross-validate your Gaussian process model and to check that the predicted variances make sense.
 
 Implementing a new PAL class
 ------------------------------
