@@ -41,11 +41,12 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     """
     # This random dataset is not really ideal for a Pareto test as there's only one
     # optimal point it appears to me
+    np.random.seed(10)
     X, y = make_random_dataset  # pylint:disable=invalid-name
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     model = build_coregionalized_model(X[sample_idx], y[sample_idx])
     palinstance = PALCoregionalized(
-        X, [model], 3, beta_scale=1, epsilon=0.01, delta=0.01
+        X, [model], 3, beta_scale=1, epsilon=0.01, delta=0.01, restarts=3
     )
 
     palinstance.update_train_set(sample_idx, y[sample_idx])
@@ -62,7 +63,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     model = build_coregionalized_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx])
 
     palinstance = PALCoregionalized(
-        X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01
+        X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01, restarts=3
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -76,7 +77,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     # testing batch sampling
     model = build_coregionalized_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx])
     palinstance = PALCoregionalized(
-        X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01
+        X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01, restarts=3
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -93,6 +94,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
 
 def test_orchestration_run_one_step_missing_data(binh_korn_points):
     """Test that the model also works with missing observations"""
+    np.random.seed(10)
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
 
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
@@ -102,7 +104,7 @@ def test_orchestration_run_one_step_missing_data(binh_korn_points):
     )
 
     palinstance = PALCoregionalized(
-        X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01
+        X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01, restarts=3
     )
 
     # make some of the observations missing

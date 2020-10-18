@@ -39,6 +39,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     In the base class it should raise an error as without
     prediction function we cannot do anything
     """
+    np.random.seed(10)
     # This random dataset is not really ideal for a Pareto test as there's only one
     # optimal point it appears to me
     X, y = make_random_dataset  # pylint:disable=invalid-name
@@ -47,7 +48,13 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     model_1 = build_model(X[sample_idx], y[sample_idx], 1)
     model_2 = build_model(X[sample_idx], y[sample_idx], 2)
     palinstance = PALGPy(
-        X, [model_0, model_1, model_2], 3, beta_scale=1, epsilon=0.01, delta=0.01
+        X,
+        [model_0, model_1, model_2],
+        3,
+        beta_scale=1,
+        epsilon=0.01,
+        delta=0.01,
+        restarts=3,
     )
 
     palinstance.update_train_set(sample_idx, y[sample_idx])
@@ -62,7 +69,13 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
 
     palinstance = PALGPy(
-        X_binh_korn, [model_0, model_1], 2, beta_scale=1, epsilon=0.01, delta=0.01
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        epsilon=0.01,
+        delta=0.01,
+        restarts=3,
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -74,6 +87,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
 
 def test_orchestration_run_one_step_parallel(binh_korn_points):
     """Test if the parallelization works"""
+    np.random.seed(10)
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
 
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
@@ -88,6 +102,7 @@ def test_orchestration_run_one_step_parallel(binh_korn_points):
         epsilon=0.01,
         delta=0.01,
         n_jobs=2,
+        restarts=3,
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -99,6 +114,7 @@ def test_orchestration_run_one_step_parallel(binh_korn_points):
 
 def test_minimize_run_one_step(binh_korn_points):
     """Test that the minimization argument does not behave weirdly"""
+    np.random.seed(10)
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
     y_binh_korn = -y_binh_korn
 
@@ -114,6 +130,7 @@ def test_minimize_run_one_step(binh_korn_points):
         goals=["min", "min"],
         epsilon=0.01,
         delta=0.01,
+        restarts=3,
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -131,6 +148,7 @@ def test_minimize_run_one_step(binh_korn_points):
         goals=[-1, -1],
         epsilon=0.01,
         delta=0.01,
+        restarts=3,
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -150,6 +168,7 @@ def test_minimize_run_one_step(binh_korn_points):
         goals=[1, -1],
         epsilon=0.01,
         delta=0.01,
+        restarts=3,
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -169,6 +188,7 @@ def test_minimize_run_one_step(binh_korn_points):
         goals=[1, -1],
         epsilon=0.01,
         delta=0.01,
+        restarts=3,
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
@@ -182,7 +202,7 @@ def test_minimize_run_one_step(binh_korn_points):
 
 def test_orchestration_run_one_step_missing_data(binh_korn_points):
     """Test that the model also works with missing observations"""
-
+    np.random.seed(10)
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
 
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
@@ -191,7 +211,13 @@ def test_orchestration_run_one_step_missing_data(binh_korn_points):
     model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
 
     palinstance = PALGPy(
-        X_binh_korn, [model_0, model_1], 2, beta_scale=1, epsilon=0.01, delta=0.01
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        epsilon=0.01,
+        delta=0.01,
+        restarts=3,
     )
 
     # make some of the observations missing
@@ -218,7 +244,13 @@ def test_crossvalidate(binh_korn_points):
     model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
 
     palinstance = PALGPy(
-        X_binh_korn, [model_0, model_1], 2, beta_scale=1, epsilon=0.01, delta=0.01
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        epsilon=0.01,
+        delta=0.01,
+        restarts=3,
     )
     palinstance.cross_val_points = 2
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
