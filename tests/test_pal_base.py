@@ -59,7 +59,7 @@ def test_beta_update(make_random_dataset):
     palinstance._update_beta()
     assert palinstance.beta is not None
 
-    assert palinstance.beta == 1 / 16 * 2 * np.log(
+    assert palinstance.beta == 1 / 9 * 2 * np.log(
         3 * 100 * np.square(np.pi) * np.square(1) / (6 * 0.05)
     )
 

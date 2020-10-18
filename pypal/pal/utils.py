@@ -84,7 +84,9 @@ def is_pareto_efficient(costs: np.array, return_mask: bool = True) -> np.array:
     return is_efficient
 
 
-def exhaust_loop(palinstance, y: np.array):  # pylint:disable=invalid-name
+def exhaust_loop(
+    palinstance, y: np.array, batch_size: int = 1
+):  # pylint:disable=invalid-name
     """Helper function that takes an initialized PAL instance
     and loops the sampling until there is no unclassified point left.
     This is useful if all measurements are already taken and one
@@ -97,6 +99,8 @@ def exhaust_loop(palinstance, y: np.array):  # pylint:disable=invalid-name
         y (np.array): Measurements.
             The number of measurements must equal the number of
             points in the design space.
+        batch_size (int, optional): Number of indices that will be returned.
+                Defaults to 10.
 
     Returns:
         None. The PAL instance is updated in place
@@ -105,9 +109,9 @@ def exhaust_loop(palinstance, y: np.array):  # pylint:disable=invalid-name
         y
     ), "The number of points in the design space must equal the number of measurements"
     while sum(palinstance.unclassified):
-        idx = palinstance.run_one_step()
+        idx = palinstance.run_one_step(batch_size=batch_size)
         if idx is not None:
-            palinstance.update_train_set(np.array([idx]), y[idx : idx + 1, :])
+            palinstance.update_train_set(idx, y[idx])
 
 
 def get_kmeans_samples(  # pylint:disable=invalid-name

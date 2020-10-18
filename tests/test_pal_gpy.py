@@ -21,7 +21,7 @@ def test_pal_gpy(make_random_dataset):
     m1 = build_model(X, y, 1)  # pylint:disable=invalid-name
     m2 = build_model(X, y, 2)  # pylint:disable=invalid-name
 
-    palgpy_instance = PALGPy(X, [m0, m1, m2], 3)
+    palgpy_instance = PALGPy(X, [m0, m1, m2], 3, delta=0.01)
     assert palgpy_instance.restarts == 20
     assert not palgpy_instance.parallel
 
@@ -47,11 +47,13 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     model_0 = build_model(X[sample_idx], y[sample_idx], 0)
     model_1 = build_model(X[sample_idx], y[sample_idx], 1)
     model_2 = build_model(X[sample_idx], y[sample_idx], 2)
-    palinstance = PALGPy(X, [model_0, model_1, model_2], 3, beta_scale=1)
+    palinstance = PALGPy(
+        X, [model_0, model_1, model_2], 3, beta_scale=1, epsilon=0.01, delta=0.01
+    )
 
     palinstance.update_train_set(sample_idx, y[sample_idx])
     idx = palinstance.run_one_step()
-    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
 
@@ -59,11 +61,13 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     model_0 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0)
     model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
 
-    palinstance = PALGPy(X_binh_korn, [model_0, model_1], 2, beta_scale=1)
+    palinstance = PALGPy(
+        X_binh_korn, [model_0, model_1], 2, beta_scale=1, epsilon=0.01, delta=0.01
+    )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
-    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
     assert palinstance.number_sampled_points > 0
     assert sum(palinstance.discarded) == 0
 
@@ -78,40 +82,82 @@ def test_minimize_run_one_step(binh_korn_points):
     model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
 
     palinstance = PALGPy(
-        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=["min", "min"]
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        goals=["min", "min"],
+        epsilon=0.01,
+        delta=0.01,
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
-    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    assert len(idx) == 1
+    assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
     assert palinstance.number_sampled_points > 0
     assert sum(palinstance.discarded) == 0
 
     palinstance = PALGPy(
-        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=[-1, -1]
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        goals=[-1, -1],
+        epsilon=0.01,
+        delta=0.01,
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
-    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    assert len(idx) == 1
+    assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
     assert palinstance.number_sampled_points > 0
     assert sum(palinstance.discarded) == 0
 
     y_binh_korn = y_binh_korn * np.array([-1, 1])
 
     palinstance = PALGPy(
-        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=[1, -1]
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        goals=[1, -1],
+        epsilon=0.01,
+        delta=0.01,
     )
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
-    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    assert len(idx) == 1
+    assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    assert palinstance.number_sampled_points > 0
+    assert sum(palinstance.discarded) == 0
+
+    # Testing batch sampling
+
+    palinstance = PALGPy(
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        goals=[1, -1],
+        epsilon=0.01,
+        delta=0.01,
+    )
+
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    idx = palinstance.run_one_step(batch_size=10)
+    assert len(idx) == 10
+    assert len(np.unique(idx)) == 10
+    assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
     assert palinstance.number_sampled_points > 0
     assert sum(palinstance.discarded) == 0
 
 
 def test_orchestration_run_one_step_missing_data(binh_korn_points):
     """Test that the model also works with missing observations"""
+
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
 
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
@@ -119,7 +165,9 @@ def test_orchestration_run_one_step_missing_data(binh_korn_points):
     model_0 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0)
     model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
 
-    palinstance = PALGPy(X_binh_korn, [model_0, model_1], 2, beta_scale=1)
+    palinstance = PALGPy(
+        X_binh_korn, [model_0, model_1], 2, beta_scale=1, epsilon=0.01, delta=0.01
+    )
 
     # make some of the observations missing
     y_binh_korn[:10, 1] = np.nan
@@ -127,7 +175,7 @@ def test_orchestration_run_one_step_missing_data(binh_korn_points):
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
 
     idx = palinstance.run_one_step()
-    assert idx not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+    assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
     assert palinstance.number_sampled_points > 0
     assert sum(palinstance.unclassified) > 0
     assert sum(palinstance.discarded) == 0

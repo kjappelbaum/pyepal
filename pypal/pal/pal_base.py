@@ -26,9 +26,24 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         ndim: int,
         epsilon: Union[list, float] = 0.01,
         delta: float = 0.05,
-        beta_scale: float = 1 / 16,
+        beta_scale: float = 1 / 9,
         goals: List[str] = None,
     ):
+        """Initialize the PAL instance
+
+        Args:
+            X_design (np.array): Design space (feature matrix)
+            models (list): Machine learning models
+            ndim (int): Number of objectives
+            epsilon (Union[list, float], optional): Epsilon hyperparameter.
+                Defaults to 0.01.
+            delta (float, optional): Delta hyperparameter. Defaults to 0.05.
+            beta_scale (float, optional): Scaling parameter for beta. Defaults to 1/9.
+            goals (List[str], optional): If a list, provide "min" for every objective
+                that shall be minimized and "max" for every objective
+                that shall be maximized. Defaults to None, which means
+                that the code maximizes all objectives.
+        """
         self.ndim = validate_ndim(ndim)
         self.epsilon = validate_epsilon(epsilon, self.ndim)
         self.delta = validate_delta(delta)
@@ -42,19 +57,24 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.models = base_validate_models(models)
         self.iteration = 0
         self.design_space_size = len(X_design)
+        # means/std are the model predictions
         self.means: np.array = None
         self.std: np.array = None
 
         self.design_space = X_design
         self.beta = None
         self.goals = validate_goals(goals, ndim)
-        self.sampled_idx = 0
+        self.sampled_idx = np.array([0])
+        # self.y is what needs to be used for train/predict
+        # as there the data has been turned into maximization
+        # self._y contains the data as provided by the user
         self.y = np.zeros(  # pylint:disable=invalid-name
             (self.design_space_size, self.ndim)
         )
+        self._y = self.y
+        # measurement_uncertainity is provided in update_train_set by the user
         self.measurement_uncertainty = np.zeros((self.design_space_size, self.ndim))
         self._has_train_set = False
-        self._y = self.y
 
     def __repr__(self):
         return f"pypal at iteration {self.iteration}. \
@@ -193,8 +213,21 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.means[self.sampled] = self.y[self.sampled]
         self.std[self.sampled] = self.measurement_uncertainty[self.sampled]
 
-    def run_one_step(self) -> Union[int, None]:
-        """Inner part of the loop"""
+    def run_one_step(self, batch_size: int = 1) -> Union[np.array, None]:
+        """[summary]
+
+        Args:
+            batch_size (int, optional): Number of indices that will be returned.
+                Defaults to 1.
+
+        Raises:
+            ValueError: In case the PAL instance was not initialized with
+                measurements.
+
+        Returns:
+            Union[np.array, None]: Returns array of indices if there are
+                unclassified points that can be sample left.
+        """
         if not self._has_train_set:
             raise ValueError(
                 "You need to provide a points to train the model on.\
@@ -209,12 +242,18 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self._replace_by_measurements()
         self._update_hyperrectangles()
         self._classify()
+        samples = np.array([], dtype=np.int)
         if sum(self.unclassified):
-            sampled_idx = self.sample()
-            self.sampled_idx = sampled_idx
+            for _ in range(batch_size):
+                sampled_idx = self.sample(exclude_idx=samples)
+                samples = np.append(samples, [sampled_idx])
+                self._log()
+
+            self.sampled_idx = samples
             self._log()
             self.iteration += 1
-            return sampled_idx
+
+            return samples
         print("Done. No unclassified point left")
         return None
 
@@ -249,12 +288,22 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             measurement_uncertainty = np.zeros(measurements.shape)
         self._y[indices] = measurements
         self.measurement_uncertainty[indices] = measurement_uncertainty
+        # This sets "sampled" to False for the objectives that have not been measured
         self.sampled[indices] = ~np.isnan(measurements)
         self._turn_to_maximization()
 
-    def sample(self) -> int:
+    def sample(self, exclude_idx: Union[np.array, None] = None) -> int:
         """Runs the sampling step based on the size of the hyperrectangle.
         I.e., favoring exploration.
+
+        Args:
+            exclude_idx (Union[np.array, None], optional):
+                Points in design space to exclude from sampling.
+                Defaults to None.
+
+        Raises:
+            ValueError: In case there are no uncertainity rectangles,
+                i.e., when the _predict has not been successfully called.
 
         Returns:
             int: Index of next point to evaulate in desing space
@@ -265,13 +314,28 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                      before you can peform the sampling"
             )
 
+        # We count a point as sampled if at least one objective has
+        # been measured, i.e. self.sampled is a N * number objectives
+        # array in which some columns can be false if a measurement
+        # has not been performed
+        sampled_mask = self.sampled.sum(axis=1) > 0
+
+        # This is to handle the case of batch sampling, where we do need
+        # to make sure that we do not sample the same points
+        if isinstance(exclude_idx, np.ndarray):
+            if len(exclude_idx) >= 1:
+                exclude_mask = np.zeros(len(sampled_mask), dtype=bool)
+                exclude_mask[exclude_idx] = True
+
+                sampled_mask += exclude_mask
+
         sampled_idx = _get_max_wt(
             self.rectangle_lows,
             self.rectangle_ups,
             self.means,
             self.pareto_optimal,
             self.unclassified,
-            self.sampled.sum(axis=1) > 0,
+            sampled_mask,
         )
 
         return sampled_idx

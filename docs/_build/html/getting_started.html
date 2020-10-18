@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.135.g973312a.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.139.g37667f6 documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -161,6 +161,10 @@
             <a href="#exploring-a-space-where-all-objectives-are-known" class="nav-link">Exploring a space where all objectives are known</a>
         </li>
 
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#batch-sampling" class="nav-link">Batch sampling</a>
+        </li>
+
             </ul>
         </li>
 
@@ -277,6 +281,22 @@ In this case you can use the <cite>exhaust_loop</cite> wrapper.</p>
 </pre></div>
 </div>
 <p>This will continue calling <cite>run_one_step()</cite> until there is no unclassified sample left.</p>
+</div>
+<div class="section" id="batch-sampling">
+<h3>Batch sampling<a class="headerlink" href="#batch-sampling" title="Permalink to this headline">¶</a></h3>
+<p>By default, the <cite>run_one_step</cite> function of the PAL classes will return a <cite>np.array</cite> with only one index for the point in the design space for which the next experiment should be performed. In some cases, you want to run multiple experiments in batches before you run a new iteration of the PyPAL. In this case, you use the <cite>batch_size</cite> keyword argument and change it to a integer greater than one.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">next_idx</span> <span class="o">=</span> <span class="n">palinstance</span><span class="o">.</span><span class="n">run_one_step</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># next_idx will be a np.array of length 10</span>
+</pre></div>
+</div>
+<p>Of course, also the <cite>exhaust_loop</cite> supports the <cite>batch_size</cite> keyword argument</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">palinstance</span> <span class="o">=</span> <span class="n">PALSklearn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># sample always 10 points and do this until there is no unclassified</span>
+<span class="c1"># point left</span>
+<span class="n">exhaust_loop</span><span class="p">(</span><span class="n">palinstance</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="implementing-a-new-pal-class">
