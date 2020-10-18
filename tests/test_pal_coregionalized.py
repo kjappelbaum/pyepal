@@ -54,7 +54,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     # initial set
     if idx is not None:
         assert len(idx) == 1
-        assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
+        assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
 
