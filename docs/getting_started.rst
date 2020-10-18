@@ -152,6 +152,7 @@ This problem is exacerbated in conjunction with :math:`\beta_\mathrm{scale} < 1`
 - automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting
 
 We also recommend to cross-validate your Gaussian process model and to check that the predicted variances make sense.
+By default, the code will run a simple cross-validation only on the first iteration and warn if the mean mean absolute error is above the mean standard deviation. If you want to change this behavior and run the cross-validation test more frequently, you can override the `should_run_crossvalidation` function.
 
 Implementing a new PAL class
 ------------------------------
