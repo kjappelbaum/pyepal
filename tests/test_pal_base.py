@@ -47,7 +47,7 @@ def test_update_train_set(make_random_dataset):
     assert palinstance.sampled.sum() == 0
 
     palinstance.update_train_set(np.array([0]), y[0, :].reshape(-1, 3))
-    assert palinstance.sampled_idx == np.array([0])
+    assert palinstance.sampled_indices == np.array([0])
     assert palinstance.number_sampled_points == 1
     assert (palinstance.y[0] == y[0, :]).all()
 

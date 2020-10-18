@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """Base class for PAL"""
 
+from copy import deepcopy
 from typing import List, Union
 
 import numpy as np
+from sklearn.metrics import mean_absolute_error
 
 from .core import (
     _get_max_wt,
@@ -53,6 +55,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                 that shall be maximized. Defaults to None, which means
                 that the code maximizes all objectives.
         """
+        self.cross_val_points = 10  # maybe we make it an argument at some point
         self.ndim = validate_ndim(ndim)
         self.epsilon = validate_epsilon(epsilon, self.ndim)
         self.delta = validate_delta(delta)
@@ -73,7 +76,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.design_space = X_design
         self.beta = None
         self.goals = validate_goals(goals, ndim)
-        self.sampled_idx = np.array([0])
+
         # self.y is what needs to be used for train/predict
         # as there the data has been turned into maximization
         # self._y contains the data as provided by the user
@@ -191,6 +194,36 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
     def _set_data(self):
         pass
 
+    def _crossvalidate(self):
+        sampled_original = deepcopy(self.sampled)
+        sampled_idx_original = self.sampled_indices
+        errors = []
+        # this step is to make the code not to complicate
+        # and deal with both large and small sample sizes
+        # in small samples sizes, we want to do leave-on-out CV
+        # in large samples this is too expensive,
+        # hence we chose a random subset, for which we
+        # test the model
+        sample_subset = np.random.choice(
+            sampled_idx_original,
+            min([self.cross_val_points, len(sampled_idx_original)]),
+            replace=False,
+        )
+        for sampled_idx in sample_subset:
+            self.sampled = sampled_original.copy()
+            self.sampled[sampled_idx, :] = False
+
+            self._set_data()
+            if self._should_optimize_hyperparameters():
+                self._set_hyperparameters()
+            self._train()
+            self._predict()
+            error = mean_absolute_error(self.y[sampled_idx], self.means[sampled_idx])
+            errors.append(error)
+
+        self.sampled = sampled_original
+        return np.array(errors).mean()
+
     def _update_hyperrectangles(self):
         """Computes new hyperrectangles based on beta,
         the means and the standard deviations.
@@ -263,7 +296,6 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                 samples = np.append(samples, [sampled_idx])
                 self._log()
 
-            self.sampled_idx = samples
             self._log()
             self.iteration += 1
 

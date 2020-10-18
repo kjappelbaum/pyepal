@@ -187,3 +187,25 @@ def test_orchestration_run_one_step_missing_data(binh_korn_points):
     assert palinstance.number_sampled_points > 0
     assert sum(palinstance.unclassified) > 0
     assert sum(palinstance.discarded) == 0
+
+
+def test_crossvalidate(binh_korn_points):
+    """Test the crossvalidation routine"""
+    np.random.seed(10)
+    gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=4)
+    gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=4)
+
+    X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
+
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
+
+    palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1)
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+
+    original_sample_mask = palinstance.sampled
+
+    cross_val_error = palinstance._crossvalidate()  # pylint:disable=protected-access
+    assert (palinstance.sampled_indices == sample_idx).all()
+    assert (palinstance.sampled == original_sample_mask).all()
+
+    assert isinstance(cross_val_error, float)
