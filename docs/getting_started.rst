@@ -147,12 +147,12 @@ This problem is exacerbated in conjunction with :math:`\beta_\mathrm{scale} < 1`
 
 - to set reasonable bounds on the lengthscale parameters
 - to increase the regularization parameter/noise kernel (:code:`alpha` in :code:`sklearn`)
-- increase the number of datapoints, especially the coverage of the design space
+- to increase the number of datapoints, especially the coverage of the design space
 - `to use a kernel that suits your problem <https://www.cs.toronto.edu/~duvenaud/cookbook/>`_
-- automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting
+- to turn off ARD. Automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting
 
 We also recommend to cross-validate your Gaussian process model and to check that the predicted variances make sense.
-By default, the code will run a simple cross-validation only on the first iteration and warn if the mean mean absolute error is above the mean standard deviation. If you want to change this behavior and run the cross-validation test more frequently, you can override the `should_run_crossvalidation` function.
+By default, the code will run a simple cross-validation only on the first iteration and warn if the mean mean absolute error is above the mean standard deviation. If you want to change this behavior and run the cross-validation test more frequently, you can override the :code:`should_run_crossvalidation` function.
 
 Implementing a new PAL class
 ------------------------------

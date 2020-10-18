@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.167.g9058af5.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.168.g180f128.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -314,12 +314,12 @@ This problem is exacerbated in conjunction with <span class="math notranslate no
 <ul class="simple">
 <li><p>to set reasonable bounds on the lengthscale parameters</p></li>
 <li><p>to increase the regularization parameter/noise kernel (<code class="code docutils literal notranslate"><span class="pre">alpha</span></code> in <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code>)</p></li>
-<li><p>increase the number of datapoints, especially the coverage of the design space</p></li>
+<li><p>to increase the number of datapoints, especially the coverage of the design space</p></li>
 <li><p><a class="reference external" href="https://www.cs.toronto.edu/~duvenaud/cookbook/">to use a kernel that suits your problem</a></p></li>
-<li><p>automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting</p></li>
+<li><p>to turn off ARD. Automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting</p></li>
 </ul>
 <p>We also recommend to cross-validate your Gaussian process model and to check that the predicted variances make sense.
-By default, the code will run a simple cross-validation only on the first iteration and warn if the mean mean absolute error is above the mean standard deviation. If you want to change this behavior and run the cross-validation test more frequently, you can override the <cite>should_run_crossvalidation</cite> function.</p>
+By default, the code will run a simple cross-validation only on the first iteration and warn if the mean mean absolute error is above the mean standard deviation. If you want to change this behavior and run the cross-validation test more frequently, you can override the <code class="code docutils literal notranslate"><span class="pre">should_run_crossvalidation</span></code> function.</p>
 </div>
 <div class="section" id="implementing-a-new-pal-class">
 <h2>Implementing a new PAL class<a class="headerlink" href="#implementing-a-new-pal-class" title="Permalink to this headline">¶</a></h2>
