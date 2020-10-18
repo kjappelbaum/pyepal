@@ -64,7 +64,12 @@ If you use a Gaussian process model built with `sklearn` or `GPy` you can use a 
 
     - `epsilon`: in a `np.array` you can provide one :math:`\epsilon` per dimension. This allows you to set looser tolerance for some objectives. Note that :math:`\epsilon_i \in [0,1]`.
     - `delta`: allows you to specify the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will spped up the convergence.
-    - `beta_scale`: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`.
+    - `beta_scale`: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`. As shown in the figure below, :math:`\beta` depends on :math:`\delta`
+
+        .. image:: _static/beta.png
+            :width: 600
+            :alt: Beta as function of hyperparameters
+
     - `goal`: By default, `pypal` assumes that you want to maximize every objective. If this is not the case, you can set the `goal` argument using a list of "min" and "max", using "min" to specify that you want to minimize the ith objective and "max" to indicate that you want to maximize this objective.
 
 In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as `np.nan`, i.e., the call could look like
