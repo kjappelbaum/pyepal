@@ -1,27 +1,28 @@
 # -*- coding: utf-8 -*-
 """Plotting utilities"""
-import numpy as np
-from typing import Iterable
+
+from typing import List, Union
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 plt.rcParams["font.family"] = "sans-serif"
 
 
 def plot_bar_iterations(  # pylint:disable=invalid-name
-    pareto_optimal: Iterable,
-    non_pareto_points: Iterable,
-    unclassified_points: Iterable,
+    pareto_optimal: np.ndarray,
+    non_pareto_points: np.ndarray,
+    unclassified_points: np.ndarray,
     ax=None,
 ):
     """Plot stacked barplots for every step of the iteration.
 
     Args:
-        pareto_optimal (Iterable): Number of pareto optimal points
+        pareto_optimal (np.ndarray): Number of pareto optimal points
             for every iteration.
-        non_pareto_points (Iterable): Number of discarded points
+        non_pareto_points (np.ndarray): Number of discarded points
             for every iteration
-        unclassified_points (Iterable): Number of unclassified points
+        unclassified_points (np.ndarray): Number of unclassified points
             for every iteration
 
     Returns:
@@ -49,8 +50,36 @@ def plot_bar_iterations(  # pylint:disable=invalid-name
     return ax
 
 
-def plot_pareto_front_2d(y_0: np.array, y_1: np.array, palinstance, ax=None):
-    ax.scatter(y_0, y_1, c="gray", alpha=0.6, label="all design points", s=1)
+def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
+    y_0: np.ndarray,
+    y_1: np.ndarray,
+    std_0: np.ndarray,
+    std_1: np.ndarray,
+    palinstance,
+    ax=None,
+):
+    """Plot a 2D pareto front, with the different categories
+    indicated in color.
+
+    Args:
+        y_0 (np.ndarray): objective 0
+        y_1 (np.ndarray): objective 1
+        std_0 (np.ndarray): standard deviation objective 0
+        std_1 (np.ndarray): standard deviation objective 0
+        palinstance (PALBase): PAL instance
+        ax (ax, optional): Matplotlib figure axis. Defaults to None.
+    """
+    ax.errorbar(
+        y_0,
+        y_1,
+        std_0,
+        std_1,
+        c="gray",
+        alpha=0.6,
+        label="all design points",
+        fmt=".",
+        capsize=5,
+    )
     ax.scatter(
         y_0[palinstance.sampled_indices],
         y_1[palinstance.sampled_indices],
@@ -76,27 +105,60 @@ def plot_pareto_front_2d(y_0: np.array, y_1: np.array, palinstance, ax=None):
     )
 
 
-def plot_histogram(y, palinstance, ax):
-    ax.hist(y, density=True, label="all design points", color="gray", alpha=0.6)
-    ax.hist(y[palinstance.sampled_indices], density=True, label="sampled", color="blue")
-    ax.hist(y[palinstance.discarded], density=True, label="discarded", color="red")
-    ax.hist(
-        y[palinstance.pareto_optimal],
-        density=True,
+def plot_histogram(y: np.ndarray, palinstance, ax):  # pylint:disable=invalid-name
+    """Plot histograms, with maxima scaled to one
+    and different categories indicated in color
+
+    Args:
+        y (np.ndarray): objective (measurement)
+        palinstance (PALBase): instance of a PAL class
+        ax (ax): Matplotlib figure axis
+    """
+    heights, bins = np.histogram(y)
+    bin_width = bins[1] - bins[0]
+    ax.bar(
+        bins[:-1],
+        heights / heights.max(),
+        bin_width,
+        label="all design points",
+        color="gray",
+        alpha=0.6,
+    )
+    heights, bins = np.histogram(y[palinstance.sampled_indices])
+    bin_width = bins[1] - bins[0]
+    ax.bar(
+        bins[:-1],
+        heights / heights.max(),
+        bin_width,
+        label="sampled",
+        color="blue",
+        alpha=0.6,
+    )
+
+    heights, bins = np.histogram(y[palinstance.pareto_optimal])
+    bin_width = bins[1] - bins[0]
+    ax.bar(
+        bins[:-1],
+        heights / heights.max(),
+        bin_width,
         label="Pareto optimal",
         color="green",
+        alpha=0.6,
     )
 
 
-def make_jointplot(
-    y: np.array, palinstance, labels: Iterable = None, figsize: tuple = (8.0, 6.0)
+def make_jointplot(  # pylint:disable=invalid-name
+    y: np.array,
+    palinstance,
+    labels: Union[List[str], None] = None,
+    figsize: tuple = (8.0, 6.0),
 ):
     """Make a jointplot of the objective space
 
     Args:
         y (np.array): array with the objectives (measurements)
         palinstance (PALBase): "trained" PAL instance
-        labels (Iterable, optional): [description]. Defaults to None.
+        labels (Union[List[str], None], optional): [description]. Defaults to None.
         figsize (tuple, optional): [description]. Defaults to (8.0, 6.0).
 
     Returns:
@@ -114,7 +176,12 @@ def make_jointplot(
                 plot_histogram(y[:, row], palinstance, ax[row, column])
             else:
                 plot_pareto_front_2d(
-                    y[:, row], y[:, column], palinstance, ax=ax[row, column]
+                    y[:, row],
+                    y[:, column],
+                    palinstance.std[:, row],
+                    palinstance.std[:, column],
+                    palinstance,
+                    ax=ax[row, column],
                 )
 
             ax[row, column].spines["top"].set_color("none")
@@ -131,7 +198,7 @@ def make_jointplot(
         ax[index, 0].set_ylabel(labels[index])
         ax[num_targets - 1, index].set_xlabel(labels[index])
 
-    ax[0, 0].legend()
+    ax[0, num_targets - 1].legend()
     fig.tight_layout()
 
     return fig
