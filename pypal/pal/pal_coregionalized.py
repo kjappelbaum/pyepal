@@ -13,6 +13,28 @@ class PALCoregionalized(PALBase):
     """PAL class for a coregionalized GPR model"""
 
     def __init__(self, *args, **kwargs):
+        """Construct the PALCoregionalized instance
+
+        Args:
+            X_design (np.array): Design space (feature matrix)
+            models (list): Machine learning models
+            ndim (int): Number of objectives
+            epsilon (Union[list, float], optional): Epsilon hyperparameter.
+                Defaults to 0.01.
+            delta (float, optional): Delta hyperparameter. Defaults to 0.05.
+            beta_scale (float, optional): Scaling parameter for beta.
+                If not equal to 1, the theoretical guarantees do not necessarily hold.
+                Also note that the parametrization depends on the kernel type.
+                Defaults to 1/9.
+            goals (List[str], optional): If a list, provide "min" for every objective
+                that shall be minimized and "max" for every objective
+                that shall be maximized. Defaults to None, which means
+                that the code maximizes all objectives.
+            restarts (int): Number of random restarts that are used for hyperparameter
+                optimization. Defaults to 20.
+            parallel (bool): If true, model hyperparameters are optimized in parallel,
+                using the GPy implementation. Defaults to False.
+        """
         self.restarts = kwargs.pop("restarts", 20)
         self.parallel = kwargs.pop("parallel", False)
         assert isinstance(
