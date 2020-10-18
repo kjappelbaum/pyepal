@@ -13,6 +13,7 @@ from pypal.pal.validate_inputs import (
     validate_goals,
     validate_gpy_model,
     validate_ndim,
+    validate_njobs,
     validate_number_models,
 )
 
@@ -111,3 +112,14 @@ def test_validate_coregionalized_gpy(make_random_dataset):
         validate_coregionalized_gpy(["m"])
 
     assert validate_coregionalized_gpy([model]) is None
+
+
+def test_validate_njobs():
+    """Test that the validation of n_jobs for multiprocessing works"""
+    with pytest.raises(ValueError):
+        validate_njobs(0.1)
+    with pytest.raises(ValueError):
+        validate_njobs(0)
+
+    assert validate_njobs(1) is None
+    assert validate_njobs(2) is None
