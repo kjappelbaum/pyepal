@@ -96,6 +96,28 @@ In case you want to also know the hypervolume, you can use the `get_hypervolume`
 
     hv = get_hypervolume(palinstance.means[palinstance.pareto_optimal])
 
+Properties of the PAL object
+..............................
+For debugging there are some properties and attributes of the `PAL` class that you can use to inspect the progress of the active learning loop.
+
+Properties
+===========
+
+- get the points in the design space, :code:`x`:
+    - :code:`design_space` returns the full design space matrix
+    - :code:`pareto_optimal_points`: returns the points that are classified as Pareto-efficient
+    - :code:`sampled_points`: returns the points that have been sampled
+    - :code:`discarded_points`: returns the points that have been discarded
+- get the indicies of Pareto efficent, sampled,  discarded, and unclassified points with :code:`pareto_optimal_indices`, :code:`sampled_indices`, `discarded_indices`, and :code:`unclassified_indices`
+- similarly, you can get the number of points in the different classes using :code:`number_pareto_optimal_points`, :code:`number_discarded_points`, :code:`number_unclassified_points`, and :code:`number_sampled_points`
+- :code:`hyperrectangle_size` returns the sizes of the hyperrectangles, i.e., the weights that are used in the sampling step
+
+Attributes
+============
+
+- :code:`means` and :code:`std` contain the predictions of the model
+- :code:`sampled` is a mask array. In case one objective has not been measured its cell is :code:`False`
+
 
 Exploring a space where all objectives are known
 .................................................
