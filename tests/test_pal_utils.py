@@ -27,8 +27,9 @@ def test_dominance_check():
     assert not dominance_check(np.array([4.5, 1]), np.array([3.7, 2]))
 
 
-def test_dominance_check_jitted():
+def test_dominance_check_jitted(binh_korn_points):
     """Test if the jitted dominance check works"""
+    _, y = binh_korn_points  # pylint:disable=invalid-name
     array = np.array([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]])
     point = np.array([1.0, 1.0, 1.0])
 
@@ -39,9 +40,18 @@ def test_dominance_check_jitted():
 
     assert not dominance_check(point, array)
 
+    assert not dominance_check(y[0], y[1:])
+    assert not dominance_check(y[2], y[2:])
 
-def test_dominance_check_jitted_2():
+
+def test_dominance_check_jitted_2(binh_korn_points):
     """Testing if the dominance check array/point works"""
+
+    _, y = binh_korn_points  # pylint:disable=invalid-name
+
+    assert not dominance_check_jitted_2(y[1:], y[0])
+    assert not dominance_check_jitted_2(y[2:], y[2])
+
     array = np.array([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]])
     point = np.array([1.0, 1.0, 1.0])
 
@@ -110,7 +120,8 @@ def test_exhaust_loop(binh_korn_points):
     model_0 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0)
     model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
 
-    palinstance = PALGPy(X_binh_korn, [model_0, model_1], 2, beta_scale=1)
+    palinstance = PALGPy(X_binh_korn, [model_0, model_1], 2, beta_scale=1, restarts=1)
+    palinstance.cross_val_points = 0
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
 
@@ -131,8 +142,14 @@ def test_exhaust_loop(binh_korn_points):
     model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
 
     palinstance = PALGPy(
-        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=["max", "min"]
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        goals=["max", "min"],
+        restarts=1,
     )
+    palinstance.cross_val_points = 0
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
 
@@ -146,8 +163,14 @@ def test_exhaust_loop(binh_korn_points):
 
     # Test batch sampling
     palinstance = PALGPy(
-        X_binh_korn, [model_0, model_1], 2, beta_scale=1, goals=["max", "min"]
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        goals=["max", "min"],
+        restarts=1,
     )
+    palinstance.cross_val_points = 0
 
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
 

@@ -346,8 +346,10 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
             )
         else:
             PAL_LOGGER.info(
-                "The mean absolute error in crossvalidation is\
-                {:.2f}, the mean variance is {:.2f}."
+                """The mean absolute error in crossvalidation is
+{:.2f}, the mean variance is {:.2f}.""".format(
+                    mae, mean_std
+                )
             )
 
     def update_train_set(

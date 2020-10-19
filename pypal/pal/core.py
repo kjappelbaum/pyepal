@@ -171,8 +171,9 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
         pareto_pessimistic_lows = rectangle_lows[pareto_indices]  # p_pess(P)
         for i in range(0, len(unclassified_0)):
             if unclassified_t[i] == 1:
+                # discard if any lower-bound epsilon dominates the upper bound
                 if dominance_check_jitted_2(
-                    pareto_pessimistic_lows + epsilon * rectangle_ups[i],
+                    pareto_pessimistic_lows + np.abs(epsilon * pareto_pessimistic_lows),
                     rectangle_ups[i],
                 ):
                     not_pareto_optimal_t[i] = True
@@ -193,11 +194,10 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
         # We can only discard points that are unclassified so far
         # We cannot discard points that are part of p_pess(P \cup U)
         if unclassified_t[i] and (i not in original_indices):
-            # If the upper bound of the hyperrectangle is not dominating anywhere
-            # the pareto pessimitic set, we can discard
+            # discard if any lower-bound epsilon dominates the upper bound
             if dominance_check_jitted_2(
-                pareto_unclassified_pessimistic_points
-                + epsilon * np.abs(rectangle_ups[i]),
+                epsilon * np.abs(pareto_unclassified_pessimistic_points)
+                + pareto_unclassified_pessimistic_points,
                 rectangle_ups[i],
             ):
                 not_pareto_optimal_t[i] = True
