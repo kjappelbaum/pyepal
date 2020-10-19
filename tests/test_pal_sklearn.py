@@ -35,7 +35,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     gpr_2 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     palinstance = PALSklearn(X, [gpr_0, gpr_1, gpr_2], 3, beta_scale=1)
-
+    palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y[sample_idx])
     idx = palinstance.run_one_step()
     assert len(idx) == 1
@@ -48,7 +48,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
 
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1)
-
+    palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
     assert len(idx) == 1
@@ -70,7 +70,7 @@ def test_orchestration_run_one_step_batch(  # pylint:disable=too-many-statements
     gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1)
-
+    palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
     assert len(idx) == 10
@@ -87,7 +87,7 @@ def test_orchestration_run_one_step_batch(  # pylint:disable=too-many-statements
     gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 3)
-
+    palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
     for index in idx:
@@ -102,6 +102,7 @@ def test_orchestration_run_one_step_batch(  # pylint:disable=too-many-statements
     gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 3)
+    palinstance.cross_val_points = 0
     sample_idx = np.array([1, 10, 20, 40, 70, 90])
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
@@ -117,6 +118,7 @@ def test_orchestration_run_one_step_batch(  # pylint:disable=too-many-statements
     gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 9)
+    palinstance.cross_val_points = 0
     sample_idx = np.array([1, 10, 20, 40, 70, 90])
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
@@ -132,6 +134,7 @@ def test_orchestration_run_one_step_batch(  # pylint:disable=too-many-statements
     gpr_0 = GaussianProcessRegressor(Matern(), normalize_y=True, n_restarts_optimizer=3)
     gpr_1 = GaussianProcessRegressor(Matern(), normalize_y=True, n_restarts_optimizer=3)
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 9)
+    palinstance.cross_val_points = 0
     sample_idx = np.array([1, 10, 20, 40, 70, 90])
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
@@ -154,6 +157,7 @@ def test_orchestration_run_one_step_parallel(binh_korn_points):
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1 / 9, n_jobs=2)
     sample_idx = np.array([1, 10, 20, 40, 70, 90])
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    palinstance.cross_val_points = 0
     idx = palinstance.run_one_step(batch_size=10)
     for index in idx:
         assert index not in [1, 10, 20, 40, 70, 90]
@@ -176,7 +180,7 @@ def test_orchestration_run_one_step_missing_data(binh_korn_points):
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
 
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1)
-
+    palinstance.cross_val_points = 0
     # make some of the observations missing
     y_binh_korn[:10, 1] = np.nan
 

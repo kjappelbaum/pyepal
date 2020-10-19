@@ -48,7 +48,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     palinstance = PALCoregionalized(
         X, [model], 3, beta_scale=1, epsilon=0.01, delta=0.01, restarts=3
     )
-
+    palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y[sample_idx])
     idx = palinstance.run_one_step()
     # Sometimes, the model might classify everything with certainity with the
@@ -65,7 +65,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     palinstance = PALCoregionalized(
         X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01, restarts=3
     )
-
+    palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
     assert len(idx) == 1
@@ -79,7 +79,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     palinstance = PALCoregionalized(
         X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01, restarts=3
     )
-
+    palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
 
@@ -106,7 +106,7 @@ def test_orchestration_run_one_step_missing_data(binh_korn_points):
     palinstance = PALCoregionalized(
         X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01, restarts=3
     )
-
+    palinstance.cross_val_points = 0
     # make some of the observations missing
     y_binh_korn[:10, 1] = np.nan
 
