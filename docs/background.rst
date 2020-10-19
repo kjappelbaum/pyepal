@@ -37,3 +37,20 @@ b. Using those points, we can use the Pareto dominance relation to classify poin
 c. Since in step b we discard many points (with confidence) the effective design space shrinks. We now can sample the next experiment from the Pareto optimal and unclassified points. Since the ultimate goal is to perform a classification of the full design space—with confidence—we sample the point with the largest hyperrectangle.
 
 d. Retraining a model with this new measurement will reduce the width of the hyperrectangles.
+
+
+How do the hyperparameters influence the algorithm?
+-----------------------------------------------------
+
+To test the influence of hyperameter settings we ran one step of the algorithm
+on the `Binh-Korn testfunction <https://en.wikipedia.org/wiki/Test_functions_for_optimization#Test_functions_for_multi-objective_optimization>`_.
+
+We model every objective seperately with a Matérn-3/2 kernel, leave :math:`\delta=0.05` fixed
+and vary :math:`\epsilon` and :math:`\beta_\mathrm{scale}`.
+
+We find that increasing :math:`\epsilon` speeds up the algorithm, but gives us a sparser Pareto frontier.
+Similarily, :math:`\beta_\mathrm{scale}` speeds up the algorithm by scaling the size of the hyperrectangles.
+
+.. image::  _static/hyperparameter_illustration_delta_001.png
+  :width: 600
+  :alt: Influence of hyperparameter settings on the PAL algorithm.

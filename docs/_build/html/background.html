@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Background &#8212; pypal 0+untagged.177.gf557e6b.dirty documentation</title>
+    <title>Background &#8212; pypal 0+untagged.180.gde84dbf.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -146,6 +146,10 @@
             <a href="#intuition-behind-the-algorithm" class="nav-link">Intuition behind the algorithm</a>
         </li>
 
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#how-do-the-hyperparameters-influence-the-algorithm" class="nav-link">How do the hyperparameters influence the algorithm?</a>
+        </li>
+
     </ul>
 </nav>
 
@@ -183,6 +187,16 @@ This is different from many Bayesian optimization approaches, that introduce som
 <li><p>Since in step b we discard many points (with confidence) the effective design space shrinks. We now can sample the next experiment from the Pareto optimal and unclassified points. Since the ultimate goal is to perform a classification of the full design space—with confidence—we sample the point with the largest hyperrectangle.</p></li>
 <li><p>Retraining a model with this new measurement will reduce the width of the hyperrectangles.</p></li>
 </ol>
+</div>
+<div class="section" id="how-do-the-hyperparameters-influence-the-algorithm">
+<h2>How do the hyperparameters influence the algorithm?<a class="headerlink" href="#how-do-the-hyperparameters-influence-the-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>To test the influence of hyperameter settings we ran one step of the algorithm
+on the <a class="reference external" href="https://en.wikipedia.org/wiki/Test_functions_for_optimization#Test_functions_for_multi-objective_optimization">Binh-Korn testfunction</a>.</p>
+<p>We model every objective seperately with a Matérn-3/2 kernel, leave <span class="math notranslate nohighlight">\(\delta=0.05\)</span> fixed
+and vary <span class="math notranslate nohighlight">\(\epsilon\)</span> and <span class="math notranslate nohighlight">\(\beta_\mathrm{scale}\)</span>.</p>
+<p>We find that increasing <span class="math notranslate nohighlight">\(\epsilon\)</span> speeds up the algorithm, but gives us a sparser Pareto frontier.
+Similarily, <span class="math notranslate nohighlight">\(\beta_\mathrm{scale}\)</span> speeds up the algorithm by scaling the size of the hyperrectangles.</p>
+<a class="reference internal image-reference" href="_images/hyperparameter_illustration_delta_001.png"><img alt="Influence of hyperparameter settings on the PAL algorithm." src="_images/hyperparameter_illustration_delta_001.png" style="width: 600px;" /></a>
 </div>
 </div>
 
