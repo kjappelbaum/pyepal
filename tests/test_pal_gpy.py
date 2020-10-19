@@ -22,6 +22,7 @@ def test_pal_gpy(make_random_dataset):
     m2 = build_model(X, y, 2)  # pylint:disable=invalid-name
 
     palgpy_instance = PALGPy(X, [m0, m1, m2], 3, delta=0.01)
+    palgpy_instance.cross_val_points = 0
     assert palgpy_instance.restarts == 20
 
     palgpy_instance.update_train_set(
@@ -56,6 +57,7 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
         delta=0.01,
         restarts=3,
     )
+    palinstance.cross_val_points = 0
 
     palinstance.update_train_set(sample_idx, y[sample_idx])
     idx = palinstance.run_one_step()
@@ -104,7 +106,7 @@ def test_orchestration_run_one_step_parallel(binh_korn_points):
         n_jobs=2,
         restarts=3,
     )
-
+    palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
     assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
@@ -132,7 +134,7 @@ def test_minimize_run_one_step(binh_korn_points):
         delta=0.01,
         restarts=3,
     )
-
+    palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
     assert len(idx) == 1
@@ -170,7 +172,7 @@ def test_minimize_run_one_step(binh_korn_points):
         delta=0.01,
         restarts=3,
     )
-
+    palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step()
     assert len(idx) == 1
@@ -190,7 +192,7 @@ def test_minimize_run_one_step(binh_korn_points):
         delta=0.01,
         restarts=3,
     )
-
+    palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
     idx = palinstance.run_one_step(batch_size=10)
     assert len(idx) == 10
@@ -219,7 +221,7 @@ def test_orchestration_run_one_step_missing_data(binh_korn_points):
         delta=0.01,
         restarts=3,
     )
-
+    palinstance.cross_val_points = 0
     # make some of the observations missing
     y_binh_korn[:10, 1] = np.nan
 
