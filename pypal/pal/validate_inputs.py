@@ -141,8 +141,7 @@ def validate_goals(  # pylint:disable=too-many-branches
     """
     if goals is None:
         warnings.warn(
-            "No goals provided,\
-                 will assume that every dimension should be maximized",
+            "No goals provided, will assume that every dimension should be maximized",
             UserWarning,
         )
 

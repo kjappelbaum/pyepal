@@ -27,6 +27,10 @@ from .validate_inputs import (
 
 PAL_LOGGER = logging.getLogger("PALLogger")
 PAL_LOGGER.setLevel(logging.INFO)
+CONSOLE_HANDLER = logging.StreamHandler()
+CONSOLE_FORMAT = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
+CONSOLE_HANDLER.setFormatter(CONSOLE_FORMAT)
+PAL_LOGGER.addHandler(CONSOLE_HANDLER)
 
 
 class PALBase:  # pylint:disable=too-many-instance-attributes
@@ -217,7 +221,6 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         for sampled_idx in sample_subset:
             # make sure that we do not run into errors due to np.nan
             if self.sampled[sampled_idx].sum() == self.ndim:
-                print("cross validating")
                 # copy here is important, otherewise all
                 # points we set to False remain False
                 self.sampled = sampled_original.copy()
