@@ -94,7 +94,7 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
         y_1[palinstance.discarded],
         c="red",
         label="discarded",
-        s=10,
+        s=15,
         alpha=1,
         zorder=10,
     )
@@ -104,7 +104,7 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
         c="green",
         label="Pareto optimal",
         s=10,
-        alpha=1,
+        alpha=0.8,
         zorder=15,
     )
 
