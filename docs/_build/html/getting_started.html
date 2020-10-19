@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.175.g15cd95a.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.176.g2fbf7cf.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -63,6 +63,14 @@
 
         <li class="nav-item active">
             <a class="nav-link" href="">Getting Started</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href=""></a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href=""></a>
         </li>
 
         <li class="nav-item ">
@@ -126,6 +134,10 @@
 
 
 
+
+
+
+
     </ul>
 
 </nav>
@@ -143,37 +155,49 @@
     <ul class="nav section-nav flex-column">
 
         <li class="nav-item toc-entry toc-h2">
+            <a href="#" class="nav-link">Getting Started</a><ul class="nav section-nav flex-column">
+
+        <li class="nav-item toc-entry toc-h3">
             <a href="#installation" class="nav-link">Installation</a>
         </li>
 
-        <li class="nav-item toc-entry toc-h2">
+        <li class="nav-item toc-entry toc-h3">
             <a href="#running-an-active-learning-experiment" class="nav-link">Running an active learning experiment</a><ul class="nav section-nav flex-column">
 
-        <li class="nav-item toc-entry toc-h3">
+        <li class="nav-item toc-entry toc-h4">
             <a href="#hyperparameter-optimization" class="nav-link">Hyperparameter optimization</a>
         </li>
 
-        <li class="nav-item toc-entry toc-h3">
+        <li class="nav-item toc-entry toc-h4">
             <a href="#logging" class="nav-link">Logging</a>
         </li>
 
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#exploring-a-space-where-all-objectives-are-known" class="nav-link">Exploring a space where all objectives are known</a>
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#properties-of-the-pal-object" class="nav-link">Properties of the PAL object</a>
         </li>
 
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#batch-sampling" class="nav-link">Batch sampling</a>
+            </ul>
         </li>
 
             </ul>
         </li>
 
         <li class="nav-item toc-entry toc-h2">
-            <a href="#caveats-and-tricks-with-gaussian-processes" class="nav-link">Caveats and tricks with Gaussian processes</a>
+            <a href="#properties" class="nav-link">Properties</a>
         </li>
 
         <li class="nav-item toc-entry toc-h2">
+            <a href="#attributes" class="nav-link">Attributes</a><ul class="nav section-nav flex-column">
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#caveats-and-tricks-with-gaussian-processes" class="nav-link">Caveats and tricks with Gaussian processes</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h3">
             <a href="#implementing-a-new-pal-class" class="nav-link">Implementing a new PAL class</a>
+        </li>
+
+            </ul>
         </li>
 
     </ul>
@@ -277,8 +301,36 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="exploring-a-space-where-all-objectives-are-known">
-<h3>Exploring a space where all objectives are known<a class="headerlink" href="#exploring-a-space-where-all-objectives-are-known" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="properties-of-the-pal-object">
+<h3>Properties of the PAL object<a class="headerlink" href="#properties-of-the-pal-object" title="Permalink to this headline">¶</a></h3>
+<p>For debugging there are some properties and attributes of the <cite>PAL</cite> class that you can use to inspect the progress of the active learning loop.</p>
+</div>
+</div>
+</div>
+<div class="section" id="properties">
+<h1>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><dl class="simple">
+<dt>get the points in the design space, <code class="code docutils literal notranslate"><span class="pre">x</span></code>:</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">design_space</span></code> returns the full design space matrix</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">pareto_optimal_points</span></code>: returns the points that are classified as Pareto-efficient</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">sampled_points</span></code>: returns the points that have been sampled</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">discarded_points</span></code>: returns the points that have been discarded</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>get the indicies of Pareto efficent, sampled,  discarded, and unclassified points with <code class="code docutils literal notranslate"><span class="pre">pareto_optimal_indices</span></code>, <code class="code docutils literal notranslate"><span class="pre">sampled_indices</span></code>, <cite>discarded_indices</cite>, and <code class="code docutils literal notranslate"><span class="pre">unclassified_indices</span></code></p></li>
+<li><p>similarly, you can get the number of points in the different classes using <code class="code docutils literal notranslate"><span class="pre">number_pareto_optimal_points</span></code>, <code class="code docutils literal notranslate"><span class="pre">number_discarded_points</span></code>, <code class="code docutils literal notranslate"><span class="pre">number_unclassified_points</span></code>, and <code class="code docutils literal notranslate"><span class="pre">number_sampled_points</span></code></p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">hyperrectangle_size</span></code> returns the sizes of the hyperrectangles, i.e., the weights that are used in the sampling step</p></li>
+</ul>
+</div>
+<div class="section" id="attributes">
+<h1>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">means</span></code> and <code class="code docutils literal notranslate"><span class="pre">std</span></code> contain the predictions of the model</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">sampled</span></code> is a mask array. In case one objective has not been measured its cell is <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+</ul>
 <p>In some cases, you already know all measurements you may want to run PAL with different settings and test how the algorithm performs.
 In this case you can use the <code class="code docutils literal notranslate"><span class="pre">exhaust_loop</span></code> wrapper.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALSklearn</span><span class="p">,</span> <span class="n">exhaust_loop</span>
@@ -289,9 +341,6 @@ In this case you can use the <code class="code docutils literal notranslate"><sp
 </pre></div>
 </div>
 <p>This will continue calling <code class="code docutils literal notranslate"><span class="pre">run_one_step()</span></code> until there is no unclassified sample left.</p>
-</div>
-<div class="section" id="batch-sampling">
-<h3>Batch sampling<a class="headerlink" href="#batch-sampling" title="Permalink to this headline">¶</a></h3>
 <p>By default, the <code class="code docutils literal notranslate"><span class="pre">run_one_step</span></code> function of the PAL classes will return a <code class="code docutils literal notranslate"><span class="pre">np.ndarray</span></code> with only one index for the point in the design space for which the next experiment should be performed. In some cases, you want to run multiple experiments in batches before you run a new iteration of the PyPAL. In this case, you use the <code class="code docutils literal notranslate"><span class="pre">batch_size</span></code> keyword argument and change it to an integer greater than one.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">next_idx</span> <span class="o">=</span> <span class="n">palinstance</span><span class="o">.</span><span class="n">run_one_step</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="c1"># next_idx will be a np.array of length 10</span>
@@ -304,8 +353,6 @@ In this case you can use the <code class="code docutils literal notranslate"><sp
 <span class="c1"># point left</span>
 <span class="n">exhaust_loop</span><span class="p">(</span><span class="n">palinstance</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
-</div>
-</div>
 </div>
 <div class="section" id="caveats-and-tricks-with-gaussian-processes">
 <h2>Caveats and tricks with Gaussian processes<a class="headerlink" href="#caveats-and-tricks-with-gaussian-processes" title="Permalink to this headline">¶</a></h2>
