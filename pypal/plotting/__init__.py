@@ -75,10 +75,11 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
         std_0,
         std_1,
         c="gray",
-        alpha=0.6,
+        alpha=0.3,
         label="all design points",
         fmt=".",
         capsize=5,
+        zorder=0,
     )
     ax.scatter(
         y_0[palinstance.sampled_indices],
@@ -86,6 +87,7 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
         c="blue",
         label="sampled",
         s=20,
+        zorder=5,
     )
     ax.scatter(
         y_0[palinstance.discarded],
@@ -93,7 +95,8 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
         c="red",
         label="discarded",
         s=10,
-        alpha=0.8,
+        alpha=1,
+        zorder=10,
     )
     ax.scatter(
         y_0[palinstance.pareto_optimal],
@@ -101,7 +104,8 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
         c="green",
         label="Pareto optimal",
         s=10,
-        alpha=0.8,
+        alpha=1,
+        zorder=15,
     )
 
 
@@ -190,7 +194,7 @@ def make_jointplot(  # pylint:disable=invalid-name
             ax[row, column].spines["bottom"].set_smart_bounds(True)
 
     if labels is None:
-        labels = [f"Objective {i}" for i in range(num_targets)]
+        labels = [f"objective {i}" for i in range(num_targets)]
     else:
         assert len(labels) == num_targets
 
