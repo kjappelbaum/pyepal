@@ -173,7 +173,7 @@ Another way to detect overfitting is to use :code:`make_jointplot` function from
     fig = make_jointplot(palinstance.means, palinstance)
 
 
-.. image:: _static/joinplot_example.png
+.. image:: _static/jointplot_example.png
     :width: 600
     :alt: Example of the output of make_jointplot
 
