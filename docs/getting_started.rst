@@ -40,7 +40,7 @@ If you use a Gaussian process model built with :code:`sklearn` or :code:`GPy` yo
         # This selects the 10 farthest points in feature space
         indices = get_maxmin_samples(X, 10)
 
-3. Now, you can intialize the instance of one :code:`PAL` class. If we use a :code:`sklearn` Gaussian process model, we would use
+3. Now, you can initialize the instance of one :code:`PAL` class. If we use a :code:`sklearn` Gaussian process model, we would use
 
     .. code-block:: python
 
@@ -142,24 +142,47 @@ Of course, also the `exhaust_loop` supports the `batch_size` keyword argument
 Caveats and tricks with Gaussian processes
 -------------------------------------------
 
-One fact that one needs to keep in mind is that :math:`\epsilon`-PAL will not work with the predictive variance does not make sense, for example, when the model is overconfident.
+One fact that one needs to keep in mind is that :math:`\epsilon`-PAL will not work if the predictive variance does not make sense, for example, when the model is overconfident.
 This problem is exacerbated in conjunction with :math:`\beta_\mathrm{scale} < 1`. To make your model more robust you can try:
 
-- to set reasonable bounds on the lengthscale parameters
+- to set reasonable bounds on the length scale parameters
 - to increase the regularization parameter/noise kernel (:code:`alpha` in :code:`sklearn`)
-- to increase the number of datapoints, especially the coverage of the design space
+- to increase the number of data points, especially the coverage of the design space
 - `to use a kernel that suits your problem <https://www.cs.toronto.edu/~duvenaud/cookbook/>`_
 - to turn off ARD. Automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting
 
 We also recommend to cross-validate your Gaussian process model and to check that the predicted variances make sense.
-By default, the code will run a simple cross-validation only on the first iteration and warn if the mean mean absolute error is above the mean standard deviation. If you want to change this behavior and run the cross-validation test more frequently, you can override the :code:`should_run_crossvalidation` function.
+By default, the code will run a simple cross-validation only on the first iteration and warn if the mean absolute error is above the mean standard deviation. The warning will look something like
+
+.. code-block::
+
+    The mean absolute error in crossvalidation is 64.29, the mean variance is 0.36.
+    Your model might not be predictive and/or overconfident.
+    In the docs, you find hints on how to make GPRs more robust.
+
+If you want to change this behavior and run the cross-validation test more frequently, you can override the :code:`should_run_crossvalidation` function.
+
+Another way to detect overfitting is to use :code:`make_jointplot` function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and historgrams of the objectives on the diagonal. If you observe that the errorbars do not overlap but the model seems to be wrong, you might want to improve your surrogate model.
+
+.. code-block:: python
+
+    from pypal.plotting import make_jointplot
+
+    # palinstance is a instance of a PAL class after
+    # calling run_one_step
+    fig = make_jointplot(palinstance.means, palinstance)
+
+
+.. image:: _static/joinplot_example.png
+    :width: 600
+    :alt: Example of the output of make_jointplot
 
 Implementing a new PAL class
 ------------------------------
 
-If you want to use `pypal` with a model that we do not support yet, i.e., not :code:`GPy` or :code:`sklearn` Gaussian process regression, it is easy to write your own class. For this, you need to inherit from `PALBase` and implement your of :code:`_train` and :code:`_predict` functions (and maybe also the :code:`_set_hyperparameters` and :code:`_should_optimize_hyperparameters` functions) using the :code:`design_space` and :code:`y` attributes of the class.
+If you want to use `pypal` with a model that we do not support yet, i.e., not :code:`GPy` or :code:`sklearn` Gaussian process regression, it is easy to write your own class. For this, you need to inherit from `PALBase` and implement your  :code:`_train` and :code:`_predict` functions (and maybe also the :code:`_set_hyperparameters` and :code:`_should_optimize_hyperparameters` functions) using the :code:`design_space` and :code:`y` attributes of the class.
 
-For instance, if we develop some multioutput model that has a :code:`train()` and a :code:`predict()` method we could simply do
+For instance, if we develop some multioutput model that has a :code:`train()` and a :code:`predict()` method we could simply use the following design pattern
 
 .. code-block:: python
 

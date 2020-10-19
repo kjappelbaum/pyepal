@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The pypal API reference &#8212; pypal 0+untagged.168.g180f128.dirty documentation</title>
+    <title>The pypal API reference &#8212; pypal 0+untagged.174.ge1ac916.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -170,6 +170,10 @@
 
         <li class="nav-item toc-entry toc-h3">
             <a href="#module-pypal.pal.utils" class="nav-link">Utilities for multiobjective optimization</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#module-pypal.plotting" class="nav-link">Utilities for plotting</a>
         </li>
 
         <li class="nav-item toc-entry toc-h3">
@@ -969,6 +973,85 @@ Defaults to True.</p></li>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pypal.plotting">
+<span id="utilities-for-plotting"></span><h3>Utilities for plotting<a class="headerlink" href="#module-pypal.plotting" title="Permalink to this headline">¶</a></h3>
+<p>Plotting utilities</p>
+<dl class="py function">
+<dt id="pypal.plotting.make_jointplot">
+<code class="sig-prename descclassname">pypal.plotting.</code><code class="sig-name descname">make_jointplot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">labels</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">8.0, 6.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.plotting.make_jointplot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a jointplot of the objective space</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>np.array</em>) – array with the objectives (measurements)</p></li>
+<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><em>PALBase</em></a>) – “trained” PAL instance</p></li>
+<li><p><strong>labels</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – [description]. Defaults to None.</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>optional</em>) – [description]. Defaults to (8.0, 6.0).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>fig</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pypal.plotting.plot_bar_iterations">
+<code class="sig-prename descclassname">pypal.plotting.</code><code class="sig-name descname">plot_bar_iterations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pareto_optimal</span></em>, <em class="sig-param"><span class="n">non_pareto_points</span></em>, <em class="sig-param"><span class="n">unclassified_points</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.plotting.plot_bar_iterations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot stacked barplots for every step of the iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pareto_optimal</strong> (<em>np.ndarray</em>) – Number of pareto optimal points
+for every iteration.</p></li>
+<li><p><strong>non_pareto_points</strong> (<em>np.ndarray</em>) – Number of discarded points
+for every iteration</p></li>
+<li><p><strong>unclassified_points</strong> (<em>np.ndarray</em>) – Number of unclassified points
+for every iteration</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ax</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pypal.plotting.plot_histogram">
+<code class="sig-prename descclassname">pypal.plotting.</code><code class="sig-name descname">plot_histogram</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">ax</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.plotting.plot_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot histograms, with maxima scaled to one
+and different categories indicated in color</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – objective (measurement)</p></li>
+<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><em>PALBase</em></a>) – instance of a PAL class</p></li>
+<li><p><strong>ax</strong> (<em>ax</em>) – Matplotlib figure axis</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pypal.plotting.plot_pareto_front_2d">
+<code class="sig-prename descclassname">pypal.plotting.</code><code class="sig-name descname">plot_pareto_front_2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_0</span></em>, <em class="sig-param"><span class="n">y_1</span></em>, <em class="sig-param"><span class="n">std_0</span></em>, <em class="sig-param"><span class="n">std_1</span></em>, <em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.plotting.plot_pareto_front_2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a 2D pareto front, with the different categories
+indicated in color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_0</strong> (<em>np.ndarray</em>) – objective 0</p></li>
+<li><p><strong>y_1</strong> (<em>np.ndarray</em>) – objective 1</p></li>
+<li><p><strong>std_0</strong> (<em>np.ndarray</em>) – standard deviation objective 0</p></li>
+<li><p><strong>std_1</strong> (<em>np.ndarray</em>) – standard deviation objective 0</p></li>
+<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><em>PALBase</em></a>) – PAL instance</p></li>
+<li><p><strong>ax</strong> (<em>ax</em><em>, </em><em>optional</em>) – Matplotlib figure axis. Defaults to None.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

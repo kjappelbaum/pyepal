@@ -73,6 +73,16 @@ Utilities for multiobjective optimization
     :private-members:
 
 
+Utilities for plotting
+...........................................
+
+.. automodule:: pypal.plotting
+    :members:
+    :show-inheritance:
+    :special-members:
+    :private-members:
+
+
 Input validation
 ...........................................
 

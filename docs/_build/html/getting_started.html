@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.168.g180f128.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.174.ge1ac916.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -222,7 +222,7 @@
 </div>
 </div></blockquote>
 </li>
-<li><p>Now, you can intialize the instance of one <code class="code docutils literal notranslate"><span class="pre">PAL</span></code> class. If we use a <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> Gaussian process model, we would use</p>
+<li><p>Now, you can initialize the instance of one <code class="code docutils literal notranslate"><span class="pre">PAL</span></code> class. If we use a <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> Gaussian process model, we would use</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALSklearn</span>
 
@@ -309,22 +309,37 @@ In this case you can use the <code class="code docutils literal notranslate"><sp
 </div>
 <div class="section" id="caveats-and-tricks-with-gaussian-processes">
 <h2>Caveats and tricks with Gaussian processes<a class="headerlink" href="#caveats-and-tricks-with-gaussian-processes" title="Permalink to this headline">¶</a></h2>
-<p>One fact that one needs to keep in mind is that <span class="math notranslate nohighlight">\(\epsilon\)</span>-PAL will not work with the predictive variance does not make sense, for example, when the model is overconfident.
+<p>One fact that one needs to keep in mind is that <span class="math notranslate nohighlight">\(\epsilon\)</span>-PAL will not work if the predictive variance does not make sense, for example, when the model is overconfident.
 This problem is exacerbated in conjunction with <span class="math notranslate nohighlight">\(\beta_\mathrm{scale} &lt; 1\)</span>. To make your model more robust you can try:</p>
 <ul class="simple">
-<li><p>to set reasonable bounds on the lengthscale parameters</p></li>
+<li><p>to set reasonable bounds on the length scale parameters</p></li>
 <li><p>to increase the regularization parameter/noise kernel (<code class="code docutils literal notranslate"><span class="pre">alpha</span></code> in <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code>)</p></li>
-<li><p>to increase the number of datapoints, especially the coverage of the design space</p></li>
+<li><p>to increase the number of data points, especially the coverage of the design space</p></li>
 <li><p><a class="reference external" href="https://www.cs.toronto.edu/~duvenaud/cookbook/">to use a kernel that suits your problem</a></p></li>
 <li><p>to turn off ARD. Automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting</p></li>
 </ul>
 <p>We also recommend to cross-validate your Gaussian process model and to check that the predicted variances make sense.
-By default, the code will run a simple cross-validation only on the first iteration and warn if the mean mean absolute error is above the mean standard deviation. If you want to change this behavior and run the cross-validation test more frequently, you can override the <code class="code docutils literal notranslate"><span class="pre">should_run_crossvalidation</span></code> function.</p>
+By default, the code will run a simple cross-validation only on the first iteration and warn if the mean absolute error is above the mean standard deviation. The warning will look something like</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">mean</span> <span class="n">absolute</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">crossvalidation</span> <span class="ow">is</span> <span class="mf">64.29</span><span class="p">,</span> <span class="n">the</span> <span class="n">mean</span> <span class="n">variance</span> <span class="ow">is</span> <span class="mf">0.36</span><span class="o">.</span>
+<span class="n">Your</span> <span class="n">model</span> <span class="n">might</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">predictive</span> <span class="ow">and</span><span class="o">/</span><span class="ow">or</span> <span class="n">overconfident</span><span class="o">.</span>
+<span class="n">In</span> <span class="n">the</span> <span class="n">docs</span><span class="p">,</span> <span class="n">you</span> <span class="n">find</span> <span class="n">hints</span> <span class="n">on</span> <span class="n">how</span> <span class="n">to</span> <span class="n">make</span> <span class="n">GPRs</span> <span class="n">more</span> <span class="n">robust</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>If you want to change this behavior and run the cross-validation test more frequently, you can override the <code class="code docutils literal notranslate"><span class="pre">should_run_crossvalidation</span></code> function.</p>
+<p>Another way to detect overfitting is to use <code class="code docutils literal notranslate"><span class="pre">make_jointplot</span></code> function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and historgrams of the objectives on the diagonal. If you observe that the errorbars do not overlap but the model seems to be wrong, you might want to improve your surrogate model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal.plotting</span> <span class="kn">import</span> <span class="n">make_jointplot</span>
+
+<span class="c1"># palinstance is a instance of a PAL class after</span>
+<span class="c1"># calling run_one_step</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">make_jointplot</span><span class="p">(</span><span class="n">palinstance</span><span class="o">.</span><span class="n">means</span><span class="p">,</span> <span class="n">palinstance</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_static/joinplot_example.png"><img alt="Example of the output of make_jointplot" src="_static/joinplot_example.png" style="width: 600px;" /></a>
 </div>
 <div class="section" id="implementing-a-new-pal-class">
 <h2>Implementing a new PAL class<a class="headerlink" href="#implementing-a-new-pal-class" title="Permalink to this headline">¶</a></h2>
-<p>If you want to use <cite>pypal</cite> with a model that we do not support yet, i.e., not <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> or <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> Gaussian process regression, it is easy to write your own class. For this, you need to inherit from <cite>PALBase</cite> and implement your of <code class="code docutils literal notranslate"><span class="pre">_train</span></code> and <code class="code docutils literal notranslate"><span class="pre">_predict</span></code> functions (and maybe also the <code class="code docutils literal notranslate"><span class="pre">_set_hyperparameters</span></code> and <code class="code docutils literal notranslate"><span class="pre">_should_optimize_hyperparameters</span></code> functions) using the <code class="code docutils literal notranslate"><span class="pre">design_space</span></code> and <code class="code docutils literal notranslate"><span class="pre">y</span></code> attributes of the class.</p>
-<p>For instance, if we develop some multioutput model that has a <code class="code docutils literal notranslate"><span class="pre">train()</span></code> and a <code class="code docutils literal notranslate"><span class="pre">predict()</span></code> method we could simply do</p>
+<p>If you want to use <cite>pypal</cite> with a model that we do not support yet, i.e., not <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> or <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> Gaussian process regression, it is easy to write your own class. For this, you need to inherit from <cite>PALBase</cite> and implement your  <code class="code docutils literal notranslate"><span class="pre">_train</span></code> and <code class="code docutils literal notranslate"><span class="pre">_predict</span></code> functions (and maybe also the <code class="code docutils literal notranslate"><span class="pre">_set_hyperparameters</span></code> and <code class="code docutils literal notranslate"><span class="pre">_should_optimize_hyperparameters</span></code> functions) using the <code class="code docutils literal notranslate"><span class="pre">design_space</span></code> and <code class="code docutils literal notranslate"><span class="pre">y</span></code> attributes of the class.</p>
+<p>For instance, if we develop some multioutput model that has a <code class="code docutils literal notranslate"><span class="pre">train()</span></code> and a <code class="code docutils literal notranslate"><span class="pre">predict()</span></code> method we could simply use the following design pattern</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALBase</span>
 
 <span class="k">class</span> <span class="nc">PALMyModel</span><span class="p">(</span><span class="n">PALBase</span><span class="p">):</span>
