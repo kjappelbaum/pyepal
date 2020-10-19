@@ -64,12 +64,7 @@ If you use a Gaussian process model built with :code:`sklearn` or :code:`GPy` yo
 
     - :code:`epsilon`: in a :code:`np.ndarray` you can provide one :math:`\epsilon` per dimension. This allows you to set looser tolerance for some objectives. Note that :math:`\epsilon_i \in [0,1]`.
     - :code:`delta`: allows you to specify the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will speed up the convergence.
-    - :code:`beta_scale`: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`. As shown in the figure below, :math:`\beta` depends on :math:`\delta` and scaling beta down will drastically reduce the size of the uncertainity rectangles
-
-        .. image:: _static/beta.png
-            :width: 600
-            :alt: Beta as function of hyperparameters
-
+    - :code:`beta_scale`: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`.
     - :code:`goal`: By default, `pypal` assumes that you want to maximize every objective. If this is not the case, you can set the :code:`goal` argument using a list of "min" and "max", using "min" to specify that you want to minimize the ith objective and "max" to indicate that you want to maximize this objective.
 
 In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as :code:`np.nan`, i.e., the call could look like

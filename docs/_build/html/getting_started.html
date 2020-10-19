@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.180.gde84dbf.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.182.gd40dc09.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -246,14 +246,10 @@
 </pre></div>
 </div>
 <p>At this level you have a range of different options you can set.</p>
-<ul>
+<ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">epsilon</span></code>: in a <code class="code docutils literal notranslate"><span class="pre">np.ndarray</span></code> you can provide one <span class="math notranslate nohighlight">\(\epsilon\)</span> per dimension. This allows you to set looser tolerance for some objectives. Note that <span class="math notranslate nohighlight">\(\epsilon_i \in [0,1]\)</span>.</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">delta</span></code>: allows you to specify the <span class="math notranslate nohighlight">\(\delta\)</span> hyperparameter (<span class="math notranslate nohighlight">\(\delta \in [0,1]\)</span>). Increasing this value will speed up the convergence.</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">beta_scale</span></code>: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>. As shown in the figure below, <span class="math notranslate nohighlight">\(\beta\)</span> depends on <span class="math notranslate nohighlight">\(\delta\)</span> and scaling beta down will drastically reduce the size of the uncertainity rectangles</p>
-<blockquote>
-<div><a class="reference internal image-reference" href="_images/beta.png"><img alt="Beta as function of hyperparameters" src="_images/beta.png" style="width: 600px;" /></a>
-</div></blockquote>
-</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">beta_scale</span></code>: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>.</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">goal</span></code>: By default, <cite>pypal</cite> assumes that you want to maximize every objective. If this is not the case, you can set the <code class="code docutils literal notranslate"><span class="pre">goal</span></code> argument using a list of “min” and “max”, using “min” to specify that you want to minimize the ith objective and “max” to indicate that you want to maximize this objective.</p></li>
 </ul>
 </div></blockquote>

@@ -54,3 +54,10 @@ Similarily, :math:`\beta_\mathrm{scale}` speeds up the algorithm by scaling the 
 .. image::  _static/hyperparameter_illustration_delta_001.png
   :width: 600
   :alt: Influence of hyperparameter settings on the PAL algorithm.
+
+
+As shown in the figure below, :math:`\beta` depends on :math:`\delta` and scaling beta down will drastically reduce the size of the uncertainity rectangles and in this way influence the convergence behavior.
+
+.. image:: _static/beta.png
+    :width: 600
+    :alt: Beta as function of hyperparameters
