@@ -227,3 +227,13 @@ def validate_njobs(njobs: int):
         raise ValueError("njobs musst be of type int")
     if njobs < 1:
         raise ValueError("njobs must be a number greater equal 1")
+
+
+def validate_coef_var(coef_var: float):
+    """Make sure that the coef_var makes sense"""
+    if not isinstance(coef_var, (float, int)):
+        raise ValueError("coef_var must be of type float or int")
+    if coef_var <= 0:
+        raise ValueError("coef_var must be greater 0")
+
+    return coef_var

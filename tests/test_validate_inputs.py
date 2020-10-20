@@ -7,6 +7,7 @@ from pypal.models.gpr import build_coregionalized_model
 from pypal.pal.validate_inputs import (
     base_validate_models,
     validate_beta_scale,
+    validate_coef_var,
     validate_coregionalized_gpy,
     validate_delta,
     validate_epsilon,
@@ -123,3 +124,18 @@ def test_validate_njobs():
 
     assert validate_njobs(1) is None
     assert validate_njobs(2) is None
+
+
+def test_validate_coef_var():
+    """Test that the validate_coef_var works"""
+
+    with pytest.raises(ValueError):
+        validate_coef_var(-1)
+
+    with pytest.raises(ValueError):
+        validate_coef_var(0)
+
+    with pytest.raises(ValueError):
+        validate_coef_var(None)
+
+    assert validate_coef_var(3) == 3

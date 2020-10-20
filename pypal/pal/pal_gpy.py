@@ -38,6 +38,9 @@ class PALGPy(PALBase):
                 that shall be minimized and "max" for every objective
                 that shall be maximized. Defaults to None, which means
                 that the code maximizes all objectives.
+            coef_var_treshold (float, optional): Use only points with
+                a coefficient of variation below this threshold
+                in the classification step. Defaults to 3.
             restarts (int): Number of random restarts that are used for hyperparameter
                 optimization. Defaults to 20.
             n_jobs (int): Number of parallel processes that are used to fit

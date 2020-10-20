@@ -209,3 +209,22 @@ def test__replace_by_measurements(make_random_dataset):
     palinstance.std = palinstance.measurement_uncertainty
     palinstance._replace_by_measurements()
     assert (palinstance.y == palinstance.std).all()
+
+
+def test__update_coef_var_mask(make_random_dataset):
+    """Test that the coefficient of variation mask works as expected"""
+    X, _ = make_random_dataset  # pylint:disable=invalid-name
+    palinstance = PALBase(X[:2], ["model"], 3, beta_scale=1)
+
+    palinstance.means = np.array([[1, 1, 1, 1], [1, 1, 1, 1]])
+    palinstance.std = np.array([[0, 0, 0, 0], [3, 1, 1, 1]])
+
+    assert (palinstance.coef_var_mask == np.array([True, True])).all()
+    palinstance._update_coef_var_mask()
+
+    assert (palinstance.coef_var_mask == np.array([True, False])).all()
+
+    palinstance.means = np.array([[0, 0, 0, 0], [0, 0, 0, 0]])
+    palinstance.std = np.array([[0, 0, 0, 0], [3, 1, 1, 1]])
+
+    assert (palinstance.coef_var_mask == np.array([True, False])).all()

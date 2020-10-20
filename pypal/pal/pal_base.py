@@ -19,6 +19,7 @@ from .core import (
 from .validate_inputs import (
     base_validate_models,
     validate_beta_scale,
+    validate_coef_var,
     validate_delta,
     validate_epsilon,
     validate_goals,
@@ -45,6 +46,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         delta: float = 0.05,
         beta_scale: float = 1 / 9,
         goals: List[str] = None,
+        coef_var_treshold: float = 3,
     ):
         """Initialize the PAL instance
 
@@ -63,6 +65,10 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                 that shall be minimized and "max" for every objective
                 that shall be maximized. Defaults to None, which means
                 that the code maximizes all objectives.
+            coef_var_treshold (float, optional): Use only points with
+                a coefficient of variation below this threshold
+                in the classification step. Defaults to 3.
+
         """
         self.cross_val_points = 10  # maybe we make it an argument at some point
         self.ndim = validate_ndim(ndim)
@@ -78,6 +84,8 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.models = base_validate_models(models)
         self.iteration = 1
         self.design_space_size = len(X_design)
+        self.coef_var_treshold = validate_coef_var(coef_var_treshold)
+        self.coef_var_mask = np.array([True] * self.design_space_size)
         # means/std are the model predictions
         self.means: np.array = None
         self.std: np.array = None
@@ -259,6 +267,25 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         else:
             self.rectangle_lows, self.rectangle_ups = _union(
                 self.rectangle_lows, self.rectangle_ups, lows, ups
+            )
+
+    def _update_coef_var_mask(self):
+        """Update the mask array of elements that have variance below
+        the coefficient of variation threshold"""
+        # small workaround to avoid potential bugs due to division by zero
+        # this will fail if everything is zero in this case,
+        # I feel we might just give up for now,
+        # in the future we can think fo just applying a shift
+        if self.means.sum() != 0:
+            means_no_zero = self.means.copy()
+            means_no_zero[means_no_zero == 0] = np.median(means_no_zero)
+            self.coef_var_mask = (
+                np.max(self.std / means_no_zero, axis=1) < self.coef_var_treshold
+            )
+        else:
+            mean_variation = self.std.mean()
+            self.coef_var_mask = (
+                np.max(self.std / mean_variation, axis=1) < self.coef_var_treshold
             )
 
     def _classify(self):
