@@ -265,3 +265,64 @@ def test_crossvalidate(binh_korn_points):
 
     assert isinstance(cross_val_error, float)
     assert np.abs(cross_val_error) > 0
+
+
+def test_epsilon_sensitivity(binh_korn_points):
+    """Simple test if the epsilon changes the result in an expected way"""
+    X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
+
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
+
+    model_0 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0)
+    model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
+
+    palinstance0 = PALGPy(
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        epsilon=0.0,
+        delta=0.01,
+        restarts=3,
+    )
+    palinstance0.cross_val_points = 0
+    palinstance0.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    _ = palinstance0.run_one_step()
+    palinstance1 = PALGPy(
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        epsilon=0.05,
+        delta=0.01,
+        restarts=3,
+    )
+    palinstance1.cross_val_points = 0
+    palinstance1.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    _ = palinstance1.run_one_step()
+
+    palinstance2 = PALGPy(
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        epsilon=0.1,
+        delta=0.01,
+        restarts=3,
+    )
+    palinstance2.cross_val_points = 0
+    palinstance2.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    _ = palinstance2.run_one_step()
+
+    assert palinstance0.number_discarded_points == 0
+    assert palinstance1.number_discarded_points == 0
+    assert palinstance2.number_discarded_points == 0
+
+    assert (
+        palinstance0.number_unclassified_points
+        > palinstance1.number_unclassified_points
+    )
+    assert (
+        palinstance1.number_unclassified_points
+        > palinstance2.number_unclassified_points
+    )
