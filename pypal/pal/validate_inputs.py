@@ -112,8 +112,8 @@ def validate_epsilon(
         raise ValueError("The epsilon values must be in [0,1]")
 
     warnings.warn(
-        "Only one epsilon value provided,\
-             will automatically expand to use the same value in every dimension",
+        """Only one epsilon value provided,
+will automatically expand to use the same value in every dimension""",
         UserWarning,
     )
     return np.array([epsilon] * ndim)
