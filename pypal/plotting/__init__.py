@@ -72,8 +72,8 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
     ax.errorbar(
         y_0,
         y_1,
-        std_0,
-        std_1,
+        xerr=std_0,
+        yerr=std_1,
         c="gray",
         alpha=0.3,
         label="all design points",

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.182.gd40dc09.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.183.g5b126a8.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -256,7 +256,9 @@
 </li>
 </ol>
 <p>In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as <code class="code docutils literal notranslate"><span class="pre">np.nan</span></code>, i.e., the call could look like</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">palinstance</span><span class="o">.</span><span class="n">update_train_set</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">palinstance</span><span class="o">.</span><span class="n">update_train_set</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
 </pre></div>
 </div>
 <p>for a case in which we performed measurements for samples 1 and 2 of our design space but didn’t measure the first target for sample 2.</p>
@@ -330,8 +332,9 @@ In this case you can use the <code class="code docutils literal notranslate"><sp
 </div>
 <div class="section" id="caveats-and-tricks-with-gaussian-processes">
 <h2>Caveats and tricks with Gaussian processes<a class="headerlink" href="#caveats-and-tricks-with-gaussian-processes" title="Permalink to this headline">¶</a></h2>
-<p>One fact that one needs to keep in mind is that <span class="math notranslate nohighlight">\(\epsilon\)</span>-PAL will not work if the predictive variance does not make sense, for example, when the model is overconfident.
-This problem is exacerbated in conjunction with <span class="math notranslate nohighlight">\(\beta_\mathrm{scale} &lt; 1\)</span>. To make your model more robust you can try:</p>
+<p>One fact that one needs to keep in mind is that <span class="math notranslate nohighlight">\(\epsilon\)</span>-PAL will not work if the predictive variance does not make sense, for example, when the model is overconfident. And example of the predictions of an overconfident model, due to a training set that excludes a part of design space, is shown in the figure below</p>
+<a class="reference internal image-reference" href="_images/overconfident_model.png"><img alt="Example of the predictions of an overconfident GPR model" src="_images/overconfident_model.png" style="width: 600px;" /></a>
+<p>This problem is exacerbated in conjunction with <span class="math notranslate nohighlight">\(\beta_\mathrm{scale} &lt; 1\)</span>. To make your model more robust you can try:</p>
 <ul class="simple">
 <li><p>to set reasonable bounds on the length scale parameters</p></li>
 <li><p>to increase the regularization parameter/noise kernel (<code class="code docutils literal notranslate"><span class="pre">alpha</span></code> in <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code>)</p></li>

@@ -71,7 +71,9 @@ In case you have missing observations, i.e., you measured only two of three outp
 
 .. code-block:: python
 
-    palinstance.update_train_set(np.array([1,2]), np.array([1, 2, 3], [np.nan, 1, 2, 0]])
+    import numpy as np
+
+    palinstance.update_train_set(np.array([1,2]), np.array([[1, 2, 3], [np.nan, 1, 2, 0]])
 
 for a case in which we performed measurements for samples 1 and 2 of our design space but didn't measure the first target for sample 2.
 
@@ -153,7 +155,12 @@ Of course, also the `exhaust_loop` supports the `batch_size` keyword argument
 Caveats and tricks with Gaussian processes
 -------------------------------------------
 
-One fact that one needs to keep in mind is that :math:`\epsilon`-PAL will not work if the predictive variance does not make sense, for example, when the model is overconfident.
+One fact that one needs to keep in mind is that :math:`\epsilon`-PAL will not work if the predictive variance does not make sense, for example, when the model is overconfident. And example of the predictions of an overconfident model, due to a training set that excludes a part of design space, is shown in the figure below
+
+.. image:: _static/overconfident_model.png
+  :width: 600
+  :alt: Example of the predictions of an overconfident GPR model
+
 This problem is exacerbated in conjunction with :math:`\beta_\mathrm{scale} < 1`. To make your model more robust you can try:
 
 - to set reasonable bounds on the length scale parameters
