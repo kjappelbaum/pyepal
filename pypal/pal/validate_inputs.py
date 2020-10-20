@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
 """Methods to validate inputs for the PAL classes"""
 import warnings
-from typing import List, Union
+from typing import Any
 
 import GPy
 import numpy as np
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 
 from ..models.coregionalized import GPCoregionalizedRegression
 
 
-def validate_ndim(ndim: int) -> int:
+def validate_ndim(ndim: Any) -> int:
     """Make sure that the number of dimensions makes sense
 
     Args:
-        ndim (int): number of dimensions
+        ndim (Any): number of dimensions
 
     Raises:
         ValueError: If the number of dimensions is not an integer
@@ -31,11 +33,11 @@ def validate_ndim(ndim: int) -> int:
     return ndim
 
 
-def validate_delta(delta: float) -> float:
+def validate_delta(delta: Any) -> float:
     """Make sure that delta is in a reasonable range
 
     Args:
-        delta (float): Delta hyperparameter
+        delta (Any): Delta hyperparameter
 
     Raises:
         ValueError: Delta must be in [0,1].
@@ -49,11 +51,11 @@ def validate_delta(delta: float) -> float:
     return delta
 
 
-def validate_beta_scale(beta_scale: float) -> float:
+def validate_beta_scale(beta_scale: Any) -> float:
     """
 
     Args:
-        beta_scale (float): scaling factor for beta
+        beta_scale (Any): scaling factor for beta
 
     Raises:
         ValueError: If beta is smaller than 0
@@ -67,13 +69,11 @@ def validate_beta_scale(beta_scale: float) -> float:
     return beta_scale
 
 
-def validate_epsilon(
-    epsilon: Union[float, np.ndarray, List[float]], ndim: int
-) -> np.ndarray:
+def validate_epsilon(epsilon: Any, ndim: int) -> np.ndarray:
     """Validate epsilon and return a np.array
 
     Args:
-        epsilon (Union[float, np.ndarray, list]): Epsilon hyperparameter
+        epsilon (Any): Epsilon hyperparameter
         ndim (int): Number of dimensions/objectives
 
     Raises:
@@ -120,13 +120,13 @@ will automatically expand to use the same value in every dimension""",
 
 
 def validate_goals(  # pylint:disable=too-many-branches
-    goals: Union[List[Union[str, int]], np.ndarray], ndim: int
+    goals: Any, ndim: int
 ) -> np.ndarray:
     """Create a valid array of goals. 1 for maximization, -1
         for objectives that are to be minimized.
 
     Args:
-        goals (Union[List[Union[str, int]], np.ndarray]): List of goals,
+        goals (Any): List of goals,
             typically provideded as strings 'max' for maximization
             and 'min' for minimization
         ndim (int): number of dimensions
@@ -179,7 +179,7 @@ def validate_goals(  # pylint:disable=too-many-branches
     )
 
 
-def base_validate_models(models: list) -> list:
+def base_validate_models(models: Any) -> list:
     """Currently no validation as the predict and train function
     are implemented independet of the base class"""
     if models:
@@ -188,11 +188,11 @@ def base_validate_models(models: list) -> list:
     raise ValueError("You must provide some models to initialize pypal")
 
 
-def validate_number_models(models: list, ndim: int):
+def validate_number_models(models: Any, ndim: int):
     """Make sure that there are as many models as objectives
 
     Args:
-        models (list): List of models
+        models (Any): List of models
         ndim (int): Number of objectives
 
     Raises:
@@ -204,14 +204,14 @@ def validate_number_models(models: list, ndim: int):
         raise ValueError("You must provide a list of models. One model per objective")
 
 
-def validate_gpy_model(models: list):
+def validate_gpy_model(models: Any):
     """Make sure that all elements of the list a GPRegression models"""
     for model in models:
         if not isinstance(model, GPy.models.GPRegression):
             raise ValueError("The models must be an instance of GPy.model")
 
 
-def validate_coregionalized_gpy(models: list):
+def validate_coregionalized_gpy(models: Any):
     """Make sure that model is a coregionalized GPR model"""
     if not isinstance(models, list):
         raise ValueError("You must provide a list of models with one element")
@@ -221,7 +221,7 @@ def validate_coregionalized_gpy(models: list):
         )
 
 
-def validate_njobs(njobs: int):
+def validate_njobs(njobs: Any):
     """Make sure that njobs is an int > 1"""
     if not isinstance(njobs, int):
         raise ValueError("njobs musst be of type int")
@@ -229,7 +229,7 @@ def validate_njobs(njobs: int):
         raise ValueError("njobs must be a number greater equal 1")
 
 
-def validate_coef_var(coef_var: float):
+def validate_coef_var(coef_var: Any):
     """Make sure that the coef_var makes sense"""
     if not isinstance(coef_var, (float, int)):
         raise ValueError("coef_var must be of type float or int")
@@ -237,3 +237,24 @@ def validate_coef_var(coef_var: float):
         raise ValueError("coef_var must be greater 0")
 
     return coef_var
+
+
+def _validate_sklearn_gpr_model(model: Any) -> GaussianProcessRegressor:
+    """Make sure that we deal with a GaussianProcessRegressor instance,
+    if it is a fitted random or grid search instance, extract the model"""
+    if isinstance(model, (RandomizedSearchCV, GridSearchCV)):
+        try:
+            if isinstance(model.best_estimator_, GaussianProcessRegressor):
+                return model.best_estimator_
+
+            raise ValueError(
+                """If you provide a grid or random search instance,
+it needs to contain a GaussianProcessRegressor instance."""
+            )
+        except AttributeError as not_fitted_exception:
+            raise ValueError(
+                "If you provide a grid or random search instance it needs to be fitted."
+            ) from not_fitted_exception
+    elif isinstance(model, GaussianProcessRegressor):
+        return model
+    raise ValueError("You need to provide a GaussianProcessRegressor instance.")

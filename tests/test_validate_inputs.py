@@ -2,9 +2,14 @@
 """Testing the input validation"""
 import numpy as np
 import pytest
+from sklearn.datasets import make_classification
+from sklearn.gaussian_process import GaussianProcessClassifier, GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF, Matern
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 
 from pypal.models.gpr import build_coregionalized_model
 from pypal.pal.validate_inputs import (
+    _validate_sklearn_gpr_model,
     base_validate_models,
     validate_beta_scale,
     validate_coef_var,
@@ -139,3 +144,58 @@ def test_validate_coef_var():
         validate_coef_var(None)
 
     assert validate_coef_var(3) == 3
+
+
+def test__validate_sklearn_gpr_model(make_random_dataset):
+    """Test that the model validation for PALSklearn works"""
+    X, y = make_random_dataset  # pylint:disable=invalid-name
+    with pytest.raises(ValueError):
+        _validate_sklearn_gpr_model(GaussianProcessClassifier())
+    with pytest.raises(ValueError):
+        _validate_sklearn_gpr_model(GridSearchCV(GaussianProcessClassifier(), {}))
+    with pytest.raises(ValueError):
+        _validate_sklearn_gpr_model(RandomizedSearchCV(GaussianProcessClassifier(), {}))
+
+    with pytest.raises(ValueError):
+        _validate_sklearn_gpr_model(GridSearchCV(GaussianProcessRegressor(), {}))
+    with pytest.raises(ValueError):
+        _validate_sklearn_gpr_model(RandomizedSearchCV(GaussianProcessRegressor(), {}))
+
+    gpr = GaussianProcessRegressor()
+
+    assert _validate_sklearn_gpr_model(gpr) == gpr
+
+    grid_search = GridSearchCV(
+        GaussianProcessRegressor(), {"kernel": [RBF(), Matern()]}
+    )
+
+    random_search = RandomizedSearchCV(
+        GaussianProcessRegressor(), {"kernel": [RBF(), Matern()]}
+    )
+
+    grid_search.fit(X, y)
+    random_search.fit(X, y)
+
+    assert _validate_sklearn_gpr_model(grid_search) == grid_search.best_estimator_
+    assert _validate_sklearn_gpr_model(random_search) == random_search.best_estimator_
+
+    (
+        X_classification,  # pylint:disable=invalid-name
+        y_classification,
+    ) = make_classification()
+
+    grid_search_class = GridSearchCV(
+        GaussianProcessClassifier(), {"kernel": [RBF(), Matern()]}
+    )
+    random_search_class = RandomizedSearchCV(
+        GaussianProcessClassifier(), {"kernel": [RBF(), Matern()]}
+    )
+
+    grid_search_class.fit(X_classification, y_classification)
+    random_search_class.fit(X_classification, y_classification)
+
+    with pytest.raises(ValueError):
+        _validate_sklearn_gpr_model(grid_search_class)
+
+    with pytest.raises(ValueError):
+        _validate_sklearn_gpr_model(random_search_class)
