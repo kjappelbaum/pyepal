@@ -289,14 +289,19 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             )
 
     def _classify(self):
-        self.pareto_optimal, self.discarded, self.unclassified = _pareto_classify(
-            self.pareto_optimal,
-            self.discarded,
-            self.unclassified,
-            self.rectangle_lows,
-            self.rectangle_ups,
+        self._update_coef_var_mask()
+        pareto_optimal, discarded, unclassified = _pareto_classify(
+            self.pareto_optimal[self.coef_var_mask],
+            self.discarded[self.coef_var_mask],
+            self.unclassified[self.coef_var_mask],
+            self.rectangle_lows[self.coef_var_mask],
+            self.rectangle_ups[self.coef_var_mask],
             self.epsilon,
         )
+
+        self.pareto_optimal[self.coef_var_mask] = pareto_optimal
+        self.discarded[self.coef_var_mask] = discarded
+        self.unclassified[self.coef_var_mask] = unclassified
 
     def _replace_by_measurements(self):
         """Implements one "trick". Instead of using the GPR
