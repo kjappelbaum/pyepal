@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Developer notes &#8212; pypal 0+untagged.183.g5b126a8.dirty documentation</title>
+    <title>Developer notes &#8212; pypal 0+untagged.187.g4cafdc1.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -176,7 +176,7 @@
 <div class="section" id="commit-messages">
 <h2>Commit messages<a class="headerlink" href="#commit-messages" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>To automatically generate the changelog and version numbers we use <a class="reference external" href="https://www.conventionalcommits.org/en/v1.0.0-beta.2/">conventional commits</a></p></li>
+<li><p>To automatically generate the changelog and version numbers we use <a class="reference external" href="https://www.conventionalcommits.org/en/v1.0.0-beta.2/">conventional commits</a> use the prefix <code class="code docutils literal notranslate"><span class="pre">feat</span></code> for new features, <code class="code docutils literal notranslate"><span class="pre">chore</span></code> <a class="reference external" href="https://stackoverflow.com/questions/26944762/when-to-use-chore-as-type-of-commit-message">for updating grunt tasks etc; no production code change</a>, <code class="code docutils literal notranslate"><span class="pre">fix</span></code> for bug fixes and <code class="code docutils literal notranslate"><span class="pre">docs</span></code> for changes to the documentation.</p></li>
 </ul>
 </div>
 <div class="section" id="python-code">
@@ -191,11 +191,11 @@
 </div>
 <div class="section" id="new-features">
 <h2>New features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h2>
-<p>Please make a new branch for the development of new features. Rebase on the upstream master and include a test for your new feature. (The CI checks for a drop in code coverage.)</p>
+<p>Please make a new branch for the development of new features. <a class="reference external" href="https://medium.com/&#64;ruthmpardee/git-fork-workflow-using-rebase-587a144be470">Rebase on the upstream master</a> and include a test for your new feature. (The CI checks for a drop in code coverage.)</p>
 </div>
 <div class="section" id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
-<p>Currently, documentation is hosted on GitHub pages. Build it locally using <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> in the <code class="docutils literal notranslate"><span class="pre">doc</span></code> directory and then push it to GitHub pages using</p>
+<p>Currently, documentation is hosted on GitHub pages. Build it locally using <code class="code docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> in the <code class="code docutils literal notranslate"><span class="pre">doc</span></code> directory and then push it to GitHub pages using</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git subtree push --prefix docs/_build/html  origin gh-pages
 </pre></div>
 </div>

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Background &#8212; pypal 0+untagged.183.g5b126a8.dirty documentation</title>
+    <title>Background &#8212; pypal 0+untagged.187.g4cafdc1.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -143,7 +143,7 @@
     <ul class="nav section-nav flex-column">
 
         <li class="nav-item toc-entry toc-h2">
-            <a href="#intuition-behind-the-algorithm" class="nav-link">Intuition behind the algorithm</a>
+            <a href="#the-intuition-behind-the-algorithm" class="nav-link">The intuition behind the algorithm</a>
         </li>
 
         <li class="nav-item toc-entry toc-h2">
@@ -168,15 +168,15 @@
 <p>This package implements a modified version of the <a class="reference external" href="https://jmlr.org/papers/v17/15-047.html">ε-PAL algorithm from Zuluaga et al.</a> in an object-oriented interface for finding the Pareto efficient points in any number of dimensions with any model that can output a standard deviation and a mean.</p>
 <p>This implementation has the following features:</p>
 <ul class="simple">
-<li><p>We make sure that the sampling is scale invariant and that the algorithm can deal with positive and negative objective values.</p></li>
+<li><p>We make sure that the sampling is scale-invariant and that the algorithm can deal with positive and negative objective values.</p></li>
 <li><p>Instead of using the predicted <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> and <span class="math notranslate nohighlight">\(\hat{\sigma}\)</span> also for the sampled points we use the measured <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>.</p></li>
 <li><p>This implementation is directly applicable to <span class="math notranslate nohighlight">\(n\)</span>-dimensional problems.</p></li>
 <li><p>It can be easily used with any kind of model. For example, one might replace the Gaussian process model with a neural network with <a class="reference external" href="http://proceedings.mlr.press/v48/gal16.pdf">Dropout Monte Carlo</a> for the uncertainty estimate.</p></li>
 <li><p>The support for missing data is implemented. For example, if you measure for some points only some of the objectives there is nothing else you have to do other than providing <cite>np.nan</cite> for the missing measurements. The code will figure the rest out for you and if you use some models like coregionalized GPRs, the models will try to use the correlations between the objectives to fill the gaps.</p></li>
 </ul>
 <p>In our own work, we used this algorithm for materials discovery.</p>
-<div class="section" id="intuition-behind-the-algorithm">
-<h2>Intuition behind the algorithm<a class="headerlink" href="#intuition-behind-the-algorithm" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-intuition-behind-the-algorithm">
+<h2>The intuition behind the algorithm<a class="headerlink" href="#the-intuition-behind-the-algorithm" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/pal_schema.png"><img alt="Schema illustrating the PAL algorithm" src="_images/pal_schema.png" style="width: 600px;" /></a>
 <p>The PAL algorithm iterates the following steps:</p>
 <ol class="loweralpha simple">
@@ -190,14 +190,14 @@ This is different from many Bayesian optimization approaches, that introduce som
 </div>
 <div class="section" id="how-do-the-hyperparameters-influence-the-algorithm">
 <h2>How do the hyperparameters influence the algorithm?<a class="headerlink" href="#how-do-the-hyperparameters-influence-the-algorithm" title="Permalink to this headline">¶</a></h2>
-<p>To test the influence of hyperameter settings we ran one step of the algorithm
-on the <a class="reference external" href="https://en.wikipedia.org/wiki/Test_functions_for_optimization#Test_functions_for_multi-objective_optimization">Binh-Korn testfunction</a>.</p>
+<p>To test the influence of hyperparameter settings we ran one step of the algorithm
+on the <a class="reference external" href="https://en.wikipedia.org/wiki/Test_functions_for_optimization#Test_functions_for_multi-objective_optimization">Binh-Korn test function</a>.</p>
 <p>We model every objective seperately with a Matérn-3/2 kernel, leave <span class="math notranslate nohighlight">\(\delta=0.05\)</span> fixed
 and vary <span class="math notranslate nohighlight">\(\epsilon\)</span> and <span class="math notranslate nohighlight">\(\beta_\mathrm{scale}\)</span>.</p>
 <p>We find that increasing <span class="math notranslate nohighlight">\(\epsilon\)</span> speeds up the algorithm, but gives us a sparser Pareto frontier.
-Similarily, <span class="math notranslate nohighlight">\(\beta_\mathrm{scale}\)</span> speeds up the algorithm by scaling the size of the hyperrectangles.</p>
+Similarly, <span class="math notranslate nohighlight">\(\beta_\mathrm{scale}\)</span> speeds up the algorithm by scaling the size of the hyperrectangles.</p>
 <a class="reference internal image-reference" href="_images/hyperparameter_illustration_delta_001.png"><img alt="Influence of hyperparameter settings on the PAL algorithm." src="_images/hyperparameter_illustration_delta_001.png" style="width: 600px;" /></a>
-<p>As shown in the figure below, <span class="math notranslate nohighlight">\(\beta\)</span> depends on <span class="math notranslate nohighlight">\(\delta\)</span> and scaling beta down will drastically reduce the size of the uncertainity rectangles and in this way influence the convergence behavior.</p>
+<p>As shown in the figure below, <span class="math notranslate nohighlight">\(\beta\)</span> depends on <span class="math notranslate nohighlight">\(\delta\)</span> and scaling beta down will drastically reduce the size of the uncertainty rectangles and in this way influence the convergence behavior.</p>
 <a class="reference internal image-reference" href="_images/beta.png"><img alt="Beta as function of hyperparameters" src="_images/beta.png" style="width: 600px;" /></a>
 </div>
 </div>

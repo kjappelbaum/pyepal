@@ -5,7 +5,7 @@ This package implements a modified version of the `ε-PAL algorithm from Zuluaga
 
 This implementation has the following features:
 
-- We make sure that the sampling is scale invariant and that the algorithm can deal with positive and negative objective values.
+- We make sure that the sampling is scale-invariant and that the algorithm can deal with positive and negative objective values.
 
 - Instead of using the predicted :math:`\hat{\mu}` and :math:`\hat{\sigma}` also for the sampled points we use the measured :math:`\mu` and :math:`\sigma`.
 
@@ -18,8 +18,8 @@ This implementation has the following features:
 In our own work, we used this algorithm for materials discovery.
 
 
-Intuition behind the algorithm
---------------------------------
+The intuition behind the algorithm
+------------------------------------
 
 .. image:: _static/pal_schema.png
   :width: 600
@@ -42,21 +42,21 @@ d. Retraining a model with this new measurement will reduce the width of the hyp
 How do the hyperparameters influence the algorithm?
 -----------------------------------------------------
 
-To test the influence of hyperameter settings we ran one step of the algorithm
-on the `Binh-Korn testfunction <https://en.wikipedia.org/wiki/Test_functions_for_optimization#Test_functions_for_multi-objective_optimization>`_.
+To test the influence of hyperparameter settings we ran one step of the algorithm
+on the `Binh-Korn test function <https://en.wikipedia.org/wiki/Test_functions_for_optimization#Test_functions_for_multi-objective_optimization>`_.
 
 We model every objective seperately with a Matérn-3/2 kernel, leave :math:`\delta=0.05` fixed
 and vary :math:`\epsilon` and :math:`\beta_\mathrm{scale}`.
 
 We find that increasing :math:`\epsilon` speeds up the algorithm, but gives us a sparser Pareto frontier.
-Similarily, :math:`\beta_\mathrm{scale}` speeds up the algorithm by scaling the size of the hyperrectangles.
+Similarly, :math:`\beta_\mathrm{scale}` speeds up the algorithm by scaling the size of the hyperrectangles.
 
 .. image::  _static/hyperparameter_illustration_delta_001.png
   :width: 600
   :alt: Influence of hyperparameter settings on the PAL algorithm.
 
 
-As shown in the figure below, :math:`\beta` depends on :math:`\delta` and scaling beta down will drastically reduce the size of the uncertainity rectangles and in this way influence the convergence behavior.
+As shown in the figure below, :math:`\beta` depends on :math:`\delta` and scaling beta down will drastically reduce the size of the uncertainty rectangles and in this way influence the convergence behavior.
 
 .. image:: _static/beta.png
     :width: 600

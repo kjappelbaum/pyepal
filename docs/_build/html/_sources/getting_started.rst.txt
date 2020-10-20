@@ -24,7 +24,7 @@ Running an active learning experiment
 
 The `examples` directory contains a `Jupyter notebook with an example <https://github.com/kjappelbaum/pypal/blob/master/examples/test_pal.ipynb>`_ that you can also run on MyBinder.
 
-If you use a Gaussian process model built with :code:`sklearn` or :code:`GPy` you can use a pre-built class and follow the following steps:
+If you use a Gaussian process model built with :code:`sklearn` or :code:`GPy` you can use a pre-built class (like :code:`PALSklearn` or :code:`PALGpy`) and follow the following steps:
 
 1. For each objective create a model (if you want to use a coregionalized model you, of course, only need to create one)
 
@@ -60,11 +60,11 @@ If you use a Gaussian process model built with :code:`sklearn` or :code:`GPy` yo
         # Now you can run one step
         next_idx = palinstance.run_one_step()
 
-    At this level you have a range of different options you can set.
+    At this level, you have a range of different options you can set.
 
     - :code:`epsilon`: in a :code:`np.ndarray` you can provide one :math:`\epsilon` per dimension. This allows you to set looser tolerance for some objectives. Note that :math:`\epsilon_i \in [0,1]`.
     - :code:`delta`: allows you to specify the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will speed up the convergence.
-    - :code:`beta_scale`: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`.
+    - :code:`beta_scale`: allows you to provide an empirical scaling parameter for :math:`beta`. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`.
     - :code:`goal`: By default, `pypal` assumes that you want to maximize every objective. If this is not the case, you can set the :code:`goal` argument using a list of "min" and "max", using "min" to specify that you want to minimize the ith objective and "max" to indicate that you want to maximize this objective.
 
 In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as :code:`np.nan`, i.e., the call could look like
@@ -73,13 +73,14 @@ In case you have missing observations, i.e., you measured only two of three outp
 
     import numpy as np
 
-    palinstance.update_train_set(np.array([1,2]), np.array([[1, 2, 3], [np.nan, 1, 2, 0]])
+    palinstance.update_train_set(np.array([1,2]), np.array([[1, 2, 3], [np.nan, 1, 2, 0]]))
 
-for a case in which we performed measurements for samples 1 and 2 of our design space but didn't measure the first target for sample 2.
+for a case in which we performed measurements for samples with index 1 and 2 of our design space but did not measure the first target for sample 2.
 
 Hyperparameter optimization
 .............................
-Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process, you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the :code:`_should_optimize_hyperparameter` function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.
+Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model.
+But since this is usually a computationally expensive process, you may not want to do this at every iteration of the active learning process. The timing of the hyperparameter optimization is internally set by the :code:`_should_optimize_hyperparameter` function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.
 
 Logging
 ........
@@ -119,7 +120,7 @@ Exploring a space where all objectives are known
 .................................................
 
 In some cases, you already know all measurements you may want to run PAL with different settings and test how the algorithm performs.
-In this case you can use the :code:`exhaust_loop` wrapper.
+In this case, you can use the :code:`exhaust_loop` wrapper.
 
 .. code-block:: python
 
@@ -155,7 +156,7 @@ Of course, also the `exhaust_loop` supports the `batch_size` keyword argument
 Caveats and tricks with Gaussian processes
 -------------------------------------------
 
-One fact that one needs to keep in mind is that :math:`\epsilon`-PAL will not work if the predictive variance does not make sense, for example, when the model is overconfident. And example of the predictions of an overconfident model, due to a training set that excludes a part of design space, is shown in the figure below
+One fact that one needs to keep in mind is that :math:`\epsilon`-PAL will not work if the predictive variance does not make sense, for example, when the model is overconfident. An example of the predictions of an overconfident model, due to a training set that excludes a part of design space, is shown in the figure below
 
 .. image:: _static/overconfident_model.png
   :width: 600
@@ -174,13 +175,13 @@ By default, the code will run a simple cross-validation only on the first iterat
 
 .. code-block::
 
-    The mean absolute error in crossvalidation is 64.29, the mean variance is 0.36.
+    The mean absolute error in cross-validation is 64.29, the mean variance is 0.36.
     Your model might not be predictive and/or overconfident.
     In the docs, you find hints on how to make GPRs more robust.
 
 If you want to change this behavior and run the cross-validation test more frequently, you can override the :code:`should_run_crossvalidation` function.
 
-Another way to detect overfitting is to use :code:`make_jointplot` function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and historgrams of the objectives on the diagonal. If you observe that the errorbars do not overlap but the model seems to be wrong, you might want to improve your surrogate model.
+Another way to detect overfitting is to use :code:`make_jointplot` function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If you observe that the error bars do not overlap but the model seems to be wrong, you might want to improve your surrogate model.
 
 .. code-block:: python
 

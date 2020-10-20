@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.183.g5b126a8.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.187.g4cafdc1.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -210,7 +210,7 @@
 <div class="section" id="running-an-active-learning-experiment">
 <h2>Running an active learning experiment<a class="headerlink" href="#running-an-active-learning-experiment" title="Permalink to this headline">¶</a></h2>
 <p>The <cite>examples</cite> directory contains a <a class="reference external" href="https://github.com/kjappelbaum/pypal/blob/master/examples/test_pal.ipynb">Jupyter notebook with an example</a> that you can also run on MyBinder.</p>
-<p>If you use a Gaussian process model built with <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> or <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> you can use a pre-built class and follow the following steps:</p>
+<p>If you use a Gaussian process model built with <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> or <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> you can use a pre-built class (like <code class="code docutils literal notranslate"><span class="pre">PALSklearn</span></code> or <code class="code docutils literal notranslate"><span class="pre">PALGpy</span></code>) and follow the following steps:</p>
 <ol class="arabic">
 <li><p>For each objective create a model (if you want to use a coregionalized model you, of course, only need to create one)</p></li>
 <li><p>Sample a few initial points from your design space. In practice, you can use the <code class="code docutils literal notranslate"><span class="pre">get_maxmin_samples</span></code> or <code class="code docutils literal notranslate"><span class="pre">get_kmeans_samples</span></code> utilities for that. Assuming that <code class="code docutils literal notranslate"><span class="pre">X</span></code> is a <code class="code docutils literal notranslate"><span class="pre">np.array</span></code> if the descriptors/features</p>
@@ -245,11 +245,11 @@
 <span class="n">next_idx</span> <span class="o">=</span> <span class="n">palinstance</span><span class="o">.</span><span class="n">run_one_step</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>At this level you have a range of different options you can set.</p>
+<p>At this level, you have a range of different options you can set.</p>
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">epsilon</span></code>: in a <code class="code docutils literal notranslate"><span class="pre">np.ndarray</span></code> you can provide one <span class="math notranslate nohighlight">\(\epsilon\)</span> per dimension. This allows you to set looser tolerance for some objectives. Note that <span class="math notranslate nohighlight">\(\epsilon_i \in [0,1]\)</span>.</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">delta</span></code>: allows you to specify the <span class="math notranslate nohighlight">\(\delta\)</span> hyperparameter (<span class="math notranslate nohighlight">\(\delta \in [0,1]\)</span>). Increasing this value will speed up the convergence.</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">beta_scale</span></code>: allows you to provide an empirical scaling parameter for beta. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">beta_scale</span></code>: allows you to provide an empirical scaling parameter for <span class="math notranslate nohighlight">\(beta\)</span>. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>.</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">goal</span></code>: By default, <cite>pypal</cite> assumes that you want to maximize every objective. If this is not the case, you can set the <code class="code docutils literal notranslate"><span class="pre">goal</span></code> argument using a list of “min” and “max”, using “min” to specify that you want to minimize the ith objective and “max” to indicate that you want to maximize this objective.</p></li>
 </ul>
 </div></blockquote>
@@ -258,13 +258,14 @@
 <p>In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as <code class="code docutils literal notranslate"><span class="pre">np.nan</span></code>, i.e., the call could look like</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">palinstance</span><span class="o">.</span><span class="n">update_train_set</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="n">palinstance</span><span class="o">.</span><span class="n">update_train_set</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]))</span>
 </pre></div>
 </div>
-<p>for a case in which we performed measurements for samples 1 and 2 of our design space but didn’t measure the first target for sample 2.</p>
+<p>for a case in which we performed measurements for samples with index 1 and 2 of our design space but did not measure the first target for sample 2.</p>
 <div class="section" id="hyperparameter-optimization">
 <h3>Hyperparameter optimization<a class="headerlink" href="#hyperparameter-optimization" title="Permalink to this headline">¶</a></h3>
-<p>Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model. But since this is usually a computationally expensive process, you do not want to do this every iteration. The timing of the hyperparameter optimization is internally set by the <code class="code docutils literal notranslate"><span class="pre">_should_optimize_hyperparameter</span></code> function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.</p>
+<p>Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model.
+But since this is usually a computationally expensive process, you may not want to do this at every iteration of the active learning process. The timing of the hyperparameter optimization is internally set by the <code class="code docutils literal notranslate"><span class="pre">_should_optimize_hyperparameter</span></code> function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.</p>
 </div>
 <div class="section" id="logging">
 <h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h3>
@@ -303,7 +304,7 @@
 <div class="section" id="exploring-a-space-where-all-objectives-are-known">
 <h3>Exploring a space where all objectives are known<a class="headerlink" href="#exploring-a-space-where-all-objectives-are-known" title="Permalink to this headline">¶</a></h3>
 <p>In some cases, you already know all measurements you may want to run PAL with different settings and test how the algorithm performs.
-In this case you can use the <code class="code docutils literal notranslate"><span class="pre">exhaust_loop</span></code> wrapper.</p>
+In this case, you can use the <code class="code docutils literal notranslate"><span class="pre">exhaust_loop</span></code> wrapper.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALSklearn</span><span class="p">,</span> <span class="n">exhaust_loop</span>
 <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">gpr0</span><span class="p">,</span> <span class="n">gpr1</span><span class="p">,</span> <span class="n">gpr2</span><span class="p">]</span>
 <span class="n">palinstance</span> <span class="o">=</span> <span class="n">PALSklearn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -332,7 +333,7 @@ In this case you can use the <code class="code docutils literal notranslate"><sp
 </div>
 <div class="section" id="caveats-and-tricks-with-gaussian-processes">
 <h2>Caveats and tricks with Gaussian processes<a class="headerlink" href="#caveats-and-tricks-with-gaussian-processes" title="Permalink to this headline">¶</a></h2>
-<p>One fact that one needs to keep in mind is that <span class="math notranslate nohighlight">\(\epsilon\)</span>-PAL will not work if the predictive variance does not make sense, for example, when the model is overconfident. And example of the predictions of an overconfident model, due to a training set that excludes a part of design space, is shown in the figure below</p>
+<p>One fact that one needs to keep in mind is that <span class="math notranslate nohighlight">\(\epsilon\)</span>-PAL will not work if the predictive variance does not make sense, for example, when the model is overconfident. An example of the predictions of an overconfident model, due to a training set that excludes a part of design space, is shown in the figure below</p>
 <a class="reference internal image-reference" href="_images/overconfident_model.png"><img alt="Example of the predictions of an overconfident GPR model" src="_images/overconfident_model.png" style="width: 600px;" /></a>
 <p>This problem is exacerbated in conjunction with <span class="math notranslate nohighlight">\(\beta_\mathrm{scale} &lt; 1\)</span>. To make your model more robust you can try:</p>
 <ul class="simple">
@@ -344,13 +345,13 @@ In this case you can use the <code class="code docutils literal notranslate"><sp
 </ul>
 <p>We also recommend to cross-validate your Gaussian process model and to check that the predicted variances make sense.
 By default, the code will run a simple cross-validation only on the first iteration and warn if the mean absolute error is above the mean standard deviation. The warning will look something like</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">mean</span> <span class="n">absolute</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">crossvalidation</span> <span class="ow">is</span> <span class="mf">64.29</span><span class="p">,</span> <span class="n">the</span> <span class="n">mean</span> <span class="n">variance</span> <span class="ow">is</span> <span class="mf">0.36</span><span class="o">.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">mean</span> <span class="n">absolute</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">cross</span><span class="o">-</span><span class="n">validation</span> <span class="ow">is</span> <span class="mf">64.29</span><span class="p">,</span> <span class="n">the</span> <span class="n">mean</span> <span class="n">variance</span> <span class="ow">is</span> <span class="mf">0.36</span><span class="o">.</span>
 <span class="n">Your</span> <span class="n">model</span> <span class="n">might</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">predictive</span> <span class="ow">and</span><span class="o">/</span><span class="ow">or</span> <span class="n">overconfident</span><span class="o">.</span>
 <span class="n">In</span> <span class="n">the</span> <span class="n">docs</span><span class="p">,</span> <span class="n">you</span> <span class="n">find</span> <span class="n">hints</span> <span class="n">on</span> <span class="n">how</span> <span class="n">to</span> <span class="n">make</span> <span class="n">GPRs</span> <span class="n">more</span> <span class="n">robust</span><span class="o">.</span>
 </pre></div>
 </div>
 <p>If you want to change this behavior and run the cross-validation test more frequently, you can override the <code class="code docutils literal notranslate"><span class="pre">should_run_crossvalidation</span></code> function.</p>
-<p>Another way to detect overfitting is to use <code class="code docutils literal notranslate"><span class="pre">make_jointplot</span></code> function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and historgrams of the objectives on the diagonal. If you observe that the errorbars do not overlap but the model seems to be wrong, you might want to improve your surrogate model.</p>
+<p>Another way to detect overfitting is to use <code class="code docutils literal notranslate"><span class="pre">make_jointplot</span></code> function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If you observe that the error bars do not overlap but the model seems to be wrong, you might want to improve your surrogate model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal.plotting</span> <span class="kn">import</span> <span class="n">make_jointplot</span>
 
 <span class="c1"># palinstance is a instance of a PAL class after</span>
