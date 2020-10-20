@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Methods to validate inputs for the PAL classes"""
 import warnings
-from typing import Any
+from typing import Any, List
 
 import GPy
 import numpy as np
@@ -258,3 +258,16 @@ it needs to contain a GaussianProcessRegressor instance."""
     elif isinstance(model, GaussianProcessRegressor):
         return model
     raise ValueError("You need to provide a GaussianProcessRegressor instance.")
+
+
+def validate_sklearn_gpr_models(
+    models: Any, ndim: int
+) -> List[GaussianProcessRegressor]:
+    """Make sure that there is a list of GPR models, one model per objective"""
+    validate_number_models(models, ndim)
+    models_validated = []
+
+    for model in models:
+        models_validated.append(_validate_sklearn_gpr_model(model))
+
+    return models_validated
