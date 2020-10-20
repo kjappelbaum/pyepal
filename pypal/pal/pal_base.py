@@ -369,7 +369,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         if mae >= mean_std:
             warnings.warn(
                 """The mean absolute error in crossvalidation is {:.2f},
-the mean variance is {:.2f}.
+the mean standard deviation is {:.2f}.
 Your model might not be predictive and/or overconfident.
 In the docs, you find hints on how to make GPRs more robust.""".format(
                     mae, mean_std
