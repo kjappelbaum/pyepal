@@ -3,12 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-pypal: Pareto active learning for Python
+PyPAL: Pareto active learning for Python
 =========================================
 
 This package uses an active learning approach to efficiently and confidently identify the Pareto front with any model that can output a mean and a standard deviation.
 
 It works with any number of objectives, missing data, and is highly customizable.
+
 
 Contents
 ---------
