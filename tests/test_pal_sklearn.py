@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """Testing the PAL sklearn class"""
 import numpy as np
+import pytest
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, Matern
+from sklearn.model_selection import GridSearchCV
 from sklearn.utils.validation import check_is_fitted
 
 from pypal.pal.pal_sklearn import PALSklearn
@@ -19,6 +21,38 @@ def test_pal_sklearn(make_random_dataset):
     assert pal_sklearn_instance.models[0].kernel.length_scale == 1
     pal_sklearn_instance._train()  # pylint:disable=protected-access
     assert pal_sklearn_instance.models[0].kernel_.length_scale != 1
+
+
+def test_gridsearch_object(binh_korn_points):
+    """Test the initialization of PALSklearn with a GridsearchCV object"""
+    X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
+    grid_search_0 = GridSearchCV(
+        GaussianProcessRegressor(), {"kernel": [RBF(), Matern()]}
+    )
+    grid_search_1 = GridSearchCV(
+        GaussianProcessRegressor(), {"kernel": [RBF(), Matern()]}
+    )
+
+    with pytest.raises(ValueError):
+        palinstance = PALSklearn(
+            X_binh_korn, [grid_search_0, grid_search_1], 2, beta_scale=1
+        )
+
+    grid_search_0.fit(X_binh_korn, y_binh_korn[:, 0])
+    grid_search_1.fit(X_binh_korn, y_binh_korn[:, 1])
+
+    palinstance = PALSklearn(
+        X_binh_korn, [grid_search_0, grid_search_1], 2, beta_scale=1
+    )
+    palinstance.cross_val_points = 0
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+
+    idx = palinstance.run_one_step()
+    assert len(idx) == 1
+    assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    for model in palinstance.models:
+        assert check_is_fitted(model) is None
 
 
 def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
