@@ -26,7 +26,10 @@ class PALSklearn(PALBase):
 
         Args:
             X_design (np.array): Design space (feature matrix)
-            models (list): Machine learning models
+            models (list): Machine learning models. You can provide a list of
+                GaussianProcessRegressor instances or a list of *fitted*
+                RandomizedSearchCV/GridSearchCV instances with
+                GaussianProcessRegressor models
             ndim (int): Number of objectives
             epsilon (Union[list, float], optional): Epsilon hyperparameter.
                 Defaults to 0.01.
