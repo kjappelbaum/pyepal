@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The pypal API reference &#8212; pypal 0+untagged.187.g71dd6e3.dirty documentation</title>
+    <title>The pypal API reference &#8212; pypal 0+untagged.194.g81f6825 documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -381,12 +381,12 @@ and the upper limits are the upper limits.</p>
 <p>Base class for PAL</p>
 <dl class="py class">
 <dt id="pypal.pal.pal_base.PALBase">
-<em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_base.</code><code class="sig-name descname">PALBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_base.</code><code class="sig-name descname">PALBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coef_var_treshold</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>PAL base class</p>
 <dl class="py method">
 <dt id="pypal.pal.pal_base.PALBase.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coef_var_treshold</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize the PAL instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -405,6 +405,9 @@ Defaults to 1/9.</p></li>
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
 that the code maximizes all objectives.</p></li>
+<li><p><strong>coef_var_treshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
+a coefficient of variation below this threshold
+in the classification step. Defaults to 3.</p></li>
 </ul>
 </dd>
 </dl>
@@ -437,6 +440,13 @@ are outliers</p>
 <dt id="pypal.pal.pal_base.PALBase._update_beta">
 <code class="sig-name descname">_update_beta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase._update_beta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update beta according to section 7.2. of the epsilon-PAL paper</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pypal.pal.pal_base.PALBase._update_coef_var_mask">
+<code class="sig-name descname">_update_coef_var_mask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase._update_coef_var_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the mask array of elements that have variance below
+the coefficient of variation threshold</p>
 </dd></dl>
 
 <dl class="py method">
@@ -638,6 +648,9 @@ Defaults to 1/9.</p></li>
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
 that the code maximizes all objectives.</p></li>
+<li><p><strong>coef_var_treshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
+a coefficient of variation below this threshold
+in the classification step. Defaults to 3.</p></li>
 <li><p><strong>restarts</strong> (<em>int</em>) – Number of random restarts that are used for hyperparameter
 optimization. Defaults to 20.</p></li>
 <li><p><strong>n_jobs</strong> (<em>int</em>) – Number of parallel processes that are used to fit
@@ -679,6 +692,9 @@ Defaults to 1/9.</p></li>
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
 that the code maximizes all objectives.</p></li>
+<li><p><strong>coef_var_treshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
+a coefficient of variation below this threshold
+in the classification step. Defaults to 3.</p></li>
 <li><p><strong>restarts</strong> (<em>int</em>) – Number of random restarts that are used for hyperparameter
 optimization. Defaults to 20.</p></li>
 <li><p><strong>parallel</strong> (<em>bool</em>) – If true, model hyperparameters are optimized in parallel,
@@ -707,7 +723,10 @@ using the GPy implementation. Defaults to False.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>X_design</strong> (<em>np.array</em>) – Design space (feature matrix)</p></li>
-<li><p><strong>models</strong> (<em>list</em>) – Machine learning models</p></li>
+<li><p><strong>models</strong> (<em>list</em>) – Machine learning models. You can provide a list of
+GaussianProcessRegressor instances or a list of <em>fitted</em>
+RandomizedSearchCV/GridSearchCV instances with
+GaussianProcessRegressor models</p></li>
 <li><p><strong>ndim</strong> (<em>int</em>) – Number of objectives</p></li>
 <li><p><strong>epsilon</strong> (<em>Union</em><em>[</em><em>list</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Epsilon hyperparameter.
 Defaults to 0.01.</p></li>
@@ -720,6 +739,9 @@ Defaults to 1/9.</p></li>
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
 that the code maximizes all objectives.</p></li>
+<li><p><strong>coef_var_treshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
+a coefficient of variation below this threshold
+in the classification step. Defaults to 3.</p></li>
 <li><p><strong>n_jobs</strong> (<em>int</em>) – Number of parallel processes that are used to fit
 the GPR models. Defaults to 1.</p></li>
 </ul>
@@ -1061,6 +1083,18 @@ indicated in color.</p>
 <span id="input-validation"></span><h3>Input validation<a class="headerlink" href="#module-pypal.pal.validate_inputs" title="Permalink to this headline">¶</a></h3>
 <p>Methods to validate inputs for the PAL classes</p>
 <dl class="py function">
+<dt id="pypal.pal.validate_inputs._validate_sklearn_gpr_model">
+<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">_validate_sklearn_gpr_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.validate_inputs._validate_sklearn_gpr_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure that we deal with a GaussianProcessRegressor instance,
+if it is a fitted random or grid search instance, extract the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GaussianProcessRegressor</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="pypal.pal.validate_inputs.base_validate_models">
 <code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">base_validate_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.validate_inputs.base_validate_models" title="Permalink to this definition">¶</a></dt>
 <dd><p>Currently no validation as the predict and train function
@@ -1077,7 +1111,7 @@ are implemented independet of the base class</p>
 <code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_beta_scale</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">beta_scale</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.validate_inputs.validate_beta_scale" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>beta_scale</strong> (<em>float</em>) – scaling factor for beta</p>
+<dd class="field-odd"><p><strong>beta_scale</strong> (<em>Any</em>) – scaling factor for beta</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><strong>ValueError</strong> – If beta is smaller than 0</p>
@@ -1092,6 +1126,12 @@ are implemented independet of the base class</p>
 </dd></dl>
 
 <dl class="py function">
+<dt id="pypal.pal.validate_inputs.validate_coef_var">
+<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_coef_var</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">coef_var</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.validate_inputs.validate_coef_var" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure that the coef_var makes sense</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="pypal.pal.validate_inputs.validate_coregionalized_gpy">
 <code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_coregionalized_gpy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.validate_inputs.validate_coregionalized_gpy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that model is a coregionalized GPR model</p>
@@ -1103,7 +1143,7 @@ are implemented independet of the base class</p>
 <dd><p>Make sure that delta is in a reasonable range</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>delta</strong> (<em>float</em>) – Delta hyperparameter</p>
+<dd class="field-odd"><p><strong>delta</strong> (<em>Any</em>) – Delta hyperparameter</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><strong>ValueError</strong> – Delta must be in [0,1].</p>
@@ -1124,7 +1164,7 @@ are implemented independet of the base class</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>epsilon</strong> (<em>Union</em><em>[</em><em>float</em><em>, </em><em>np.ndarray</em><em>, </em><em>list</em><em>]</em>) – Epsilon hyperparameter</p></li>
+<li><p><strong>epsilon</strong> (<em>Any</em>) – Epsilon hyperparameter</p></li>
 <li><p><strong>ndim</strong> (<em>int</em>) – Number of dimensions/objectives</p></li>
 </ul>
 </dd>
@@ -1154,7 +1194,7 @@ are implemented independet of the base class</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>goals</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>]</em><em>, </em><em>np.ndarray</em><em>]</em>) – List of goals,
+<li><p><strong>goals</strong> (<em>Any</em>) – List of goals,
 typically provideded as strings ‘max’ for maximization
 and ‘min’ for minimization</p></li>
 <li><p><strong>ndim</strong> (<em>int</em>) – number of dimensions</p></li>
@@ -1188,7 +1228,7 @@ and ‘min’ for minimization</p></li>
 <dd><p>Make sure that the number of dimensions makes sense</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>ndim</strong> (<em>int</em>) – number of dimensions</p>
+<dd class="field-odd"><p><strong>ndim</strong> (<em>Any</em>) – number of dimensions</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
@@ -1218,12 +1258,23 @@ and ‘min’ for minimization</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>models</strong> (<em>list</em>) – List of models</p></li>
+<li><p><strong>models</strong> (<em>Any</em>) – List of models</p></li>
 <li><p><strong>ndim</strong> (<em>int</em>) – Number of objectives</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><strong>ValueError</strong> – If the number of models does not equal the number of objectives</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pypal.pal.validate_inputs.validate_sklearn_gpr_models">
+<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_sklearn_gpr_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.validate_inputs.validate_sklearn_gpr_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure that there is a list of GPR models, one model per objective</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">GaussianProcessRegressor</span></code>]</p>
 </dd>
 </dl>
 </dd></dl>

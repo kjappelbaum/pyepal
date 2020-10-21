@@ -6,7 +6,7 @@ from functools import partial
 import numpy as np
 
 from .pal_base import PALBase
-from .validate_inputs import validate_njobs, validate_number_models
+from .validate_inputs import validate_njobs, validate_sklearn_gpr_models
 
 
 def _train_model_picklable(i, models, design_space, objectives, sampled):
@@ -26,7 +26,10 @@ class PALSklearn(PALBase):
 
         Args:
             X_design (np.array): Design space (feature matrix)
-            models (list): Machine learning models
+            models (list): Machine learning models. You can provide a list of
+                GaussianProcessRegressor instances or a list of *fitted*
+                RandomizedSearchCV/GridSearchCV instances with
+                GaussianProcessRegressor models
             ndim (int): Number of objectives
             epsilon (Union[list, float], optional): Epsilon hyperparameter.
                 Defaults to 0.01.
@@ -50,7 +53,7 @@ class PALSklearn(PALBase):
         self.n_jobs = n_jobs
         super().__init__(*args, **kwargs)
 
-        validate_number_models(self.models, self.ndim)
+        self.models = validate_sklearn_gpr_models(self.models, self.ndim)
 
     def _set_data(self):
         pass
