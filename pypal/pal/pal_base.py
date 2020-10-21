@@ -112,6 +112,15 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         {self.number_unclassified_points} unclassified points."
 
     @property
+    def sampled_mask(self):
+        """Create a mask for the sampled points
+        We count a point as sampled if at least one objective has
+        been measured, i.e., self.sampled is a N * number objectives
+        array in which some columns can be false if a measurement
+        has not been performed"""
+        return self.sampled.sum(axis=1) > 0
+
+    @property
     def pareto_optimal_points(self):
         """Return the pareto optimal points"""
         return self.design_space[self.pareto_optimal]
@@ -350,6 +359,9 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self._update_hyperrectangles()
         self._classify()
         samples = np.array([], dtype=np.int)
+        if sum((self.pareto_optimal | self.unclassified) & ~self.sampled_mask) == 0:
+            PAL_LOGGER.info("No point that we could sample left.")
+            return None
         if sum(self.unclassified):
             for _ in range(batch_size):
                 sampled_idx = self.sample(exclude_idx=samples)
@@ -360,7 +372,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             self.iteration += 1
 
             return samples
-        print("Done. No unclassified point left")
+        PAL_LOGGER.info("Done. No unclassified point left.")
         return None
 
     def _compare_mae_variance(self):
@@ -442,12 +454,7 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
                      before you can peform the sampling"
             )
 
-        # We count a point as sampled if at least one objective has
-        # been measured, i.e., self.sampled is a N * number objectives
-        # array in which some columns can be false if a measurement
-        # has not been performed
-        sampled_mask = self.sampled.sum(axis=1) > 0
-
+        sampled_mask = self.sampled_mask.copy()
         # This is to handle the case of batch sampling, where we do need
         # to make sure that we do not sample the same points
         if isinstance(exclude_idx, np.ndarray):

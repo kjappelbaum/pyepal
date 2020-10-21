@@ -19,7 +19,12 @@ setup(
     install_requires=REQUIREMENTS,
     extras_require={
         "testing": ["pytest", "pytest-cov<2.11"],
-        "docs": ["sphinx", "pydata-sphinx-theme", "sphinx-autodoc-typehints"],
+        "docs": [
+            "sphinx",
+            "pydata-sphinx-theme",
+            "sphinx-autodoc-typehints",
+            "sphinx-copybutton",
+        ],
         "pre-commit": [
             "pre-commit",
             "black",

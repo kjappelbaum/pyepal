@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pypal.pal.utils &#8212; pypal 0+untagged.204.gf1a6cd4.dirty documentation</title>
+
+  <link rel="stylesheet" href="../../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+
+
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+
+  <link rel="preload" as="script" href="../../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../../index.html">
+
+      <img src="../../../_static/pypal_logo.png" class="logo" alt="logo" />
+
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../getting_started.html">Getting Started</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../tutorials.html">Tutorials</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../background.html">Background</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../api.html">The PyPAL API reference</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../developer_notes.html">Developer notes</a>
+        </li>
+
+
+      </ul>
+
+
+
+
+      <ul class="navbar-nav">
+
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/kjappelbaum/pypal" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+
+
+      </ul>
+    </div>
+</div>
+    </nav>
+
+
+    <div class="container-xl">
+      <div class="row">
+
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+
+
+    <ul class="nav bd-sidenav">
+
+
+
+
+
+
+
+
+
+
+
+      </ul>
+
+  </nav>
+          </div>
+
+
+
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+
+    </ul>
+</nav>
+
+
+
+          </div>
+
+
+
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+
+              <div>
+
+  <h1>Source code for pypal.pal.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Utilities for dealing with Pareto fronts in general&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">distance</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+
+<span class="kn">from</span> <span class="nn">._hypervolume</span> <span class="kn">import</span> <span class="n">HypervolumeIndicator</span>
+
+
+<div class="viewcode-block" id="dominance_check"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.dominance_check">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dominance_check</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;One point dominates another if it is not worse in all objectives</span>
+<span class="sd">    and strictly better in at least one. This here assumes we want to maximize&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">point1</span> <span class="o">&gt;=</span> <span class="n">point2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">point1</span> <span class="o">&gt;</span> <span class="n">point2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="dominance_check_jitted"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.dominance_check_jitted">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dominance_check_jitted</span><span class="p">(</span><span class="n">point</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Check if point dominates any point in array&quot;&quot;&quot;</span>
+    <span class="n">arr_sorted</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr_sorted</span><span class="p">)):</span>  <span class="c1"># pylint:disable=consider-using-enumerate</span>
+        <span class="k">if</span> <span class="n">dominance_check</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">arr_sorted</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="dominance_check_jitted_2"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.dominance_check_jitted_2">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dominance_check_jitted_2</span><span class="p">(</span><span class="n">array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Check if any point in array dominates point&quot;&quot;&quot;</span>
+    <span class="n">arr_sorted</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr_sorted</span><span class="p">)):</span>  <span class="c1"># pylint:disable=consider-using-enumerate</span>
+        <span class="k">if</span> <span class="n">dominance_check</span><span class="p">(</span><span class="n">arr_sorted</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">point</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="dominance_check_jitted_3"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.dominance_check_jitted_3">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dominance_check_jitted_3</span><span class="p">(</span><span class="n">array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">ignore_me</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Check if any point in array dominates point. ignore_me</span>
+<span class="sd">    since numba does not understand masked arrays&quot;&quot;&quot;</span>
+    <span class="n">sorted_idx</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ignore_me</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sorted_idx</span> <span class="o">==</span> <span class="n">ignore_me</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">arr_sorted</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">sorted_idx</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr_sorted</span><span class="p">)):</span>  <span class="c1"># pylint:disable=consider-using-enumerate</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">ignore_me</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dominance_check</span><span class="p">(</span><span class="n">arr_sorted</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">point</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="is_pareto_efficient"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.is_pareto_efficient">[docs]</a><span class="k">def</span> <span class="nf">is_pareto_efficient</span><span class="p">(</span><span class="n">costs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">return_mask</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Find the Pareto efficient points</span>
+<span class="sd">    Based on https://stackoverflow.com/questions/</span>
+<span class="sd">    32791911/fast-calculation-of-pareto-front-in-python</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        costs (np.array): An (n_points, n_costs) array</span>
+<span class="sd">        return_mask (bool, optional): True to return a mask,</span>
+<span class="sd">            Otherwise it will be a (n_efficient_points, ) integer array of indices.</span>
+<span class="sd">            Defaults to True.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.array: [description]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">is_efficient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">costs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">n_points</span> <span class="o">=</span> <span class="n">costs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">next_point_index</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Next index in the is_efficient array to search for</span>
+    <span class="k">while</span> <span class="n">next_point_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">costs</span><span class="p">):</span>
+        <span class="n">nondominated_point_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">costs</span> <span class="o">&lt;</span> <span class="n">costs</span><span class="p">[</span><span class="n">next_point_index</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">nondominated_point_mask</span><span class="p">[</span><span class="n">next_point_index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">is_efficient</span> <span class="o">=</span> <span class="n">is_efficient</span><span class="p">[</span><span class="n">nondominated_point_mask</span><span class="p">]</span>  <span class="c1"># Remove dominated points</span>
+        <span class="n">costs</span> <span class="o">=</span> <span class="n">costs</span><span class="p">[</span><span class="n">nondominated_point_mask</span><span class="p">]</span>
+        <span class="n">next_point_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">nondominated_point_mask</span><span class="p">[:</span><span class="n">next_point_index</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">return_mask</span><span class="p">:</span>
+        <span class="n">is_efficient_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="n">is_efficient_mask</span><span class="p">[</span><span class="n">is_efficient</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">is_efficient_mask</span>
+    <span class="k">return</span> <span class="n">is_efficient</span></div>
+
+
+<div class="viewcode-block" id="exhaust_loop"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.exhaust_loop">[docs]</a><span class="k">def</span> <span class="nf">exhaust_loop</span><span class="p">(</span>
+    <span class="n">palinstance</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">):</span>  <span class="c1"># pylint:disable=invalid-name</span>
+    <span class="sd">&quot;&quot;&quot;Helper function that takes an initialized PAL instance</span>
+<span class="sd">    and loops the sampling until there is no unclassified point left.</span>
+<span class="sd">    This is useful if all measurements are already taken and one</span>
+<span class="sd">    wants to test the algorithm with different hyperparameters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        palinstance (PALBase): A initialized instance of a class that</span>
+<span class="sd">            inherited from PALBase and implemented the ._train() and</span>
+<span class="sd">            ._predict() functions</span>
+<span class="sd">        y (np.array): Measurements.</span>
+<span class="sd">            The number of measurements must equal the number of</span>
+<span class="sd">            points in the design space.</span>
+<span class="sd">        batch_size (int, optional): Number of indices that will be returned.</span>
+<span class="sd">                Defaults to 10.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None. The PAL instance is updated in place</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">palinstance</span><span class="o">.</span><span class="n">design_space_size</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
+        <span class="n">y</span>
+    <span class="p">),</span> <span class="s2">&quot;The number of points in the design space must equal the number of measurements&quot;</span>
+    <span class="k">while</span> <span class="nb">sum</span><span class="p">(</span><span class="n">palinstance</span><span class="o">.</span><span class="n">unclassified</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">palinstance</span><span class="o">.</span><span class="n">run_one_step</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">palinstance</span><span class="o">.</span><span class="n">update_train_set</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="get_kmeans_samples"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.get_kmeans_samples">[docs]</a><span class="k">def</span> <span class="nf">get_kmeans_samples</span><span class="p">(</span>  <span class="c1"># pylint:disable=invalid-name</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Get the samples that are closest to the k=n_samples centroids</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X (np.array): Feature array, on which the KMeans clustering is run</span>
+<span class="sd">        n_samples (int): number of samples are should be selected</span>
+<span class="sd">        **kwargs passed to the KMeans</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.array:  selected_indices</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n_samples</span>
+    <span class="p">),</span> <span class="s2">&quot;The numbers of points that shall be selected (n_samples),</span><span class="se">\</span>
+<span class="s2">         needs to be smaller than the length of the feature matrix (X)&quot;</span>
+
+    <span class="k">assert</span> <span class="n">n_samples</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">n_samples</span><span class="p">,</span> <span class="nb">int</span>
+    <span class="p">),</span> <span class="s2">&quot;The number of points that shall be selected (n_samples)</span><span class="se">\</span>
+<span class="s2">             needs to be an integer greater than 0&quot;</span>
+
+    <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">cluster_centers</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span>
+    <span class="n">closest</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">pairwise_distances_argmin_min</span><span class="p">(</span><span class="n">cluster_centers</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">closest</span></div>
+
+
+<div class="viewcode-block" id="get_maxmin_samples"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.get_maxmin_samples">[docs]</a><span class="k">def</span> <span class="nf">get_maxmin_samples</span><span class="p">(</span>  <span class="c1"># pylint:disable=invalid-name</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+    <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+    <span class="n">init</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Greedy maxmin sampling, also known as Kennard-Stone sampling (1).</span>
+<span class="sd">    Note that a greedy sampling is not guaranteed to give the ideal solution</span>
+<span class="sd">    and the output will depend on the random initialization (if this is chosen).</span>
+
+<span class="sd">    If you need a good solution, you can restart this algorithm multiple times</span>
+<span class="sd">    with random initialization and different random seeds</span>
+<span class="sd">    and use a coverage metric to quantify how well</span>
+<span class="sd">    the space is covered. Some metrics are described in (2). In contrast to the</span>
+<span class="sd">    code provided with (2) and (3) we do not consider the feature importance for the</span>
+<span class="sd">    selection as this is typically not known beforehand.</span>
+
+<span class="sd">    You might want to standardize your data before applying this sampling function.</span>
+
+<span class="sd">    Some more sampling options are provided in our structure_comp (4) Python package.</span>
+<span class="sd">    Also, this implementation here is quite memory hungry.</span>
+
+<span class="sd">    References:</span>
+<span class="sd">    (1) Kennard, R. W.; Stone, L. A. Computer Aided Design of Experiments.</span>
+<span class="sd">    Technometrics 1969, 11 (1), 137–148. https://doi.org/10.1080/00401706.1969.10490666.</span>
+<span class="sd">    (2) Moosavi, S. M.; Nandy, A.; Jablonka, K. M.; Ongari, D.; Janet,</span>
+<span class="sd">    J. P.; Boyd, P. G.; Lee, Y.; Smit, B.; Kulik, H. J.</span>
+<span class="sd">    Understanding the Diversity of the Metal-Organic Framework Ecosystem.</span>
+<span class="sd">    Nature Communications 2020, 11 (1), 4068.</span>
+<span class="sd">    https://doi.org/10.1038/s41467-020-17755-8.</span>
+<span class="sd">    (3) Moosavi, S. M.; Chidambaram, A.; Talirz, L.; Haranczyk, M.; Stylianou, K. C.;</span>
+<span class="sd">    Smit, B. Capturing Chemical Intuition in Synthesis of Metal-Organic Frameworks.</span>
+<span class="sd">    Nat Commun 2019, 10 (1), 539. https://doi.org/10.1038/s41467-019-08483-9.</span>
+<span class="sd">    (4) https://github.com/kjappelbaum/structure_comp</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X (np.array): Feature array, this is the array</span>
+<span class="sd">            that is used to perform the sampling</span>
+
+<span class="sd">        n_samples (int): number of points that will be selected,</span>
+<span class="sd">            needs to be lower than the length of X</span>
+
+<span class="sd">        metric (str, optional): Distance metric to use for the maxmin calculation.</span>
+<span class="sd">            Must be a valid option of scipy.spatial.distance.cdist</span>
+<span class="sd">            (‘braycurtis’, ‘canberra’, ‘chebyshev’,</span>
+<span class="sd">            ‘cityblock’, ‘correlation’, ‘cosine’, ‘dice’,</span>
+<span class="sd">            ‘euclidean’, ‘hamming’, ‘jaccard’, ‘jensenshannon’, ‘kulsinski’,</span>
+<span class="sd">            ‘mahalanobis’, ‘matching’, ‘minkowski’, ‘rogerstanimoto’, ‘russellrao’,</span>
+<span class="sd">            ‘seuclidean’, ‘sokalmichener’, ‘sokalsneath’, ‘sqeuclidean’,</span>
+<span class="sd">            ‘wminkowski’, ‘yule’). Defaults to &#39;euclidean&#39;</span>
+
+<span class="sd">        init (str, optional): either &#39;mean&#39;, &#39;median&#39;, or &#39;random&#39;.</span>
+<span class="sd">            Determines how the initial point is chosen. Defaults to &#39;center&#39;</span>
+
+<span class="sd">        seed (int, optional): seed for the random number generator. Defaults to None.</span>
+<span class="sd">        **kwargs passed to the cdist</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.array: selected_indices</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n_samples</span>
+    <span class="p">),</span> <span class="s2">&quot;The numbers of points that shall be selected (n_samples),</span><span class="se">\</span>
+<span class="s2">         needs to be smaller than the length of the feature matrix (X)&quot;</span>
+
+    <span class="k">assert</span> <span class="n">n_samples</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">n_samples</span><span class="p">,</span> <span class="nb">int</span>
+    <span class="p">),</span> <span class="s2">&quot;The number of points that shall be selected (n_samples)</span><span class="se">\</span>
+<span class="s2">         needs to be an integer greater than 0&quot;</span>
+
+    <span class="n">greedy_data</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">init</span> <span class="o">==</span> <span class="s2">&quot;random&quot;</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">init</span> <span class="o">==</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">greedy_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+    <span class="n">remaining</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">greedy_data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n_samples</span><span class="p">:</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">distance</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">remaining</span><span class="p">,</span> <span class="n">greedy_data</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">greedy_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">greedy_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">remaining</span><span class="p">[</span><span class="n">greedy_index</span><span class="p">])</span>
+        <span class="n">remaining</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">remaining</span><span class="p">,</span> <span class="n">greedy_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">greedy_indices</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">greedy_data</span><span class="p">:</span>
+        <span class="n">greedy_indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">X</span> <span class="o">==</span> <span class="n">datum</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">greedy_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">greedy_indices</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">greedy_indices</span></div>
+
+
+<div class="viewcode-block" id="get_hypervolume"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.get_hypervolume">[docs]</a><span class="k">def</span> <span class="nf">get_hypervolume</span><span class="p">(</span>
+    <span class="n">pareto_front</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">reference_vector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">prefactor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Compute the hypervolume indicator of a Pareto front</span>
+<span class="sd">    I multiply it with minus one as we assume that we want</span>
+<span class="sd">    to maximize all objective and then we calculate the area</span>
+
+<span class="sd">    f1</span>
+<span class="sd">    |</span>
+<span class="sd">    |----|</span>
+<span class="sd">    |     -|</span>
+<span class="sd">    |       -|</span>
+<span class="sd">    ------------ f2</span>
+
+<span class="sd">    But the code we use for the hv indicator assumes that the reference vector</span>
+<span class="sd">    is larger than all the points in the Pareto front.</span>
+<span class="sd">    For this reason, we then flip all the signs using prefactor</span>
+
+<span class="sd">    This indicator is not needed for the epsilon-PAL algorithm itself</span>
+<span class="sd">    but only to allow tracking a metric that might help the user to see</span>
+<span class="sd">    if the algorithm converges.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hv_instance</span> <span class="o">=</span> <span class="n">HypervolumeIndicator</span><span class="p">(</span><span class="n">reference_vector</span><span class="p">)</span>
+    <span class="n">volume</span> <span class="o">=</span> <span class="n">hv_instance</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">pareto_front</span> <span class="o">*</span> <span class="n">prefactor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">volume</span></div>
+</pre></div>
+
+              </div>
+
+
+              <div class='prev-next-bottom'>
+
+
+              </div>
+
+          </main>
+
+
+      </div>
+    </div>
+
+
+  <script src="../../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Kevin Maik Jablonka, Brian Yoo, Berend Smit.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

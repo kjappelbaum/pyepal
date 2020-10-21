@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pypal.pal.pal_gpy &#8212; pypal 0+untagged.204.gf1a6cd4.dirty documentation</title>
+
+  <link rel="stylesheet" href="../../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+
+
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+
+  <link rel="preload" as="script" href="../../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../../index.html">
+
+      <img src="../../../_static/pypal_logo.png" class="logo" alt="logo" />
+
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../getting_started.html">Getting Started</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../tutorials.html">Tutorials</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../background.html">Background</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../api.html">The PyPAL API reference</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../developer_notes.html">Developer notes</a>
+        </li>
+
+
+      </ul>
+
+
+
+
+      <ul class="navbar-nav">
+
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/kjappelbaum/pypal" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+
+
+      </ul>
+    </div>
+</div>
+    </nav>
+
+
+    <div class="container-xl">
+      <div class="row">
+
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+
+
+    <ul class="nav bd-sidenav">
+
+
+
+
+
+
+
+
+
+
+
+      </ul>
+
+  </nav>
+          </div>
+
+
+
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+
+    </ul>
+</nav>
+
+
+
+          </div>
+
+
+
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+
+              <div>
+
+  <h1>Source code for pypal.pal.pal_gpy</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;PAL using GPy GPR models&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">concurrent.futures</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..models.gpr</span> <span class="kn">import</span> <span class="n">predict</span>
+<span class="kn">from</span> <span class="nn">.pal_base</span> <span class="kn">import</span> <span class="n">PALBase</span>
+<span class="kn">from</span> <span class="nn">.schedules</span> <span class="kn">import</span> <span class="n">linear</span>
+<span class="kn">from</span> <span class="nn">.validate_inputs</span> <span class="kn">import</span> <span class="n">validate_gpy_model</span><span class="p">,</span> <span class="n">validate_njobs</span><span class="p">,</span> <span class="n">validate_number_models</span>
+
+
+<span class="k">def</span> <span class="nf">_train_model_picklable</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">restarts</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">optimize_restarts</span><span class="p">(</span><span class="n">restarts</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">model</span>
+
+
+<div class="viewcode-block" id="PALGPy"><a class="viewcode-back" href="../../../api.html#pypal.pal.pal_gpy.PALGPy">[docs]</a><span class="k">class</span> <span class="nc">PALGPy</span><span class="p">(</span><span class="n">PALBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;PAL class for a list of GPy GPR models, with one model per objective&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PALGPy.__init__"><a class="viewcode-back" href="../../../api.html#pypal.pal.pal_gpy.PALGPy.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Contruct the PALGPy instance</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            X_design (np.array): Design space (feature matrix)</span>
+<span class="sd">            models (list): Machine learning models</span>
+<span class="sd">            ndim (int): Number of objectives</span>
+<span class="sd">            epsilon (Union[list, float], optional): Epsilon hyperparameter.</span>
+<span class="sd">                Defaults to 0.01.</span>
+<span class="sd">            delta (float, optional): Delta hyperparameter. Defaults to 0.05.</span>
+<span class="sd">            beta_scale (float, optional): Scaling parameter for beta.</span>
+<span class="sd">                If not equal to 1, the theoretical guarantees do not necessarily hold.</span>
+<span class="sd">                Also note that the parametrization depends on the kernel type.</span>
+<span class="sd">                Defaults to 1/9.</span>
+<span class="sd">            goals (List[str], optional): If a list, provide &quot;min&quot; for every objective</span>
+<span class="sd">                that shall be minimized and &quot;max&quot; for every objective</span>
+<span class="sd">                that shall be maximized. Defaults to None, which means</span>
+<span class="sd">                that the code maximizes all objectives.</span>
+<span class="sd">            coef_var_threshold (float, optional): Use only points with</span>
+<span class="sd">                a coefficient of variation below this threshold</span>
+<span class="sd">                in the classification step. Defaults to 3.</span>
+<span class="sd">            restarts (int): Number of random restarts that are used for hyperparameter</span>
+<span class="sd">                optimization. Defaults to 20.</span>
+<span class="sd">            n_jobs (int): Number of parallel processes that are used to fit</span>
+<span class="sd">                the GPR models. Defaults to 1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">restarts</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;restarts&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">validate_njobs</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;n_jobs&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">restarts</span><span class="p">,</span> <span class="nb">int</span>
+        <span class="p">),</span> <span class="s2">&quot;the restarts keyword must be of type int&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">validate_number_models</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+        <span class="n">validate_gpy_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">):</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">set_XY</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>  <span class="c1"># There is no training in instance based models</span>
+
+    <span class="k">def</span> <span class="nf">_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">means</span><span class="p">,</span> <span class="n">stds</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
+            <span class="n">mean</span><span class="p">,</span> <span class="n">std</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">)</span>
+            <span class="n">means</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">stds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">means</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">stds</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_hyperparameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">train_model_pickleable_partial</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+            <span class="n">_train_model_picklable</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">restarts</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">restarts</span>
+        <span class="p">)</span>
+        <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">(</span>
+            <span class="n">max_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">train_model_pickleable_partial</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">)):</span>
+                <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">models</span>
+
+    <span class="k">def</span> <span class="nf">_should_optimize_hyperparameters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iteration</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span></div>
+</pre></div>
+
+              </div>
+
+
+              <div class='prev-next-bottom'>
+
+
+              </div>
+
+          </main>
+
+
+      </div>
+    </div>
+
+
+  <script src="../../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Kevin Maik Jablonka, Brian Yoo, Berend Smit.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

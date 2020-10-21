@@ -40,7 +40,14 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx_autodoc_typehints",
     "sphinx.ext.githubpages",
+    "sphinx.ext.mathjax",
+    "sphinx_copybutton",
+    "sphinx.ext.viewcode",
 ]
+
+copybutton_selector = "div:not(.no-copy)>div.highlight pre"
+copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
+copybutton_prompt_is_regexp = True
 
 autosummary_generate = True
 
@@ -51,6 +58,9 @@ templates_path = ["_templates"]
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+
+
+numfig = True
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -67,3 +77,14 @@ html_logo = "../pypal_logo.png"
 html_theme_options = {
     "github_url": "https://github.com/kjappelbaum/pypal",
 }
+
+
+html_show_sphinx = False
+
+
+# The name of the Pygments (syntax highlighting) style to use.
+pygments_style = "sphinx"
+
+# If true, SmartyPants will be used to convert quotes and dashes to
+# typographically correct entities.
+html_use_smartypants = True

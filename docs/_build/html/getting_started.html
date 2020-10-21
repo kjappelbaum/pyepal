@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.202.g1e688b3.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.204.gf1a6cd4.dirty documentation</title>
 
-  <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
+  <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
 
   <link rel="stylesheet"
@@ -27,14 +27,17 @@
 
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
 
-  <link rel="preload" as="script" href="_static/js/index.30270b6e4c972e43c488.js">
+  <link rel="preload" as="script" href="_static/js/index.3da636dd464baa7582d2.js">
 
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/language_data.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -48,11 +51,11 @@
     <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
 <div class="container-xl">
 
-
     <a class="navbar-brand" href="index.html">
-      <img src="_static/pypal_logo.png" class="logo" alt="logo">
-    </a>
 
+      <img src="_static/pypal_logo.png" class="logo" alt="logo" />
+
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -105,23 +108,16 @@
     <div class="container-xl">
       <div class="row">
 
-          <div class="col-12 col-md-3 bd-sidebar">
-
-<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form>
-
-
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
 
-  <div class="bd-toc-item active">
+    <div class="bd-toc-item active">
 
 
-  <ul class="nav bd-sidenav">
-
-
-
+    <ul class="nav bd-sidenav">
 
 
 
@@ -132,9 +128,12 @@
 
 
 
-    </ul>
 
-</nav>
+
+
+      </ul>
+
+  </nav>
           </div>
 
 
@@ -180,10 +179,6 @@
 
         <li class="nav-item toc-entry toc-h2">
             <a href="#caveats-and-tricks-with-gaussian-processes" class="nav-link">Caveats and tricks with Gaussian processes</a>
-        </li>
-
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#implementing-a-new-pal-class" class="nav-link">Implementing a new PAL class</a>
         </li>
 
     </ul>
@@ -368,61 +363,6 @@ By default, the code will run a simple cross-validation only on the first iterat
 </div>
 <a class="reference internal image-reference" href="_images/jointplot_example.png"><img alt="Example of the output of make_jointplot" src="_images/jointplot_example.png" style="width: 600px;" /></a>
 </div>
-<div class="section" id="implementing-a-new-pal-class">
-<h2>Implementing a new PAL class<a class="headerlink" href="#implementing-a-new-pal-class" title="Permalink to this headline">¶</a></h2>
-<p>If you want to use PyPAL  with a model that we do not support yet, i.e., not <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> or <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> Gaussian process regression, it is easy to write your own class. For this, you need to inherit from <cite>PALBase</cite> and implement your  <code class="code docutils literal notranslate"><span class="pre">_train</span></code> and <code class="code docutils literal notranslate"><span class="pre">_predict</span></code> functions (and maybe also the <code class="code docutils literal notranslate"><span class="pre">_set_hyperparameters</span></code> and <code class="code docutils literal notranslate"><span class="pre">_should_optimize_hyperparameters</span></code> functions) using the <code class="code docutils literal notranslate"><span class="pre">design_space</span></code> and <code class="code docutils literal notranslate"><span class="pre">y</span></code> attributes of the class.</p>
-<p>For instance, if we develop some multioutput model that has a <code class="code docutils literal notranslate"><span class="pre">train()</span></code> and a <code class="code docutils literal notranslate"><span class="pre">predict()</span></code> method we could simply use the following design pattern</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALBase</span>
-
-<span class="k">class</span> <span class="nc">PALMyModel</span><span class="p">(</span><span class="n">PALBase</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">])</span>
-
-    <span class="k">def</span> <span class="nf">_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Note that we typically provide the models, even if it is only one, in a list to keep the API consistent.</p>
-<p>In some instances, you might want to perform an operation in parallel, e.g., train the models for different objectives in parallel. One convenient way to do this in Python is <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html">concurrent.futures</a>. The only hitch is that this approach requires that the function is picklable. To ensure is, you may want to implement the function that is to be run in parallel outside the class. For example, you could use the following design pattern</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALBase</span>
-<span class="kn">import</span> <span class="nn">concurrent.futures</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-
-<span class="k">def</span> <span class="nf">_train_model_picklable</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">design_space</span><span class="p">,</span> <span class="n">objectives</span><span class="p">,</span> <span class="n">sampled</span><span class="p">):</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-        <span class="n">design_space</span><span class="p">[</span><span class="n">sampled</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]],</span>
-        <span class="n">objectives</span><span class="p">[</span><span class="n">sampled</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">model</span>
-
-<span class="k">class</span> <span class="nc">MyPal</span><span class="p">(</span><span class="n">PALBase</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;n_jobs&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">validate_njobs</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-        <span class="n">validate_number_models</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">train_single_partial</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
-            <span class="n">_train_model_picklable</span><span class="p">,</span>
-            <span class="n">models</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span>
-            <span class="n">design_space</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">,</span>
-            <span class="n">objectives</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
-            <span class="n">sampled</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">(</span>
-            <span class="n">max_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span>
-        <span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">train_single_partial</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">)):</span>
-                <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">models</span>
-</pre></div>
-</div>
-</div>
 </div>
 
 
@@ -443,14 +383,13 @@ By default, the code will run a simple cross-validation only on the first iterat
     </div>
 
 
-  <script src="_static/js/index.30270b6e4c972e43c488.js"></script>
+  <script src="_static/js/index.3da636dd464baa7582d2.js"></script>
 
 
     <footer class="footer mt-5 mt-md-0">
   <div class="container">
     <p>
           &copy; Copyright 2020, Kevin Maik Jablonka, Brian Yoo, Berend Smit.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
     </p>
   </div>
 </footer>

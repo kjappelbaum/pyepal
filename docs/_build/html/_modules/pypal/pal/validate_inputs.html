@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pypal.pal.validate_inputs &#8212; pypal 0+untagged.204.gf1a6cd4.dirty documentation</title>
+
+  <link rel="stylesheet" href="../../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+
+
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+
+  <link rel="preload" as="script" href="../../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../../index.html">
+
+      <img src="../../../_static/pypal_logo.png" class="logo" alt="logo" />
+
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../getting_started.html">Getting Started</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../tutorials.html">Tutorials</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../background.html">Background</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../api.html">The PyPAL API reference</a>
+        </li>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../developer_notes.html">Developer notes</a>
+        </li>
+
+
+      </ul>
+
+
+
+
+      <ul class="navbar-nav">
+
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/kjappelbaum/pypal" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+
+
+      </ul>
+    </div>
+</div>
+    </nav>
+
+
+    <div class="container-xl">
+      <div class="row">
+
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+
+
+    <ul class="nav bd-sidenav">
+
+
+
+
+
+
+
+
+
+
+
+      </ul>
+
+  </nav>
+          </div>
+
+
+
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+
+    </ul>
+</nav>
+
+
+
+          </div>
+
+
+
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+
+              <div>
+
+  <h1>Source code for pypal.pal.validate_inputs</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Methods to validate inputs for the PAL classes&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">GPy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.gaussian_process</span> <span class="kn">import</span> <span class="n">GaussianProcessRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span><span class="p">,</span> <span class="n">RandomizedSearchCV</span>
+
+<span class="kn">from</span> <span class="nn">..models.coregionalized</span> <span class="kn">import</span> <span class="n">GPCoregionalizedRegression</span>
+
+
+<div class="viewcode-block" id="validate_ndim"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_ndim">[docs]</a><span class="k">def</span> <span class="nf">validate_ndim</span><span class="p">(</span><span class="n">ndim</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Make sure that the number of dimensions makes sense</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ndim (Any): number of dimensions</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the number of dimensions is not an integer</span>
+<span class="sd">        ValueError: If the number of dimensions is not greater than 0</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: the number of dimensions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ndim</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of dimensions, ndim, must be a positive integer&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ndim</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ndmin must be greater than 0&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ndim</span></div>
+
+
+<div class="viewcode-block" id="validate_delta"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_delta">[docs]</a><span class="k">def</span> <span class="nf">validate_delta</span><span class="p">(</span><span class="n">delta</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Make sure that delta is in a reasonable range</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        delta (Any): Delta hyperparameter</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: Delta must be in [0,1].</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: delta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">delta</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The delta values must be in [0,1]&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">delta</span></div>
+
+
+<div class="viewcode-block" id="validate_beta_scale"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_beta_scale">[docs]</a><span class="k">def</span> <span class="nf">validate_beta_scale</span><span class="p">(</span><span class="n">beta_scale</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        beta_scale (Any): scaling factor for beta</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If beta is smaller than 0</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: scaling factor for beta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">beta_scale</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The beta_scale values must be positive&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">beta_scale</span></div>
+
+
+<div class="viewcode-block" id="validate_epsilon"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_epsilon">[docs]</a><span class="k">def</span> <span class="nf">validate_epsilon</span><span class="p">(</span><span class="n">epsilon</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ndim</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Validate epsilon and return a np.array</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        epsilon (Any): Epsilon hyperparameter</span>
+<span class="sd">        ndim (int): Number of dimensions/objectives</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If epsilon is a list there must be one float per dimension</span>
+<span class="sd">        ValueError: Epsilon must be in [0,1]</span>
+<span class="sd">        ValueError: If epsilon is an array there must be one float per dimension</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray:  Array of one epsilon per objective</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">epsilon</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">epsilon</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ndim</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If epsilon is provided as a list,</span><span class="se">\</span>
+<span class="s2">                     there must be one float per dimension&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">epsilon</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The epsilon values must be in [0,1]&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">epsilon</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">epsilon</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ndim</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If epsilon is provided as a array,</span><span class="se">\</span>
+<span class="s2">                     there must be one float per dimension&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">epsilon</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The epsilon values must be in [0,1]&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">epsilon</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">epsilon</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">epsilon</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The epsilon values must be in [0,1]&quot;</span><span class="p">)</span>
+
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;Only one epsilon value provided,</span>
+<span class="sd">will automatically expand to use the same value in every dimension&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="ne">UserWarning</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">epsilon</span><span class="p">]</span> <span class="o">*</span> <span class="n">ndim</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_goals"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_goals">[docs]</a><span class="k">def</span> <span class="nf">validate_goals</span><span class="p">(</span>  <span class="c1"># pylint:disable=too-many-branches</span>
+    <span class="n">goals</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ndim</span><span class="p">:</span> <span class="nb">int</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Create a valid array of goals. 1 for maximization, -1</span>
+<span class="sd">        for objectives that are to be minimized.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        goals (Any): List of goals,</span>
+<span class="sd">            typically provideded as strings &#39;max&#39; for maximization</span>
+<span class="sd">            and &#39;min&#39; for minimization</span>
+<span class="sd">        ndim (int): number of dimensions</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If goals is a list and the length is not equal to ndim</span>
+<span class="sd">        ValueError: If goals is a list and the elements</span>
+<span class="sd">            are not strings &#39;min&#39;, &#39;max&#39; or -1 and 1</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: Array of -1 and 1</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">goals</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="s2">&quot;No goals provided, will assume that every dimension should be maximized&quot;</span><span class="p">,</span>
+            <span class="ne">UserWarning</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">ndim</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">goals</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">goals</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ndim</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If goals is a list, the length must be equal to the ndim&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">goal</span> <span class="ow">in</span> <span class="n">goals</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">goal</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">goal</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">goal</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If goals is a list, it must be a list of strings&quot;</span><span class="p">)</span>
+
+        <span class="n">clean_goals</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">goal</span> <span class="ow">in</span> <span class="n">goals</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">goal</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s2">&quot;max&quot;</span> <span class="ow">in</span> <span class="n">goal</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">clean_goals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="s2">&quot;min&quot;</span> <span class="ow">in</span> <span class="n">goal</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">clean_goals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The strings in the goals list must be min or max&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">goal</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">goal</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">clean_goals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">goal</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">clean_goals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The ints in the goals list must be 1 or -1&quot;</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">clean_goals</span><span class="p">)</span> <span class="o">==</span> <span class="n">ndim</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">clean_goals</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s2">&quot;Goal can be set to None or must be a list of strings</span><span class="se">\</span>
+<span class="s2">             or -1 and 1 of length equal to ndim&quot;</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="base_validate_models"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.base_validate_models">[docs]</a><span class="k">def</span> <span class="nf">base_validate_models</span><span class="p">(</span><span class="n">models</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Currently no validation as the predict and train function</span>
+<span class="sd">    are implemented independet of the base class&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">models</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">models</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must provide some models to initialize pypal&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_number_models"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_number_models">[docs]</a><span class="k">def</span> <span class="nf">validate_number_models</span><span class="p">(</span><span class="n">models</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ndim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make sure that there are as many models as objectives</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        models (Any): List of models</span>
+<span class="sd">        ndim (int): Number of objectives</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError:  If the number of models does not equal the number of objectives</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must provide a list of models. One model per objective&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ndim</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must provide a list of models. One model per objective&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_gpy_model"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_gpy_model">[docs]</a><span class="k">def</span> <span class="nf">validate_gpy_model</span><span class="p">(</span><span class="n">models</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make sure that all elements of the list a GPRegression models&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">GPy</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">GPRegression</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The models must be an instance of GPy.model&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_coregionalized_gpy"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_coregionalized_gpy">[docs]</a><span class="k">def</span> <span class="nf">validate_coregionalized_gpy</span><span class="p">(</span><span class="n">models</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make sure that model is a coregionalized GPR model&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must provide a list of models with one element&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">models</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">GPCoregionalizedRegression</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Model must be a GPCoregionalized regression object from this package!&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_njobs"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_njobs">[docs]</a><span class="k">def</span> <span class="nf">validate_njobs</span><span class="p">(</span><span class="n">njobs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Make sure that njobs is an int &gt; 1&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">njobs</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;njobs musst be of type int&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">njobs</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;njobs must be a number greater equal 1&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">njobs</span></div>
+
+
+<div class="viewcode-block" id="validate_coef_var"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_coef_var">[docs]</a><span class="k">def</span> <span class="nf">validate_coef_var</span><span class="p">(</span><span class="n">coef_var</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make sure that the coef_var makes sense&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coef_var</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;coef_var must be of type float or int&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">coef_var</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;coef_var must be greater 0&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">coef_var</span></div>
+
+
+<div class="viewcode-block" id="_validate_sklearn_gpr_model"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs._validate_sklearn_gpr_model">[docs]</a><span class="k">def</span> <span class="nf">_validate_sklearn_gpr_model</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianProcessRegressor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Make sure that we deal with a GaussianProcessRegressor instance,</span>
+<span class="sd">    if it is a fitted random or grid search instance, extract the model&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="n">RandomizedSearchCV</span><span class="p">,</span> <span class="n">GridSearchCV</span><span class="p">)):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">,</span> <span class="n">GaussianProcessRegressor</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">best_estimator_</span>
+
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sd">&quot;&quot;&quot;If you provide a grid or random search instance,</span>
+<span class="sd">it needs to contain a GaussianProcessRegressor instance.&quot;&quot;&quot;</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">not_fitted_exception</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If you provide a grid or random search instance it needs to be fitted.&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="nn">not_fitted_exception</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">GaussianProcessRegressor</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">model</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You need to provide a GaussianProcessRegressor instance.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_sklearn_gpr_models"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_sklearn_gpr_models">[docs]</a><span class="k">def</span> <span class="nf">validate_sklearn_gpr_models</span><span class="p">(</span>
+    <span class="n">models</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ndim</span><span class="p">:</span> <span class="nb">int</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">GaussianProcessRegressor</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Make sure that there is a list of GPR models, one model per objective&quot;&quot;&quot;</span>
+    <span class="n">validate_number_models</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">ndim</span><span class="p">)</span>
+    <span class="n">models_validated</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+        <span class="n">models_validated</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_validate_sklearn_gpr_model</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">models_validated</span></div>
+
+
+<span class="k">def</span> <span class="nf">_validate_quantile_loss</span><span class="p">(</span><span class="n">lightgbmregressor</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">lightgbmregressor</span><span class="o">.</span><span class="n">alpha</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">lightgbmregressor</span><span class="o">.</span><span class="n">objective</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">missing_attribute</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;Make sure that you initialize at</span>
+<span class="sd">least the first and last model with quantile loss.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span> <span class="nn">missing_attribute</span>
+    <span class="k">if</span> <span class="n">loss</span> <span class="o">!=</span> <span class="s2">&quot;quantile&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;Make sure that you initialize at</span>
+<span class="sd">least the first and last model with quantile loss.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+        <span class="p">)</span>
+    <span class="k">assert</span> <span class="n">alpha</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+
+<div class="viewcode-block" id="validate_gbdt_models"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_gbdt_models">[docs]</a><span class="k">def</span> <span class="nf">validate_gbdt_models</span><span class="p">(</span><span class="n">models</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ndim</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Iterable</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Make sure that the number of iterables is equal to the number of objectives</span>
+<span class="sd">    and that every iterable contains three LGBMRegressors.</span>
+<span class="sd">    Also, we check that at least the first and last models use quantile loss&quot;&quot;&quot;</span>
+
+    <span class="n">validate_number_models</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">ndim</span><span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>  <span class="c1"># pylint:disable=import-outside-toplevel</span>
+
+    <span class="k">for</span> <span class="n">model_tuple</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">model_tuple</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sd">&quot;&quot;&quot;The model list must contain</span>
+<span class="sd">tuples with three LGBMRegressor instances.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">counter</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">model_tuple</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">LGBMRegressor</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;The model list must contain</span>
+<span class="sd">tuples with three LGBMRegressor instances.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">counter</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">_validate_quantile_loss</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">models</span></div>
+
+
+<div class="viewcode-block" id="validate_interquartile_scaler"><a class="viewcode-back" href="../../../api.html#pypal.pal.validate_inputs.validate_interquartile_scaler">[docs]</a><span class="k">def</span> <span class="nf">validate_interquartile_scaler</span><span class="p">(</span><span class="n">interquartile_scaler</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Make sure that the interquartile_scaler makes sense&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">interquartile_scaler</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;interquartile_scaler must be a number.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">interquartile_scaler</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;interquartile_scaler must be a number greater 0.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">interquartile_scaler</span></div>
+</pre></div>
+
+              </div>
+
+
+              <div class='prev-next-bottom'>
+
+
+              </div>
+
+          </main>
+
+
+      </div>
+    </div>
+
+
+  <script src="../../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Kevin Maik Jablonka, Brian Yoo, Berend Smit.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

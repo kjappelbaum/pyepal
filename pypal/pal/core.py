@@ -256,7 +256,7 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
     Returns:
         int: index with maximum size of hyperrectangle
     """
-    max_uncertainty = 0
+    max_uncertainty = -np.inf
     maxid = 0
 
     for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
