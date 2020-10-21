@@ -24,9 +24,10 @@ Contents
    :maxdepth: 3
 
    getting_started
+   tutorials
    background
-   developer_notes
    api
+   developer_notes
 
 
 Indices and tables
