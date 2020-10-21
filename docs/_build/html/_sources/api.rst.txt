@@ -1,4 +1,4 @@
-The pypal API reference
+The PyPAL API reference
 ========================
 
 The PAL package
