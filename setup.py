@@ -30,6 +30,7 @@ setup(
             "gitchangelog",
         ],
         "GPy": ["GPy==1.9.9", "matplotlib"],
+        "GBDT": ["lightgbm>=3.0.0"],
     },
     author="Kevin M. Jablonka, Giriprasad Melpatti Jothiappan,\
          Shefang Wang, Berend Smit, Brian Yoo",
