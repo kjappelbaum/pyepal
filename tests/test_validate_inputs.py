@@ -16,6 +16,7 @@ from pypal.pal.validate_inputs import (
     validate_coregionalized_gpy,
     validate_delta,
     validate_epsilon,
+    validate_gbdt_models,
     validate_goals,
     validate_gpy_model,
     validate_ndim,
@@ -199,3 +200,21 @@ def test__validate_sklearn_gpr_model(make_random_dataset):
 
     with pytest.raises(ValueError):
         _validate_sklearn_gpr_model(random_search_class)
+
+
+def test_validate_gbdt_models():
+    """Test the input validation for the input of the PALGBDT class"""
+    from lightgbm import LGBMRegressor  # pylint:disable=import-outside-toplevel
+
+    lgbm = LGBMRegressor(loss="quantile", alpha=0.1)
+    with pytest.raises(ValueError):
+        validate_gbdt_models([(lgbm, lgbm), (lgbm, lgbm, lgbm)], 2)
+
+    with pytest.raises(ValueError):
+        validate_gbdt_models([(LGBMRegressor(), lgbm, lgbm), (lgbm, lgbm, lgbm)], 2)
+
+    with pytest.raises(ValueError):
+        validate_gbdt_models([(lgbm, lgbm, lgbm), (lgbm, lgbm, LGBMRegressor())], 2)
+
+    valid_input = [(lgbm, LGBMRegressor(), lgbm), (lgbm, LGBMRegressor(), lgbm)]
+    assert validate_gbdt_models(valid_input, 2) == valid_input

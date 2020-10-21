@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Methods to validate inputs for the PAL classes"""
 import warnings
-from typing import Any, List
+from typing import Any, List, Tuple
 
 import GPy
 import numpy as np
@@ -271,3 +271,52 @@ def validate_sklearn_gpr_models(
         models_validated.append(_validate_sklearn_gpr_model(model))
 
     return models_validated
+
+
+def _validate_quantile_loss(lightgbmregressor):
+    try:
+        alpha = lightgbmregressor.alpha
+        loss = lightgbmregressor.loss
+    except AttributeError as missing_attribute:
+        raise ValueError(
+            """Make sure that you initialize at
+least the first and last model with quantile loss.
+"""
+        ) from missing_attribute
+    if loss != "quantile":
+        raise ValueError(
+            """Make sure that you initialize at
+least the first and last model with quantile loss.
+"""
+        )
+    assert alpha > 0
+
+
+def validate_gbdt_models(models: Any, ndim: int) -> List[Tuple]:
+    """Make sure that the number of tuples is equal to the number of objectives
+    and that every tuple contains three LGBMRegressors.
+    Also, we check that at least the first and last models use quantile loss"""
+
+    validate_number_models(models, ndim)
+    from lightgbm import LGBMRegressor  # pylint:disable=import-outside-toplevel
+
+    for model_tuple in models:
+        if len(model_tuple) != 3:
+            raise ValueError(
+                """The model list must contain
+tuples with three LGBMRegressor instances.
+        """
+            )
+
+        for counter, model in enumerate(model_tuple):
+            if not isinstance(model, LGBMRegressor):
+                raise ValueError(
+                    """The model list must contain
+tuples with three LGBMRegressor instances.
+        """
+                )
+
+            if counter != 1:
+                _validate_quantile_loss(model)
+
+    return models
