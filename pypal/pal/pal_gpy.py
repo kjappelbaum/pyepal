@@ -38,7 +38,7 @@ class PALGPy(PALBase):
                 that shall be minimized and "max" for every objective
                 that shall be maximized. Defaults to None, which means
                 that the code maximizes all objectives.
-            coef_var_treshold (float, optional): Use only points with
+            coef_var_threshold (float, optional): Use only points with
                 a coefficient of variation below this threshold
                 in the classification step. Defaults to 3.
             restarts (int): Number of random restarts that are used for hyperparameter
@@ -47,10 +47,7 @@ class PALGPy(PALBase):
                 the GPR models. Defaults to 1.
         """
         self.restarts = kwargs.pop("restarts", 20)
-
-        n_jobs = kwargs.pop("n_jobs", 1)
-        validate_njobs(n_jobs)
-        self.n_jobs = n_jobs
+        self.n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
 
         assert isinstance(
             self.restarts, int

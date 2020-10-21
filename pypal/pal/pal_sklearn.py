@@ -42,15 +42,13 @@ class PALSklearn(PALBase):
                 that shall be minimized and "max" for every objective
                 that shall be maximized. Defaults to None, which means
                 that the code maximizes all objectives.
-            coef_var_treshold (float, optional): Use only points with
+            coef_var_threshold (float, optional): Use only points with
                 a coefficient of variation below this threshold
                 in the classification step. Defaults to 3.
             n_jobs (int): Number of parallel processes that are used to fit
                 the GPR models. Defaults to 1.
         """
-        n_jobs = kwargs.pop("n_jobs", 1)
-        validate_njobs(n_jobs)
-        self.n_jobs = n_jobs
+        self.n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
         super().__init__(*args, **kwargs)
 
         self.models = validate_sklearn_gpr_models(self.models, self.ndim)

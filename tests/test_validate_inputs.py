@@ -16,8 +16,10 @@ from pypal.pal.validate_inputs import (
     validate_coregionalized_gpy,
     validate_delta,
     validate_epsilon,
+    validate_gbdt_models,
     validate_goals,
     validate_gpy_model,
+    validate_interquartile_scaler,
     validate_ndim,
     validate_njobs,
     validate_number_models,
@@ -127,8 +129,8 @@ def test_validate_njobs():
     with pytest.raises(ValueError):
         validate_njobs(0)
 
-    assert validate_njobs(1) is None
-    assert validate_njobs(2) is None
+    assert validate_njobs(1) == 1
+    assert validate_njobs(2) == 2
 
 
 def test_validate_coef_var():
@@ -199,3 +201,33 @@ def test__validate_sklearn_gpr_model(make_random_dataset):
 
     with pytest.raises(ValueError):
         _validate_sklearn_gpr_model(random_search_class)
+
+
+def test_validate_gbdt_models():
+    """Test the input validation for the input of the PALGBDT class"""
+    from lightgbm import LGBMRegressor  # pylint:disable=import-outside-toplevel
+
+    lgbm = LGBMRegressor(objective="quantile", alpha=0.1)
+    with pytest.raises(ValueError):
+        validate_gbdt_models([(lgbm, lgbm), (lgbm, lgbm, lgbm)], 2)
+
+    with pytest.raises(ValueError):
+        validate_gbdt_models([(LGBMRegressor(), lgbm, lgbm), (lgbm, lgbm, lgbm)], 2)
+
+    with pytest.raises(ValueError):
+        validate_gbdt_models([(lgbm, lgbm, lgbm), (lgbm, lgbm, LGBMRegressor())], 2)
+
+    valid_input = [(lgbm, LGBMRegressor(), lgbm), (lgbm, LGBMRegressor(), lgbm)]
+    assert validate_gbdt_models(valid_input, 2) == valid_input
+
+
+def test_validate_interquartile_scaler():
+    """Make sure that the validation of the interquartile_scaler makes sense"""
+
+    with pytest.raises(ValueError):
+        validate_interquartile_scaler(None)
+
+    with pytest.raises(ValueError):
+        validate_interquartile_scaler(-1)
+
+    assert validate_interquartile_scaler(1.35) == 1.35

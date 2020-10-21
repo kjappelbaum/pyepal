@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.196.gc6961ab.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.201.g1699f5c.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -251,7 +251,7 @@
 <li><p><code class="code docutils literal notranslate"><span class="pre">delta</span></code>: allows you to specify the <span class="math notranslate nohighlight">\(\delta\)</span> hyperparameter (<span class="math notranslate nohighlight">\(\delta \in [0,1]\)</span>). Increasing this value will speed up the convergence.</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">beta_scale</span></code>: allows you to provide an empirical scaling parameter for <span class="math notranslate nohighlight">\(beta\)</span>. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>.</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">goal</span></code>: By default, PyPAL assumes that you want to maximize every objective. If this is not the case, you can set the <code class="code docutils literal notranslate"><span class="pre">goal</span></code> argument using a list of “min” and “max”, using “min” to specify that you want to minimize the ith objective and “max” to indicate that you want to maximize this objective.</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">coef_var_treshold</span></code>: By default, PyPAL will not consider points with a coefficient of variation <span class="math notranslate nohighlight">\(\ge 3\)</span> for the classification step of the algorithm. This is to avoid that classification is based on design points for which the model is completely unsure. To change this behavior, you can reduce the number to make the check tighter or increase this number to avoid this check (as in the original implementation).</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">coef_var_threshold</span></code>: By default, PyPAL will not consider points with a coefficient of variation <span class="math notranslate nohighlight">\(\ge 3\)</span> for the classification step of the algorithm. This is to avoid that classification is based on design points for which the model is completely unsure. To change this behavior, you can reduce the number to make the check tighter or increase this number to avoid this check (as in the original implementation).</p></li>
 </ul>
 </div></blockquote>
 </li>

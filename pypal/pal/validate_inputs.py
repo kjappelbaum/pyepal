@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Methods to validate inputs for the PAL classes"""
 import warnings
-from typing import Any, List
+from typing import Any, Iterable, List
 
 import GPy
 import numpy as np
@@ -221,12 +221,13 @@ def validate_coregionalized_gpy(models: Any):
         )
 
 
-def validate_njobs(njobs: Any):
+def validate_njobs(njobs: Any) -> int:
     """Make sure that njobs is an int > 1"""
     if not isinstance(njobs, int):
         raise ValueError("njobs musst be of type int")
     if njobs < 1:
         raise ValueError("njobs must be a number greater equal 1")
+    return njobs
 
 
 def validate_coef_var(coef_var: Any):
@@ -271,3 +272,63 @@ def validate_sklearn_gpr_models(
         models_validated.append(_validate_sklearn_gpr_model(model))
 
     return models_validated
+
+
+def _validate_quantile_loss(lightgbmregressor):
+    try:
+        alpha = lightgbmregressor.alpha
+        loss = lightgbmregressor.objective
+    except AttributeError as missing_attribute:
+        raise ValueError(
+            """Make sure that you initialize at
+least the first and last model with quantile loss.
+"""
+        ) from missing_attribute
+    if loss != "quantile":
+        raise ValueError(
+            """Make sure that you initialize at
+least the first and last model with quantile loss.
+"""
+        )
+    assert alpha > 0
+
+
+def validate_gbdt_models(models: Any, ndim: int) -> List[Iterable]:
+    """Make sure that the number of iterables is equal to the number of objectives
+    and that every iterable contains three LGBMRegressors.
+    Also, we check that at least the first and last models use quantile loss"""
+
+    validate_number_models(models, ndim)
+    from lightgbm import LGBMRegressor  # pylint:disable=import-outside-toplevel
+
+    for model_tuple in models:
+        if len(model_tuple) != 3:
+            raise ValueError(
+                """The model list must contain
+tuples with three LGBMRegressor instances.
+        """
+            )
+
+        for counter, model in enumerate(model_tuple):
+            if not isinstance(model, LGBMRegressor):
+                raise ValueError(
+                    """The model list must contain
+tuples with three LGBMRegressor instances.
+        """
+                )
+
+            if counter != 1:
+                _validate_quantile_loss(model)
+
+    return models
+
+
+def validate_interquartile_scaler(interquartile_scaler: Any) -> float:
+    """Make sure that the interquartile_scaler makes sense"""
+    if not isinstance(interquartile_scaler, (float, int)):
+        raise ValueError("interquartile_scaler must be a number.")
+
+    if interquartile_scaler < 0:
+        raise ValueError("interquartile_scaler must be a number greater 0.")
+
+    return interquartile_scaler
