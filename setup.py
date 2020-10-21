@@ -36,10 +36,11 @@ setup(
     author_email="kevin.jablonka@epfl.ch, brian.yoo@basf.com",
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Development Status :: 1 - Beta",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
+        "Topic :: Scientific/Engineering",
         "Topic :: Scientific/Engineering :: Physics",
         "Topic :: Scientific/Engineering :: Chemistry",
         "Topic :: Software Development :: Libraries :: Python Modules",
