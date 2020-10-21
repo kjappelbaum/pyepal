@@ -147,6 +147,14 @@ To measure the performance, you can use the `get_hypervolume` function from `pyp
 1. <a name="1"></a> Zuluaga, M.; Krause, A.; Püschel, M. E-PAL: An Active Learning Approach to the Multi-Objective Optimization Problem. Journal of Machine Learning Research 2016, 17 (104), 1–32.
 2. <a name="2"></a> Zuluaga, M.; Sergent, G.; Krause, A.; Püschel, M. Active Learning for Multi-Objective Optimization; Dasgupta, S., McAllester, D., Eds.; Proceedings of machine learning research; PMLR: Atlanta, Georgia, USA, 2013; Vol. 28, pp 462–470.
 
+## Citation
+
+If you find this code useful for your work, please cite:
+
+- Our paper that describes the implementation and an application to materials discovery: Jablonka, K. M.; Giriprasad, M. J.; Wang, S.; Smit, B.; Yoo, B. De Novo Polymer Design with Multi Objective Active Learning and Molecular Simulations. 2020.
+
+- The original paper that describes the ε-PAL algorithm: [Zuluaga, M.; Krause, A.; Püschel, M. E-PAL: An Active Learning Approach to the Multi-Objective Optimization Problem. Journal of Machine Learning Research 2016, 17 (104), 1–32.](https://jmlr.csail.mit.edu/papers/volume17/15-047/15-047.pdf)
+
 ## Acknowledgments
 
 The research was supported by the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme ([grant agreement 666983, MaGic](https://cordis.europa.eu/project/id/666983)), by the [NCCR-MARVEL](https://www.nccr-marvel.ch/), funded by the Swiss National Science Foundation, and by the Swiss National Science Foundation (SNSF) under Grant 200021_172759. Part of the work was performed as part of the [Explore Together internship program at BASF](https://www.basf.com/global/en/careers/students/explore-together.html).
