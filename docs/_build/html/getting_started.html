@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.195.g4bae94d.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.196.gc6961ab.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -197,11 +197,11 @@
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>You can install <cite>pypal</cite> from <cite>PyPi</cite> using</p>
+<p>You can install PyPAL from <cite>PyPi</cite> using</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pypal</span>
 </pre></div>
 </div>
-<p>We recommend that you install <cite>pypal</cite> in a dedicated <a class="reference external" href="https://docs.python.org/3/tutorial/venv.html">virtual environment</a> or <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">conda environment</a>.</p>
+<p>We recommend that you install PyPAL in a dedicated <a class="reference external" href="https://docs.python.org/3/tutorial/venv.html">virtual environment</a> or <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">conda environment</a>.</p>
 <p>If you want to use the latest version from GitHub, you can install it using</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">kjappelbaum</span><span class="o">/</span><span class="n">pypal</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
@@ -364,7 +364,7 @@ By default, the code will run a simple cross-validation only on the first iterat
 </div>
 <div class="section" id="implementing-a-new-pal-class">
 <h2>Implementing a new PAL class<a class="headerlink" href="#implementing-a-new-pal-class" title="Permalink to this headline">¶</a></h2>
-<p>If you want to use <cite>pypal</cite> with a model that we do not support yet, i.e., not <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> or <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> Gaussian process regression, it is easy to write your own class. For this, you need to inherit from <cite>PALBase</cite> and implement your  <code class="code docutils literal notranslate"><span class="pre">_train</span></code> and <code class="code docutils literal notranslate"><span class="pre">_predict</span></code> functions (and maybe also the <code class="code docutils literal notranslate"><span class="pre">_set_hyperparameters</span></code> and <code class="code docutils literal notranslate"><span class="pre">_should_optimize_hyperparameters</span></code> functions) using the <code class="code docutils literal notranslate"><span class="pre">design_space</span></code> and <code class="code docutils literal notranslate"><span class="pre">y</span></code> attributes of the class.</p>
+<p>If you want to use PyPAL  with a model that we do not support yet, i.e., not <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> or <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> Gaussian process regression, it is easy to write your own class. For this, you need to inherit from <cite>PALBase</cite> and implement your  <code class="code docutils literal notranslate"><span class="pre">_train</span></code> and <code class="code docutils literal notranslate"><span class="pre">_predict</span></code> functions (and maybe also the <code class="code docutils literal notranslate"><span class="pre">_set_hyperparameters</span></code> and <code class="code docutils literal notranslate"><span class="pre">_should_optimize_hyperparameters</span></code> functions) using the <code class="code docutils literal notranslate"><span class="pre">design_space</span></code> and <code class="code docutils literal notranslate"><span class="pre">y</span></code> attributes of the class.</p>
 <p>For instance, if we develop some multioutput model that has a <code class="code docutils literal notranslate"><span class="pre">train()</span></code> and a <code class="code docutils literal notranslate"><span class="pre">predict()</span></code> method we could simply use the following design pattern</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALBase</span>
 

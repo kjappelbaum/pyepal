@@ -4,13 +4,13 @@ Getting Started
 Installation
 ---------------
 
-You can install `pypal` from `PyPi` using
+You can install PyPAL from `PyPi` using
 
 .. code-block:: python
 
     pip install pypal
 
-We recommend that you install `pypal` in a dedicated `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ or `conda environment <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_.
+We recommend that you install PyPAL in a dedicated `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ or `conda environment <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_.
 
 If you want to use the latest version from GitHub, you can install it using
 
@@ -200,7 +200,7 @@ Another way to detect overfitting is to use :code:`make_jointplot` function from
 Implementing a new PAL class
 ------------------------------
 
-If you want to use `pypal` with a model that we do not support yet, i.e., not :code:`GPy` or :code:`sklearn` Gaussian process regression, it is easy to write your own class. For this, you need to inherit from `PALBase` and implement your  :code:`_train` and :code:`_predict` functions (and maybe also the :code:`_set_hyperparameters` and :code:`_should_optimize_hyperparameters` functions) using the :code:`design_space` and :code:`y` attributes of the class.
+If you want to use PyPAL  with a model that we do not support yet, i.e., not :code:`GPy` or :code:`sklearn` Gaussian process regression, it is easy to write your own class. For this, you need to inherit from `PALBase` and implement your  :code:`_train` and :code:`_predict` functions (and maybe also the :code:`_set_hyperparameters` and :code:`_should_optimize_hyperparameters` functions) using the :code:`design_space` and :code:`y` attributes of the class.
 
 For instance, if we develop some multioutput model that has a :code:`train()` and a :code:`predict()` method we could simply use the following design pattern
 
