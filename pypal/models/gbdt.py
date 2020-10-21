@@ -7,14 +7,19 @@ from lightgbm import LGBMRegressor
 
 
 def build_gbdt_tuple(
-    alphas: Union[List[float], np.ndarray] = [0.16, 0.5, 0.84],
+    alphas: Union[List[float], np.ndarray, Tuple[float, float, float]] = [
+        0.25,
+        0.5,
+        0.75,
+    ],
     **kwargs  # pylint:disable=dangerous-default-value
 ) -> Tuple[LGBMRegressor, LGBMRegressor, LGBMRegressor]:
     """Build a Tuple of LGBMRegressors in the correct
     format for PALGBDT
 
     Args:
-        alphas (Union[List[float], np.ndarray], optional): Quantile levels.
+        alphas (Union[List[float], np.ndarray, Tuple[float]], optional):
+            Quantile levels.
             Defaults to [0.16, 0.5, 0.84]
             (about 68% of the probability under a
             normal curve lies between 𝜇±𝜎.)
@@ -23,7 +28,7 @@ def build_gbdt_tuple(
         Tuple[LGBMRegressor, LGBMRegressor, LGBMRegressor]
     """
     return (
-        LGBMRegressor(loss="quantile", alpha=alphas[0], **kwargs),
-        LGBMRegressor(loss="quantile", alpha=alphas[1], **kwargs),
-        LGBMRegressor(loss="quantile", alpha=alphas[2], **kwargs),
+        LGBMRegressor(objective="quantile", alpha=alphas[0], **kwargs),
+        LGBMRegressor(objective="quantile", alpha=alphas[1], **kwargs),
+        LGBMRegressor(objective="quantile", alpha=alphas[2], **kwargs),
     )

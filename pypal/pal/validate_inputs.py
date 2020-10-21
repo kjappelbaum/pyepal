@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Methods to validate inputs for the PAL classes"""
 import warnings
-from typing import Any, List, Tuple
+from typing import Any, Iterable, List
 
 import GPy
 import numpy as np
@@ -276,7 +276,7 @@ def validate_sklearn_gpr_models(
 def _validate_quantile_loss(lightgbmregressor):
     try:
         alpha = lightgbmregressor.alpha
-        loss = lightgbmregressor.loss
+        loss = lightgbmregressor.objective
     except AttributeError as missing_attribute:
         raise ValueError(
             """Make sure that you initialize at
@@ -292,9 +292,9 @@ least the first and last model with quantile loss.
     assert alpha > 0
 
 
-def validate_gbdt_models(models: Any, ndim: int) -> List[Tuple]:
-    """Make sure that the number of tuples is equal to the number of objectives
-    and that every tuple contains three LGBMRegressors.
+def validate_gbdt_models(models: Any, ndim: int) -> List[Iterable]:
+    """Make sure that the number of iterables is equal to the number of objectives
+    and that every iterable contains three LGBMRegressors.
     Also, we check that at least the first and last models use quantile loss"""
 
     validate_number_models(models, ndim)

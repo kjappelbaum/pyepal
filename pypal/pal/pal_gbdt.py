@@ -13,20 +13,23 @@ see https://en.wikipedia.org/wiki/Quantile_regression
 Note that the scaling of the hyperrectangles has been derived
 for GPR models (with RBF kernels).
 """
-import concurrent.futures
+import math
+
+# import concurrent.futures
 from functools import partial
 
 import numpy as np
 
 from .pal_base import PALBase
-from .validate_inputs import validate_njobs
+from .validate_inputs import validate_gbdt_models, validate_njobs
 
 
 def _train_model_picklable(i, models, design_space, objectives, sampled):
     model = models[i]
+    objective = math.floor(i / 3)
     model.fit(
-        design_space[sampled[:, i]],
-        objectives[sampled[:, i], i].reshape(-1, 1),
+        design_space[sampled[:, objective], :],
+        objectives[sampled[:, objective], objective].ravel(),
     )
     return model
 
@@ -39,9 +42,9 @@ class PALGBDT(PALBase):
 
         Args:
             X_design (np.array): Design space (feature matrix)
-            models (List[Tuple[LGBMRegressor, LGBMRegressor, LGBMRegressor]]:
-                Machine learning models. You need to provide a list of tuples.
-                One tuple per objective and every tuple contains three
+            models (List[Iterable[LGBMRegressor, LGBMRegressor, LGBMRegressor]]:
+                Machine learning models. You need to provide a list of iterables.
+                One iterable per objective and every iterable contains three
                 LGBMRegressors. The first one for the lower uncertainty limits,
                 the middle one for the median and the last one for the upper limit.
                 To create appropriate models, you need to use the quantile loss.
@@ -57,42 +60,60 @@ class PALGBDT(PALBase):
                 that shall be minimized and "max" for every objective
                 that shall be maximized. Defaults to None, which means
                 that the code maximizes all objectives.
-            coef_var_treshold (float, optional): Use only points with
+            coef_var_threshold (float, optional): Use only points with
                 a coefficient of variation below this threshold
                 in the classification step. Defaults to 3.
             n_jobs (int): Number of parallel processes that are used to fit
                 the GPR models. Defaults to 1.
         """
         n_jobs = kwargs.pop("n_jobs", 1)
+        self.interquartile_scaler = kwargs.pop("interquartile_scaler", 1.35)
         validate_njobs(n_jobs)
         self.n_jobs = n_jobs
         super().__init__(*args, **kwargs)
 
-        # ToDo: self.models = validate_sklearn_gpr_models(self.models, self.ndim)
+        self.models = validate_gbdt_models(self.models, self.ndim)
 
     def _set_data(self):
         pass
 
     def _train(self):
+        models_flat = []
+        # not using list(sum(self.models, ())) such that we do not
+        # have to assume the type
+        for model_tuples in self.models:
+            for model in model_tuples:
+                models_flat.append(model)
+
         train_single_partial = partial(
             _train_model_picklable,
-            models=self.models,
+            models=models_flat,
             design_space=self.design_space,
             objectives=self.y,
             sampled=self.sampled,
         )
         models = []
-        with concurrent.futures.ProcessPoolExecutor(
-            max_workers=self.n_jobs
-        ) as executor:
-            for model in executor.map(train_single_partial, range(self.ndim)):
-                models.append(model)
-        self.models = models
+
+        # with concurrent.futures.ProcessPoolExecutor(
+        #     max_workers=self.n_jobs
+        # ) as executor:
+        for model in map(train_single_partial, range(len(models_flat))):
+            models.append(model)
+
+        model_tuples = []
+        for i in range(0, len(models), 3):
+            chunk = models[i : i + 3]
+            model_tuples.append(chunk)
+        self.models = model_tuples
 
     def _predict(self):
         means, stds = [], []
-        for model in self.models:
-            mean, std = model.predict(self.design_space, return_std=True)
+        for model_tuple in self.models:
+            mean = model_tuple[1].predict(self.design_space)
+            upper = model_tuple[2].predict(self.design_space)
+            lower = model_tuple[0].predict(self.design_space)
+            std = np.abs(upper - lower) / self.interquartile_scaler
+
             means.append(mean.reshape(-1, 1))
             stds.append(std.reshape(-1, 1))
 

@@ -46,7 +46,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         delta: float = 0.05,
         beta_scale: float = 1 / 9,
         goals: List[str] = None,
-        coef_var_treshold: float = 3,
+        coef_var_threshold: float = 3,
     ):
         """Initialize the PAL instance
 
@@ -65,7 +65,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                 that shall be minimized and "max" for every objective
                 that shall be maximized. Defaults to None, which means
                 that the code maximizes all objectives.
-            coef_var_treshold (float, optional): Use only points with
+            coef_var_threshold (float, optional): Use only points with
                 a coefficient of variation below this threshold
                 in the classification step. Defaults to 3.
 
@@ -84,7 +84,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.models = base_validate_models(models)
         self.iteration = 1
         self.design_space_size = len(X_design)
-        self.coef_var_treshold = validate_coef_var(coef_var_treshold)
+        self.coef_var_threshold = validate_coef_var(coef_var_threshold)
         self.coef_var_mask = np.array([True] * self.design_space_size)
         # means/std are the model predictions
         self.means: np.array = None
@@ -221,6 +221,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         # in large samples this is too expensive,
         # hence we chose a random subset, for which we
         # test the model
+
         sample_subset = np.random.choice(
             sampled_idx_original,
             min([self.cross_val_points, len(sampled_idx_original)]),
@@ -249,7 +250,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
 
     def should_cross_validate(self):
         """Override for more complex cross validation schedules"""
-        if self.iteration == 1:
+        if (self.iteration == 1) & self.cross_val_points > 0:
             return True
         return False
 
@@ -280,12 +281,12 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             means_no_zero = self.means.copy()
             means_no_zero[means_no_zero == 0] = np.median(means_no_zero)
             self.coef_var_mask = (
-                np.max(self.std / means_no_zero, axis=1) < self.coef_var_treshold
+                np.max(self.std / means_no_zero, axis=1) < self.coef_var_threshold
             )
         else:
             mean_variation = self.std.mean()
             self.coef_var_mask = (
-                np.max(self.std / mean_variation, axis=1) < self.coef_var_treshold
+                np.max(self.std / mean_variation, axis=1) < self.coef_var_threshold
             )
 
     def _classify(self):
