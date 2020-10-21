@@ -14,18 +14,12 @@ Note that the scaling of the hyperrectangles has been derived
 for GPR models (with RBF kernels).
 """
 import math
-
-# import concurrent.futures
 from functools import partial
 
 import numpy as np
 
 from .pal_base import PALBase
-from .validate_inputs import (
-    validate_gbdt_models,
-    validate_interquartile_scaler,
-    validate_njobs,
-)
+from .validate_inputs import validate_gbdt_models, validate_interquartile_scaler
 
 
 def _train_model_picklable(i, models, design_space, objectives, sampled):
@@ -52,6 +46,9 @@ class PALGBDT(PALBase):
                 LGBMRegressors. The first one for the lower uncertainty limits,
                 the middle one for the median and the last one for the upper limit.
                 To create appropriate models, you need to use the quantile loss.
+                If you want to parallelize training, we recommend that you use
+                the LightGBM parallelization and fit the models for the different
+                objectives in serial fashion.s
             ndim (int): Number of objectives
             epsilon (Union[list, float], optional): Epsilon hyperparameter.
                 Defaults to 0.01.
@@ -75,15 +72,12 @@ class PALGBDT(PALBase):
                 median, range and/or interquartile range.
                 BMC Med Res Methodol 14, 135 (2014).
                 https://doi.org/10.1186/1471-2288-14-135
-            n_jobs (int): Number of parallel processes that are used to fit
-                the models. Defaults to 1.
+
         """
-        n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
         self.interquartile_scaler = validate_interquartile_scaler(
             kwargs.pop("interquartile_scaler", 1.35)
         )
 
-        self.n_jobs = n_jobs
         super().__init__(*args, **kwargs)
 
         self.models = validate_gbdt_models(self.models, self.ndim)
@@ -97,6 +91,8 @@ class PALGBDT(PALBase):
         # have to assume the type
         for model_tuples in self.models:
             for model in model_tuples:
+                model.n_jobs = 1
+                model.nthreads = 1
                 models_flat.append(model)
 
         train_single_partial = partial(
@@ -108,9 +104,6 @@ class PALGBDT(PALBase):
         )
         models = []
 
-        # with concurrent.futures.ProcessPoolExecutor(
-        #     max_workers=self.n_jobs
-        # ) as executor:
         for model in map(train_single_partial, range(len(models_flat))):
             models.append(model)
 
@@ -135,5 +128,5 @@ class PALGBDT(PALBase):
         self.std = np.hstack(stds)
 
     def _set_hyperparameters(self):
-        # ToDo: potentially use hyperopt
+        # ToDo
         pass

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The pypal API reference &#8212; pypal 0+untagged.200.ge44205f.dirty documentation</title>
+    <title>The pypal API reference &#8212; pypal 0+untagged.201.g1699f5c.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -786,17 +786,26 @@ for GPR models (with RBF kernels).</p>
 One iterable per objective and every iterable contains three
 LGBMRegressors. The first one for the lower uncertainty limits,
 the middle one for the median and the last one for the upper limit.
-To create appropriate models, you need to use the quantile loss.</p></li>
+To create appropriate models, you need to use the quantile loss.
+If you want to parallelize training, we recommend that you use
+the LightGBM parallelization and fit the models for the different
+objectives in serial fashion.s</p></li>
 <li><p><strong>LGBMRegressor</strong> – Machine learning models. You need to provide a list of iterables.
 One iterable per objective and every iterable contains three
 LGBMRegressors. The first one for the lower uncertainty limits,
 the middle one for the median and the last one for the upper limit.
-To create appropriate models, you need to use the quantile loss.</p></li>
+To create appropriate models, you need to use the quantile loss.
+If you want to parallelize training, we recommend that you use
+the LightGBM parallelization and fit the models for the different
+objectives in serial fashion.s</p></li>
 <li><p><strong>LGBMRegressor</strong><strong>]</strong><strong>]</strong> – Machine learning models. You need to provide a list of iterables.
 One iterable per objective and every iterable contains three
 LGBMRegressors. The first one for the lower uncertainty limits,
 the middle one for the median and the last one for the upper limit.
-To create appropriate models, you need to use the quantile loss.</p></li>
+To create appropriate models, you need to use the quantile loss.
+If you want to parallelize training, we recommend that you use
+the LightGBM parallelization and fit the models for the different
+objectives in serial fashion.s</p></li>
 <li><p><strong>ndim</strong> (<em>int</em>) – Number of objectives</p></li>
 <li><p><strong>epsilon</strong> (<em>Union</em><em>[</em><em>list</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Epsilon hyperparameter.
 Defaults to 0.01.</p></li>
@@ -817,10 +826,9 @@ between the upper and lower quantile into a standard deviation.
 This, is std = (up-low)/interquartile_scaler. Defaults to 1.35,
 following Wan, X., Wang, W., Liu, J. et al.
 Estimating the sample mean and standard deviation from the sample size,
-median, range and/or interquartile range. BMC Med Res Methodol 14, 135 (2014).
+median, range and/or interquartile range.
+BMC Med Res Methodol 14, 135 (2014).
 <a class="reference external" href="https://doi.org/10.1186/1471-2288-14-135">https://doi.org/10.1186/1471-2288-14-135</a></p></li>
-<li><p><strong>n_jobs</strong> (<em>int</em>) – Number of parallel processes that are used to fit
-the models. Defaults to 1.</p></li>
 </ul>
 </dd>
 </dl>
