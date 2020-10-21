@@ -53,6 +53,16 @@ For sklearn GPR models
     :private-members:
 
 
+For quantile regression with LightGBM
+.......................................
+
+.. automodule:: pypal.pal.pal_gbdt
+    :members:
+    :show-inheritance:
+    :special-members:
+    :private-members:
+
+
 Schedules for hyperparameter optimization
 ...........................................
 

@@ -21,7 +21,11 @@ from functools import partial
 import numpy as np
 
 from .pal_base import PALBase
-from .validate_inputs import validate_gbdt_models, validate_njobs
+from .validate_inputs import (
+    validate_gbdt_models,
+    validate_interquartile_scaler,
+    validate_njobs,
+)
 
 
 def _train_model_picklable(i, models, design_space, objectives, sampled):
@@ -63,12 +67,22 @@ class PALGBDT(PALBase):
             coef_var_threshold (float, optional): Use only points with
                 a coefficient of variation below this threshold
                 in the classification step. Defaults to 3.
+            interquartile_scaler (float, optional): Used to convert the difference
+                between the upper and lower quantile into a standard deviation.
+                This, is std = (up-low)/interquartile_scaler. Defaults to 1.35,
+                following Wan, X., Wang, W., Liu, J. et al.
+                Estimating the sample mean and standard deviation from the sample size,
+                median, range and/or interquartile range.
+                BMC Med Res Methodol 14, 135 (2014).
+                https://doi.org/10.1186/1471-2288-14-135
             n_jobs (int): Number of parallel processes that are used to fit
-                the GPR models. Defaults to 1.
+                the models. Defaults to 1.
         """
-        n_jobs = kwargs.pop("n_jobs", 1)
-        self.interquartile_scaler = kwargs.pop("interquartile_scaler", 1.35)
-        validate_njobs(n_jobs)
+        n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
+        self.interquartile_scaler = validate_interquartile_scaler(
+            kwargs.pop("interquartile_scaler", 1.35)
+        )
+
         self.n_jobs = n_jobs
         super().__init__(*args, **kwargs)
 

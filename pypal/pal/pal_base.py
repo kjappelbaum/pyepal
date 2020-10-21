@@ -250,7 +250,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
 
     def should_cross_validate(self):
         """Override for more complex cross validation schedules"""
-        if (self.iteration == 1) & self.cross_val_points > 0:
+        if (self.iteration == 1) & (self.cross_val_points > 0):
             return True
         return False
 

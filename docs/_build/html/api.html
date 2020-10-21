@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The pypal API reference &#8212; pypal 0+untagged.196.gc6961ab.dirty documentation</title>
+    <title>The pypal API reference &#8212; pypal 0+untagged.200.ge44205f.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -162,6 +162,10 @@
 
         <li class="nav-item toc-entry toc-h3">
             <a href="#module-pypal.pal.pal_sklearn" class="nav-link">For sklearn GPR models</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#module-pypal.pal.pal_gbdt" class="nav-link">For quantile regression with LightGBM</a>
         </li>
 
         <li class="nav-item toc-entry toc-h3">
@@ -381,12 +385,12 @@ and the upper limits are the upper limits.</p>
 <p>Base class for PAL</p>
 <dl class="py class">
 <dt id="pypal.pal.pal_base.PALBase">
-<em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_base.</code><code class="sig-name descname">PALBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coef_var_treshold</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_base.</code><code class="sig-name descname">PALBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coef_var_threshold</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>PAL base class</p>
 <dl class="py method">
 <dt id="pypal.pal.pal_base.PALBase.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coef_var_treshold</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coef_var_threshold</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_base.PALBase.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize the PAL instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -405,7 +409,7 @@ Defaults to 1/9.</p></li>
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
 that the code maximizes all objectives.</p></li>
-<li><p><strong>coef_var_treshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
+<li><p><strong>coef_var_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
 a coefficient of variation below this threshold
 in the classification step. Defaults to 3.</p></li>
 </ul>
@@ -648,7 +652,7 @@ Defaults to 1/9.</p></li>
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
 that the code maximizes all objectives.</p></li>
-<li><p><strong>coef_var_treshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
+<li><p><strong>coef_var_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
 a coefficient of variation below this threshold
 in the classification step. Defaults to 3.</p></li>
 <li><p><strong>restarts</strong> (<em>int</em>) – Number of random restarts that are used for hyperparameter
@@ -692,7 +696,7 @@ Defaults to 1/9.</p></li>
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
 that the code maximizes all objectives.</p></li>
-<li><p><strong>coef_var_treshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
+<li><p><strong>coef_var_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
 a coefficient of variation below this threshold
 in the classification step. Defaults to 3.</p></li>
 <li><p><strong>restarts</strong> (<em>int</em>) – Number of random restarts that are used for hyperparameter
@@ -739,11 +743,84 @@ Defaults to 1/9.</p></li>
 that shall be minimized and “max” for every objective
 that shall be maximized. Defaults to None, which means
 that the code maximizes all objectives.</p></li>
-<li><p><strong>coef_var_treshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
+<li><p><strong>coef_var_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
 a coefficient of variation below this threshold
 in the classification step. Defaults to 3.</p></li>
 <li><p><strong>n_jobs</strong> (<em>int</em>) – Number of parallel processes that are used to fit
 the GPR models. Defaults to 1.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pypal.pal.pal_gbdt">
+<span id="for-quantile-regression-with-lightgbm"></span><h3>For quantile regression with LightGBM<a class="headerlink" href="#module-pypal.pal.pal_gbdt" title="Permalink to this headline">¶</a></h3>
+<p>Implements a PAL class for GBDT models which can predict uncertainity intervals
+when used with quantile loss.
+For an example of GBDT with quantile loss see
+Jablonka, Kevin Maik; Moosavi, Seyed Mohamad; Asgari, Mehrdad; Ireland, Christopher;
+Patiny, Luc; Smit, Berend (2020): A Data-Driven Perspective on
+the Colours of Metal-Organic Frameworks. ChemRxiv. Preprint.
+<a class="reference external" href="https://doi.org/10.26434/chemrxiv.13033217.v1">https://doi.org/10.26434/chemrxiv.13033217.v1</a></p>
+<p>For general information about quantile regression
+see <a class="reference external" href="https://en.wikipedia.org/wiki/Quantile_regression">https://en.wikipedia.org/wiki/Quantile_regression</a></p>
+<p>Note that the scaling of the hyperrectangles has been derived
+for GPR models (with RBF kernels).</p>
+<dl class="py class">
+<dt id="pypal.pal.pal_gbdt.PALGBDT">
+<em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_gbdt.</code><code class="sig-name descname">PALGBDT</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_gbdt.PALGBDT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_base.PALBase</span></code></a></p>
+<p>PAL class for a list of LightGBM GBDT models</p>
+<dl class="py method">
+<dt id="pypal.pal.pal_gbdt.PALGBDT.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.pal_gbdt.PALGBDT.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the PALGBDT instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_design</strong> (<em>np.array</em>) – Design space (feature matrix)</p></li>
+<li><p><strong>(</strong><strong>List</strong><strong>[</strong><strong>Iterable</strong><strong>[</strong><strong>LGBMRegressor</strong> (<em>models</em>) – Machine learning models. You need to provide a list of iterables.
+One iterable per objective and every iterable contains three
+LGBMRegressors. The first one for the lower uncertainty limits,
+the middle one for the median and the last one for the upper limit.
+To create appropriate models, you need to use the quantile loss.</p></li>
+<li><p><strong>LGBMRegressor</strong> – Machine learning models. You need to provide a list of iterables.
+One iterable per objective and every iterable contains three
+LGBMRegressors. The first one for the lower uncertainty limits,
+the middle one for the median and the last one for the upper limit.
+To create appropriate models, you need to use the quantile loss.</p></li>
+<li><p><strong>LGBMRegressor</strong><strong>]</strong><strong>]</strong> – Machine learning models. You need to provide a list of iterables.
+One iterable per objective and every iterable contains three
+LGBMRegressors. The first one for the lower uncertainty limits,
+the middle one for the median and the last one for the upper limit.
+To create appropriate models, you need to use the quantile loss.</p></li>
+<li><p><strong>ndim</strong> (<em>int</em>) – Number of objectives</p></li>
+<li><p><strong>epsilon</strong> (<em>Union</em><em>[</em><em>list</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Epsilon hyperparameter.
+Defaults to 0.01.</p></li>
+<li><p><strong>delta</strong> (<em>float</em><em>, </em><em>optional</em>) – Delta hyperparameter. Defaults to 0.05.</p></li>
+<li><p><strong>beta_scale</strong> (<em>float</em><em>, </em><em>optional</em>) – Scaling parameter for beta.
+If not equal to 1, the theoretical guarantees do not necessarily hold.
+Also note that the parametrization depends on the kernel type.
+Defaults to 1/9.</p></li>
+<li><p><strong>goals</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – If a list, provide “min” for every objective
+that shall be minimized and “max” for every objective
+that shall be maximized. Defaults to None, which means
+that the code maximizes all objectives.</p></li>
+<li><p><strong>coef_var_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Use only points with
+a coefficient of variation below this threshold
+in the classification step. Defaults to 3.</p></li>
+<li><p><strong>interquartile_scaler</strong> (<em>float</em><em>, </em><em>optional</em>) – Used to convert the difference
+between the upper and lower quantile into a standard deviation.
+This, is std = (up-low)/interquartile_scaler. Defaults to 1.35,
+following Wan, X., Wang, W., Liu, J. et al.
+Estimating the sample mean and standard deviation from the sample size,
+median, range and/or interquartile range. BMC Med Res Methodol 14, 135 (2014).
+<a class="reference external" href="https://doi.org/10.1186/1471-2288-14-135">https://doi.org/10.1186/1471-2288-14-135</a></p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em>) – Number of parallel processes that are used to fit
+the models. Defaults to 1.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1185,6 +1262,19 @@ are implemented independet of the base class</p>
 </dd></dl>
 
 <dl class="py function">
+<dt id="pypal.pal.validate_inputs.validate_gbdt_models">
+<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_gbdt_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.validate_inputs.validate_gbdt_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure that the number of iterables is equal to the number of objectives
+and that every iterable contains three LGBMRegressors.
+Also, we check that at least the first and last models use quantile loss</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="pypal.pal.validate_inputs.validate_goals">
 <code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_goals</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">goals</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.validate_inputs.validate_goals" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
@@ -1223,6 +1313,17 @@ and ‘min’ for minimization</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt id="pypal.pal.validate_inputs.validate_interquartile_scaler">
+<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_interquartile_scaler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">interquartile_scaler</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.validate_inputs.validate_interquartile_scaler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure that the interquartile_scaler makes sense</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="pypal.pal.validate_inputs.validate_ndim">
 <code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_ndim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.validate_inputs.validate_ndim" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that the number of dimensions makes sense</p>
@@ -1249,6 +1350,11 @@ and ‘min’ for minimization</p></li>
 <dt id="pypal.pal.validate_inputs.validate_njobs">
 <code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_njobs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">njobs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypal.pal.validate_inputs.validate_njobs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that njobs is an int &gt; 1</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">

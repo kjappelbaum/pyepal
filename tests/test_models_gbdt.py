@@ -9,5 +9,5 @@ def test_build_gbdt_tuple():
     gbdt_tuple = build_gbdt_tuple()
     assert len(gbdt_tuple) == 3
     for model in gbdt_tuple:
-        assert model.loss == "quantile"  # pylint:disable=no-member
+        assert model.objective == "quantile"
         assert model.alpha > 0  # pylint:disable=no-member

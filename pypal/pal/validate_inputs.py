@@ -221,12 +221,13 @@ def validate_coregionalized_gpy(models: Any):
         )
 
 
-def validate_njobs(njobs: Any):
+def validate_njobs(njobs: Any) -> int:
     """Make sure that njobs is an int > 1"""
     if not isinstance(njobs, int):
         raise ValueError("njobs musst be of type int")
     if njobs < 1:
         raise ValueError("njobs must be a number greater equal 1")
+    return njobs
 
 
 def validate_coef_var(coef_var: Any):
@@ -320,3 +321,14 @@ tuples with three LGBMRegressor instances.
                 _validate_quantile_loss(model)
 
     return models
+
+
+def validate_interquartile_scaler(interquartile_scaler: Any) -> float:
+    """Make sure that the interquartile_scaler makes sense"""
+    if not isinstance(interquartile_scaler, (float, int)):
+        raise ValueError("interquartile_scaler must be a number.")
+
+    if interquartile_scaler < 0:
+        raise ValueError("interquartile_scaler must be a number greater 0.")
+
+    return interquartile_scaler

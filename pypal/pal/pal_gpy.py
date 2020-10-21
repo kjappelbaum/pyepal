@@ -47,10 +47,7 @@ class PALGPy(PALBase):
                 the GPR models. Defaults to 1.
         """
         self.restarts = kwargs.pop("restarts", 20)
-
-        n_jobs = kwargs.pop("n_jobs", 1)
-        validate_njobs(n_jobs)
-        self.n_jobs = n_jobs
+        self.n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
 
         assert isinstance(
             self.restarts, int

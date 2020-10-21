@@ -48,9 +48,7 @@ class PALSklearn(PALBase):
             n_jobs (int): Number of parallel processes that are used to fit
                 the GPR models. Defaults to 1.
         """
-        n_jobs = kwargs.pop("n_jobs", 1)
-        validate_njobs(n_jobs)
-        self.n_jobs = n_jobs
+        self.n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
         super().__init__(*args, **kwargs)
 
         self.models = validate_sklearn_gpr_models(self.models, self.ndim)
