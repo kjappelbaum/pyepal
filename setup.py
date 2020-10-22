@@ -1,4 +1,18 @@
 # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+# Copyright 2020 PyPAL authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 """Model agnostic Python implementation of the epsilon-PAL algorithm"""
 
 from setuptools import find_packages, setup
@@ -14,7 +28,7 @@ setup(
     cmdclass=versioneer.get_cmdclass(),
     packages=find_packages(),
     url="",
-    license="MIT",
+    license="Apache 2.0",
     python_requires=">=3.6",
     install_requires=REQUIREMENTS,
     extras_require={
@@ -37,8 +51,7 @@ setup(
         "GPy": ["GPy==1.9.9", "matplotlib"],
         "GBDT": ["lightgbm>=3.0.0"],
     },
-    author="Kevin M. Jablonka, Giriprasad Melpatti Jothiappan,\
-         Shefang Wang, Berend Smit, Brian Yoo",
+    author="PyPAL authors",
     author_email="kevin.jablonka@epfl.ch, brian.yoo@basf.com",
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -50,5 +63,6 @@ setup(
         "Topic :: Scientific/Engineering :: Physics",
         "Topic :: Scientific/Engineering :: Chemistry",
         "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
     ],
 )
