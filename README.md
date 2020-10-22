@@ -7,7 +7,7 @@
 [![codecov](https://codecov.io/gh/kjappelbaum/pypal/branch/master/graph/badge.svg?token=BL2CF4HQ06)](https://codecov.io/gh/kjappelbaum/pypal)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pypal)
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Gitter](https://badges.gitter.im/kjappelbaum/pypal.svg)](https://gitter.im/kjappelbaum/pypal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/kjappelbaum/pypal)
 
