@@ -12,13 +12,24 @@ Commit messages
 Python code
 .................
 
-Please install the pre-commit hooks to automatically
+Please install the pre-commit hooks using
+
+.. code::bash
+
+    pip install pre-commit
+    pre-commit install .
+
+
+to automatically
 
 - format the code with `black <https://github.com/psf/black>`_
 - sort the imports with `isort <https://pycqa.github.io/isort/>`_
 - lint the code with `prospector <http://prospector.landscape.io/en/master/>`_
 
 We use type hints, which we feel is a good way of documentation and helps us find bugs using `mypy <http://mypy-lang.org/>`_.
+
+Some of the pre-commit hooks modify the files, e.g., they trim whitespaces or format the code. If they modify your file, you will have
+to run :code:`git add` and :code:`git commit` again. To skip the pre-commit checks (not recommended) you can use :code:`git commit --no-verify`.
 
 New features
 .................

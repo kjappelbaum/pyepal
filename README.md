@@ -29,11 +29,12 @@ To install a stable release use
 pip install pypal
 ```
 
-Developers can install the extras `[testing, docs, pre-commit]`.
+Developers can install the extras `[testing, docs, pre-commit]`. Installation should take only a few minutes.
 
 ## Usage
 
 The main logic is implemented in the `PALBase` class. There are some prebuilt classes for common use cases (`GPy`, `sklearn`) that inherit from this class.
+For more details about how to use the code and notes about the tutorials [see the docs]](https://kjappelbaum.github.io/pypal/).
 
 ### Pre-Built classes
 
