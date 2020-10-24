@@ -4,15 +4,15 @@ Getting Started
 Installation
 ---------------
 
-You can install PyPAL from `PyPi` using
+PyPAL can be installed from `PyPi` using
 
 .. code-block:: python
 
     pip install pypal
 
-We recommend that you install PyPAL in a dedicated `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ or `conda environment <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_.
+We recommend installing PyPAL in a dedicated `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ or `conda environment <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_.
 
-If you want to use the latest version from GitHub, you can install it using
+The latest version of PyPAL can be installed from GitHub using
 
 .. code-block:: python
 
@@ -22,13 +22,13 @@ If you want to use the latest version from GitHub, you can install it using
 Running an active learning experiment
 ---------------------------------------
 
-The `examples` directory contains a `Jupyter notebook with an example <https://github.com/kjappelbaum/pypal/blob/master/examples/test_pal.ipynb>`_ that you can also run on MyBinder.
+The `examples` directory contains a `Jupyter notebook with an example <https://github.com/kjappelbaum/pypal/blob/master/examples/test_pal.ipynb>`_ that can also be run on MyBinder.
 
-If you use a Gaussian process model built with :code:`sklearn` or :code:`GPy` you can use a pre-built class (like :code:`PALSklearn` or :code:`PALGpy`) and follow the following steps:
+If using a Gaussian process model built with :code:`sklearn` or :code:`GPy` we recommend using a pre-built class such as :code:`PALSklearn` or :code:`PALGpy` and following the subsequent steps:
 
-1. For each objective create a model (if you want to use a coregionalized model you, of course, only need to create one)
+1. For each objective create a model (if using a coregionalized Gaussian process model, only one model needs to be created)
 
-2. Sample a few initial points from your design space. In practice, you can use the :code:`get_maxmin_samples` or :code:`get_kmeans_samples` utilities for that. Assuming that :code:`X` is a :code:`np.array` if the descriptors/features
+2. Sample a few initial points from the design space. We provide the :code:`get_maxmin_samples` or :code:`get_kmeans_samples` utilities that can help with the sampling. Our code assumes that :code:`X` is a :code:`np.array`.
 
     .. code-block:: python
 
@@ -40,7 +40,7 @@ If you use a Gaussian process model built with :code:`sklearn` or :code:`GPy` yo
         # This selects the 10 farthest points in feature space
         indices = get_maxmin_samples(X, 10)
 
-3. Now, you can initialize the instance of one :code:`PAL` class. If we use a :code:`sklearn` Gaussian process model, we would use
+3. Now we can initialize the instance of one :code:`PAL` class. If using a :code:`sklearn` Gaussian process model, we would use
 
     .. code-block:: python
 
@@ -53,22 +53,22 @@ If you use a Gaussian process model built with :code:`sklearn` or :code:`GPy` yo
         palinstance = PALSklearn(X, models, 3)
 
         # Now, we can also feed in the first measurements
-        # this here assumes that in y you have all measurements and you now
-        # provide the ones which index is in the indices array
+        # this here assumes that we have all measurements for y and we now
+        # provide those which are present in the indices array
         palinstance.update_train_set(indices, y[indices])
 
-        # Now you can run one step
+        # Now we can run one step
         next_idx = palinstance.run_one_step()
 
-    At this level, you have a range of different options you can set.
+    At this level, we have a range of different optional arguements we can set.
 
-    - :code:`epsilon`: in a :code:`np.ndarray` you can provide one :math:`\epsilon` per dimension. This allows you to set looser tolerance for some objectives. Note that :math:`\epsilon_i \in [0,1]`.
-    - :code:`delta`: allows you to specify the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will speed up the convergence.
-    - :code:`beta_scale`: allows you to provide an empirical scaling parameter for :math:`beta`. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, you can achieve much faster convergence by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`.
-    - :code:`goal`: By default, PyPAL assumes that you want to maximize every objective. If this is not the case, you can set the :code:`goal` argument using a list of "min" and "max", using "min" to specify that you want to minimize the ith objective and "max" to indicate that you want to maximize this objective.
-    - :code:`coef_var_threshold`: By default, PyPAL will not consider points with a coefficient of variation :math:`\ge 3` for the classification step of the algorithm. This is to avoid that classification is based on design points for which the model is completely unsure. To change this behavior, you can reduce the number to make the check tighter or increase this number to avoid this check (as in the original implementation).
+    - :code:`epsilon`: one :math:`\epsilon` per dimension in a :code:`np.ndarray`. This can be used to set different tolerances for each objective. Note that :math:`\epsilon_i \in [0,1]`.
+    - :code:`delta`: the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will speed up the convergence.
+    - :code:`beta_scale`: an empirical scaling parameter for :math:`beta`. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, a much faster convergence can be achieved by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`.
+    - :code:`goal`: By default, PyPAL assumes that the goal is to maximize every objective. If this is not the case, this argument can be set using a list of "min" and "max" strings, with "min" specifying whether to minimize the ith objective and "max" indicating whether to maximize this objective.
+    - :code:`coef_var_threshold`: By default, PyPAL will not consider points with a coefficient of variation :math:`\ge 3` for the classification step of the algorithm. This is meant to avoid classifying design points for which the model is entirely unsure. This tends to happen when a model is severely overfit on the training data (i.e., the training data uncertainties are very low, whereas the prediction uncertainties are very high). To change this setting, reduce this value to make the check tighter or increase it to avoid this check (as in the original implementation).
 
-In case you have missing observations, i.e., you measured only two of three outputs at sometimes you need to report the missing observations as :code:`np.nan`, i.e., the call could look like
+In the case of missing observations, i.e., only two of three outputs are measured, report the missing observations as :code:`np.nan`. The call could look like
 
 .. code-block:: python
 
@@ -76,16 +76,16 @@ In case you have missing observations, i.e., you measured only two of three outp
 
     palinstance.update_train_set(np.array([1,2]), np.array([[1, 2, 3], [np.nan, 1, 2, 0]]))
 
-for a case in which we performed measurements for samples with index 1 and 2 of our design space but did not measure the first target for sample 2.
+for a case in which we performed measurements for samples with index 1 and 2 of our design space, but did not measure the first target for sample 2.
 
 Hyperparameter optimization
 .............................
-Usually, the hyperparameters of a machine learning model should be optimized as new training data is added, in particular the kernel hyperparameters of a Gaussian process regression model.
-But since this is usually a computationally expensive process, you may not want to do this at every iteration of the active learning process. The timing of the hyperparameter optimization is internally set by the :code:`_should_optimize_hyperparameter` function that by default uses a schedule that will optimize the hyperparameter every 10th iteration. If you want to change this behavior, you can override this function.
+Usually, the hyperparameters of a machine learning model, in particular the kernel hyperparameters of a Gaussian process regression model, should be optimized as new training data is added.
+However, since this is usually a computationally expensive process, it may not be desirable to perform this at every iteration of the active learning process. The iteration frequency of the hyperparameter optimization is internally set by the :code:`_should_optimize_hyperparameter` function, which by default uses a schedule that optimizes the hyperparameter every 10th iteration. This behavior can be changed by override this function.
 
 Logging
 ........
-You will see basic information like the current iteration and the classification status if you print the :code:`PAL` object
+Basic information such as the current iteration and the classification status are logged and can be viewed by printing the :code:`PAL` object
 
 .. code:: python
 
@@ -94,7 +94,7 @@ You will see basic information like the current iteration and the classification
     # returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.
 
 
-In case you want to also know the hypervolume, you can use the :code:`get_hypervolume` function
+We also provide calculation of the hypervolume enclosed by the Pareto front with the :code:`get_hypervolume` function
 
 .. code:: python
 
@@ -103,7 +103,7 @@ In case you want to also know the hypervolume, you can use the :code:`get_hyperv
 
 Properties of the PAL object
 ..............................
-For debugging there are some properties and attributes of the `PAL` class that you can use to inspect the progress of the active learning loop.
+For debugging there are some properties and attributes of the `PAL` class that can be used to inspect the progress of the active learning loop.
 
 - get the points in the design space, :code:`x`:
     - :code:`design_space` returns the full design space matrix
@@ -111,7 +111,7 @@ For debugging there are some properties and attributes of the `PAL` class that y
     - :code:`sampled_points`: returns the points that have been sampled
     - :code:`discarded_points`: returns the points that have been discarded
 - get the indicies of Pareto efficent, sampled,  discarded, and unclassified points with :code:`pareto_optimal_indices`, :code:`sampled_indices`, :code:`discarded_indices`, and :code:`unclassified_indices`
-- similarly, you can get the number of points in the different classes using :code:`number_pareto_optimal_points`, :code:`number_discarded_points`, :code:`number_unclassified_points`, and :code:`number_sampled_points`
+- similarly, the number of points in the different classes can be obtained using :code:`number_pareto_optimal_points`, :code:`number_discarded_points`, :code:`number_unclassified_points`, and :code:`number_sampled_points`
 - :code:`hyperrectangle_size` returns the sizes of the hyperrectangles, i.e., the weights that are used in the sampling step
 - :code:`means` and :code:`std` contain the predictions of the model
 - :code:`sampled` is a mask array. In case one objective has not been measured its cell is :code:`False`
@@ -120,8 +120,8 @@ For debugging there are some properties and attributes of the `PAL` class that y
 Exploring a space where all objectives are known
 .................................................
 
-In some cases, you already know all measurements you may want to run PAL with different settings and test how the algorithm performs.
-In this case, you can use the :code:`exhaust_loop` wrapper.
+In some cases, we may already posess all measurements, but would like to run PAL with different settings to test how the algorithm performs.
+In this case, we provide the :code:`exhaust_loop` wrapper.
 
 .. code-block:: python
 
@@ -137,14 +137,14 @@ This will continue calling :code:`run_one_step()` until there is no unclassified
 Batch sampling
 ................
 
-By default, the :code:`run_one_step` function of the PAL classes will return a :code:`np.ndarray` with only one index for the point in the design space for which the next experiment should be performed. In some cases, you want to run multiple experiments in batches before you run a new iteration of the PyPAL. In this case, you use the :code:`batch_size` keyword argument and change it to an integer greater than one.
+By default, the :code:`run_one_step` function of the PAL classes will return a :code:`np.ndarray` with only one index for the point in the design space for which the next experiment should be performed. In some situations, it may be more practical to run multiple experiments as batches before running the next active learning iteration. In such cases, we provide the :code:`batch_size` argument which can be set to an integer greater than one.
 
 .. code-block:: python
 
     next_idx = palinstance.run_one_step(batch_size=10)
     # next_idx will be a np.array of length 10
 
-Of course, also the `exhaust_loop` supports the `batch_size` keyword argument
+Note that the `exhaust_loop` also supports the `batch_size` keyword argument
 
 .. code-block:: python
 
@@ -157,22 +157,22 @@ Of course, also the `exhaust_loop` supports the `batch_size` keyword argument
 Caveats and tricks with Gaussian processes
 -------------------------------------------
 
-One fact that one needs to keep in mind is that :math:`\epsilon`-PAL will not work if the predictive variance does not make sense, for example, when the model is overconfident. An example of the predictions of an overconfident model, due to a training set that excludes a part of design space, is shown in the figure below
+One caveat to keep in mind is that :math:`\epsilon`-PAL will not work if the predictive variance does not make sense. For example, when the model is overconfident and the uncertainties for the training set is significantly lower than those for the predicted set. In this case, PyPAL will untimely, and often incorrectly, label the design points. An example situation where the predictions for an overconfident model due to a training set that excludes a part of design space is shown in the figure below
 
 .. image:: _static/overconfident_model.png
   :width: 600
   :alt: Example of the predictions of an overconfident GPR model
 
-This problem is exacerbated in conjunction with :math:`\beta_\mathrm{scale} < 1`. To make your model more robust you can try:
+This problem is exacerbated in conjunction with :math:`\beta_\mathrm{scale} < 1`. To make the model more robust we suggest trying:
 
 - to set reasonable bounds on the length scale parameters
 - to increase the regularization parameter/noise kernel (:code:`alpha` in :code:`sklearn`)
 - to increase the number of data points, especially the coverage of the design space
-- `to use a kernel that suits your problem <https://www.cs.toronto.edu/~duvenaud/cookbook/>`_
+- `to use a kernel that suits the problem <https://www.cs.toronto.edu/~duvenaud/cookbook/>`_
 - to turn off ARD. Automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting
 
-We also recommend to cross-validate your Gaussian process model and to check that the predicted variances make sense.
-By default, the code will run a simple cross-validation only on the first iteration and warn if the mean absolute error is above the mean standard deviation. The warning will look something like
+We also recommend to cross-validate the Gaussian process models and to check that the predicted variances make sense. When performing cross-validation, make sure that the index provided to PyPAL is the same size as the cross-validation folds.
+By default, the code will run a simple cross-validation only on the first iteration and provide a warning if the mean absolute error is above the mean standard deviation. The warning will look something like
 
 .. code-block::
 
@@ -180,9 +180,9 @@ By default, the code will run a simple cross-validation only on the first iterat
     Your model might not be predictive and/or overconfident.
     In the docs, you find hints on how to make GPRs more robust.
 
-If you want to change this behavior and run the cross-validation test more frequently, you can override the :code:`should_run_crossvalidation` function.
+This behavior can changed with the cross-validation test being performed more frequently by overriding the :code:`should_run_crossvalidation` function.
 
-Another way to detect overfitting is to use :code:`make_jointplot` function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If you observe that the error bars do not overlap but the model seems to be wrong, you might want to improve your surrogate model.
+Another way to detect overfitting is to use :code:`make_jointplot` function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyPAL, this may suggest that the surrogate model is overfitted.
 
 .. code-block:: python
 

@@ -5,11 +5,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PyPAL: Pareto active learning for Python &#8212; pypal 0+untagged.204.gf1a6cd4.dirty documentation</title>
-
+    <title>PyPAL: Pareto active learning for Python &#8212; pypal 0+untagged.209.gc7ee65e.dirty documentation</title>
+    
   <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
-
+    
   <link rel="stylesheet"
     href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
@@ -17,18 +17,18 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-
-
+    
+      
   <link rel="stylesheet"
     href="_static/vendor/open-sans_all/1.44.1/index.css">
   <link rel="stylesheet"
     href="_static/vendor/lato_latin-ext/1.44.1/index.css">
 
-
+    
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-
+    
   <link rel="preload" as="script" href="_static/js/index.3da636dd464baa7582d2.js">
 
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -46,14 +46,14 @@
     <meta name="docsearch:language" content="en" />
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-
+    
     <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
 <div class="container-xl">
 
     <a class="navbar-brand" href="#">
-
+    
       <img src="_static/pypal_logo.png" class="logo" alt="logo" />
-
+    
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -61,52 +61,52 @@
 
     <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
       <ul id="navbar-main-elements" class="navbar-nav mr-auto">
-
-
+        
+        
         <li class="nav-item ">
             <a class="nav-link" href="getting_started.html">Getting Started</a>
         </li>
-
+        
         <li class="nav-item ">
             <a class="nav-link" href="tutorials.html">Tutorials</a>
         </li>
-
+        
         <li class="nav-item ">
             <a class="nav-link" href="background.html">Background</a>
         </li>
-
+        
         <li class="nav-item ">
             <a class="nav-link" href="api.html">The PyPAL API reference</a>
         </li>
-
+        
         <li class="nav-item ">
             <a class="nav-link" href="developer_notes.html">Developer notes</a>
         </li>
-
-
+        
+        
       </ul>
 
 
-
+      
 
       <ul class="navbar-nav">
-
+        
           <li class="nav-item">
             <a class="nav-link" href="https://github.com/kjappelbaum/pypal" target="_blank" rel="noopener">
               <span><i class="fab fa-github-square"></i></span>
             </a>
           </li>
-
-
+        
+        
       </ul>
     </div>
 </div>
     </nav>
-
+    
 
     <div class="container-xl">
       <div class="row">
-
+          
           <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
@@ -114,66 +114,66 @@
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
 
     <div class="bd-toc-item active">
-
-
+    
+  
     <ul class="nav bd-sidenav">
-
-
-
-
-
-
-
-
-
-
-
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
       </ul>
-
+  
   </nav>
           </div>
+          
 
-
-
+          
           <div class="d-none d-xl-block col-xl-2 bd-toc">
-
+              
 <div class="tocsection onthispage pt-5 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
-
+    
         <li class="nav-item toc-entry toc-h2">
             <a href="#" class="nav-link">PyPAL: Pareto active learning for Python</a><ul class="nav section-nav flex-column">
-
+                
         <li class="nav-item toc-entry toc-h3">
             <a href="#contents" class="nav-link">Contents</a>
         </li>
-
+    
             </ul>
         </li>
-
+    
         <li class="nav-item toc-entry toc-h2">
             <a href="#indices-and-tables" class="nav-link">Indices and tables</a>
         </li>
-
+    
     </ul>
 </nav>
 
 
-
+              
           </div>
+          
 
-
-
+          
           <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
-
+              
               <div>
-
+                
   <div class="section" id="pypal-pareto-active-learning-for-python">
 <h1>PyPAL: Pareto active learning for Python<a class="headerlink" href="#pypal-pareto-active-learning-for-python" title="Permalink to this headline">¶</a></h1>
-<p>This package uses an active learning approach to efficiently and confidently identify the Pareto front with any model that can output a mean and a standard deviation.</p>
+<p>This package uses an active learning approach to efficiently and confidently identify the Pareto front with any regression model that can output a mean and a standard deviation.</p>
 <p>It works with any number of objectives, missing data, and is highly customizable.</p>
 <p>If you find this code useful for your work, please cite:</p>
 <ul class="simple">
@@ -254,21 +254,21 @@
 
 
               </div>
-
-
+              
+              
               <div class='prev-next-bottom'>
-
+                
     <a class='right-next' id="next-link" href="getting_started.html" title="next page">Getting Started</a>
 
               </div>
-
+              
           </main>
-
+          
 
       </div>
     </div>
 
-
+    
   <script src="_static/js/index.3da636dd464baa7582d2.js"></script>
 
 

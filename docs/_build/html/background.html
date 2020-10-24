@@ -5,11 +5,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Background &#8212; pypal 0+untagged.204.gf1a6cd4.dirty documentation</title>
-
+    <title>Background &#8212; pypal 0+untagged.209.gc7ee65e.dirty documentation</title>
+    
   <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
-
+    
   <link rel="stylesheet"
     href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
@@ -17,18 +17,18 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-
-
+    
+      
   <link rel="stylesheet"
     href="_static/vendor/open-sans_all/1.44.1/index.css">
   <link rel="stylesheet"
     href="_static/vendor/lato_latin-ext/1.44.1/index.css">
 
-
+    
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-
+    
   <link rel="preload" as="script" href="_static/js/index.3da636dd464baa7582d2.js">
 
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -47,14 +47,14 @@
     <meta name="docsearch:language" content="en" />
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-
+    
     <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
 <div class="container-xl">
 
     <a class="navbar-brand" href="index.html">
-
+    
       <img src="_static/pypal_logo.png" class="logo" alt="logo" />
-
+    
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -62,52 +62,52 @@
 
     <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
       <ul id="navbar-main-elements" class="navbar-nav mr-auto">
-
-
+        
+        
         <li class="nav-item ">
             <a class="nav-link" href="getting_started.html">Getting Started</a>
         </li>
-
+        
         <li class="nav-item ">
             <a class="nav-link" href="tutorials.html">Tutorials</a>
         </li>
-
+        
         <li class="nav-item active">
             <a class="nav-link" href="">Background</a>
         </li>
-
+        
         <li class="nav-item ">
             <a class="nav-link" href="api.html">The PyPAL API reference</a>
         </li>
-
+        
         <li class="nav-item ">
             <a class="nav-link" href="developer_notes.html">Developer notes</a>
         </li>
-
-
+        
+        
       </ul>
 
 
-
+      
 
       <ul class="navbar-nav">
-
+        
           <li class="nav-item">
             <a class="nav-link" href="https://github.com/kjappelbaum/pypal" target="_blank" rel="noopener">
               <span><i class="fab fa-github-square"></i></span>
             </a>
           </li>
-
-
+        
+        
       </ul>
     </div>
 </div>
     </nav>
-
+    
 
     <div class="container-xl">
       <div class="row">
-
+          
           <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
@@ -115,87 +115,87 @@
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
 
     <div class="bd-toc-item active">
-
-
+    
+  
     <ul class="nav bd-sidenav">
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+        
+        
+        
+        
+        
+          
+        
+        
+        
+        
+        
+        
       </ul>
-
+  
   </nav>
           </div>
+          
 
-
-
+          
           <div class="d-none d-xl-block col-xl-2 bd-toc">
-
+              
 <div class="tocsection onthispage pt-5 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
-
+    
         <li class="nav-item toc-entry toc-h2">
             <a href="#the-intuition-behind-the-algorithm" class="nav-link">The intuition behind the algorithm</a>
         </li>
-
+    
         <li class="nav-item toc-entry toc-h2">
             <a href="#how-do-the-hyperparameters-influence-the-algorithm" class="nav-link">How do the hyperparameters influence the algorithm?</a>
         </li>
-
+    
     </ul>
 </nav>
 
 
-
+              
           </div>
+          
 
-
-
+          
           <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
-
+              
               <div>
-
+                
   <div class="section" id="background">
 <h1>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h1>
-<p>This package implements a modified version of the <a class="reference external" href="https://jmlr.org/papers/v17/15-047.html">ε-PAL algorithm from Zuluaga et al.</a> in an object-oriented interface for finding the Pareto efficient points in any number of dimensions with any model that can output a standard deviation and a mean.</p>
+<p>This package implements a modified version of the <a class="reference external" href="https://jmlr.org/papers/v17/15-047.html">ε-PAL algorithm from Zuluaga et al.</a> in an object-oriented design. The algorithm effeciently searches for the Pareto efficient points in an unbiased manner for any number of dimensions. This package can be used with any regression model that can output means and standard deviations.</p>
 <p>This implementation has the following features:</p>
 <ul class="simple">
-<li><p>We make sure that the sampling is scale-invariant and that the algorithm can deal with positive and negative objective values.</p></li>
+<li><p>We ensure that the sampling is scale-invariant and that the algorithm can deal with positive and negative objective values.</p></li>
 <li><p>Instead of using the predicted <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> and <span class="math notranslate nohighlight">\(\hat{\sigma}\)</span> also for the sampled points we use the measured <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>.</p></li>
-<li><p>This implementation is directly applicable to <span class="math notranslate nohighlight">\(n\)</span>-dimensional problems.</p></li>
-<li><p>It can be easily used with any kind of model. For example, one might replace the Gaussian process model with a neural network with <a class="reference external" href="http://proceedings.mlr.press/v48/gal16.pdf">Dropout Monte Carlo</a> for the uncertainty estimate.</p></li>
-<li><p>The support for missing data is implemented. For example, if you measure for some points only some of the objectives there is nothing else you have to do other than providing <cite>np.nan</cite> for the missing measurements. The code will figure the rest out for you and if you use some models like coregionalized GPRs, the models will try to use the correlations between the objectives to fill the gaps.</p></li>
+<li><p>This implementation is directly scalable to <span class="math notranslate nohighlight">\(n\)</span>-dimensional problems.</p></li>
+<li><p>It can be easily used with any kind of regression model with uncertainty measures. For example, one can replace the Gaussian process model with a neural network with <a class="reference external" href="http://proceedings.mlr.press/v48/gal16.pdf">Dropout Monte Carlo</a> for the uncertainty estimate.</p></li>
+<li><p>The support for missing data is implemented. For example, if you measure for labeled data for only some of the objectives, you will simply need to provide <cite>np.nan</cite> for the missing measurements. The code will automatically estimate these measurements. If using coregionalized GPR models, the models will try to utilize the correlations between the objectives to improve these predictions.</p></li>
 </ul>
-<p>In our own work, we used this algorithm for materials discovery.</p>
+<p>In our own work, we used this algorithm for materials discovery applications.</p>
 <div class="section" id="the-intuition-behind-the-algorithm">
 <h2>The intuition behind the algorithm<a class="headerlink" href="#the-intuition-behind-the-algorithm" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/pal_schema.png"><img alt="Schema illustrating the PAL algorithm" src="_images/pal_schema.png" style="width: 600px;" /></a>
-<p>The PAL algorithm iterates the following steps:</p>
+<p>The PAL algorithm iterates through the following steps:</p>
 <ol class="loweralpha simple">
-<li><p>Training a machine learning model to predict means and standard deviations for all points of the design space. This can be used to construct hyperrectangles.</p></li>
-<li><p>Using those points, we can use the Pareto dominance relation to classify points as Pareto optimal or to discard them.
-In some cases, e.g., when hyperrectangles overlap, we will not be able to perform a classification with confidence.
-This is different from many Bayesian optimization approaches, that introduce some expected improvement function to that introduce a total order in the design space and hence bias the search.</p></li>
-<li><p>Since in step b we discard many points (with confidence) the effective design space shrinks. We now can sample the next experiment from the Pareto optimal and unclassified points. Since the ultimate goal is to perform a classification of the full design space—with confidence—we sample the point with the largest hyperrectangle.</p></li>
+<li><p>Training a machine learning model to predict means and standard deviations for all points of the design space. This can be used to construct uncertainty hyperrectangles.</p></li>
+<li><p>Using these points, we can use the Pareto dominance relation to classify points as Pareto optimal or to discard them.
+In some cases, e.g., when uncertainty hyperrectangles overlap, we will not be able to perform a classification with confidence.
+This is different from many Bayesian optimization approaches that couples an acquisition function such as expected improvement, which introduces a total order in the design space and hence biases the search.</p></li>
+<li><p>Since in step (b) we discard many points (with confidence) the effective design space shrinks. This enables us to sample the next experiment from the regions near the Pareto front with points labeled as Pareto optimal and “unclassified”. Since the ultimate goal is to perform a classification of the full design space—with confidence—we sample the point with the largest hyperrectangle.</p></li>
 <li><p>Retraining a model with this new measurement will reduce the width of the hyperrectangles.</p></li>
 </ol>
 </div>
 <div class="section" id="how-do-the-hyperparameters-influence-the-algorithm">
 <h2>How do the hyperparameters influence the algorithm?<a class="headerlink" href="#how-do-the-hyperparameters-influence-the-algorithm" title="Permalink to this headline">¶</a></h2>
-<p>To test the influence of hyperparameter settings we ran one step of the algorithm
+<p>To test the influence of hyperparameter settings we provide an example where we ran one step of the algorithm
 on the <a class="reference external" href="https://en.wikipedia.org/wiki/Test_functions_for_optimization#Test_functions_for_multi-objective_optimization">Binh-Korn test function</a>.</p>
 <p>We model every objective seperately with a Matérn-3/2 kernel, leave <span class="math notranslate nohighlight">\(\delta=0.05\)</span> fixed
 and vary <span class="math notranslate nohighlight">\(\epsilon\)</span> and <span class="math notranslate nohighlight">\(\beta_\mathrm{scale}\)</span>.</p>
@@ -209,22 +209,22 @@ Similarly, <span class="math notranslate nohighlight">\(\beta_\mathrm{scale}\)</
 
 
               </div>
-
-
+              
+              
               <div class='prev-next-bottom'>
-
+                
     <a class='left-prev' id="prev-link" href="tutorials.html" title="previous page">Tutorials</a>
     <a class='right-next' id="next-link" href="api.html" title="next page">The PyPAL API reference</a>
 
               </div>
-
+              
           </main>
-
+          
 
       </div>
     </div>
 
-
+    
   <script src="_static/js/index.3da636dd464baa7582d2.js"></script>
 
 

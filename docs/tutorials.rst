@@ -1,7 +1,7 @@
 Tutorials
 ============
 
-To explore different use cases of PyPAL, there are `example notebooks <https://github.com/kjappelbaum/pypal/tree/master/examples>`_.
+To explore different use cases of PyPAL, we recommend checking out the `example notebooks <https://github.com/kjappelbaum/pypal/tree/master/examples>`_.
 All notebooks can be run without installation on MyBinder.
 
 
