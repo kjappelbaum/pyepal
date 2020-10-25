@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.210.gc6bd515.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.212.g4af8189.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -156,6 +156,10 @@
         </li>
 
         <li class="nav-item toc-entry toc-h2">
+            <a href="#which-class-do-i-use" class="nav-link">Which class do i use?</a>
+        </li>
+
+        <li class="nav-item toc-entry toc-h2">
             <a href="#running-an-active-learning-experiment" class="nav-link">Running an active learning experiment</a><ul class="nav section-nav flex-column">
 
         <li class="nav-item toc-entry toc-h3">
@@ -212,13 +216,23 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="which-class-do-i-use">
+<h2>Which class do i use?<a class="headerlink" href="#which-class-do-i-use" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>For Gaussian processes built with <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> use <a class="reference internal" href="api.html#pypal.pal.pal_sklearn.PALSklearn" title="pypal.pal.pal_sklearn.PALSklearn"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_sklearn.PALSklearn</span></code></a></p></li>
+<li><p>For Gaussian processes built with <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> use <a class="reference internal" href="api.html#pypal.pal.pal_gpy.PALGPy" title="pypal.pal.pal_gpy.PALGPy"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_gpy.PALGPy</span></code></a></p></li>
+<li><p>For coregionalized Gaussian processes (built with <code class="code docutils literal notranslate"><span class="pre">GPy</span></code>) use <a class="reference internal" href="api.html#pypal.pal.pal_coregionalized.PALCoregionalized" title="pypal.pal.pal_coregionalized.PALCoregionalized"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_coregionalized.PALCoregionalized</span></code></a></p></li>
+<li><p>For quantile regression using <code class="code docutils literal notranslate"><span class="pre">LightGBM</span></code> gradient boosted decision trees use <a class="reference internal" href="api.html#pypal.pal.pal_gbdt.PALGBDT" title="pypal.pal.pal_gbdt.PALGBDT"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_gbdt.PALGBDT</span></code></a></p></li>
+</ul>
+<p>If your favorite model is not listed, you can easily implement it yourself (see <a class="reference internal" href="developer_notes.html#new-pal-class"><span class="std std-ref">Implementing a new PAL class</span></a>)!</p>
+</div>
 <div class="section" id="running-an-active-learning-experiment">
 <h2>Running an active learning experiment<a class="headerlink" href="#running-an-active-learning-experiment" title="Permalink to this headline">¶</a></h2>
 <p>The <cite>examples</cite> directory contains a <a class="reference external" href="https://github.com/kjappelbaum/pypal/blob/master/examples/test_pal.ipynb">Jupyter notebook with an example</a> that can also be run on MyBinder.</p>
-<p>If using a Gaussian process model built with <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> or <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> we recommend using a pre-built class such as <code class="code docutils literal notranslate"><span class="pre">PALSklearn</span></code> or <code class="code docutils literal notranslate"><span class="pre">PALGpy</span></code> and following the subsequent steps:</p>
+<p>If using a Gaussian process model built with <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> or <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> we recommend using a pre-built class such as <a class="reference internal" href="api.html#pypal.pal.pal_sklearn.PALSklearn" title="pypal.pal.pal_sklearn.PALSklearn"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_sklearn.PALSklearn</span></code></a>,  <a class="reference internal" href="api.html#pypal.pal.pal_coregionalized.PALCoregionalized" title="pypal.pal.pal_coregionalized.PALCoregionalized"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_coregionalized.PALCoregionalized</span></code></a>,  <a class="reference internal" href="api.html#pypal.pal.pal_gpy.PALGPy" title="pypal.pal.pal_gpy.PALGPy"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_gpy.PALGPy</span></code></a> and following the subsequent steps (for more details on which class to use see <a class="reference internal" href="#which-class-do-i-use"><span class="std std-ref">Which class do i use?</span></a>):</p>
 <ol class="arabic">
 <li><p>For each objective create a model (if using a coregionalized Gaussian process model, only one model needs to be created)</p></li>
-<li><p>Sample a few initial points from the design space. We provide the <code class="code docutils literal notranslate"><span class="pre">get_maxmin_samples</span></code> or <code class="code docutils literal notranslate"><span class="pre">get_kmeans_samples</span></code> utilities that can help with the sampling. Our code assumes that <code class="code docutils literal notranslate"><span class="pre">X</span></code> is a <code class="code docutils literal notranslate"><span class="pre">np.array</span></code>.</p>
+<li><p>Sample a few initial points from the design space. We provide the <a class="reference internal" href="api.html#pypal.pal.utils.get_maxmin_samples" title="pypal.pal.utils.get_maxmin_samples"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pypal.pal.utils.get_maxmin_samples()</span></code></a> or <a class="reference internal" href="api.html#pypal.pal.utils.get_kmeans_samples" title="pypal.pal.utils.get_kmeans_samples"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pypal.pal.utils.get_kmeans_samples()</span></code></a> utilities that can help with the sampling. Our code assumes that <code class="code docutils literal notranslate"><span class="pre">X</span></code> is a <code class="code docutils literal notranslate"><span class="pre">np.array</span></code>.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">get_kmeans_samples</span><span class="p">,</span> <span class="n">get_maxmin_samples</span>
 
@@ -271,7 +285,7 @@
 <div class="section" id="hyperparameter-optimization">
 <h3>Hyperparameter optimization<a class="headerlink" href="#hyperparameter-optimization" title="Permalink to this headline">¶</a></h3>
 <p>Usually, the hyperparameters of a machine learning model, in particular the kernel hyperparameters of a Gaussian process regression model, should be optimized as new training data is added.
-However, since this is usually a computationally expensive process, it may not be desirable to perform this at every iteration of the active learning process. The iteration frequency of the hyperparameter optimization is internally set by the <code class="code docutils literal notranslate"><span class="pre">_should_optimize_hyperparameter</span></code> function, which by default uses a schedule that optimizes the hyperparameter every 10th iteration. This behavior can be changed by override this function.</p>
+However, since this is usually a computationally expensive process, it may not be desirable to perform this at every iteration of the active learning process. The iteration frequency of the hyperparameter optimization is internally set by the <code class="code docutils literal notranslate"><span class="pre">_should_optimize_hyperparameters</span></code> function, which by default uses a schedule that optimizes the hyperparameter every 10th iteration. This behavior can be changed by override this function.</p>
 </div>
 <div class="section" id="logging">
 <h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h3>
@@ -281,7 +295,7 @@ However, since this is usually a computationally expensive process, it may not b
 <span class="c1"># returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.</span>
 </pre></div>
 </div>
-<p>We also provide calculation of the hypervolume enclosed by the Pareto front with the <code class="code docutils literal notranslate"><span class="pre">get_hypervolume</span></code> function</p>
+<p>We also provide calculation of the hypervolume enclosed by the Pareto front with the function <a class="reference internal" href="api.html#pypal.pal.utils.get_hypervolume" title="pypal.pal.utils.get_hypervolume"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pypal.pal.utils.get_hypervolume()</span></code></a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hv</span> <span class="o">=</span> <span class="n">get_hypervolume</span><span class="p">(</span><span class="n">palinstance</span><span class="o">.</span><span class="n">means</span><span class="p">[</span><span class="n">palinstance</span><span class="o">.</span><span class="n">pareto_optimal</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -310,7 +324,7 @@ However, since this is usually a computationally expensive process, it may not b
 <div class="section" id="exploring-a-space-where-all-objectives-are-known">
 <h3>Exploring a space where all objectives are known<a class="headerlink" href="#exploring-a-space-where-all-objectives-are-known" title="Permalink to this headline">¶</a></h3>
 <p>In some cases, we may already posess all measurements, but would like to run PAL with different settings to test how the algorithm performs.
-In this case, we provide the <code class="code docutils literal notranslate"><span class="pre">exhaust_loop</span></code> wrapper.</p>
+In this case, we provide the <a class="reference internal" href="api.html#pypal.pal.utils.exhaust_loop" title="pypal.pal.utils.exhaust_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pypal.pal.utils.exhaust_loop()</span></code></a> wrapper.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALSklearn</span><span class="p">,</span> <span class="n">exhaust_loop</span>
 <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">gpr0</span><span class="p">,</span> <span class="n">gpr1</span><span class="p">,</span> <span class="n">gpr2</span><span class="p">]</span>
 <span class="n">palinstance</span> <span class="o">=</span> <span class="n">PALSklearn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -357,7 +371,7 @@ By default, the code will run a simple cross-validation only on the first iterat
 </pre></div>
 </div>
 <p>This behavior can changed with the cross-validation test being performed more frequently by overriding the <code class="code docutils literal notranslate"><span class="pre">should_run_crossvalidation</span></code> function.</p>
-<p>Another way to detect overfitting is to use <code class="code docutils literal notranslate"><span class="pre">make_jointplot</span></code> function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyPAL, this may suggest that the surrogate model is overfitted.</p>
+<p>Another way to detect overfitting is to use :py:func:<a href="#id1"><span class="problematic" id="id2">`</span></a>pypal.plotting.make_jointplot`function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyPAL, this may suggest that the surrogate model is overfitted.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal.plotting</span> <span class="kn">import</span> <span class="n">make_jointplot</span>
 
 <span class="c1"># palinstance is a instance of a PAL class after</span>
