@@ -19,16 +19,27 @@ The latest version of PyPAL can be installed from GitHub using
     pip install git+https://github.com/kjappelbaum/pypal.git
 
 
+Which class do i use?
+-----------------------
+
+- For Gaussian processes built with :code:`sklearn` use :py:class:`pypal.pal.pal_sklearn.PALSklearn`
+- For Gaussian processes built with :code:`GPy` use :py:class:`pypal.pal.pal_gpy.PALGPy`
+- For coregionalized Gaussian processes (built with :code:`GPy`) use :py:class:`pypal.pal.pal_coregionalized.PALCoregionalized`
+- For quantile regression using :code:`LightGBM` gradient boosted decision trees use :py:class:`pypal.pal.pal_gbdt.PALGBDT`
+
+If your favorite model is not listed, you can easily implement it yourself (see :ref:`new_pal_class`)!
+
+
 Running an active learning experiment
 ---------------------------------------
 
 The `examples` directory contains a `Jupyter notebook with an example <https://github.com/kjappelbaum/pypal/blob/master/examples/test_pal.ipynb>`_ that can also be run on MyBinder.
 
-If using a Gaussian process model built with :code:`sklearn` or :code:`GPy` we recommend using a pre-built class such as :code:`PALSklearn` or :code:`PALGpy` and following the subsequent steps:
+If using a Gaussian process model built with :code:`sklearn` or :code:`GPy` we recommend using a pre-built class such as :py:class:`pypal.pal.pal_sklearn.PALSklearn`,  :py:class:`pypal.pal.pal_coregionalized.PALCoregionalized`,  :py:class:`pypal.pal.pal_gpy.PALGPy` and following the subsequent steps (for more details on which class to use see :ref:`Which class do i use?`):
 
 1. For each objective create a model (if using a coregionalized Gaussian process model, only one model needs to be created)
 
-2. Sample a few initial points from the design space. We provide the :code:`get_maxmin_samples` or :code:`get_kmeans_samples` utilities that can help with the sampling. Our code assumes that :code:`X` is a :code:`np.array`.
+2. Sample a few initial points from the design space. We provide the :py:meth:`pypal.pal.utils.get_maxmin_samples` or :py:meth:`pypal.pal.utils.get_kmeans_samples` utilities that can help with the sampling. Our code assumes that :code:`X` is a :code:`np.array`.
 
     .. code-block:: python
 
@@ -81,7 +92,7 @@ for a case in which we performed measurements for samples with index 1 and 2 of 
 Hyperparameter optimization
 .............................
 Usually, the hyperparameters of a machine learning model, in particular the kernel hyperparameters of a Gaussian process regression model, should be optimized as new training data is added.
-However, since this is usually a computationally expensive process, it may not be desirable to perform this at every iteration of the active learning process. The iteration frequency of the hyperparameter optimization is internally set by the :code:`_should_optimize_hyperparameter` function, which by default uses a schedule that optimizes the hyperparameter every 10th iteration. This behavior can be changed by override this function.
+However, since this is usually a computationally expensive process, it may not be desirable to perform this at every iteration of the active learning process. The iteration frequency of the hyperparameter optimization is internally set by the :code:`_should_optimize_hyperparameters` function, which by default uses a schedule that optimizes the hyperparameter every 10th iteration. This behavior can be changed by override this function.
 
 Logging
 ........
@@ -94,7 +105,7 @@ Basic information such as the current iteration and the classification status ar
     # returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.
 
 
-We also provide calculation of the hypervolume enclosed by the Pareto front with the :code:`get_hypervolume` function
+We also provide calculation of the hypervolume enclosed by the Pareto front with the function :py:meth:`pypal.pal.utils.get_hypervolume`
 
 .. code:: python
 
@@ -121,7 +132,7 @@ Exploring a space where all objectives are known
 .................................................
 
 In some cases, we may already posess all measurements, but would like to run PAL with different settings to test how the algorithm performs.
-In this case, we provide the :code:`exhaust_loop` wrapper.
+In this case, we provide the :py:meth:`pypal.pal.utils.exhaust_loop` wrapper.
 
 .. code-block:: python
 
@@ -182,7 +193,7 @@ By default, the code will run a simple cross-validation only on the first iterat
 
 This behavior can changed with the cross-validation test being performed more frequently by overriding the :code:`should_run_crossvalidation` function.
 
-Another way to detect overfitting is to use :code:`make_jointplot` function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyPAL, this may suggest that the surrogate model is overfitted.
+Another way to detect overfitting is to use :py:func:`pypal.plotting.make_jointplot`function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyPAL, this may suggest that the surrogate model is overfitted.
 
 .. code-block:: python
 

@@ -47,6 +47,8 @@ Currently, documentation is hosted on GitHub pages. Build it locally using :code
    git subtree push --prefix docs/_build/html  origin gh-pages
 
 
+.. _new_pal_class:
+
 Implementing a new PAL class
 -----------------------------
 
