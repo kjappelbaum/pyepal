@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.212.g4af8189.dirty documentation</title>
+    <title>Getting Started &#8212; pypal 0+untagged.213.g6cabb45.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -371,7 +371,7 @@ By default, the code will run a simple cross-validation only on the first iterat
 </pre></div>
 </div>
 <p>This behavior can changed with the cross-validation test being performed more frequently by overriding the <code class="code docutils literal notranslate"><span class="pre">should_run_crossvalidation</span></code> function.</p>
-<p>Another way to detect overfitting is to use :py:func:<a href="#id1"><span class="problematic" id="id2">`</span></a>pypal.plotting.make_jointplot`function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyPAL, this may suggest that the surrogate model is overfitted.</p>
+<p>Another way to detect overfitting is to use <a class="reference internal" href="api.html#pypal.plotting.make_jointplot" title="pypal.plotting.make_jointplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">pypal.plotting.make_jointplot()</span></code></a> function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyPAL, this may suggest that the surrogate model is overfitted.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal.plotting</span> <span class="kn">import</span> <span class="n">make_jointplot</span>
 
 <span class="c1"># palinstance is a instance of a PAL class after</span>
