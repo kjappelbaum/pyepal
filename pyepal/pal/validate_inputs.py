@@ -18,7 +18,6 @@
 import warnings
 from typing import Any, Iterable, List
 
-import GPy
 import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
@@ -221,6 +220,8 @@ def validate_number_models(models: Any, ndim: int):
 
 def validate_gpy_model(models: Any):
     """Make sure that all elements of the list a GPRegression models"""
+    import GPy  # pylint:disable=import-outside-toplevel
+
     for model in models:
         if not isinstance(model, GPy.models.GPRegression):
             raise ValueError("The models must be an instance of GPy.model")
