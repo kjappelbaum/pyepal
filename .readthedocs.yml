@@ -17,9 +17,13 @@ sphinx:
 formats:
   - pdf
 
-# Optionally set the version of Python and requirements required to build your docs
+# Need to install the package itself such that the entry points are installed and the API doc can build properly
 python:
-  version: 3.7
+  version: 3.8
   install:
-    - requirements: docs/requirements.txt
-  setup_py_install: true
+    - method: pip
+      path: .
+      extra_requirements:
+        - GPy
+        - docs
+        - GBDT
