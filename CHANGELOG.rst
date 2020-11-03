@@ -22,6 +22,22 @@ Docs
 v0.1 (2020-10-25)
 -----------------
 
+Changes
+~~~~~~~
+- Chore: bug in the postBuild script was a space. [Kevin M. Jablonka]
+- Chore: remove space in postBuild script. [Kevin M. Jablonka]
+- Chore: for binder we need to install pypal. [Kevin M. Jablonka]
+- Chore: updated configs for readthedocs and binder. [Kevin M. Jablonka]
+- Chore: making readthedocs ready. [Kevin M. Jablonka]
+
+Docs
+~~~~
+- Docs: move doc links to readthedocs. [Kevin M. Jablonka]
+
+
+v0.1 (2020-10-25)
+-----------------
+
 New
 ~~~
 - Feat: Implemented first version of PALGBDT (#75) [Kevin Jablonka]
