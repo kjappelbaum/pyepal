@@ -14,14 +14,14 @@
 import os
 import sys
 
-from pypal import __version__
+from pyepal import __version__
 
 sys.path.insert(0, os.path.abspath(".."))
 
 
 # -- Project information -----------------------------------------------------
 
-project = "pypal"
+project = "pyepal"
 copyright = "2020, Kevin Maik Jablonka, Brian Yoo, Berend Smit"
 author = "Kevin Maik Jablonka, Brian Yoo, Berend Smit"
 
@@ -76,7 +76,7 @@ html_logo = "../pypal_logo.png"
 
 
 html_theme_options = {
-    "github_url": "https://github.com/kjappelbaum/pypal",
+    "github_url": "https://github.com/kjappelbaum/pyepal",
 }
 
 

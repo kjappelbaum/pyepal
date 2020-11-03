@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pypal.pal.utils &#8212; pypal 0+untagged.213.g6cabb45.dirty documentation</title>
+    <title>pyepal.pal.utils &#8212; pyepal 0+untagged.213.g6cabb45.dirty documentation</title>
 
   <link rel="stylesheet" href="../../../_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -75,7 +75,7 @@
         </li>
 
         <li class="nav-item ">
-            <a class="nav-link" href="../../../api.html">The PyPAL API reference</a>
+            <a class="nav-link" href="../../../api.html">The PyePAL API reference</a>
         </li>
 
         <li class="nav-item ">
@@ -91,7 +91,7 @@
       <ul class="navbar-nav">
 
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/kjappelbaum/pypal" target="_blank" rel="noopener">
+            <a class="nav-link" href="https://github.com/kjappelbaum/pyepal" target="_blank" rel="noopener">
               <span><i class="fab fa-github-square"></i></span>
             </a>
           </li>
@@ -157,9 +157,9 @@
 
               <div>
 
-  <h1>Source code for pypal.pal.utils</h1><div class="highlight"><pre>
+  <h1>Source code for pyepal.pal.utils</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="c1"># Copyright 2020 PyPAL authors</span>
+<span class="c1"># Copyright 2020 PyePAL authors</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -184,7 +184,7 @@
 <span class="kn">from</span> <span class="nn">._hypervolume</span> <span class="kn">import</span> <span class="n">HypervolumeIndicator</span>
 
 
-<div class="viewcode-block" id="dominance_check"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.dominance_check">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="dominance_check"><a class="viewcode-back" href="../../../api.html#pyepal.pal.utils.dominance_check">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">dominance_check</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;One point dominates another if it is not worse in all objectives</span>
 <span class="sd">    and strictly better in at least one. This here assumes we want to maximize&quot;&quot;&quot;</span>
@@ -194,7 +194,7 @@
     <span class="k">return</span> <span class="kc">False</span></div>
 
 
-<div class="viewcode-block" id="dominance_check_jitted"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.dominance_check_jitted">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="dominance_check_jitted"><a class="viewcode-back" href="../../../api.html#pyepal.pal.utils.dominance_check_jitted">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">dominance_check_jitted</span><span class="p">(</span><span class="n">point</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Check if point dominates any point in array&quot;&quot;&quot;</span>
     <span class="n">arr_sorted</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()]</span>
@@ -204,7 +204,7 @@
     <span class="k">return</span> <span class="kc">False</span></div>
 
 
-<div class="viewcode-block" id="dominance_check_jitted_2"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.dominance_check_jitted_2">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="dominance_check_jitted_2"><a class="viewcode-back" href="../../../api.html#pyepal.pal.utils.dominance_check_jitted_2">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">dominance_check_jitted_2</span><span class="p">(</span><span class="n">array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Check if any point in array dominates point&quot;&quot;&quot;</span>
     <span class="n">arr_sorted</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
@@ -214,7 +214,7 @@
     <span class="k">return</span> <span class="kc">False</span></div>
 
 
-<div class="viewcode-block" id="dominance_check_jitted_3"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.dominance_check_jitted_3">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="dominance_check_jitted_3"><a class="viewcode-back" href="../../../api.html#pyepal.pal.utils.dominance_check_jitted_3">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">dominance_check_jitted_3</span><span class="p">(</span><span class="n">array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">ignore_me</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Check if any point in array dominates point. ignore_me</span>
 <span class="sd">    since numba does not understand masked arrays&quot;&quot;&quot;</span>
@@ -228,7 +228,7 @@
     <span class="k">return</span> <span class="kc">False</span></div>
 
 
-<div class="viewcode-block" id="is_pareto_efficient"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.is_pareto_efficient">[docs]</a><span class="k">def</span> <span class="nf">is_pareto_efficient</span><span class="p">(</span><span class="n">costs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">return_mask</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+<div class="viewcode-block" id="is_pareto_efficient"><a class="viewcode-back" href="../../../api.html#pyepal.pal.utils.is_pareto_efficient">[docs]</a><span class="k">def</span> <span class="nf">is_pareto_efficient</span><span class="p">(</span><span class="n">costs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">return_mask</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Find the Pareto efficient points</span>
 <span class="sd">    Based on https://stackoverflow.com/questions/</span>
 <span class="sd">    32791911/fast-calculation-of-pareto-front-in-python</span>
@@ -258,7 +258,7 @@
     <span class="k">return</span> <span class="n">is_efficient</span></div>
 
 
-<div class="viewcode-block" id="exhaust_loop"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.exhaust_loop">[docs]</a><span class="k">def</span> <span class="nf">exhaust_loop</span><span class="p">(</span>
+<div class="viewcode-block" id="exhaust_loop"><a class="viewcode-back" href="../../../api.html#pyepal.pal.utils.exhaust_loop">[docs]</a><span class="k">def</span> <span class="nf">exhaust_loop</span><span class="p">(</span>
     <span class="n">palinstance</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="p">):</span>  <span class="c1"># pylint:disable=invalid-name</span>
     <span class="sd">&quot;&quot;&quot;Helper function that takes an initialized PAL instance</span>
@@ -288,7 +288,7 @@
             <span class="n">palinstance</span><span class="o">.</span><span class="n">update_train_set</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span></div>
 
 
-<div class="viewcode-block" id="get_kmeans_samples"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.get_kmeans_samples">[docs]</a><span class="k">def</span> <span class="nf">get_kmeans_samples</span><span class="p">(</span>  <span class="c1"># pylint:disable=invalid-name</span>
+<div class="viewcode-block" id="get_kmeans_samples"><a class="viewcode-back" href="../../../api.html#pyepal.pal.utils.get_kmeans_samples">[docs]</a><span class="k">def</span> <span class="nf">get_kmeans_samples</span><span class="p">(</span>  <span class="c1"># pylint:disable=invalid-name</span>
     <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Get the samples that are closest to the k=n_samples centroids</span>
@@ -319,7 +319,7 @@
     <span class="k">return</span> <span class="n">closest</span></div>
 
 
-<div class="viewcode-block" id="get_maxmin_samples"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.get_maxmin_samples">[docs]</a><span class="k">def</span> <span class="nf">get_maxmin_samples</span><span class="p">(</span>  <span class="c1"># pylint:disable=invalid-name</span>
+<div class="viewcode-block" id="get_maxmin_samples"><a class="viewcode-back" href="../../../api.html#pyepal.pal.utils.get_maxmin_samples">[docs]</a><span class="k">def</span> <span class="nf">get_maxmin_samples</span><span class="p">(</span>  <span class="c1"># pylint:disable=invalid-name</span>
     <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
     <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
@@ -419,7 +419,7 @@
     <span class="k">return</span> <span class="n">greedy_indices</span></div>
 
 
-<div class="viewcode-block" id="get_hypervolume"><a class="viewcode-back" href="../../../api.html#pypal.pal.utils.get_hypervolume">[docs]</a><span class="k">def</span> <span class="nf">get_hypervolume</span><span class="p">(</span>
+<div class="viewcode-block" id="get_hypervolume"><a class="viewcode-back" href="../../../api.html#pyepal.pal.utils.get_hypervolume">[docs]</a><span class="k">def</span> <span class="nf">get_hypervolume</span><span class="p">(</span>
     <span class="n">pareto_front</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">reference_vector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">prefactor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Compute the hypervolume indicator of a Pareto front</span>

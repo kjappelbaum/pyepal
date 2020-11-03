@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
 """Testing the Pareto front utilities"""
 import numpy as np
 
-from pypal import PALGPy
-from pypal.models.gpr import build_model
-from pypal.pal.utils import (
+from pyepal import PALGPy
+from pyepal.models.gpr import build_model
+from pyepal.pal.utils import (
     dominance_check,
     dominance_check_jitted,
     dominance_check_jitted_2,

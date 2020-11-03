@@ -5,22 +5,22 @@ Installation
 ---------------
 
 
-We recommend installing PyPAL in a dedicated `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ or `conda environment <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_.
+We recommend installing PyePAL in a dedicated `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ or `conda environment <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_.
 
-The latest version of PyPAL can be installed from GitHub using
+The latest version of PyePAL can be installed from GitHub using
 
 .. code-block:: python
 
-    pip install git+https://github.com/kjappelbaum/pypal.git
+    pip install git+https://github.com/kjappelbaum/pyepal.git
 
 
 Which class do i use?
 -----------------------
 
-- For Gaussian processes built with :code:`sklearn` use :py:class:`pypal.pal.pal_sklearn.PALSklearn`
-- For Gaussian processes built with :code:`GPy` use :py:class:`pypal.pal.pal_gpy.PALGPy`
-- For coregionalized Gaussian processes (built with :code:`GPy`) use :py:class:`pypal.pal.pal_coregionalized.PALCoregionalized`
-- For quantile regression using :code:`LightGBM` gradient boosted decision trees use :py:class:`pypal.pal.pal_gbdt.PALGBDT`
+- For Gaussian processes built with :code:`sklearn` use :py:class:`pyepal.pal.pal_sklearn.PALSklearn`
+- For Gaussian processes built with :code:`GPy` use :py:class:`pyepal.pal.pal_gpy.PALGPy`
+- For coregionalized Gaussian processes (built with :code:`GPy`) use :py:class:`pyepal.pal.pal_coregionalized.PALCoregionalized`
+- For quantile regression using :code:`LightGBM` gradient boosted decision trees use :py:class:`pyepal.pal.pal_gbdt.PALGBDT`
 
 If your favorite model is not listed, you can easily implement it yourself (see :ref:`new_pal_class`)!
 
@@ -28,17 +28,17 @@ If your favorite model is not listed, you can easily implement it yourself (see 
 Running an active learning experiment
 ---------------------------------------
 
-The `examples` directory contains a `Jupyter notebook with an example <https://github.com/kjappelbaum/pypal/blob/master/examples/test_pal.ipynb>`_ that can also be run on MyBinder.
+The `examples` directory contains a `Jupyter notebook with an example <https://github.com/kjappelbaum/pyepal/blob/master/examples/test_pal.ipynb>`_ that can also be run on MyBinder.
 
-If using a Gaussian process model built with :code:`sklearn` or :code:`GPy` we recommend using a pre-built class such as :py:class:`pypal.pal.pal_sklearn.PALSklearn`,  :py:class:`pypal.pal.pal_coregionalized.PALCoregionalized`,  :py:class:`pypal.pal.pal_gpy.PALGPy` and following the subsequent steps (for more details on which class to use see :ref:`Which class do i use?`):
+If using a Gaussian process model built with :code:`sklearn` or :code:`GPy` we recommend using a pre-built class such as :py:class:`pyepal.pal.pal_sklearn.PALSklearn`,  :py:class:`pyepal.pal.pal_coregionalized.PALCoregionalized`,  :py:class:`pyepal.pal.pal_gpy.PALGPy` and following the subsequent steps (for more details on which class to use see :ref:`Which class do i use?`):
 
 1. For each objective create a model (if using a coregionalized Gaussian process model, only one model needs to be created)
 
-2. Sample a few initial points from the design space. We provide the :py:meth:`pypal.pal.utils.get_maxmin_samples` or :py:meth:`pypal.pal.utils.get_kmeans_samples` utilities that can help with the sampling. Our code assumes that :code:`X` is a :code:`np.array`.
+2. Sample a few initial points from the design space. We provide the :py:meth:`pyepal.pal.utils.get_maxmin_samples` or :py:meth:`pyepal.pal.utils.get_kmeans_samples` utilities that can help with the sampling. Our code assumes that :code:`X` is a :code:`np.array`.
 
     .. code-block:: python
 
-        from pypal import get_kmeans_samples, get_maxmin_samples
+        from pyepal import get_kmeans_samples, get_maxmin_samples
 
         # This selects the 10 points closest to the centroids of a k=10 means clustering
         indices = get_kmeans_samples(X, 10)
@@ -50,7 +50,7 @@ If using a Gaussian process model built with :code:`sklearn` or :code:`GPy` we r
 
     .. code-block:: python
 
-        from pypal import PALSklearn
+        from pyepal import PALSklearn
 
         # Each of these models is an instance of sklearn.gaussian_process.GaussianProcessRegressor
         models = [gpr0, gpr1, gpr2]
@@ -71,8 +71,8 @@ If using a Gaussian process model built with :code:`sklearn` or :code:`GPy` we r
     - :code:`epsilon`: one :math:`\epsilon` per dimension in a :code:`np.ndarray`. This can be used to set different tolerances for each objective. Note that :math:`\epsilon_i \in [0,1]`.
     - :code:`delta`: the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will speed up the convergence.
     - :code:`beta_scale`: an empirical scaling parameter for :math:`beta`. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, a much faster convergence can be achieved by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`.
-    - :code:`goal`: By default, PyPAL assumes that the goal is to maximize every objective. If this is not the case, this argument can be set using a list of "min" and "max" strings, with "min" specifying whether to minimize the ith objective and "max" indicating whether to maximize this objective.
-    - :code:`coef_var_threshold`: By default, PyPAL will not consider points with a coefficient of variation :math:`\ge 3` for the classification step of the algorithm. This is meant to avoid classifying design points for which the model is entirely unsure. This tends to happen when a model is severely overfit on the training data (i.e., the training data uncertainties are very low, whereas the prediction uncertainties are very high). To change this setting, reduce this value to make the check tighter or increase it to avoid this check (as in the original implementation).
+    - :code:`goal`: By default, PyePAL assumes that the goal is to maximize every objective. If this is not the case, this argument can be set using a list of "min" and "max" strings, with "min" specifying whether to minimize the ith objective and "max" indicating whether to maximize this objective.
+    - :code:`coef_var_threshold`: By default, PyePAL will not consider points with a coefficient of variation :math:`\ge 3` for the classification step of the algorithm. This is meant to avoid classifying design points for which the model is entirely unsure. This tends to happen when a model is severely overfit on the training data (i.e., the training data uncertainties are very low, whereas the prediction uncertainties are very high). To change this setting, reduce this value to make the check tighter or increase it to avoid this check (as in the original implementation).
 
 In the case of missing observations, i.e., only two of three outputs are measured, report the missing observations as :code:`np.nan`. The call could look like
 
@@ -97,10 +97,10 @@ Basic information such as the current iteration and the classification status ar
 
     print(palinstance)
 
-    # returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.
+    # returns: pyepal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.
 
 
-We also provide calculation of the hypervolume enclosed by the Pareto front with the function :py:meth:`pypal.pal.utils.get_hypervolume`
+We also provide calculation of the hypervolume enclosed by the Pareto front with the function :py:meth:`pyepal.pal.utils.get_hypervolume`
 
 .. code:: python
 
@@ -127,11 +127,11 @@ Exploring a space where all objectives are known
 .................................................
 
 In some cases, we may already posess all measurements, but would like to run PAL with different settings to test how the algorithm performs.
-In this case, we provide the :py:meth:`pypal.pal.utils.exhaust_loop` wrapper.
+In this case, we provide the :py:meth:`pyepal.pal.utils.exhaust_loop` wrapper.
 
 .. code-block:: python
 
-    from pypal import PALSklearn, exhaust_loop
+    from pyepal import PALSklearn, exhaust_loop
     models = [gpr0, gpr1, gpr2]
     palinstance = PALSklearn(X, models, 3)
 
@@ -163,7 +163,7 @@ Note that the `exhaust_loop` also supports the `batch_size` keyword argument
 Caveats and tricks with Gaussian processes
 -------------------------------------------
 
-One caveat to keep in mind is that :math:`\epsilon`-PAL will not work if the predictive variance does not make sense. For example, when the model is overconfident and the uncertainties for the training set is significantly lower than those for the predicted set. In this case, PyPAL will untimely, and often incorrectly, label the design points. An example situation where the predictions for an overconfident model due to a training set that excludes a part of design space is shown in the figure below
+One caveat to keep in mind is that :math:`\epsilon`-PAL will not work if the predictive variance does not make sense. For example, when the model is overconfident and the uncertainties for the training set is significantly lower than those for the predicted set. In this case, PyePAL will untimely, and often incorrectly, label the design points. An example situation where the predictions for an overconfident model due to a training set that excludes a part of design space is shown in the figure below
 
 .. image:: _static/overconfident_model.png
   :width: 600
@@ -177,7 +177,7 @@ This problem is exacerbated in conjunction with :math:`\beta_\mathrm{scale} < 1`
 - `to use a kernel that suits the problem <https://www.cs.toronto.edu/~duvenaud/cookbook/>`_
 - to turn off ARD. Automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting
 
-We also recommend to cross-validate the Gaussian process models and to check that the predicted variances make sense. When performing cross-validation, make sure that the index provided to PyPAL is the same size as the cross-validation folds.
+We also recommend to cross-validate the Gaussian process models and to check that the predicted variances make sense. When performing cross-validation, make sure that the index provided to PyePAL is the same size as the cross-validation folds.
 By default, the code will run a simple cross-validation only on the first iteration and provide a warning if the mean absolute error is above the mean standard deviation. The warning will look something like
 
 .. code-block::
@@ -188,11 +188,11 @@ By default, the code will run a simple cross-validation only on the first iterat
 
 This behavior can changed with the cross-validation test being performed more frequently by overriding the :code:`should_run_crossvalidation` function.
 
-Another way to detect overfitting is to use :py:func:`pypal.plotting.make_jointplot` function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyPAL, this may suggest that the surrogate model is overfitted.
+Another way to detect overfitting is to use :py:func:`pyepal.plotting.make_jointplot` function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyePAL, this may suggest that the surrogate model is overfitted.
 
 .. code-block:: python
 
-    from pypal.plotting import make_jointplot
+    from pyepal.plotting import make_jointplot
 
     # palinstance is a instance of a PAL class after
     # calling run_one_step

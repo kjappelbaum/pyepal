@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pypal.plotting &#8212; pypal 0+untagged.213.g6cabb45.dirty documentation</title>
+    <title>pyepal.plotting &#8212; pyepal 0+untagged.213.g6cabb45.dirty documentation</title>
 
   <link rel="stylesheet" href="../../_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -75,7 +75,7 @@
         </li>
 
         <li class="nav-item ">
-            <a class="nav-link" href="../../api.html">The PyPAL API reference</a>
+            <a class="nav-link" href="../../api.html">The PyePAL API reference</a>
         </li>
 
         <li class="nav-item ">
@@ -91,7 +91,7 @@
       <ul class="navbar-nav">
 
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/kjappelbaum/pypal" target="_blank" rel="noopener">
+            <a class="nav-link" href="https://github.com/kjappelbaum/pyepal" target="_blank" rel="noopener">
               <span><i class="fab fa-github-square"></i></span>
             </a>
           </li>
@@ -157,9 +157,9 @@
 
               <div>
 
-  <h1>Source code for pypal.plotting</h1><div class="highlight"><pre>
+  <h1>Source code for pyepal.plotting</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="c1"># Copyright 2020 PyPAL authors</span>
+<span class="c1"># Copyright 2020 PyePAL authors</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -184,7 +184,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.family&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;sans-serif&quot;</span>
 
 
-<div class="viewcode-block" id="plot_bar_iterations"><a class="viewcode-back" href="../../api.html#pypal.plotting.plot_bar_iterations">[docs]</a><span class="k">def</span> <span class="nf">plot_bar_iterations</span><span class="p">(</span>  <span class="c1"># pylint:disable=invalid-name</span>
+<div class="viewcode-block" id="plot_bar_iterations"><a class="viewcode-back" href="../../api.html#pyepal.plotting.plot_bar_iterations">[docs]</a><span class="k">def</span> <span class="nf">plot_bar_iterations</span><span class="p">(</span>  <span class="c1"># pylint:disable=invalid-name</span>
     <span class="n">pareto_optimal</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">non_pareto_points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">unclassified_points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -225,7 +225,7 @@
     <span class="k">return</span> <span class="n">ax</span></div>
 
 
-<div class="viewcode-block" id="plot_pareto_front_2d"><a class="viewcode-back" href="../../api.html#pypal.plotting.plot_pareto_front_2d">[docs]</a><span class="k">def</span> <span class="nf">plot_pareto_front_2d</span><span class="p">(</span>  <span class="c1"># pylint:disable=too-many-arguments, invalid-name</span>
+<div class="viewcode-block" id="plot_pareto_front_2d"><a class="viewcode-back" href="../../api.html#pyepal.plotting.plot_pareto_front_2d">[docs]</a><span class="k">def</span> <span class="nf">plot_pareto_front_2d</span><span class="p">(</span>  <span class="c1"># pylint:disable=too-many-arguments, invalid-name</span>
     <span class="n">y_0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">y_1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">std_0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -284,7 +284,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="plot_histogram"><a class="viewcode-back" href="../../api.html#pypal.plotting.plot_histogram">[docs]</a><span class="k">def</span> <span class="nf">plot_histogram</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">palinstance</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>  <span class="c1"># pylint:disable=invalid-name</span>
+<div class="viewcode-block" id="plot_histogram"><a class="viewcode-back" href="../../api.html#pyepal.plotting.plot_histogram">[docs]</a><span class="k">def</span> <span class="nf">plot_histogram</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">palinstance</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>  <span class="c1"># pylint:disable=invalid-name</span>
     <span class="sd">&quot;&quot;&quot;Plot histograms, with maxima scaled to one</span>
 <span class="sd">    and different categories indicated in color</span>
 
@@ -326,7 +326,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="make_jointplot"><a class="viewcode-back" href="../../api.html#pypal.plotting.make_jointplot">[docs]</a><span class="k">def</span> <span class="nf">make_jointplot</span><span class="p">(</span>  <span class="c1"># pylint:disable=invalid-name</span>
+<div class="viewcode-block" id="make_jointplot"><a class="viewcode-back" href="../../api.html#pyepal.plotting.make_jointplot">[docs]</a><span class="k">def</span> <span class="nf">make_jointplot</span><span class="p">(</span>  <span class="c1"># pylint:disable=invalid-name</span>
     <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
     <span class="n">palinstance</span><span class="p">,</span>
     <span class="n">labels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>

@@ -1,7 +1,7 @@
 Tutorials
 ============
 
-To explore different use cases of PyPAL, we recommend checking out the `example notebooks <https://github.com/kjappelbaum/pypal/tree/master/examples>`_.
+To explore different use cases of PyePAL, we recommend checking out the `example notebooks <https://github.com/kjappelbaum/pyepal/tree/master/examples>`_.
 All notebooks can be run without installation on MyBinder. In the folder, you find the notebooks with the output cells, if you rerun them, the execution
 should not take more than a few minutes.
 
@@ -16,10 +16,10 @@ should not take more than a few minutes.
 Topic covered
 ................
 
-- building a pal_coregionalized GPR model using :py:meth:`pypal.pal.models.gpr.build_coregionalized_model`
--  using coregionalized models with :py:obj:`pypal.pal.pal_coregionalized.PALCoregionalized`
+- building a pal_coregionalized GPR model using :py:meth:`pyepal.pal.models.gpr.build_coregionalized_model`
+-  using coregionalized models with :py:obj:`pyepal.pal.pal_coregionalized.PALCoregionalized`
 - attributes of the :code:`PAL` instance
-- :py:meth:`pypal.pal.utils.exhaust_loop`
+- :py:meth:`pyepal.pal.utils.exhaust_loop`
 
 
 2. Active learning with "measure" function and :code:`sklearn` models
@@ -32,9 +32,9 @@ Topic covered
 Topic covered
 ................
 
-- using :code:`sklearn`  models with :py:obj:`pypal.pal.pal_sklearn.PALSklearn`
-- selecting an initial set with :py:meth:`pypal.pal.utils.get_maxmin_samples`
-- plotting with :py:meth:`pypal.plotting.make_jointplot`
+- using :code:`sklearn`  models with :py:obj:`pyepal.pal.pal_sklearn.PALSklearn`
+- selecting an initial set with :py:meth:`pyepal.pal.utils.get_maxmin_samples`
+- plotting with :py:meth:`pyepal.plotting.make_jointplot`
 
 
 
@@ -46,5 +46,5 @@ Topic covered
     :align: center
 
 
-- Using LightGBM models with quantile loss with :py:obj:`pypal.pal.pal_gbdt.PALGBDT`
-- selecting an initial set with :py:meth:`pypal.pal.utils.get_kmeans_samples`
+- Using LightGBM models with quantile loss with :py:obj:`pyepal.pal.pal_gbdt.PALGBDT`
+- selecting an initial set with :py:meth:`pyepal.pal.utils.get_kmeans_samples`

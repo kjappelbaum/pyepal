@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 import numpy as np
 import pytest
 
-from pypal.pal.pal_base import PALBase
+from pyepal.pal.pal_base import PALBase
 
 
 def test_pal_base(make_random_dataset):
@@ -38,7 +38,7 @@ def test_pal_base(make_random_dataset):
 
     assert (
         str(palinstance)
-        == "pypal at iteration 1. \
+        == "pyepal at iteration 1. \
         0 Pareto optimal points, \
         0 discarded points, \
         100 unclassified points."

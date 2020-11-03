@@ -52,13 +52,13 @@ Currently, documentation is hosted on GitHub pages. Build it locally using :code
 Implementing a new PAL class
 -----------------------------
 
-If you want to use PyPAL  with a model that we do not support yet, i.e., not :code:`GPy` or :code:`sklearn` Gaussian process regression, it is easy to write your own class. For this, you need to inherit from `PALBase` and implement your  :code:`_train` and :code:`_predict` functions (and maybe also the :code:`_set_hyperparameters` and :code:`_should_optimize_hyperparameters` functions) using the :code:`design_space` and :code:`y` attributes of the class.
+If you want to use PyePAL  with a model that we do not support yet, i.e., not :code:`GPy` or :code:`sklearn` Gaussian process regression, it is easy to write your own class. For this, you need to inherit from `PALBase` and implement your  :code:`_train` and :code:`_predict` functions (and maybe also the :code:`_set_hyperparameters` and :code:`_should_optimize_hyperparameters` functions) using the :code:`design_space` and :code:`y` attributes of the class.
 
 For instance, if we develop some multioutput model that has a :code:`train()` and a :code:`predict()` method we could simply use the following design pattern
 
 .. code-block:: python
 
-    from pypal import PALBase
+    from pyepal import PALBase
 
     class PALMyModel(PALBase):
         def _train(self):
@@ -74,7 +74,7 @@ In some instances, you might want to perform an operation in parallel, e.g., tra
 
 .. code-block:: python
 
-    from pypal import PALBase
+    from pyepal import PALBase
     import concurrent.futures
     from functools import partial
 

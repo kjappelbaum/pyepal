@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ from sklearn.gaussian_process.kernels import RBF, Matern
 from sklearn.model_selection import GridSearchCV
 from sklearn.utils.validation import check_is_fitted
 
-from pypal.pal.pal_sklearn import PALSklearn
+from pyepal.pal.pal_sklearn import PALSklearn
 
 
 def test_pal_sklearn(make_random_dataset):

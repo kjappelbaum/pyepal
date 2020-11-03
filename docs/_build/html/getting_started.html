@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; pypal 0+untagged.213.g6cabb45.dirty documentation</title>
+    <title>Getting Started &#8212; pyepal 0+untagged.213.g6cabb45.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -42,7 +42,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tutorials" href="tutorials.html" />
-    <link rel="prev" title="PyPAL: Pareto active learning for Python" href="index.html" />
+    <link rel="prev" title="PyePAL: Pareto active learning for Python" href="index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
   </head>
@@ -77,7 +77,7 @@
         </li>
 
         <li class="nav-item ">
-            <a class="nav-link" href="api.html">The PyPAL API reference</a>
+            <a class="nav-link" href="api.html">The PyePAL API reference</a>
         </li>
 
         <li class="nav-item ">
@@ -93,7 +93,7 @@
       <ul class="navbar-nav">
 
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/kjappelbaum/pypal" target="_blank" rel="noopener">
+            <a class="nav-link" href="https://github.com/kjappelbaum/pyepal" target="_blank" rel="noopener">
               <span><i class="fab fa-github-square"></i></span>
             </a>
           </li>
@@ -206,35 +206,35 @@
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>PyPAL can be installed from <cite>PyPi</cite> using</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pypal</span>
+<p>PyePAL can be installed from <cite>PyPi</cite> using</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pyepal</span>
 </pre></div>
 </div>
-<p>We recommend installing PyPAL in a dedicated <a class="reference external" href="https://docs.python.org/3/tutorial/venv.html">virtual environment</a> or <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">conda environment</a>.</p>
-<p>The latest version of PyPAL can be installed from GitHub using</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">kjappelbaum</span><span class="o">/</span><span class="n">pypal</span><span class="o">.</span><span class="n">git</span>
+<p>We recommend installing PyePAL in a dedicated <a class="reference external" href="https://docs.python.org/3/tutorial/venv.html">virtual environment</a> or <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">conda environment</a>.</p>
+<p>The latest version of PyePAL can be installed from GitHub using</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">kjappelbaum</span><span class="o">/</span><span class="n">pyepal</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="which-class-do-i-use">
 <h2>Which class do i use?<a class="headerlink" href="#which-class-do-i-use" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>For Gaussian processes built with <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> use <a class="reference internal" href="api.html#pypal.pal.pal_sklearn.PALSklearn" title="pypal.pal.pal_sklearn.PALSklearn"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_sklearn.PALSklearn</span></code></a></p></li>
-<li><p>For Gaussian processes built with <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> use <a class="reference internal" href="api.html#pypal.pal.pal_gpy.PALGPy" title="pypal.pal.pal_gpy.PALGPy"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_gpy.PALGPy</span></code></a></p></li>
-<li><p>For coregionalized Gaussian processes (built with <code class="code docutils literal notranslate"><span class="pre">GPy</span></code>) use <a class="reference internal" href="api.html#pypal.pal.pal_coregionalized.PALCoregionalized" title="pypal.pal.pal_coregionalized.PALCoregionalized"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_coregionalized.PALCoregionalized</span></code></a></p></li>
-<li><p>For quantile regression using <code class="code docutils literal notranslate"><span class="pre">LightGBM</span></code> gradient boosted decision trees use <a class="reference internal" href="api.html#pypal.pal.pal_gbdt.PALGBDT" title="pypal.pal.pal_gbdt.PALGBDT"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_gbdt.PALGBDT</span></code></a></p></li>
+<li><p>For Gaussian processes built with <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> use <a class="reference internal" href="api.html#pyepal.pal.pal_sklearn.PALSklearn" title="pyepal.pal.pal_sklearn.PALSklearn"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyepal.pal.pal_sklearn.PALSklearn</span></code></a></p></li>
+<li><p>For Gaussian processes built with <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> use <a class="reference internal" href="api.html#pyepal.pal.pal_gpy.PALGPy" title="pyepal.pal.pal_gpy.PALGPy"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyepal.pal.pal_gpy.PALGPy</span></code></a></p></li>
+<li><p>For coregionalized Gaussian processes (built with <code class="code docutils literal notranslate"><span class="pre">GPy</span></code>) use <a class="reference internal" href="api.html#pyepal.pal.pal_coregionalized.PALCoregionalized" title="pyepal.pal.pal_coregionalized.PALCoregionalized"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyepal.pal.pal_coregionalized.PALCoregionalized</span></code></a></p></li>
+<li><p>For quantile regression using <code class="code docutils literal notranslate"><span class="pre">LightGBM</span></code> gradient boosted decision trees use <a class="reference internal" href="api.html#pyepal.pal.pal_gbdt.PALGBDT" title="pyepal.pal.pal_gbdt.PALGBDT"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyepal.pal.pal_gbdt.PALGBDT</span></code></a></p></li>
 </ul>
 <p>If your favorite model is not listed, you can easily implement it yourself (see <a class="reference internal" href="developer_notes.html#new-pal-class"><span class="std std-ref">Implementing a new PAL class</span></a>)!</p>
 </div>
 <div class="section" id="running-an-active-learning-experiment">
 <h2>Running an active learning experiment<a class="headerlink" href="#running-an-active-learning-experiment" title="Permalink to this headline">¶</a></h2>
-<p>The <cite>examples</cite> directory contains a <a class="reference external" href="https://github.com/kjappelbaum/pypal/blob/master/examples/test_pal.ipynb">Jupyter notebook with an example</a> that can also be run on MyBinder.</p>
-<p>If using a Gaussian process model built with <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> or <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> we recommend using a pre-built class such as <a class="reference internal" href="api.html#pypal.pal.pal_sklearn.PALSklearn" title="pypal.pal.pal_sklearn.PALSklearn"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_sklearn.PALSklearn</span></code></a>,  <a class="reference internal" href="api.html#pypal.pal.pal_coregionalized.PALCoregionalized" title="pypal.pal.pal_coregionalized.PALCoregionalized"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_coregionalized.PALCoregionalized</span></code></a>,  <a class="reference internal" href="api.html#pypal.pal.pal_gpy.PALGPy" title="pypal.pal.pal_gpy.PALGPy"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_gpy.PALGPy</span></code></a> and following the subsequent steps (for more details on which class to use see <a class="reference internal" href="#which-class-do-i-use"><span class="std std-ref">Which class do i use?</span></a>):</p>
+<p>The <cite>examples</cite> directory contains a <a class="reference external" href="https://github.com/kjappelbaum/pyepal/blob/master/examples/test_pal.ipynb">Jupyter notebook with an example</a> that can also be run on MyBinder.</p>
+<p>If using a Gaussian process model built with <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> or <code class="code docutils literal notranslate"><span class="pre">GPy</span></code> we recommend using a pre-built class such as <a class="reference internal" href="api.html#pyepal.pal.pal_sklearn.PALSklearn" title="pyepal.pal.pal_sklearn.PALSklearn"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyepal.pal.pal_sklearn.PALSklearn</span></code></a>,  <a class="reference internal" href="api.html#pyepal.pal.pal_coregionalized.PALCoregionalized" title="pyepal.pal.pal_coregionalized.PALCoregionalized"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyepal.pal.pal_coregionalized.PALCoregionalized</span></code></a>,  <a class="reference internal" href="api.html#pyepal.pal.pal_gpy.PALGPy" title="pyepal.pal.pal_gpy.PALGPy"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyepal.pal.pal_gpy.PALGPy</span></code></a> and following the subsequent steps (for more details on which class to use see <a class="reference internal" href="#which-class-do-i-use"><span class="std std-ref">Which class do i use?</span></a>):</p>
 <ol class="arabic">
 <li><p>For each objective create a model (if using a coregionalized Gaussian process model, only one model needs to be created)</p></li>
-<li><p>Sample a few initial points from the design space. We provide the <a class="reference internal" href="api.html#pypal.pal.utils.get_maxmin_samples" title="pypal.pal.utils.get_maxmin_samples"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pypal.pal.utils.get_maxmin_samples()</span></code></a> or <a class="reference internal" href="api.html#pypal.pal.utils.get_kmeans_samples" title="pypal.pal.utils.get_kmeans_samples"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pypal.pal.utils.get_kmeans_samples()</span></code></a> utilities that can help with the sampling. Our code assumes that <code class="code docutils literal notranslate"><span class="pre">X</span></code> is a <code class="code docutils literal notranslate"><span class="pre">np.array</span></code>.</p>
+<li><p>Sample a few initial points from the design space. We provide the <a class="reference internal" href="api.html#pyepal.pal.utils.get_maxmin_samples" title="pyepal.pal.utils.get_maxmin_samples"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyepal.pal.utils.get_maxmin_samples()</span></code></a> or <a class="reference internal" href="api.html#pyepal.pal.utils.get_kmeans_samples" title="pyepal.pal.utils.get_kmeans_samples"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyepal.pal.utils.get_kmeans_samples()</span></code></a> utilities that can help with the sampling. Our code assumes that <code class="code docutils literal notranslate"><span class="pre">X</span></code> is a <code class="code docutils literal notranslate"><span class="pre">np.array</span></code>.</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">get_kmeans_samples</span><span class="p">,</span> <span class="n">get_maxmin_samples</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyepal</span> <span class="kn">import</span> <span class="n">get_kmeans_samples</span><span class="p">,</span> <span class="n">get_maxmin_samples</span>
 
 <span class="c1"># This selects the 10 points closest to the centroids of a k=10 means clustering</span>
 <span class="n">indices</span> <span class="o">=</span> <span class="n">get_kmeans_samples</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
@@ -247,7 +247,7 @@
 </li>
 <li><p>Now we can initialize the instance of one <code class="code docutils literal notranslate"><span class="pre">PAL</span></code> class. If using a <code class="code docutils literal notranslate"><span class="pre">sklearn</span></code> Gaussian process model, we would use</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALSklearn</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyepal</span> <span class="kn">import</span> <span class="n">PALSklearn</span>
 
 <span class="c1"># Each of these models is an instance of sklearn.gaussian_process.GaussianProcessRegressor</span>
 <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">gpr0</span><span class="p">,</span> <span class="n">gpr1</span><span class="p">,</span> <span class="n">gpr2</span><span class="p">]</span>
@@ -269,8 +269,8 @@
 <li><p><code class="code docutils literal notranslate"><span class="pre">epsilon</span></code>: one <span class="math notranslate nohighlight">\(\epsilon\)</span> per dimension in a <code class="code docutils literal notranslate"><span class="pre">np.ndarray</span></code>. This can be used to set different tolerances for each objective. Note that <span class="math notranslate nohighlight">\(\epsilon_i \in [0,1]\)</span>.</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">delta</span></code>: the <span class="math notranslate nohighlight">\(\delta\)</span> hyperparameter (<span class="math notranslate nohighlight">\(\delta \in [0,1]\)</span>). Increasing this value will speed up the convergence.</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">beta_scale</span></code>: an empirical scaling parameter for <span class="math notranslate nohighlight">\(beta\)</span>. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, a much faster convergence can be achieved by setting it to a number <span class="math notranslate nohighlight">\(0&lt; \beta_\mathrm{scale} \ll 1\)</span>.</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">goal</span></code>: By default, PyPAL assumes that the goal is to maximize every objective. If this is not the case, this argument can be set using a list of “min” and “max” strings, with “min” specifying whether to minimize the ith objective and “max” indicating whether to maximize this objective.</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">coef_var_threshold</span></code>: By default, PyPAL will not consider points with a coefficient of variation <span class="math notranslate nohighlight">\(\ge 3\)</span> for the classification step of the algorithm. This is meant to avoid classifying design points for which the model is entirely unsure. This tends to happen when a model is severely overfit on the training data (i.e., the training data uncertainties are very low, whereas the prediction uncertainties are very high). To change this setting, reduce this value to make the check tighter or increase it to avoid this check (as in the original implementation).</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">goal</span></code>: By default, PyePAL assumes that the goal is to maximize every objective. If this is not the case, this argument can be set using a list of “min” and “max” strings, with “min” specifying whether to minimize the ith objective and “max” indicating whether to maximize this objective.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">coef_var_threshold</span></code>: By default, PyePAL will not consider points with a coefficient of variation <span class="math notranslate nohighlight">\(\ge 3\)</span> for the classification step of the algorithm. This is meant to avoid classifying design points for which the model is entirely unsure. This tends to happen when a model is severely overfit on the training data (i.e., the training data uncertainties are very low, whereas the prediction uncertainties are very high). To change this setting, reduce this value to make the check tighter or increase it to avoid this check (as in the original implementation).</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -292,10 +292,10 @@ However, since this is usually a computationally expensive process, it may not b
 <p>Basic information such as the current iteration and the classification status are logged and can be viewed by printing the <code class="code docutils literal notranslate"><span class="pre">PAL</span></code> object</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">palinstance</span><span class="p">)</span>
 
-<span class="c1"># returns: pypal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.</span>
+<span class="c1"># returns: pyepal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.</span>
 </pre></div>
 </div>
-<p>We also provide calculation of the hypervolume enclosed by the Pareto front with the function <a class="reference internal" href="api.html#pypal.pal.utils.get_hypervolume" title="pypal.pal.utils.get_hypervolume"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pypal.pal.utils.get_hypervolume()</span></code></a></p>
+<p>We also provide calculation of the hypervolume enclosed by the Pareto front with the function <a class="reference internal" href="api.html#pyepal.pal.utils.get_hypervolume" title="pyepal.pal.utils.get_hypervolume"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyepal.pal.utils.get_hypervolume()</span></code></a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hv</span> <span class="o">=</span> <span class="n">get_hypervolume</span><span class="p">(</span><span class="n">palinstance</span><span class="o">.</span><span class="n">means</span><span class="p">[</span><span class="n">palinstance</span><span class="o">.</span><span class="n">pareto_optimal</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -324,8 +324,8 @@ However, since this is usually a computationally expensive process, it may not b
 <div class="section" id="exploring-a-space-where-all-objectives-are-known">
 <h3>Exploring a space where all objectives are known<a class="headerlink" href="#exploring-a-space-where-all-objectives-are-known" title="Permalink to this headline">¶</a></h3>
 <p>In some cases, we may already posess all measurements, but would like to run PAL with different settings to test how the algorithm performs.
-In this case, we provide the <a class="reference internal" href="api.html#pypal.pal.utils.exhaust_loop" title="pypal.pal.utils.exhaust_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pypal.pal.utils.exhaust_loop()</span></code></a> wrapper.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal</span> <span class="kn">import</span> <span class="n">PALSklearn</span><span class="p">,</span> <span class="n">exhaust_loop</span>
+In this case, we provide the <a class="reference internal" href="api.html#pyepal.pal.utils.exhaust_loop" title="pyepal.pal.utils.exhaust_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyepal.pal.utils.exhaust_loop()</span></code></a> wrapper.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyepal</span> <span class="kn">import</span> <span class="n">PALSklearn</span><span class="p">,</span> <span class="n">exhaust_loop</span>
 <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">gpr0</span><span class="p">,</span> <span class="n">gpr1</span><span class="p">,</span> <span class="n">gpr2</span><span class="p">]</span>
 <span class="n">palinstance</span> <span class="o">=</span> <span class="n">PALSklearn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
@@ -353,7 +353,7 @@ In this case, we provide the <a class="reference internal" href="api.html#pypal.
 </div>
 <div class="section" id="caveats-and-tricks-with-gaussian-processes">
 <h2>Caveats and tricks with Gaussian processes<a class="headerlink" href="#caveats-and-tricks-with-gaussian-processes" title="Permalink to this headline">¶</a></h2>
-<p>One caveat to keep in mind is that <span class="math notranslate nohighlight">\(\epsilon\)</span>-PAL will not work if the predictive variance does not make sense. For example, when the model is overconfident and the uncertainties for the training set is significantly lower than those for the predicted set. In this case, PyPAL will untimely, and often incorrectly, label the design points. An example situation where the predictions for an overconfident model due to a training set that excludes a part of design space is shown in the figure below</p>
+<p>One caveat to keep in mind is that <span class="math notranslate nohighlight">\(\epsilon\)</span>-PAL will not work if the predictive variance does not make sense. For example, when the model is overconfident and the uncertainties for the training set is significantly lower than those for the predicted set. In this case, PyePAL will untimely, and often incorrectly, label the design points. An example situation where the predictions for an overconfident model due to a training set that excludes a part of design space is shown in the figure below</p>
 <a class="reference internal image-reference" href="_images/overconfident_model.png"><img alt="Example of the predictions of an overconfident GPR model" src="_images/overconfident_model.png" style="width: 600px;" /></a>
 <p>This problem is exacerbated in conjunction with <span class="math notranslate nohighlight">\(\beta_\mathrm{scale} &lt; 1\)</span>. To make the model more robust we suggest trying:</p>
 <ul class="simple">
@@ -363,7 +363,7 @@ In this case, we provide the <a class="reference internal" href="api.html#pypal.
 <li><p><a class="reference external" href="https://www.cs.toronto.edu/~duvenaud/cookbook/">to use a kernel that suits the problem</a></p></li>
 <li><p>to turn off ARD. Automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting</p></li>
 </ul>
-<p>We also recommend to cross-validate the Gaussian process models and to check that the predicted variances make sense. When performing cross-validation, make sure that the index provided to PyPAL is the same size as the cross-validation folds.
+<p>We also recommend to cross-validate the Gaussian process models and to check that the predicted variances make sense. When performing cross-validation, make sure that the index provided to PyePAL is the same size as the cross-validation folds.
 By default, the code will run a simple cross-validation only on the first iteration and provide a warning if the mean absolute error is above the mean standard deviation. The warning will look something like</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">mean</span> <span class="n">absolute</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">cross</span><span class="o">-</span><span class="n">validation</span> <span class="ow">is</span> <span class="mf">64.29</span><span class="p">,</span> <span class="n">the</span> <span class="n">mean</span> <span class="n">variance</span> <span class="ow">is</span> <span class="mf">0.36</span><span class="o">.</span>
 <span class="n">Your</span> <span class="n">model</span> <span class="n">might</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">predictive</span> <span class="ow">and</span><span class="o">/</span><span class="ow">or</span> <span class="n">overconfident</span><span class="o">.</span>
@@ -371,8 +371,8 @@ By default, the code will run a simple cross-validation only on the first iterat
 </pre></div>
 </div>
 <p>This behavior can changed with the cross-validation test being performed more frequently by overriding the <code class="code docutils literal notranslate"><span class="pre">should_run_crossvalidation</span></code> function.</p>
-<p>Another way to detect overfitting is to use <a class="reference internal" href="api.html#pypal.plotting.make_jointplot" title="pypal.plotting.make_jointplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">pypal.plotting.make_jointplot()</span></code></a> function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyPAL, this may suggest that the surrogate model is overfitted.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypal.plotting</span> <span class="kn">import</span> <span class="n">make_jointplot</span>
+<p>Another way to detect overfitting is to use <a class="reference internal" href="api.html#pyepal.plotting.make_jointplot" title="pyepal.plotting.make_jointplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyepal.plotting.make_jointplot()</span></code></a> function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyePAL, this may suggest that the surrogate model is overfitted.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyepal.plotting</span> <span class="kn">import</span> <span class="n">make_jointplot</span>
 
 <span class="c1"># palinstance is a instance of a PAL class after</span>
 <span class="c1"># calling run_one_step</span>
@@ -389,7 +389,7 @@ By default, the code will run a simple cross-validation only on the first iterat
 
               <div class='prev-next-bottom'>
 
-    <a class='left-prev' id="prev-link" href="index.html" title="previous page">PyPAL: Pareto active learning for Python</a>
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">PyePAL: Pareto active learning for Python</a>
     <a class='right-next' id="next-link" href="tutorials.html" title="next page">Tutorials</a>
 
               </div>

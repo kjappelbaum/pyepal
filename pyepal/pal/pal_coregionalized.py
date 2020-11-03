@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,37 +14,25 @@
 # limitations under the License.
 
 
-"""PAL using Sklearn GPR models"""
-import concurrent.futures
-from functools import partial
+"""PAL for coregionalized GPR models"""
 
 import numpy as np
 
+from ..models.gpr import predict_coregionalized, set_xy_coregionalized
 from .pal_base import PALBase
-from .validate_inputs import validate_njobs, validate_sklearn_gpr_models
+from .schedules import linear
+from .validate_inputs import validate_coregionalized_gpy
 
 
-def _train_model_picklable(i, models, design_space, objectives, sampled):
-    model = models[i]
-    model.fit(
-        design_space[sampled[:, i]],
-        objectives[sampled[:, i], i].reshape(-1, 1),
-    )
-    return model
-
-
-class PALSklearn(PALBase):
-    """PAL class for a list of Sklearn (GPR) models, with one model per objective"""
+class PALCoregionalized(PALBase):
+    """PAL class for a coregionalized GPR model"""
 
     def __init__(self, *args, **kwargs):
-        """Construct the PALSklearn instance
+        """Construct the PALCoregionalized instance
 
         Args:
             X_design (np.array): Design space (feature matrix)
-            models (list): Machine learning models. You can provide a list of
-                GaussianProcessRegressor instances or a list of *fitted*
-                RandomizedSearchCV/GridSearchCV instances with
-                GaussianProcessRegressor models
+            models (list): Machine learning models
             ndim (int): Number of objectives
             epsilon (Union[list, float], optional): Epsilon hyperparameter.
                 Defaults to 0.01.
@@ -60,37 +48,37 @@ class PALSklearn(PALBase):
             coef_var_threshold (float, optional): Use only points with
                 a coefficient of variation below this threshold
                 in the classification step. Defaults to 3.
-            n_jobs (int): Number of parallel processes that are used to fit
-                the GPR models. Defaults to 1.
+            restarts (int): Number of random restarts that are used for hyperparameter
+                optimization. Defaults to 20.
+            parallel (bool): If true, model hyperparameters are optimized in parallel,
+                using the GPy implementation. Defaults to False.
         """
-        self.n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
+        self.restarts = kwargs.pop("restarts", 20)
+        self.parallel = kwargs.pop("parallel", False)
+        assert isinstance(
+            self.parallel, bool
+        ), "the parallel keyword must be of type bool"
+        assert isinstance(
+            self.restarts, int
+        ), "the restarts keyword must be of type int"
         super().__init__(*args, **kwargs)
-
-        self.models = validate_sklearn_gpr_models(self.models, self.ndim)
+        validate_coregionalized_gpy(self.models)
 
     def _set_data(self):
-        pass
+        self.models[0] = set_xy_coregionalized(
+            self.models[0],
+            self.design_space[self.sampled_indices],
+            self.y[self.sampled_indices],
+            self.sampled[self.sampled_indices],
+        )
 
     def _train(self):
-        train_single_partial = partial(
-            _train_model_picklable,
-            models=self.models,
-            design_space=self.design_space,
-            objectives=self.y,
-            sampled=self.sampled,
-        )
-        models = []
-        with concurrent.futures.ProcessPoolExecutor(
-            max_workers=self.n_jobs
-        ) as executor:
-            for model in executor.map(train_single_partial, range(self.ndim)):
-                models.append(model)
-        self.models = models
+        pass
 
     def _predict(self):
         means, stds = [], []
-        for model in self.models:
-            mean, std = model.predict(self.design_space, return_std=True)
+        for i in range(self.ndim):
+            mean, std = predict_coregionalized(self.models[0], self.design_space, i)
             means.append(mean.reshape(-1, 1))
             stds.append(std.reshape(-1, 1))
 
@@ -98,4 +86,7 @@ class PALSklearn(PALBase):
         self.std = np.hstack(stds)
 
     def _set_hyperparameters(self):
-        pass
+        self.models[0].optimize_restarts(self.restarts, parallel=self.parallel)
+
+    def _should_optimize_hyperparameters(self) -> bool:
+        return linear(self.iteration, 10)

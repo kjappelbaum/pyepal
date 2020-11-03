@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 """Testing the PAL module"""
 import numpy as np
 
-from pypal.pal.core import (
+from pyepal.pal.core import (
     _get_max_wt,
     _get_uncertainty_region,
     _get_uncertainty_regions,

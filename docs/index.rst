@@ -1,9 +1,9 @@
-.. pypal documentation master file, created by
+.. pyepal documentation master file, created by
    sphinx-quickstart on Fri Oct  2 14:54:04 2020.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-PyPAL: Pareto active learning for Python
+PyePAL: Pareto active learning for Python
 =========================================
 
 This package uses an active learning approach to efficiently and confidently identify the Pareto front with any regression model that can output a mean and a standard deviation.

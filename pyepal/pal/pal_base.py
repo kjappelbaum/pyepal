@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -121,7 +121,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self._has_train_set = False
 
     def __repr__(self):
-        return f"pypal at iteration {self.iteration}. \
+        return f"pyepal at iteration {self.iteration}. \
         {self.number_pareto_optimal_points} Pareto optimal points, \
         {self.number_discarded_points} discarded points, \
         {self.number_unclassified_points} unclassified points."

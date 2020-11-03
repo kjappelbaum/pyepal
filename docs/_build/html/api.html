@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The PyPAL API reference &#8212; pypal 0+untagged.213.g6cabb45.dirty documentation</title>
+    <title>The PyePAL API reference &#8212; pyepal 0+untagged.213.g6cabb45.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -77,7 +77,7 @@
         </li>
 
         <li class="nav-item active">
-            <a class="nav-link" href="">The PyPAL API reference</a>
+            <a class="nav-link" href="">The PyePAL API reference</a>
         </li>
 
         <li class="nav-item ">
@@ -93,7 +93,7 @@
       <ul class="navbar-nav">
 
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/kjappelbaum/pypal" target="_blank" rel="noopener">
+            <a class="nav-link" href="https://github.com/kjappelbaum/pyepal" target="_blank" rel="noopener">
               <span><i class="fab fa-github-square"></i></span>
             </a>
           </li>
@@ -155,43 +155,43 @@
             <a href="#the-pal-package" class="nav-link">The PAL package</a><ul class="nav section-nav flex-column">
 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#module-pypal.pal.core" class="nav-link">Core functions</a>
+            <a href="#module-pyepal.pal.core" class="nav-link">Core functions</a>
         </li>
 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#module-pypal.pal.pal_base" class="nav-link">Base class</a>
+            <a href="#module-pyepal.pal.pal_base" class="nav-link">Base class</a>
         </li>
 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#module-pypal.pal.pal_gpy" class="nav-link">For GPy models</a>
+            <a href="#module-pyepal.pal.pal_gpy" class="nav-link">For GPy models</a>
         </li>
 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#module-pypal.pal.pal_coregionalized" class="nav-link">For coregionalized GPy models</a>
+            <a href="#module-pyepal.pal.pal_coregionalized" class="nav-link">For coregionalized GPy models</a>
         </li>
 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#module-pypal.pal.pal_sklearn" class="nav-link">For sklearn GPR models</a>
+            <a href="#module-pyepal.pal.pal_sklearn" class="nav-link">For sklearn GPR models</a>
         </li>
 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#module-pypal.pal.pal_gbdt" class="nav-link">For quantile regression with LightGBM</a>
+            <a href="#module-pyepal.pal.pal_gbdt" class="nav-link">For quantile regression with LightGBM</a>
         </li>
 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#module-pypal.pal.schedules" class="nav-link">Schedules for hyperparameter optimization</a>
+            <a href="#module-pyepal.pal.schedules" class="nav-link">Schedules for hyperparameter optimization</a>
         </li>
 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#module-pypal.pal.utils" class="nav-link">Utilities for multiobjective optimization</a>
+            <a href="#module-pyepal.pal.utils" class="nav-link">Utilities for multiobjective optimization</a>
         </li>
 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#module-pypal.plotting" class="nav-link">Utilities for plotting</a>
+            <a href="#module-pyepal.plotting" class="nav-link">Utilities for plotting</a>
         </li>
 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#module-pypal.pal.validate_inputs" class="nav-link">Input validation</a>
+            <a href="#module-pyepal.pal.validate_inputs" class="nav-link">Input validation</a>
         </li>
 
             </ul>
@@ -201,7 +201,7 @@
             <a href="#the-models-package" class="nav-link">The models package</a><ul class="nav section-nav flex-column">
 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#module-pypal.models.gpr" class="nav-link">Helper functions for GPR with GPy</a>
+            <a href="#module-pyepal.models.gpr" class="nav-link">Helper functions for GPR with GPy</a>
         </li>
 
             </ul>
@@ -220,16 +220,16 @@
 
               <div>
 
-  <div class="section" id="the-pypal-api-reference">
-<h1>The PyPAL API reference<a class="headerlink" href="#the-pypal-api-reference" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="the-pyepal-api-reference">
+<h1>The PyePAL API reference<a class="headerlink" href="#the-pyepal-api-reference" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="the-pal-package">
 <h2>The PAL package<a class="headerlink" href="#the-pal-package" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="module-pypal.pal.core">
-<span id="core-functions"></span><h3>Core functions<a class="headerlink" href="#module-pypal.pal.core" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-pyepal.pal.core">
+<span id="core-functions"></span><h3>Core functions<a class="headerlink" href="#module-pyepal.pal.core" title="Permalink to this headline">¶</a></h3>
 <p>Core functions for PAL</p>
 <dl class="py function">
-<dt id="pypal.pal.core._get_max_wt">
-<code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_get_max_wt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rectangle_lows</span></em>, <em class="sig-param"><span class="n">rectangle_ups</span></em>, <em class="sig-param"><span class="n">means</span></em>, <em class="sig-param"><span class="n">pareto_optimal_t</span></em>, <em class="sig-param"><span class="n">unclassified_t</span></em>, <em class="sig-param"><span class="n">sampled</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/core.html#_get_max_wt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.core._get_max_wt" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.core._get_max_wt">
+<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_get_max_wt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rectangle_lows</span></em>, <em class="sig-param"><span class="n">rectangle_ups</span></em>, <em class="sig-param"><span class="n">means</span></em>, <em class="sig-param"><span class="n">pareto_optimal_t</span></em>, <em class="sig-param"><span class="n">unclassified_t</span></em>, <em class="sig-param"><span class="n">sampled</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_get_max_wt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._get_max_wt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the index in design space with the maximum size of the hyperrectangle
 (scaled by the mean predictions, i.e., effectively,
 we use the coefficient of variation).
@@ -256,8 +256,8 @@ for the Pareto optimal points</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.core._get_uncertainty_region">
-<code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_get_uncertainty_region</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mu</span></em>, <em class="sig-param"><span class="n">std</span></em>, <em class="sig-param"><span class="n">beta_sqrt</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/core.html#_get_uncertainty_region"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.core._get_uncertainty_region" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.core._get_uncertainty_region">
+<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_get_uncertainty_region</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mu</span></em>, <em class="sig-param"><span class="n">std</span></em>, <em class="sig-param"><span class="n">beta_sqrt</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_get_uncertainty_region"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._get_uncertainty_region" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -276,8 +276,8 @@ for the Pareto optimal points</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.core._get_uncertainty_regions">
-<code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_get_uncertainty_regions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mus</span></em>, <em class="sig-param"><span class="n">stds</span></em>, <em class="sig-param"><span class="n">beta_sqrt</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/core.html#_get_uncertainty_regions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.core._get_uncertainty_regions" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.core._get_uncertainty_regions">
+<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_get_uncertainty_regions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mus</span></em>, <em class="sig-param"><span class="n">stds</span></em>, <em class="sig-param"><span class="n">beta_sqrt</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_get_uncertainty_regions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._get_uncertainty_regions" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Compute the lower and upper bound of the uncertainty region</dt><dd><p>for each dimension (=target)</p>
 </dd>
@@ -300,8 +300,8 @@ for the Pareto optimal points</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.core._pareto_classify">
-<code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_pareto_classify</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pareto_optimal_0</span></em>, <em class="sig-param"><span class="n">not_pareto_optimal_0</span></em>, <em class="sig-param"><span class="n">unclassified_0</span></em>, <em class="sig-param"><span class="n">rectangle_lows</span></em>, <em class="sig-param"><span class="n">rectangle_ups</span></em>, <em class="sig-param"><span class="n">epsilon</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/core.html#_pareto_classify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.core._pareto_classify" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.core._pareto_classify">
+<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_pareto_classify</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pareto_optimal_0</span></em>, <em class="sig-param"><span class="n">not_pareto_optimal_0</span></em>, <em class="sig-param"><span class="n">unclassified_0</span></em>, <em class="sig-param"><span class="n">rectangle_lows</span></em>, <em class="sig-param"><span class="n">rectangle_ups</span></em>, <em class="sig-param"><span class="n">epsilon</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_pareto_classify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._pareto_classify" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the classification part of the algorithm
 (p. 4 of the PAL paper, see algorithm 1/2 of the epsilon-PAL paper)</p>
 <p>One core concept is that once a point is classified,
@@ -334,14 +334,14 @@ classified as non-Pareto optimal</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.core._uncertainty">
-<code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_uncertainty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rectangle_ups</span></em>, <em class="sig-param"><span class="n">rectangle_lows</span></em>, <em class="sig-param"><span class="n">means</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/core.html#_uncertainty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.core._uncertainty" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.core._uncertainty">
+<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_uncertainty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rectangle_ups</span></em>, <em class="sig-param"><span class="n">rectangle_lows</span></em>, <em class="sig-param"><span class="n">means</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_uncertainty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._uncertainty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hyperrectangle sizes</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.core._union">
-<code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_union</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lows</span></em>, <em class="sig-param"><span class="n">ups</span></em>, <em class="sig-param"><span class="n">new_lows</span></em>, <em class="sig-param"><span class="n">new_ups</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/core.html#_union"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.core._union" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.core._union">
+<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_union</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lows</span></em>, <em class="sig-param"><span class="n">ups</span></em>, <em class="sig-param"><span class="n">new_lows</span></em>, <em class="sig-param"><span class="n">new_ups</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_union"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._union" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performing iterative intersection (eq. 6 in PAL paper) in all dimensions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -362,8 +362,8 @@ classified as non-Pareto optimal</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.core._union_one_dim">
-<code class="sig-prename descclassname">pypal.pal.core.</code><code class="sig-name descname">_union_one_dim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lows</span></em>, <em class="sig-param"><span class="n">ups</span></em>, <em class="sig-param"><span class="n">new_lows</span></em>, <em class="sig-param"><span class="n">new_ups</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/core.html#_union_one_dim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.core._union_one_dim" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.core._union_one_dim">
+<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_union_one_dim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lows</span></em>, <em class="sig-param"><span class="n">ups</span></em>, <em class="sig-param"><span class="n">new_lows</span></em>, <em class="sig-param"><span class="n">new_ups</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_union_one_dim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._union_one_dim" title="Permalink to this definition">¶</a></dt>
 <dd><p>Used to intersect the confidence regions, for eq. 6 of the PAL paper.
 The iterative intersection ensures that all uncertainty regions
 are non-increasing with t.</p>
@@ -390,17 +390,17 @@ and the upper limits are the upper limits.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-pypal.pal.pal_base">
-<span id="base-class"></span><h3>Base class<a class="headerlink" href="#module-pypal.pal.pal_base" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-pyepal.pal.pal_base">
+<span id="base-class"></span><h3>Base class<a class="headerlink" href="#module-pyepal.pal.pal_base" title="Permalink to this headline">¶</a></h3>
 <p>Base class for PAL</p>
 <dl class="py class">
-<dt id="pypal.pal.pal_base.PALBase">
-<em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_base.</code><code class="sig-name descname">PALBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coef_var_threshold</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_base.html#PALBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_base.PALBase" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase">
+<em class="property">class </em><code class="sig-prename descclassname">pyepal.pal.pal_base.</code><code class="sig-name descname">PALBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coef_var_threshold</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>PAL base class</p>
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coef_var_threshold</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_base.html#PALBase.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_base.PALBase.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_design</span></em>, <em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">beta_scale</span><span class="o">=</span><span class="default_value">0.1111111111111111</span></em>, <em class="sig-param"><span class="n">goals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">coef_var_threshold</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize the PAL instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -428,20 +428,20 @@ in the classification step. Defaults to 3.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.__repr__">
-<code class="sig-name descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_base.html#PALBase.__repr__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_base.PALBase.__repr__" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.__repr__">
+<code class="sig-name descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase.__repr__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.__repr__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return repr(self).</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="pypal.pal.pal_base.PALBase.__weakref__">
-<code class="sig-name descname">__weakref__</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.__weakref__">
+<code class="sig-name descname">__weakref__</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.__weakref__" title="Permalink to this definition">¶</a></dt>
 <dd><p>list of weak references to the object (if defined)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase._replace_by_measurements">
-<code class="sig-name descname">_replace_by_measurements</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_base.html#PALBase._replace_by_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_base.PALBase._replace_by_measurements" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase._replace_by_measurements">
+<code class="sig-name descname">_replace_by_measurements</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase._replace_by_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase._replace_by_measurements" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements one “trick”. Instead of using the GPR
 predictions for the sampled points we use the data that
 was actually measured and the actual uncertainty.
@@ -451,21 +451,21 @@ are outliers</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase._update_beta">
-<code class="sig-name descname">_update_beta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_base.html#PALBase._update_beta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_base.PALBase._update_beta" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase._update_beta">
+<code class="sig-name descname">_update_beta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase._update_beta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase._update_beta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update beta according to section 7.2. of the epsilon-PAL paper</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase._update_coef_var_mask">
-<code class="sig-name descname">_update_coef_var_mask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_base.html#PALBase._update_coef_var_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_base.PALBase._update_coef_var_mask" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase._update_coef_var_mask">
+<code class="sig-name descname">_update_coef_var_mask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase._update_coef_var_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase._update_coef_var_mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the mask array of elements that have variance below
 the coefficient of variation threshold</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase._update_hyperrectangles">
-<code class="sig-name descname">_update_hyperrectangles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_base.html#PALBase._update_hyperrectangles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_base.PALBase._update_hyperrectangles" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase._update_hyperrectangles">
+<code class="sig-name descname">_update_hyperrectangles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase._update_hyperrectangles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase._update_hyperrectangles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes new hyperrectangles based on beta,
 the means and the standard deviations.
 If the iteration is &gt; 0,
@@ -474,62 +474,62 @@ hyperrectangles is decreasing.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.discarded_indices">
-<em class="property">property </em><code class="sig-name descname">discarded_indices</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.discarded_indices" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.discarded_indices">
+<em class="property">property </em><code class="sig-name descname">discarded_indices</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.discarded_indices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the indices of the discarded points</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.discarded_points">
-<em class="property">property </em><code class="sig-name descname">discarded_points</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.discarded_points" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.discarded_points">
+<em class="property">property </em><code class="sig-name descname">discarded_points</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.discarded_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the discarded points</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.hyperrectangle_sizes">
-<em class="property">property </em><code class="sig-name descname">hyperrectangle_sizes</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.hyperrectangle_sizes" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.hyperrectangle_sizes">
+<em class="property">property </em><code class="sig-name descname">hyperrectangle_sizes</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.hyperrectangle_sizes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the sizes of the hyperrectangles</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.number_discarded_points">
-<em class="property">property </em><code class="sig-name descname">number_discarded_points</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.number_discarded_points" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.number_discarded_points">
+<em class="property">property </em><code class="sig-name descname">number_discarded_points</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.number_discarded_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the nnumber of discarded points</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.number_pareto_optimal_points">
-<em class="property">property </em><code class="sig-name descname">number_pareto_optimal_points</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.number_pareto_optimal_points" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.number_pareto_optimal_points">
+<em class="property">property </em><code class="sig-name descname">number_pareto_optimal_points</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.number_pareto_optimal_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the number of Pareto optimal points</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.number_sampled_points">
-<em class="property">property </em><code class="sig-name descname">number_sampled_points</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.number_sampled_points" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.number_sampled_points">
+<em class="property">property </em><code class="sig-name descname">number_sampled_points</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.number_sampled_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the number of sampled points</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.number_unclassified_points">
-<em class="property">property </em><code class="sig-name descname">number_unclassified_points</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.number_unclassified_points" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.number_unclassified_points">
+<em class="property">property </em><code class="sig-name descname">number_unclassified_points</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.number_unclassified_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the number of unclassified points</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.pareto_optimal_indices">
-<em class="property">property </em><code class="sig-name descname">pareto_optimal_indices</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.pareto_optimal_indices" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.pareto_optimal_indices">
+<em class="property">property </em><code class="sig-name descname">pareto_optimal_indices</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.pareto_optimal_indices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the indices of the Pareto optimal points</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.pareto_optimal_points">
-<em class="property">property </em><code class="sig-name descname">pareto_optimal_points</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.pareto_optimal_points" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.pareto_optimal_points">
+<em class="property">property </em><code class="sig-name descname">pareto_optimal_points</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.pareto_optimal_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the pareto optimal points</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.run_one_step">
-<code class="sig-name descname">run_one_step</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_base.html#PALBase.run_one_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_base.PALBase.run_one_step" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.run_one_step">
+<code class="sig-name descname">run_one_step</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase.run_one_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.run_one_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>[summary]</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -554,8 +554,8 @@ Defaults to 1.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">exclude_idx</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_base.html#PALBase.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_base.PALBase.sample" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.sample">
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">exclude_idx</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs the sampling step based on the size of the hyperrectangle.
 I.e., favoring exploration.</p>
 <dl class="field-list simple">
@@ -577,14 +577,14 @@ Defaults to None.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.sampled_indices">
-<em class="property">property </em><code class="sig-name descname">sampled_indices</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.sampled_indices" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.sampled_indices">
+<em class="property">property </em><code class="sig-name descname">sampled_indices</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.sampled_indices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the indices of the sampled points</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.sampled_mask">
-<em class="property">property </em><code class="sig-name descname">sampled_mask</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.sampled_mask" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.sampled_mask">
+<em class="property">property </em><code class="sig-name descname">sampled_mask</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.sampled_mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a mask for the sampled points
 We count a point as sampled if at least one objective has
 been measured, i.e., self.sampled is a N * number objectives
@@ -593,32 +593,32 @@ has not been performed</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.sampled_points">
-<em class="property">property </em><code class="sig-name descname">sampled_points</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.sampled_points" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.sampled_points">
+<em class="property">property </em><code class="sig-name descname">sampled_points</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.sampled_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the sampled points</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.should_cross_validate">
-<code class="sig-name descname">should_cross_validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_base.html#PALBase.should_cross_validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_base.PALBase.should_cross_validate" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.should_cross_validate">
+<code class="sig-name descname">should_cross_validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase.should_cross_validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.should_cross_validate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Override for more complex cross validation schedules</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.unclassified_indices">
-<em class="property">property </em><code class="sig-name descname">unclassified_indices</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.unclassified_indices" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.unclassified_indices">
+<em class="property">property </em><code class="sig-name descname">unclassified_indices</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.unclassified_indices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the indices of the unclassified points</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.unclassified_points">
-<em class="property">property </em><code class="sig-name descname">unclassified_points</code><a class="headerlink" href="#pypal.pal.pal_base.PALBase.unclassified_points" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.unclassified_points">
+<em class="property">property </em><code class="sig-name descname">unclassified_points</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.unclassified_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the discarded points</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pypal.pal.pal_base.PALBase.update_train_set">
-<code class="sig-name descname">update_train_set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">indices</span></em>, <em class="sig-param"><span class="n">measurements</span></em>, <em class="sig-param"><span class="n">measurement_uncertainty</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_base.html#PALBase.update_train_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_base.PALBase.update_train_set" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_base.PALBase.update_train_set">
+<code class="sig-name descname">update_train_set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">indices</span></em>, <em class="sig-param"><span class="n">measurements</span></em>, <em class="sig-param"><span class="n">measurement_uncertainty</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase.update_train_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.update_train_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update training set following a measurement</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -643,17 +643,17 @@ For example, np.array([1, 1, np.nan])</p></li>
 </dd></dl>
 
 </div>
-<div class="section" id="module-pypal.pal.pal_gpy">
-<span id="for-gpy-models"></span><h3>For GPy models<a class="headerlink" href="#module-pypal.pal.pal_gpy" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-pyepal.pal.pal_gpy">
+<span id="for-gpy-models"></span><h3>For GPy models<a class="headerlink" href="#module-pyepal.pal.pal_gpy" title="Permalink to this headline">¶</a></h3>
 <p>PAL using GPy GPR models</p>
 <dl class="py class">
-<dt id="pypal.pal.pal_gpy.PALGPy">
-<em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_gpy.</code><code class="sig-name descname">PALGPy</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_gpy.html#PALGPy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_gpy.PALGPy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_base.PALBase</span></code></a></p>
+<dt id="pyepal.pal.pal_gpy.PALGPy">
+<em class="property">class </em><code class="sig-prename descclassname">pyepal.pal.pal_gpy.</code><code class="sig-name descname">PALGPy</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_gpy.html#PALGPy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_gpy.PALGPy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyepal.pal.pal_base.PALBase" title="pyepal.pal.pal_base.PALBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyepal.pal.pal_base.PALBase</span></code></a></p>
 <p>PAL class for a list of GPy GPR models, with one model per objective</p>
 <dl class="py method">
-<dt id="pypal.pal.pal_gpy.PALGPy.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_gpy.html#PALGPy.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_gpy.PALGPy.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_gpy.PALGPy.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_gpy.html#PALGPy.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_gpy.PALGPy.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Contruct the PALGPy instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -687,17 +687,17 @@ the GPR models. Defaults to 1.</p></li>
 </dd></dl>
 
 </div>
-<div class="section" id="module-pypal.pal.pal_coregionalized">
-<span id="for-coregionalized-gpy-models"></span><h3>For coregionalized GPy models<a class="headerlink" href="#module-pypal.pal.pal_coregionalized" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-pyepal.pal.pal_coregionalized">
+<span id="for-coregionalized-gpy-models"></span><h3>For coregionalized GPy models<a class="headerlink" href="#module-pyepal.pal.pal_coregionalized" title="Permalink to this headline">¶</a></h3>
 <p>PAL for coregionalized GPR models</p>
 <dl class="py class">
-<dt id="pypal.pal.pal_coregionalized.PALCoregionalized">
-<em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_coregionalized.</code><code class="sig-name descname">PALCoregionalized</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_coregionalized.html#PALCoregionalized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_coregionalized.PALCoregionalized" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_base.PALBase</span></code></a></p>
+<dt id="pyepal.pal.pal_coregionalized.PALCoregionalized">
+<em class="property">class </em><code class="sig-prename descclassname">pyepal.pal.pal_coregionalized.</code><code class="sig-name descname">PALCoregionalized</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_coregionalized.html#PALCoregionalized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_coregionalized.PALCoregionalized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyepal.pal.pal_base.PALBase" title="pyepal.pal.pal_base.PALBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyepal.pal.pal_base.PALBase</span></code></a></p>
 <p>PAL class for a coregionalized GPR model</p>
 <dl class="py method">
-<dt id="pypal.pal.pal_coregionalized.PALCoregionalized.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_coregionalized.html#PALCoregionalized.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_coregionalized.PALCoregionalized.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_coregionalized.PALCoregionalized.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_coregionalized.html#PALCoregionalized.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_coregionalized.PALCoregionalized.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct the PALCoregionalized instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -731,17 +731,17 @@ using the GPy implementation. Defaults to False.</p></li>
 </dd></dl>
 
 </div>
-<div class="section" id="module-pypal.pal.pal_sklearn">
-<span id="for-sklearn-gpr-models"></span><h3>For sklearn GPR models<a class="headerlink" href="#module-pypal.pal.pal_sklearn" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-pyepal.pal.pal_sklearn">
+<span id="for-sklearn-gpr-models"></span><h3>For sklearn GPR models<a class="headerlink" href="#module-pyepal.pal.pal_sklearn" title="Permalink to this headline">¶</a></h3>
 <p>PAL using Sklearn GPR models</p>
 <dl class="py class">
-<dt id="pypal.pal.pal_sklearn.PALSklearn">
-<em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_sklearn.</code><code class="sig-name descname">PALSklearn</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_sklearn.html#PALSklearn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_sklearn.PALSklearn" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_base.PALBase</span></code></a></p>
+<dt id="pyepal.pal.pal_sklearn.PALSklearn">
+<em class="property">class </em><code class="sig-prename descclassname">pyepal.pal.pal_sklearn.</code><code class="sig-name descname">PALSklearn</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_sklearn.html#PALSklearn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_sklearn.PALSklearn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyepal.pal.pal_base.PALBase" title="pyepal.pal.pal_base.PALBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyepal.pal.pal_base.PALBase</span></code></a></p>
 <p>PAL class for a list of Sklearn (GPR) models, with one model per objective</p>
 <dl class="py method">
-<dt id="pypal.pal.pal_sklearn.PALSklearn.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_sklearn.html#PALSklearn.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_sklearn.PALSklearn.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_sklearn.PALSklearn.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_sklearn.html#PALSklearn.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_sklearn.PALSklearn.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct the PALSklearn instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -776,8 +776,8 @@ the GPR models. Defaults to 1.</p></li>
 </dd></dl>
 
 </div>
-<div class="section" id="module-pypal.pal.pal_gbdt">
-<span id="for-quantile-regression-with-lightgbm"></span><h3>For quantile regression with LightGBM<a class="headerlink" href="#module-pypal.pal.pal_gbdt" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-pyepal.pal.pal_gbdt">
+<span id="for-quantile-regression-with-lightgbm"></span><h3>For quantile regression with LightGBM<a class="headerlink" href="#module-pyepal.pal.pal_gbdt" title="Permalink to this headline">¶</a></h3>
 <p>Implements a PAL class for GBDT models which can predict uncertainity intervals
 when used with quantile loss.
 For an example of GBDT with quantile loss see
@@ -790,13 +790,13 @@ see <a class="reference external" href="https://en.wikipedia.org/wiki/Quantile_r
 <p>Note that the scaling of the hyperrectangles has been derived
 for GPR models (with RBF kernels).</p>
 <dl class="py class">
-<dt id="pypal.pal.pal_gbdt.PALGBDT">
-<em class="property">class </em><code class="sig-prename descclassname">pypal.pal.pal_gbdt.</code><code class="sig-name descname">PALGBDT</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_gbdt.html#PALGBDT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_gbdt.PALGBDT" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">pypal.pal.pal_base.PALBase</span></code></a></p>
+<dt id="pyepal.pal.pal_gbdt.PALGBDT">
+<em class="property">class </em><code class="sig-prename descclassname">pyepal.pal.pal_gbdt.</code><code class="sig-name descname">PALGBDT</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_gbdt.html#PALGBDT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_gbdt.PALGBDT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyepal.pal.pal_base.PALBase" title="pyepal.pal.pal_base.PALBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyepal.pal.pal_base.PALBase</span></code></a></p>
 <p>PAL class for a list of LightGBM GBDT models</p>
 <dl class="py method">
-<dt id="pypal.pal.pal_gbdt.PALGBDT.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/pal_gbdt.html#PALGBDT.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.pal_gbdt.PALGBDT.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.pal_gbdt.PALGBDT.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_gbdt.html#PALGBDT.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_gbdt.PALGBDT.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct the PALGBDT instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -857,13 +857,13 @@ BMC Med Res Methodol 14, 135 (2014).
 </dd></dl>
 
 </div>
-<div class="section" id="module-pypal.pal.schedules">
-<span id="schedules-for-hyperparameter-optimization"></span><h3>Schedules for hyperparameter optimization<a class="headerlink" href="#module-pypal.pal.schedules" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-pyepal.pal.schedules">
+<span id="schedules-for-hyperparameter-optimization"></span><h3>Schedules for hyperparameter optimization<a class="headerlink" href="#module-pyepal.pal.schedules" title="Permalink to this headline">¶</a></h3>
 <p>Provides some scheduling functions
 that can be used to implement the _should_optimize_hyperparameters function</p>
 <dl class="py function">
-<dt id="pypal.pal.schedules.exp_decay">
-<code class="sig-prename descclassname">pypal.pal.schedules.</code><code class="sig-name descname">exp_decay</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iteration</span></em>, <em class="sig-param"><span class="n">base</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/schedules.html#exp_decay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.schedules.exp_decay" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.schedules.exp_decay">
+<code class="sig-prename descclassname">pyepal.pal.schedules.</code><code class="sig-name descname">exp_decay</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iteration</span></em>, <em class="sig-param"><span class="n">base</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/schedules.html#exp_decay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.schedules.exp_decay" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optimize hyperparameters at logartihmically spaced intervals</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -882,8 +882,8 @@ that can be used to implement the _should_optimize_hyperparameters function</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.schedules.linear">
-<code class="sig-prename descclassname">pypal.pal.schedules.</code><code class="sig-name descname">linear</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iteration</span></em>, <em class="sig-param"><span class="n">frequency</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/schedules.html#linear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.schedules.linear" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.schedules.linear">
+<code class="sig-prename descclassname">pyepal.pal.schedules.</code><code class="sig-name descname">linear</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iteration</span></em>, <em class="sig-param"><span class="n">frequency</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/schedules.html#linear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.schedules.linear" title="Permalink to this definition">¶</a></dt>
 <dd><p>Optimize hyperparameters at equally spaced intervals</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -902,12 +902,12 @@ that can be used to implement the _should_optimize_hyperparameters function</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-pypal.pal.utils">
-<span id="utilities-for-multiobjective-optimization"></span><h3>Utilities for multiobjective optimization<a class="headerlink" href="#module-pypal.pal.utils" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-pyepal.pal.utils">
+<span id="utilities-for-multiobjective-optimization"></span><h3>Utilities for multiobjective optimization<a class="headerlink" href="#module-pyepal.pal.utils" title="Permalink to this headline">¶</a></h3>
 <p>Utilities for dealing with Pareto fronts in general</p>
 <dl class="py function">
-<dt id="pypal.pal.utils.dominance_check">
-<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">dominance_check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point1</span></em>, <em class="sig-param"><span class="n">point2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/utils.html#dominance_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.utils.dominance_check" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.utils.dominance_check">
+<code class="sig-prename descclassname">pyepal.pal.utils.</code><code class="sig-name descname">dominance_check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point1</span></em>, <em class="sig-param"><span class="n">point2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/utils.html#dominance_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.utils.dominance_check" title="Permalink to this definition">¶</a></dt>
 <dd><p>One point dominates another if it is not worse in all objectives
 and strictly better in at least one. This here assumes we want to maximize</p>
 <dl class="field-list simple">
@@ -918,8 +918,8 @@ and strictly better in at least one. This here assumes we want to maximize</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.utils.dominance_check_jitted">
-<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">dominance_check_jitted</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point</span></em>, <em class="sig-param"><span class="n">array</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/utils.html#dominance_check_jitted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.utils.dominance_check_jitted" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.utils.dominance_check_jitted">
+<code class="sig-prename descclassname">pyepal.pal.utils.</code><code class="sig-name descname">dominance_check_jitted</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point</span></em>, <em class="sig-param"><span class="n">array</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/utils.html#dominance_check_jitted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.utils.dominance_check_jitted" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if point dominates any point in array</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -929,8 +929,8 @@ and strictly better in at least one. This here assumes we want to maximize</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.utils.dominance_check_jitted_2">
-<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">dominance_check_jitted_2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span></em>, <em class="sig-param"><span class="n">point</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/utils.html#dominance_check_jitted_2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.utils.dominance_check_jitted_2" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.utils.dominance_check_jitted_2">
+<code class="sig-prename descclassname">pyepal.pal.utils.</code><code class="sig-name descname">dominance_check_jitted_2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span></em>, <em class="sig-param"><span class="n">point</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/utils.html#dominance_check_jitted_2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.utils.dominance_check_jitted_2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if any point in array dominates point</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -940,8 +940,8 @@ and strictly better in at least one. This here assumes we want to maximize</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.utils.dominance_check_jitted_3">
-<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">dominance_check_jitted_3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span></em>, <em class="sig-param"><span class="n">point</span></em>, <em class="sig-param"><span class="n">ignore_me</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/utils.html#dominance_check_jitted_3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.utils.dominance_check_jitted_3" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.utils.dominance_check_jitted_3">
+<code class="sig-prename descclassname">pyepal.pal.utils.</code><code class="sig-name descname">dominance_check_jitted_3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span></em>, <em class="sig-param"><span class="n">point</span></em>, <em class="sig-param"><span class="n">ignore_me</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/utils.html#dominance_check_jitted_3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.utils.dominance_check_jitted_3" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if any point in array dominates point. ignore_me
 since numba does not understand masked arrays</p>
 <dl class="field-list simple">
@@ -952,8 +952,8 @@ since numba does not understand masked arrays</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.utils.exhaust_loop">
-<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">exhaust_loop</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/utils.html#exhaust_loop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.utils.exhaust_loop" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.utils.exhaust_loop">
+<code class="sig-prename descclassname">pyepal.pal.utils.</code><code class="sig-name descname">exhaust_loop</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/utils.html#exhaust_loop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.utils.exhaust_loop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper function that takes an initialized PAL instance
 and loops the sampling until there is no unclassified point left.
 This is useful if all measurements are already taken and one
@@ -961,7 +961,7 @@ wants to test the algorithm with different hyperparameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><em>PALBase</em></a>) – A initialized instance of a class that
+<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pyepal.pal.pal_base.PALBase" title="pyepal.pal.pal_base.PALBase"><em>PALBase</em></a>) – A initialized instance of a class that
 inherited from PALBase and implemented the ._train() and
 ._predict() functions</p></li>
 <li><p><strong>y</strong> (<em>np.array</em>) – Measurements.
@@ -978,8 +978,8 @@ Defaults to 10.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.utils.get_hypervolume">
-<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">get_hypervolume</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pareto_front</span></em>, <em class="sig-param"><span class="n">reference_vector</span></em>, <em class="sig-param"><span class="n">prefactor</span><span class="o">=</span><span class="default_value">- 1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/utils.html#get_hypervolume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.utils.get_hypervolume" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.utils.get_hypervolume">
+<code class="sig-prename descclassname">pyepal.pal.utils.</code><code class="sig-name descname">get_hypervolume</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pareto_front</span></em>, <em class="sig-param"><span class="n">reference_vector</span></em>, <em class="sig-param"><span class="n">prefactor</span><span class="o">=</span><span class="default_value">- 1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/utils.html#get_hypervolume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.utils.get_hypervolume" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the hypervolume indicator of a Pareto front
 I multiply it with minus one as we assume that we want
 to maximize all objective and then we calculate the area</p>
@@ -1003,8 +1003,8 @@ if the algorithm converges.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.utils.get_kmeans_samples">
-<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">get_kmeans_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">n_samples</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/utils.html#get_kmeans_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.utils.get_kmeans_samples" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.utils.get_kmeans_samples">
+<code class="sig-prename descclassname">pyepal.pal.utils.</code><code class="sig-name descname">get_kmeans_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">n_samples</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/utils.html#get_kmeans_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.utils.get_kmeans_samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the samples that are closest to the k=n_samples centroids</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1024,8 +1024,8 @@ if the algorithm converges.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.utils.get_maxmin_samples">
-<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">get_maxmin_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">n_samples</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'euclidean'</span></em>, <em class="sig-param"><span class="n">init</span><span class="o">=</span><span class="default_value">'mean'</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/utils.html#get_maxmin_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.utils.get_maxmin_samples" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.utils.get_maxmin_samples">
+<code class="sig-prename descclassname">pyepal.pal.utils.</code><code class="sig-name descname">get_maxmin_samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">n_samples</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'euclidean'</span></em>, <em class="sig-param"><span class="n">init</span><span class="o">=</span><span class="default_value">'mean'</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/utils.html#get_maxmin_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.utils.get_maxmin_samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>Greedy maxmin sampling, also known as Kennard-Stone sampling (1).
 Note that a greedy sampling is not guaranteed to give the ideal solution
 and the output will depend on the random initialization (if this is chosen).</p>
@@ -1081,8 +1081,8 @@ Determines how the initial point is chosen. Defaults to ‘center’</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.utils.is_pareto_efficient">
-<code class="sig-prename descclassname">pypal.pal.utils.</code><code class="sig-name descname">is_pareto_efficient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">costs</span></em>, <em class="sig-param"><span class="n">return_mask</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/utils.html#is_pareto_efficient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.utils.is_pareto_efficient" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.utils.is_pareto_efficient">
+<code class="sig-prename descclassname">pyepal.pal.utils.</code><code class="sig-name descname">is_pareto_efficient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">costs</span></em>, <em class="sig-param"><span class="n">return_mask</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/utils.html#is_pareto_efficient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.utils.is_pareto_efficient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the Pareto efficient points
 Based on <a class="reference external" href="https://stackoverflow.com/questions/">https://stackoverflow.com/questions/</a>
 32791911/fast-calculation-of-pareto-front-in-python</p>
@@ -1105,18 +1105,18 @@ Defaults to True.</p></li>
 </dd></dl>
 
 </div>
-<div class="section" id="module-pypal.plotting">
-<span id="utilities-for-plotting"></span><h3>Utilities for plotting<a class="headerlink" href="#module-pypal.plotting" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-pyepal.plotting">
+<span id="utilities-for-plotting"></span><h3>Utilities for plotting<a class="headerlink" href="#module-pyepal.plotting" title="Permalink to this headline">¶</a></h3>
 <p>Plotting utilities</p>
 <dl class="py function">
-<dt id="pypal.plotting.make_jointplot">
-<code class="sig-prename descclassname">pypal.plotting.</code><code class="sig-name descname">make_jointplot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">labels</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">8.0, 6.0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/plotting.html#make_jointplot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.plotting.make_jointplot" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.plotting.make_jointplot">
+<code class="sig-prename descclassname">pyepal.plotting.</code><code class="sig-name descname">make_jointplot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">labels</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">8.0, 6.0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/plotting.html#make_jointplot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.plotting.make_jointplot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make a jointplot of the objective space</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>y</strong> (<em>np.array</em>) – array with the objectives (measurements)</p></li>
-<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><em>PALBase</em></a>) – “trained” PAL instance</p></li>
+<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pyepal.pal.pal_base.PALBase" title="pyepal.pal.pal_base.PALBase"><em>PALBase</em></a>) – “trained” PAL instance</p></li>
 <li><p><strong>labels</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – [description]. Defaults to None.</p></li>
 <li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>optional</em>) – [description]. Defaults to (8.0, 6.0).</p></li>
 </ul>
@@ -1128,8 +1128,8 @@ Defaults to True.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.plotting.plot_bar_iterations">
-<code class="sig-prename descclassname">pypal.plotting.</code><code class="sig-name descname">plot_bar_iterations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pareto_optimal</span></em>, <em class="sig-param"><span class="n">non_pareto_points</span></em>, <em class="sig-param"><span class="n">unclassified_points</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/plotting.html#plot_bar_iterations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.plotting.plot_bar_iterations" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.plotting.plot_bar_iterations">
+<code class="sig-prename descclassname">pyepal.plotting.</code><code class="sig-name descname">plot_bar_iterations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pareto_optimal</span></em>, <em class="sig-param"><span class="n">non_pareto_points</span></em>, <em class="sig-param"><span class="n">unclassified_points</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/plotting.html#plot_bar_iterations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.plotting.plot_bar_iterations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot stacked barplots for every step of the iteration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1149,15 +1149,15 @@ for every iteration</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.plotting.plot_histogram">
-<code class="sig-prename descclassname">pypal.plotting.</code><code class="sig-name descname">plot_histogram</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">ax</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/plotting.html#plot_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.plotting.plot_histogram" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.plotting.plot_histogram">
+<code class="sig-prename descclassname">pyepal.plotting.</code><code class="sig-name descname">plot_histogram</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">ax</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/plotting.html#plot_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.plotting.plot_histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot histograms, with maxima scaled to one
 and different categories indicated in color</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>y</strong> (<em>np.ndarray</em>) – objective (measurement)</p></li>
-<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><em>PALBase</em></a>) – instance of a PAL class</p></li>
+<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pyepal.pal.pal_base.PALBase" title="pyepal.pal.pal_base.PALBase"><em>PALBase</em></a>) – instance of a PAL class</p></li>
 <li><p><strong>ax</strong> (<em>ax</em>) – Matplotlib figure axis</p></li>
 </ul>
 </dd>
@@ -1165,8 +1165,8 @@ and different categories indicated in color</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.plotting.plot_pareto_front_2d">
-<code class="sig-prename descclassname">pypal.plotting.</code><code class="sig-name descname">plot_pareto_front_2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_0</span></em>, <em class="sig-param"><span class="n">y_1</span></em>, <em class="sig-param"><span class="n">std_0</span></em>, <em class="sig-param"><span class="n">std_1</span></em>, <em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/plotting.html#plot_pareto_front_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.plotting.plot_pareto_front_2d" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.plotting.plot_pareto_front_2d">
+<code class="sig-prename descclassname">pyepal.plotting.</code><code class="sig-name descname">plot_pareto_front_2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_0</span></em>, <em class="sig-param"><span class="n">y_1</span></em>, <em class="sig-param"><span class="n">std_0</span></em>, <em class="sig-param"><span class="n">std_1</span></em>, <em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/plotting.html#plot_pareto_front_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.plotting.plot_pareto_front_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a 2D pareto front, with the different categories
 indicated in color.</p>
 <dl class="field-list simple">
@@ -1176,7 +1176,7 @@ indicated in color.</p>
 <li><p><strong>y_1</strong> (<em>np.ndarray</em>) – objective 1</p></li>
 <li><p><strong>std_0</strong> (<em>np.ndarray</em>) – standard deviation objective 0</p></li>
 <li><p><strong>std_1</strong> (<em>np.ndarray</em>) – standard deviation objective 0</p></li>
-<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pypal.pal.pal_base.PALBase" title="pypal.pal.pal_base.PALBase"><em>PALBase</em></a>) – PAL instance</p></li>
+<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pyepal.pal.pal_base.PALBase" title="pyepal.pal.pal_base.PALBase"><em>PALBase</em></a>) – PAL instance</p></li>
 <li><p><strong>ax</strong> (<em>ax</em><em>, </em><em>optional</em>) – Matplotlib figure axis. Defaults to None.</p></li>
 </ul>
 </dd>
@@ -1184,12 +1184,12 @@ indicated in color.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-pypal.pal.validate_inputs">
-<span id="input-validation"></span><h3>Input validation<a class="headerlink" href="#module-pypal.pal.validate_inputs" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-pyepal.pal.validate_inputs">
+<span id="input-validation"></span><h3>Input validation<a class="headerlink" href="#module-pyepal.pal.validate_inputs" title="Permalink to this headline">¶</a></h3>
 <p>Methods to validate inputs for the PAL classes</p>
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs._validate_sklearn_gpr_model">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">_validate_sklearn_gpr_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#_validate_sklearn_gpr_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs._validate_sklearn_gpr_model" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs._validate_sklearn_gpr_model">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">_validate_sklearn_gpr_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#_validate_sklearn_gpr_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs._validate_sklearn_gpr_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that we deal with a GaussianProcessRegressor instance,
 if it is a fitted random or grid search instance, extract the model</p>
 <dl class="field-list simple">
@@ -1200,8 +1200,8 @@ if it is a fitted random or grid search instance, extract the model</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.base_validate_models">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">base_validate_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#base_validate_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.base_validate_models" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.base_validate_models">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">base_validate_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#base_validate_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.base_validate_models" title="Permalink to this definition">¶</a></dt>
 <dd><p>Currently no validation as the predict and train function
 are implemented independet of the base class</p>
 <dl class="field-list simple">
@@ -1212,8 +1212,8 @@ are implemented independet of the base class</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_beta_scale">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_beta_scale</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">beta_scale</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_beta_scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_beta_scale" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_beta_scale">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_beta_scale</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">beta_scale</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_beta_scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_beta_scale" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>beta_scale</strong> (<em>Any</em>) – scaling factor for beta</p>
@@ -1231,20 +1231,20 @@ are implemented independet of the base class</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_coef_var">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_coef_var</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">coef_var</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_coef_var"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_coef_var" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_coef_var">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_coef_var</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">coef_var</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_coef_var"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_coef_var" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that the coef_var makes sense</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_coregionalized_gpy">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_coregionalized_gpy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_coregionalized_gpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_coregionalized_gpy" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_coregionalized_gpy">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_coregionalized_gpy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_coregionalized_gpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_coregionalized_gpy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that model is a coregionalized GPR model</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_delta">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_delta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">delta</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_delta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_delta" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_delta">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_delta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">delta</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_delta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_delta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that delta is in a reasonable range</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1263,8 +1263,8 @@ are implemented independet of the base class</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_epsilon">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_epsilon</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epsilon</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_epsilon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_epsilon" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_epsilon">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_epsilon</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epsilon</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_epsilon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_epsilon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validate epsilon and return a np.array</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1290,8 +1290,8 @@ are implemented independet of the base class</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_gbdt_models">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_gbdt_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_gbdt_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_gbdt_models" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_gbdt_models">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_gbdt_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_gbdt_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_gbdt_models" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that the number of iterables is equal to the number of objectives
 and that every iterable contains three LGBMRegressors.
 Also, we check that at least the first and last models use quantile loss</p>
@@ -1303,8 +1303,8 @@ Also, we check that at least the first and last models use quantile loss</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_goals">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_goals</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">goals</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_goals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_goals" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_goals">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_goals</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">goals</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_goals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_goals" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Create a valid array of goals. 1 for maximization, -1</dt><dd><p>for objectives that are to be minimized.</p>
 </dd>
@@ -1335,14 +1335,14 @@ and ‘min’ for minimization</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_gpy_model">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_gpy_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_gpy_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_gpy_model" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_gpy_model">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_gpy_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_gpy_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_gpy_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that all elements of the list a GPRegression models</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_interquartile_scaler">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_interquartile_scaler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">interquartile_scaler</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_interquartile_scaler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_interquartile_scaler" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_interquartile_scaler">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_interquartile_scaler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">interquartile_scaler</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_interquartile_scaler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_interquartile_scaler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that the interquartile_scaler makes sense</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1352,8 +1352,8 @@ and ‘min’ for minimization</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_ndim">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_ndim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_ndim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_ndim" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_ndim">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_ndim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_ndim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_ndim" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that the number of dimensions makes sense</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1375,8 +1375,8 @@ and ‘min’ for minimization</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_njobs">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_njobs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">njobs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_njobs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_njobs" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_njobs">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_njobs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">njobs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_njobs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_njobs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that njobs is an int &gt; 1</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1386,8 +1386,8 @@ and ‘min’ for minimization</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_number_models">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_number_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_number_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_number_models" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_number_models">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_number_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_number_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_number_models" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that there are as many models as objectives</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1403,8 +1403,8 @@ and ‘min’ for minimization</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.pal.validate_inputs.validate_sklearn_gpr_models">
-<code class="sig-prename descclassname">pypal.pal.validate_inputs.</code><code class="sig-name descname">validate_sklearn_gpr_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/pal/validate_inputs.html#validate_sklearn_gpr_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.pal.validate_inputs.validate_sklearn_gpr_models" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.pal.validate_inputs.validate_sklearn_gpr_models">
+<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">validate_sklearn_gpr_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em>, <em class="sig-param"><span class="n">ndim</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#validate_sklearn_gpr_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.validate_sklearn_gpr_models" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure that there is a list of GPR models, one model per objective</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1417,8 +1417,8 @@ and ‘min’ for minimization</p></li>
 </div>
 <div class="section" id="the-models-package">
 <h2>The models package<a class="headerlink" href="#the-models-package" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="module-pypal.models.gpr">
-<span id="helper-functions-for-gpr-with-gpy"></span><h3>Helper functions for GPR with GPy<a class="headerlink" href="#module-pypal.models.gpr" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-pyepal.models.gpr">
+<span id="helper-functions-for-gpr-with-gpy"></span><h3>Helper functions for GPR with GPy<a class="headerlink" href="#module-pyepal.models.gpr" title="Permalink to this headline">¶</a></h3>
 <p>Wrappers for Gaussian Process Regression models.</p>
 <p>We typically use the GPy package as it offers most flexibility
 for Gaussian processes in Python.
@@ -1433,8 +1433,8 @@ be needed.</p>
 Matérn, RBF and RationalQuadrat are good quick and dirty solutions
 but have their caveats</p>
 <dl class="py function">
-<dt id="pypal.models.gpr._get_matern_32_kernel">
-<code class="sig-prename descclassname">pypal.models.gpr.</code><code class="sig-name descname">_get_matern_32_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NFEAT</span></em>, <em class="sig-param"><span class="n">ARD</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/models/gpr.html#_get_matern_32_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.models.gpr._get_matern_32_kernel" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.models.gpr._get_matern_32_kernel">
+<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">_get_matern_32_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NFEAT</span></em>, <em class="sig-param"><span class="n">ARD</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#_get_matern_32_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr._get_matern_32_kernel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Matern-3/2 kernel without ARD</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1444,8 +1444,8 @@ but have their caveats</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.models.gpr._get_matern_52_kernel">
-<code class="sig-prename descclassname">pypal.models.gpr.</code><code class="sig-name descname">_get_matern_52_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NFEAT</span></em>, <em class="sig-param"><span class="n">ARD</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/models/gpr.html#_get_matern_52_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.models.gpr._get_matern_52_kernel" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.models.gpr._get_matern_52_kernel">
+<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">_get_matern_52_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NFEAT</span></em>, <em class="sig-param"><span class="n">ARD</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#_get_matern_52_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr._get_matern_52_kernel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Matern-5/2 kernel without ARD</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1455,8 +1455,8 @@ but have their caveats</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.models.gpr._get_ratquad_kernel">
-<code class="sig-prename descclassname">pypal.models.gpr.</code><code class="sig-name descname">_get_ratquad_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NFEAT</span></em>, <em class="sig-param"><span class="n">ARD</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/models/gpr.html#_get_ratquad_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.models.gpr._get_ratquad_kernel" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.models.gpr._get_ratquad_kernel">
+<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">_get_ratquad_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NFEAT</span></em>, <em class="sig-param"><span class="n">ARD</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#_get_ratquad_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr._get_ratquad_kernel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rational quadratic kernel without ARD</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1466,8 +1466,8 @@ but have their caveats</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.models.gpr.build_coregionalized_model">
-<code class="sig-prename descclassname">pypal.models.gpr.</code><code class="sig-name descname">build_coregionalized_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_train</span></em>, <em class="sig-param"><span class="n">y_train</span></em>, <em class="sig-param"><span class="n">kernel</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/models/gpr.html#build_coregionalized_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.models.gpr.build_coregionalized_model" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.models.gpr.build_coregionalized_model">
+<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">build_coregionalized_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_train</span></em>, <em class="sig-param"><span class="n">y_train</span></em>, <em class="sig-param"><span class="n">kernel</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#build_coregionalized_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr.build_coregionalized_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper for building a coregionalized GPR, it will have as many
 outputs as y_train.shape[1].
 Each output will have its own noise term</p>
@@ -1479,8 +1479,8 @@ Each output will have its own noise term</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.models.gpr.build_model">
-<code class="sig-prename descclassname">pypal.models.gpr.</code><code class="sig-name descname">build_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_train</span></em>, <em class="sig-param"><span class="n">y_train</span></em>, <em class="sig-param"><span class="n">index</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">kernel</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/models/gpr.html#build_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.models.gpr.build_model" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.models.gpr.build_model">
+<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">build_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_train</span></em>, <em class="sig-param"><span class="n">y_train</span></em>, <em class="sig-param"><span class="n">index</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">kernel</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#build_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr.build_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build a single-output GPR model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1490,8 +1490,8 @@ Each output will have its own noise term</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.models.gpr.predict">
-<code class="sig-prename descclassname">pypal.models.gpr.</code><code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/models/gpr.html#predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.models.gpr.predict" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.models.gpr.predict">
+<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper function for the prediction method of a GPy regression model.
 It return the standard deviation instead of the variance</p>
 <dl class="field-list simple">
@@ -1502,8 +1502,8 @@ It return the standard deviation instead of the variance</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.models.gpr.predict_coregionalized">
-<code class="sig-prename descclassname">pypal.models.gpr.</code><code class="sig-name descname">predict_coregionalized</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">index</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/models/gpr.html#predict_coregionalized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.models.gpr.predict_coregionalized" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.models.gpr.predict_coregionalized">
+<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">predict_coregionalized</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">index</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#predict_coregionalized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr.predict_coregionalized" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper function for the prediction method of a coregionalized
 GPy regression model.
 It return the standard deviation instead of the variance</p>
@@ -1515,8 +1515,8 @@ It return the standard deviation instead of the variance</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pypal.models.gpr.set_xy_coregionalized">
-<code class="sig-prename descclassname">pypal.models.gpr.</code><code class="sig-name descname">set_xy_coregionalized</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">mask</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pypal/models/gpr.html#set_xy_coregionalized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pypal.models.gpr.set_xy_coregionalized" title="Permalink to this definition">¶</a></dt>
+<dt id="pyepal.models.gpr.set_xy_coregionalized">
+<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">set_xy_coregionalized</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">mask</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#set_xy_coregionalized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr.set_xy_coregionalized" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to update a coregionalized model with new data</p>
 </dd></dl>
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,13 +26,13 @@ with open("README.md", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
 
 setup(
-    name="pypal",
+    name="pyepal",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     packages=find_packages(),
-    url="https://github.com/kjappelbaum/PyPAL",
+    url="https://github.com/kjappelbaum/PyePAL",
     license="Apache 2.0",
     python_requires=">=3.6",
     install_requires=REQUIREMENTS,
@@ -56,7 +56,7 @@ setup(
         "GPy": ["GPy==1.9.9", "matplotlib"],
         "GBDT": ["lightgbm>=3.0.0"],
     },
-    author="PyPAL authors",
+    author="PyePAL authors",
     author_email="kevin.jablonka@epfl.ch, brian.yoo@basf.com",
     classifiers=[
         "Programming Language :: Python :: 3",

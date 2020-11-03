@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 import GPy
 import numpy as np
 
-from pypal.models.coregionalized import GPCoregionalizedRegression
-from pypal.models.gpr import (
+from pyepal.models.coregionalized import GPCoregionalizedRegression
+from pyepal.models.gpr import (
     build_coregionalized_model,
     build_model,
     predict,

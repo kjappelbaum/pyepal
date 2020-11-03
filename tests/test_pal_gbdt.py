@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 import numpy as np
 from lightgbm import LGBMRegressor
 
-from pypal.pal.pal_gbdt import PALGBDT
+from pyepal.pal.pal_gbdt import PALGBDT
 
 
 def test_pal_gbdt(binh_korn_points):

@@ -1,4 +1,4 @@
-The PyPAL API reference
+The PyePAL API reference
 ========================
 
 The PAL package
@@ -7,7 +7,7 @@ The PAL package
 Core functions
 ...............
 
-.. automodule:: pypal.pal.core
+.. automodule:: pyepal.pal.core
     :members:
     :show-inheritance:
     :special-members:
@@ -16,7 +16,7 @@ Core functions
 Base class
 ...............
 
-.. automodule:: pypal.pal.pal_base
+.. automodule:: pyepal.pal.pal_base
     :members:
     :show-inheritance:
     :special-members:
@@ -26,7 +26,7 @@ Base class
 For GPy models
 ........................
 
-.. automodule:: pypal.pal.pal_gpy
+.. automodule:: pyepal.pal.pal_gpy
     :members:
     :show-inheritance:
     :special-members:
@@ -36,7 +36,7 @@ For GPy models
 For coregionalized GPy models
 ..................................
 
-.. automodule:: pypal.pal.pal_coregionalized
+.. automodule:: pyepal.pal.pal_coregionalized
     :members:
     :show-inheritance:
     :special-members:
@@ -46,7 +46,7 @@ For coregionalized GPy models
 For sklearn GPR models
 ........................
 
-.. automodule:: pypal.pal.pal_sklearn
+.. automodule:: pyepal.pal.pal_sklearn
     :members:
     :show-inheritance:
     :special-members:
@@ -56,7 +56,7 @@ For sklearn GPR models
 For quantile regression with LightGBM
 .......................................
 
-.. automodule:: pypal.pal.pal_gbdt
+.. automodule:: pyepal.pal.pal_gbdt
     :members:
     :show-inheritance:
     :special-members:
@@ -66,7 +66,7 @@ For quantile regression with LightGBM
 Schedules for hyperparameter optimization
 ...........................................
 
-.. automodule:: pypal.pal.schedules
+.. automodule:: pyepal.pal.schedules
     :members:
     :show-inheritance:
     :special-members:
@@ -76,7 +76,7 @@ Schedules for hyperparameter optimization
 Utilities for multiobjective optimization
 ...........................................
 
-.. automodule:: pypal.pal.utils
+.. automodule:: pyepal.pal.utils
     :members:
     :show-inheritance:
     :special-members:
@@ -86,7 +86,7 @@ Utilities for multiobjective optimization
 Utilities for plotting
 ...........................................
 
-.. automodule:: pypal.plotting
+.. automodule:: pyepal.plotting
     :members:
     :show-inheritance:
     :special-members:
@@ -96,7 +96,7 @@ Utilities for plotting
 Input validation
 ...........................................
 
-.. automodule:: pypal.pal.validate_inputs
+.. automodule:: pyepal.pal.validate_inputs
     :members:
     :show-inheritance:
     :special-members:
@@ -110,7 +110,7 @@ The models package
 Helper functions for GPR with GPy
 ...................................
 
-.. automodule:: pypal.models.gpr
+.. automodule:: pyepal.models.gpr
     :members:
     :show-inheritance:
     :special-members:

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -200,7 +200,7 @@ def base_validate_models(models: Any) -> list:
     if models:
         return models
 
-    raise ValueError("You must provide some models to initialize pypal")
+    raise ValueError("You must provide some models to initialize pyepal")
 
 
 def validate_number_models(models: Any, ndim: int):

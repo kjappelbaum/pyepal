@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 import numpy as np
 import pytest
 
-from pypal.models.gpr import build_coregionalized_model
-from pypal.pal.pal_coregionalized import PALCoregionalized
+from pyepal.models.gpr import build_coregionalized_model
+from pyepal.pal.pal_coregionalized import PALCoregionalized
 
 
 def test_pal_coregionalized(make_random_dataset):

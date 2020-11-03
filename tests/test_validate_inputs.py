@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@ from sklearn.gaussian_process import GaussianProcessClassifier, GaussianProcessR
 from sklearn.gaussian_process.kernels import RBF, Matern
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 
-from pypal.models.gpr import build_coregionalized_model
-from pypal.pal.validate_inputs import (
+from pyepal.models.gpr import build_coregionalized_model
+from pyepal.pal.validate_inputs import (
     _validate_sklearn_gpr_model,
     base_validate_models,
     validate_beta_scale,

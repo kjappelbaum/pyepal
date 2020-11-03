@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,22 +13,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-"""PAL for coregionalized GPR models"""
+"""PAL using GPy GPR models"""
+import concurrent.futures
+from functools import partial
 
 import numpy as np
 
-from ..models.gpr import predict_coregionalized, set_xy_coregionalized
+from ..models.gpr import predict
 from .pal_base import PALBase
 from .schedules import linear
-from .validate_inputs import validate_coregionalized_gpy
+from .validate_inputs import validate_gpy_model, validate_njobs, validate_number_models
 
 
-class PALCoregionalized(PALBase):
-    """PAL class for a coregionalized GPR model"""
+def _train_model_picklable(i, models, restarts):
+    model = models[i]
+    model.optimize_restarts(restarts)
+    return model
+
+
+class PALGPy(PALBase):
+    """PAL class for a list of GPy GPR models, with one model per objective"""
 
     def __init__(self, *args, **kwargs):
-        """Construct the PALCoregionalized instance
+        """Contruct the PALGPy instance
 
         Args:
             X_design (np.array): Design space (feature matrix)
@@ -50,35 +57,34 @@ class PALCoregionalized(PALBase):
                 in the classification step. Defaults to 3.
             restarts (int): Number of random restarts that are used for hyperparameter
                 optimization. Defaults to 20.
-            parallel (bool): If true, model hyperparameters are optimized in parallel,
-                using the GPy implementation. Defaults to False.
+            n_jobs (int): Number of parallel processes that are used to fit
+                the GPR models. Defaults to 1.
         """
         self.restarts = kwargs.pop("restarts", 20)
-        self.parallel = kwargs.pop("parallel", False)
-        assert isinstance(
-            self.parallel, bool
-        ), "the parallel keyword must be of type bool"
+        self.n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
+
         assert isinstance(
             self.restarts, int
         ), "the restarts keyword must be of type int"
         super().__init__(*args, **kwargs)
-        validate_coregionalized_gpy(self.models)
+
+        validate_number_models(self.models, self.ndim)
+        validate_gpy_model(self.models)
 
     def _set_data(self):
-        self.models[0] = set_xy_coregionalized(
-            self.models[0],
-            self.design_space[self.sampled_indices],
-            self.y[self.sampled_indices],
-            self.sampled[self.sampled_indices],
-        )
+        for i, model in enumerate(self.models):
+            model.set_XY(
+                self.design_space[self.sampled[:, i]],
+                self.y[self.sampled[:, i], i].reshape(-1, 1),
+            )
 
     def _train(self):
-        pass
+        pass  # There is no training in instance based models
 
     def _predict(self):
         means, stds = [], []
-        for i in range(self.ndim):
-            mean, std = predict_coregionalized(self.models[0], self.design_space, i)
+        for model in self.models:
+            mean, std = predict(model, self.design_space)
             means.append(mean.reshape(-1, 1))
             stds.append(std.reshape(-1, 1))
 
@@ -86,7 +92,17 @@ class PALCoregionalized(PALBase):
         self.std = np.hstack(stds)
 
     def _set_hyperparameters(self):
-        self.models[0].optimize_restarts(self.restarts, parallel=self.parallel)
+        models = []
+
+        train_model_pickleable_partial = partial(
+            _train_model_picklable, models=self.models, restarts=self.restarts
+        )
+        with concurrent.futures.ProcessPoolExecutor(
+            max_workers=self.n_jobs
+        ) as executor:
+            for model in executor.map(train_model_pickleable_partial, range(self.ndim)):
+                models.append(model)
+        self.models = models
 
     def _should_optimize_hyperparameters(self) -> bool:
         return linear(self.iteration, 10)

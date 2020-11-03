@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 
 
 """Testing the scheduling utility functions"""
-from pypal.pal.schedules import exp_decay, linear
+from pyepal.pal.schedules import exp_decay, linear
 
 
 def test_linear():

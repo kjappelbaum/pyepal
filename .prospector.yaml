@@ -1,9 +1,9 @@
 ignore-paths:
   - docs
   - versioneer.py
-  - pypal/_version.py
-  - pypal/pal/_hypervolume.py
-  - pypal/models/coregionalized.py
+  - pyepal/_version.py
+  - pyepal/pal/_hypervolume.py
+  - pyepal/models/coregionalized.py
 
 pylint:
   run: true

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyPAL authors
+# Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 import numpy as np
 import pytest
 
-from pypal.models.gpr import build_model
-from pypal.pal.pal_gpy import PALGPy
+from pyepal.models.gpr import build_model
+from pyepal.pal.pal_gpy import PALGPy
 
 
 def test_pal_gpy(make_random_dataset):

@@ -2,27 +2,27 @@
  <img src="pypal_logo.png" />
 </p>
 
-![Python package](https://github.com/kjappelbaum/pypal/workflows/Python%20package/badge.svg)
-![pre-commit](https://github.com/kjappelbaum/pypal/workflows/pre-commit/badge.svg)
-[![codecov](https://codecov.io/gh/kjappelbaum/pypal/branch/master/graph/badge.svg?token=BL2CF4HQ06)](https://codecov.io/gh/kjappelbaum/pypal)
+![Python package](https://github.com/kjappelbaum/pyepal/workflows/Python%20package/badge.svg)
+![pre-commit](https://github.com/kjappelbaum/pyepal/workflows/pre-commit/badge.svg)
+[![codecov](https://codecov.io/gh/kjappelbaum/pyepal/branch/master/graph/badge.svg?token=BL2CF4HQ06)](https://codecov.io/gh/kjappelbaum/pyepal)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pypal)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyepal)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Gitter](https://badges.gitter.im/kjappelbaum/pypal.svg)](https://gitter.im/kjappelbaum/pypal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-![GitHub last commit](https://img.shields.io/github/last-commit/kjappelbaum/pypal)
-[![Documentation Status](https://readthedocs.org/projects/pypal/badge/?version=latest)](https://pypal.readthedocs.io/en/latest/?badge=latest)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kjappelbaum/pypal/HEAD?filepath=examples)
+[![Gitter](https://badges.gitter.im/kjappelbaum/pyepal.svg)](https://gitter.im/kjappelbaum/pyepal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/kjappelbaum/pyepal)
+[![Documentation Status](https://readthedocs.org/projects/pyepal/badge/?version=latest)](https://pyepal.readthedocs.io/en/latest/?badge=latest)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kjappelbaum/pyepal/HEAD?filepath=examples)
 
 Generalized Python implementation of a modified version of the ε-PAL algorithm [[1](#1), [2](#2)].
 
-For more detailed docs [go here](https://pypal.readthedocs.io/en/latest/?badge=latest).
+For more detailed docs [go here](https://pyepal.readthedocs.io/en/latest/?badge=latest).
 
 ## Installation
 
 To install the latest development version from the head use
 
 ```(bash)
-pip install git+https://github.com/kjappelbaum/pypal.git
+pip install git+https://github.com/kjappelbaum/pyepal.git
 ```
 
 Developers can install the extras `[testing, docs, pre-commit]`. Installation should take only a few minutes.
@@ -30,7 +30,7 @@ Developers can install the extras `[testing, docs, pre-commit]`. Installation sh
 ## Usage
 
 The main logic is implemented in the `PALBase` class. There are some prebuilt classes for common use cases (`GPy`, `sklearn`) that inherit from this class.
-For more details about how to use the code and notes about the tutorials [see the docs]](https://kjappelbaum.github.io/pypal/).
+For more details about how to use the code and notes about the tutorials [see the docs]](https://kjappelbaum.github.io/pyepal/).
 
 ### Pre-Built classes
 
@@ -40,7 +40,7 @@ If you want to use a list of [sklearn](https://scikit-learn.org/stable/index.htm
 you can follow the following code snippet. The basic principle is the same for all the different `PAL` classes.
 
 ```python
-from pypal import PALSklearn
+from pyepal import PALSklearn
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, Matern
 
@@ -110,7 +110,7 @@ class PALSklearn(PALBase):
         self.std = np.hstack(stds)
 ```
 
-For scheduling for the hyperparameter optimization we have some predefined schedules in the `pypal.pal.schedules` module.
+For scheduling for the hyperparameter optimization we have some predefined schedules in the `pyepal.pal.schedules` module.
 
 ### Test the algorithms
 
@@ -118,8 +118,8 @@ If the full design space is known, you can use a while loop to fully explore the
 For the theoretical guarantees to hold, you'll need to sample until all uncertainties are below epsilon. In practice, it is usually enough to require as termination criterion that there are no unclassified samples left. For this you could use the following snippet
 
 ```python
-from pypal.utils import exhaust_loop
-from pypal.models.gpr import build_model
+from pyepal.utils import exhaust_loop
+from pyepal.models.gpr import build_model
 
 # indices for initialization
 sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
@@ -137,7 +137,7 @@ palinstance.update_train_set(sample_idx, y[sample_idx])
 exhaust_loop(palinstance, y)
 ```
 
-To measure the performance, you can use the `get_hypervolume` function from `pypal.pal.utils`. More indicators are implemented in packages like [deap](https://github.com/DEAP/deap), [pagmo](https://github.com/esa/pagmo), or [pymoo](https://github.com/msu-coinlab/pymoo/tree/master).
+To measure the performance, you can use the `get_hypervolume` function from `pyepal.pal.utils`. More indicators are implemented in packages like [deap](https://github.com/DEAP/deap), [pagmo](https://github.com/esa/pagmo), or [pymoo](https://github.com/msu-coinlab/pymoo/tree/master).
 
 ## References
 

@@ -19,7 +19,7 @@
 				"docker-build"
 			],
 			"python": {
-				"file": "pypal/__init__.py"
+				"file": "pyepal/__init__.py"
 			}
 		}
 	]

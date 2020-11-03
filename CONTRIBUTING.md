@@ -1,4 +1,4 @@
-# Contributing to pypal
+# Contributing to pyepal
 
 If you find a bug or have a feature request, please open an issue. If you report a bug, please use the issue template.
 For help, you can also use the Gitter chat.
