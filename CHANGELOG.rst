@@ -2,6 +2,14 @@ Changelog
 =========
 
 
+v0.1.7 (2020-11-03)
+-------------------
+
+Changes
+~~~~~~~
+- Chore: updates manuscript title. [Brian]
+
+
 v0.1.6 (2020-11-03)
 -------------------
 
