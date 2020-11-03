@@ -1,5 +1,5 @@
 <p align="center">
- <img src="pypal_logo.png" />
+ <img src="pyepal_logo.png" />
 </p>
 
 ![Python package](https://github.com/kjappelbaum/pyepal/workflows/Python%20package/badge.svg)
