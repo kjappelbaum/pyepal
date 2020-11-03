@@ -2,6 +2,26 @@ Changelog
 =========
 
 
+v0.1.3 (2020-11-03)
+-------------------
+
+Changes
+~~~~~~~
+- Chore: preparing pypi release. [Kevin M. Jablonka]
+- Chore: fixing broken links in readme after rename. [Kevin M. Jablonka]
+- Chore: renaming the package. [Kevin M. Jablonka]
+
+  BREAKING CHANGE
+- Chore: preparing release to pypi. [Kevin M. Jablonka]
+- Chore: remove pypi instructions due to clashing name. [Kevin M.
+  Jablonka]
+
+Other
+~~~~~
+- Merge branch 'master' of github.com:kjappelbaum/PyPAL. [Kevin M.
+  Jablonka]
+
+
 v0.1.2 (2020-11-03)
 -------------------
 
@@ -10,23 +30,7 @@ Changes
 - Chore: preparing release to pypi. [Kevin M. Jablonka]
 - Chore: bug in the postBuild script was a space. [Kevin M. Jablonka]
 - Chore: remove space in postBuild script. [Kevin M. Jablonka]
-- Chore: for binder we need to install pyepal. [Kevin M. Jablonka]
-- Chore: updated configs for readthedocs and binder. [Kevin M. Jablonka]
-- Chore: making readthedocs ready. [Kevin M. Jablonka]
-
-Docs
-~~~~
-- Docs: move doc links to readthedocs. [Kevin M. Jablonka]
-
-
-v0.1 (2020-10-25)
------------------
-
-Changes
-~~~~~~~
-- Chore: bug in the postBuild script was a space. [Kevin M. Jablonka]
-- Chore: remove space in postBuild script. [Kevin M. Jablonka]
-- Chore: for binder we need to install pyepal. [Kevin M. Jablonka]
+- Chore: for binder we need to install pypal. [Kevin M. Jablonka]
 - Chore: updated configs for readthedocs and binder. [Kevin M. Jablonka]
 - Chore: making readthedocs ready. [Kevin M. Jablonka]
 
@@ -124,7 +128,7 @@ Changes
 - Chore: updating classifiers in setup.py, closes #73. [Kevin M.
   Jablonka]
 - Chore: implemented coefficient of variation mask. [Kevin M. Jablonka]
-- Chore: spelling of PyePAL in doc landing page fixed. [Kevin M.
+- Chore: spelling of PyPAL in doc landing page fixed. [Kevin M.
   Jablonka]
 - Chore: adding some test for epsilon sensitivity, closes #54 (#64)
   [Kevin Jablonka]
@@ -267,9 +271,9 @@ Docs
   [Kevin M. Jablonka]
 - Docs: adding screenshots of tutorials that can be linked to mybinder.
   [Kevin M. Jablonka]
-- Docs: pyepal -> PyePAL. [Kevin M. Jablonka]
+- Docs: pypal -> PyPAL. [Kevin M. Jablonka]
 - Docs: rebuild docs. [Kevin M. Jablonka]
-- Docs: pyepal -> PyePAL in text. [Kevin M. Jablonka]
+- Docs: pypal -> PyPAL in text. [Kevin M. Jablonka]
 - Docs: added note about coef_var_threshold, closes #71. [Kevin M.
   Jablonka]
 - Docs: citation placeholder added (#70) [Kevin Jablonka]
@@ -329,9 +333,9 @@ Fix
 Other
 ~~~~~
 - Update docs. [byooooo]
-- Merge branch 'master' of github.com:kjappelbaum/PyePAL. [Kevin M.
+- Merge branch 'master' of github.com:kjappelbaum/PyPAL. [Kevin M.
   Jablonka]
-- Merge branch 'master' of github.com:kjappelbaum/PyePAL. [Kevin M.
+- Merge branch 'master' of github.com:kjappelbaum/PyPAL. [Kevin M.
   Jablonka]
 - Validate sklearn GaussianProcessRegressor and extract model from
   fitted GridSearchCV/RandomizedSearchCV (#69) [Kevin Jablonka]
@@ -352,7 +356,7 @@ Other
   * chore: updating developer notes
 
   * docs: some spellchecking of the docs
-- Merge branch 'master' of github.com:kjappelbaum/PyePAL. [Kevin M.
+- Merge branch 'master' of github.com:kjappelbaum/PyPAL. [Kevin M.
   Jablonka]
 - Merge pull request #31 from kjappelbaum/docs. [Kevin Jablonka]
 
