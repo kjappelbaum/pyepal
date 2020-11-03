@@ -18,10 +18,8 @@
 
 import numpy as np
 
-from ..models.gpr import predict_coregionalized, set_xy_coregionalized
 from .pal_base import PALBase
 from .schedules import linear
-from .validate_inputs import validate_coregionalized_gpy
 
 
 class PALCoregionalized(PALBase):
@@ -53,6 +51,10 @@ class PALCoregionalized(PALBase):
             parallel (bool): If true, model hyperparameters are optimized in parallel,
                 using the GPy implementation. Defaults to False.
         """
+        from .validate_inputs import (  # pylint:disable=import-outside-toplevel
+            validate_coregionalized_gpy,
+        )
+
         self.restarts = kwargs.pop("restarts", 20)
         self.parallel = kwargs.pop("parallel", False)
         assert isinstance(
@@ -65,6 +67,10 @@ class PALCoregionalized(PALBase):
         validate_coregionalized_gpy(self.models)
 
     def _set_data(self):
+        from ..models.gpr import (  # pylint:disable=import-outside-toplevel
+            set_xy_coregionalized,
+        )
+
         self.models[0] = set_xy_coregionalized(
             self.models[0],
             self.design_space[self.sampled_indices],
@@ -76,6 +82,10 @@ class PALCoregionalized(PALBase):
         pass
 
     def _predict(self):
+        from ..models.gpr import (  # pylint:disable=import-outside-toplevel
+            predict_coregionalized,
+        )
+
         means, stds = [], []
         for i in range(self.ndim):
             mean, std = predict_coregionalized(self.models[0], self.design_space, i)

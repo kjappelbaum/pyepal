@@ -19,10 +19,9 @@ from functools import partial
 
 import numpy as np
 
-from ..models.gpr import predict
 from .pal_base import PALBase
 from .schedules import linear
-from .validate_inputs import validate_gpy_model, validate_njobs, validate_number_models
+from .validate_inputs import validate_njobs, validate_number_models
 
 
 def _train_model_picklable(i, models, restarts):
@@ -60,6 +59,10 @@ class PALGPy(PALBase):
             n_jobs (int): Number of parallel processes that are used to fit
                 the GPR models. Defaults to 1.
         """
+        from .validate_inputs import (  # pylint:disable=import-outside-toplevel
+            validate_gpy_model,
+        )
+
         self.restarts = kwargs.pop("restarts", 20)
         self.n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
 
@@ -82,6 +85,9 @@ class PALGPy(PALBase):
         pass  # There is no training in instance based models
 
     def _predict(self):
+
+        from ..models.gpr import predict  # pylint:disable=import-outside-toplevel
+
         means, stds = [], []
         for model in self.models:
             mean, std = predict(model, self.design_space)
