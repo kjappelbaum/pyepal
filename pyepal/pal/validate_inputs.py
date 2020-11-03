@@ -22,8 +22,6 @@ import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 
-from ..models.coregionalized import GPCoregionalizedRegression
-
 
 def validate_ndim(ndim: Any) -> int:
     """Make sure that the number of dimensions makes sense
@@ -231,6 +229,11 @@ def validate_coregionalized_gpy(models: Any):
     """Make sure that model is a coregionalized GPR model"""
     if not isinstance(models, list):
         raise ValueError("You must provide a list of models with one element")
+
+    from ..models.coregionalized import (  # pylint:disable=import-outside-toplevel
+        GPCoregionalizedRegression,
+    )
+
     if not isinstance(models[0], GPCoregionalizedRegression):
         raise ValueError(
             "Model must be a GPCoregionalized regression object from this package!"

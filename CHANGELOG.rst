@@ -2,6 +2,14 @@ Changelog
 =========
 
 
+v0.1.6 (2020-11-03)
+-------------------
+
+Changes
+~~~~~~~
+- Chore: removing GPy dependency. [Kevin M. Jablonka]
+
+
 v0.1.5 (2020-11-03)
 -------------------
 
