@@ -8,6 +8,9 @@ section_regexps = [
     ('Changes', [
         r'^chore',
      ]),
+    ('Docs', [
+        r'^doc',
+     ]),
     ('Fix', [
         r'^fix',
      ]),
