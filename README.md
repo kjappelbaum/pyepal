@@ -10,10 +10,11 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Gitter](https://badges.gitter.im/kjappelbaum/pypal.svg)](https://gitter.im/kjappelbaum/pypal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/kjappelbaum/pypal)
+[![Documentation Status](https://readthedocs.org/projects/pypal/badge/?version=latest)](https://pypal.readthedocs.io/en/latest/?badge=latest)
 
 Generalized Python implementation of a modified version of the ε-PAL algorithm [[1](#1), [2](#2)].
 
-For more detailed docs [go here](https://kjappelbaum.github.io/pypal/).
+For more detailed docs [go here](https://pypal.readthedocs.io/en/latest/?badge=latest).
 
 ## Installation
 
