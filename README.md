@@ -25,12 +25,6 @@ To install the latest development version from the head use
 pip install git+https://github.com/kjappelbaum/pypal.git
 ```
 
-To install a stable release use
-
-```(bash)
-pip install pypal
-```
-
 Developers can install the extras `[testing, docs, pre-commit]`. Installation should take only a few minutes.
 
 ## Usage

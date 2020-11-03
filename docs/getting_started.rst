@@ -4,11 +4,6 @@ Getting Started
 Installation
 ---------------
 
-PyPAL can be installed from `PyPi` using
-
-.. code-block:: python
-
-    pip install pypal
 
 We recommend installing PyPAL in a dedicated `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ or `conda environment <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_.
 
