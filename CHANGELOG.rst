@@ -2,11 +2,70 @@ Changelog
 =========
 
 
-(unreleased)
-------------
+v0.1.2 (2020-11-03)
+-------------------
+
+Changes
+~~~~~~~
+- Chore: preparing release to pypi. [Kevin M. Jablonka]
+- Chore: bug in the postBuild script was a space. [Kevin M. Jablonka]
+- Chore: remove space in postBuild script. [Kevin M. Jablonka]
+- Chore: for binder we need to install pypal. [Kevin M. Jablonka]
+- Chore: updated configs for readthedocs and binder. [Kevin M. Jablonka]
+- Chore: making readthedocs ready. [Kevin M. Jablonka]
+
+Docs
+~~~~
+- Docs: move doc links to readthedocs. [Kevin M. Jablonka]
+
+
+v0.1 (2020-10-25)
+-----------------
 
 New
 ~~~
+- Feat: Implemented first version of PALGBDT (#75) [Kevin Jablonka]
+
+  * feat: started implementation of PALGBDT
+
+  * added framework for class
+
+  * added helper function to construct model tuples
+
+  * chore: implemented input validation for LGBMRegressor
+
+  * docs: example of quantile regression
+
+  * chore: API docs for PALGBDT, added validation for interquartile_scaler
+
+  * chore: drop n_jobs support for palgbdt
+- Feat: implemented kwargs for filtering based on the coefficient of
+  variation, closes #58. [Kevin M. Jablonka]
+- Feat: added new example notebook, closes #30 (#61) [Kevin Jablonka]
+- Feat: warning for too low variance, closes #45 and #50. [Kevin M.
+  Jablonka]
+- Feat: implementing cross validation routine to address #45 (#49)
+  [Kevin Jablonka]
+- Feat: Adding plotting subpackage (#48) [Kevin Jablonka]
+
+  * feat: addressing #23
+
+  * feat: addressing #23
+
+  * fix: normalizing histogram, closes #35
+
+  * chore: used scaled uncertain for plot
+- Feat: added uncertainty wts property (#42) [Kevin Jablonka]
+- Feat: Implement mulitprocessing support for GPy and sklearn (#41)
+  [Kevin Jablonka]
+
+  * feat: first multiprocessing implementation for sklearn, #36
+
+  * feat: first multiprocessing implementation for GPy and added note in docs, #36
+
+  * fix: more restarts for sklearn
+
+  * chore: fix random seed for tests
 - Feat: Batch sampling (#33) [Kevin Jablonka]
 
   - we decided to update the mask array with the sampled points only in the `update_train_set()` function, which makes sense to me as before that the sampling didn't really happen. This is, a sample without subsequent measurement does not really help us and we do not know if only some or all objectives have been measured
@@ -36,6 +95,37 @@ New
 
 Changes
 ~~~~~~~
+- Chore: fix pre-commit. [Kevin M. Jablonka]
+- Chore: updating doc notes about pre-commit and adding notes to readme.
+  [Kevin M. Jablonka]
+- Chore: license badge. [Kevin M. Jablonka]
+- Chore: added license, closes #60. [Kevin M. Jablonka]
+- Chore: added license, closes #60. [Kevin M. Jablonka]
+- Chore: added license, closes #60. [Kevin M. Jablonka]
+- Chore: devops, docs, and closing #79. [Kevin M. Jablonka]
+- Chore: added some notebooks to create the figures in the docs. [Kevin
+  M. Jablonka]
+- Chore: updating classifiers in setup.py, closes #73. [Kevin M.
+  Jablonka]
+- Chore: implemented coefficient of variation mask. [Kevin M. Jablonka]
+- Chore: spelling of PyPAL in doc landing page fixed. [Kevin M.
+  Jablonka]
+- Chore: adding some test for epsilon sensitivity, closes #54 (#64)
+  [Kevin Jablonka]
+- Chore: docs example for overconfident model, fized errorbars in the
+  plotting functions. [Kevin M. Jablonka]
+- Chore: tuning the plotting functions. [Kevin M. Jablonka]
+
+  * specify zorder
+  * labels lowercase
+- Chore: adding more tests to address #59. [Kevin M. Jablonka]
+- Chore: add logger and remove print statement. [Kevin M. Jablonka]
+- Chore: disablying cross-validation in  most tests, closes #53 (#55)
+  [Kevin Jablonka]
+- Chore: reducing restarts, fix random seed, closes #52. [Kevin M.
+  Jablonka]
+- Chore: fixing typo in prospector settings. [Kevin M. Jablonka]
+- Chore: test with different kernel type, #37. [Kevin M. Jablonka]
 - Chore: allow for None option in tests. [Kevin M. Jablonka]
 - Chore: binh-korn test with smaller beta scale. [Kevin M. Jablonka]
 - Chore: added more binh-korn tests to address #37. [Kevin M. Jablonka]
@@ -152,8 +242,57 @@ Changes
 - Chore: added issue and PR templates. [Kevin]
 - Chore: initial commit. [Kevin]
 
+Docs
+~~~~
+- Docs: adding description of tutorials. [Kevin M. Jablonka]
+- Docs: added some links to API docs, explain which class to use. Closes
+  #78 (#80) [Kevin Jablonka]
+- Docs: moving notes about class implementation to developer notes.
+  [Kevin M. Jablonka]
+- Docs: adding screenshots of tutorials that can be linked to mybinder.
+  [Kevin M. Jablonka]
+- Docs: pypal -> PyPAL. [Kevin M. Jablonka]
+- Docs: rebuild docs. [Kevin M. Jablonka]
+- Docs: pypal -> PyPAL in text. [Kevin M. Jablonka]
+- Docs: added note about coef_var_threshold, closes #71. [Kevin M.
+  Jablonka]
+- Docs: citation placeholder added (#70) [Kevin Jablonka]
+
+  * fix: warning message for mae_variance comparison
+
+  * chore: added citation placeholder
+- Docs: move beta to background. [Kevin M. Jablonka]
+- Docs: added some first dicussion about the hyperparameters. [Kevin M.
+  Jablonka]
+- Docs: added some first dicussion about the hyperparameters. [Kevin M.
+  Jablonka]
+- Docs: fix typo in the list of attributes/properties. [Kevin M.
+  Jablonka]
+- Docs: adding some property docs (#57) [Kevin Jablonka]
+- Docs: fix typo in docs. [Kevin M. Jablonka]
+- Docs: fixing some typos, addings some notes about plotting and
+  plotting api docs, #29. [Kevin M. Jablonka]
+- Docs: updating hints about the crossvalidation. [Kevin M. Jablonka]
+- Docs: updating hints about the crossvalidation. [Kevin M. Jablonka]
+- Docs: updating hints about the crossvalidation. [Kevin M. Jablonka]
+- Docs: added some hints about GPR, closes #44 (#46) [Kevin Jablonka]
+- Docs: fixed typo. [Kevin M. Jablonka]
+- Docs: fixed typo. [Kevin M. Jablonka]
+- Docs: inline code in sphinx docs. [Kevin M. Jablonka]
+- Docs: fix some typos in readme, rebuilt docs. [Kevin M. Jablonka]
+- Docs: fix some typos in readme, rebuilt docs. [Kevin M. Jablonka]
+- Docs: added docstring to the PAL classes #40 (#43) [Kevin Jablonka]
+- Docs: updating notes on beta. [Kevin M. Jablonka]
+- Docs: adding beta influence. [Kevin M. Jablonka]
+- Docs: adding beta influence. [Kevin M. Jablonka]
+- Docs: adding beta influence. [Kevin M. Jablonka]
+
 Fix
 ~~~
+- Warning message for mae_variance comparison. [Kevin M. Jablonka]
+- Crossvalidation returned only nan due to wrong if. [Kevin M. Jablonka]
+- Replace nan MAE by inf. [Kevin M. Jablonka]
+- Indices in test fixed. [Kevin M. Jablonka]
 - Start iteration count at 1. [Kevin M. Jablonka]
 - Fixes remaining typos for uncertainity. [byooooo]
 - Took two times sqrt in coregionalized pal. [Kevin]
@@ -173,6 +312,30 @@ Fix
 
 Other
 ~~~~~
+- Update docs. [byooooo]
+- Merge branch 'master' of github.com:kjappelbaum/PyPAL. [Kevin M.
+  Jablonka]
+- Merge branch 'master' of github.com:kjappelbaum/PyPAL. [Kevin M.
+  Jablonka]
+- Validate sklearn GaussianProcessRegressor and extract model from
+  fitted GridSearchCV/RandomizedSearchCV (#69) [Kevin Jablonka]
+
+  * fix: warning message for mae_variance comparison
+
+  * feat: first implementation of sklearn gpr validation
+
+  * feat: using new validation in PALSklearn
+
+  * chore: updating docstring of PALsklearn
+
+  * docs: rebuilding docs
+- Docs spellcheck (#63) [Kevin Jablonka]
+
+  * chore: spellcheck on landing page
+
+  * chore: updating developer notes
+
+  * docs: some spellchecking of the docs
 - Merge branch 'master' of github.com:kjappelbaum/PyPAL. [Kevin M.
   Jablonka]
 - Merge pull request #31 from kjappelbaum/docs. [Kevin Jablonka]

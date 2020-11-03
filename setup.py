@@ -21,12 +21,18 @@ import versioneer
 with open("requirements.txt", "r") as fh:
     REQUIREMENTS = [line.strip() for line in fh]
 
+
+with open("README.md", encoding="utf-8") as fh:
+    LONG_DESCRIPTION = fh.read()
+
 setup(
     name="pypal",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
+    long_description=LONG_DESCRIPTION,
+    long_description_content_type="text/markdown",
     packages=find_packages(),
-    url="",
+    url="https://github.com/kjappelbaum/PyPAL",
     license="Apache 2.0",
     python_requires=">=3.6",
     install_requires=REQUIREMENTS,
