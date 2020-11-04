@@ -19,7 +19,13 @@ For more detailed docs [go here](https://pyepal.readthedocs.io/en/latest/?badge=
 
 ## Installation
 
-To install the latest development version from the head use
+To install the latest stable release use
+
+```(bash)
+pip install pyepal
+```
+
+to install the latest development version from the head use
 
 ```(bash)
 pip install git+https://github.com/kjappelbaum/pyepal.git

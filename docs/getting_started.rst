@@ -7,11 +7,20 @@ Installation
 
 We recommend installing PyePAL in a dedicated `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ or `conda environment <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_.
 
+To install the latest stable release use
+
+.. code-block:: bash
+
+    pip install pyepal
+
+
 The latest version of PyePAL can be installed from GitHub using
 
-.. code-block:: python
+.. code-block:: bash
 
     pip install git+https://github.com/kjappelbaum/pyepal.git
+
+
 
 
 Which class do i use?
