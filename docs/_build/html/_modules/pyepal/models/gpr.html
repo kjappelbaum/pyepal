@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pypal.models.gpr &#8212; pyepal v0.1.7+1.g6ba0ee7.dirty documentation</title>
+    <title>pyepal.models.gpr &#8212; pyepal v0.1.7+1.g6ba0ee7.dirty documentation</title>
 
   <link rel="stylesheet" href="../../../_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -157,9 +157,9 @@
 
               <div>
 
-  <h1>Source code for pypal.models.gpr</h1><div class="highlight"><pre>
+  <h1>Source code for pyepal.models.gpr</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="c1"># Copyright 2020 PyPAL authors</span>
+<span class="c1"># Copyright 2020 PyePAL authors</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -201,22 +201,22 @@
 <span class="kn">from</span> <span class="nn">.coregionalized</span> <span class="kn">import</span> <span class="n">GPCoregionalizedRegression</span>
 
 
-<div class="viewcode-block" id="_get_matern_32_kernel"><a class="viewcode-back" href="../../../api.html#pypal.models.gpr._get_matern_32_kernel">[docs]</a><span class="k">def</span> <span class="nf">_get_matern_32_kernel</span><span class="p">(</span><span class="n">NFEAT</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ARD</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">Matern32</span><span class="p">:</span>
+<div class="viewcode-block" id="_get_matern_32_kernel"><a class="viewcode-back" href="../../../api.html#pyepal.models.gpr._get_matern_32_kernel">[docs]</a><span class="k">def</span> <span class="nf">_get_matern_32_kernel</span><span class="p">(</span><span class="n">NFEAT</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ARD</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">Matern32</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Matern-3/2 kernel without ARD&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">Matern32</span><span class="p">(</span><span class="n">NFEAT</span><span class="p">,</span> <span class="n">ARD</span><span class="o">=</span><span class="n">ARD</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_get_matern_52_kernel"><a class="viewcode-back" href="../../../api.html#pypal.models.gpr._get_matern_52_kernel">[docs]</a><span class="k">def</span> <span class="nf">_get_matern_52_kernel</span><span class="p">(</span><span class="n">NFEAT</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ARD</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">Matern52</span><span class="p">:</span>
+<div class="viewcode-block" id="_get_matern_52_kernel"><a class="viewcode-back" href="../../../api.html#pyepal.models.gpr._get_matern_52_kernel">[docs]</a><span class="k">def</span> <span class="nf">_get_matern_52_kernel</span><span class="p">(</span><span class="n">NFEAT</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ARD</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">Matern52</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Matern-5/2 kernel without ARD&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">Matern52</span><span class="p">(</span><span class="n">NFEAT</span><span class="p">,</span> <span class="n">ARD</span><span class="o">=</span><span class="n">ARD</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_get_ratquad_kernel"><a class="viewcode-back" href="../../../api.html#pypal.models.gpr._get_ratquad_kernel">[docs]</a><span class="k">def</span> <span class="nf">_get_ratquad_kernel</span><span class="p">(</span><span class="n">NFEAT</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ARD</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">RatQuad</span><span class="p">:</span>
+<div class="viewcode-block" id="_get_ratquad_kernel"><a class="viewcode-back" href="../../../api.html#pyepal.models.gpr._get_ratquad_kernel">[docs]</a><span class="k">def</span> <span class="nf">_get_ratquad_kernel</span><span class="p">(</span><span class="n">NFEAT</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ARD</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">RatQuad</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Rational quadratic kernel without ARD&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">RatQuad</span><span class="p">(</span><span class="n">NFEAT</span><span class="p">,</span> <span class="n">ARD</span><span class="o">=</span><span class="n">ARD</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="build_coregionalized_model"><a class="viewcode-back" href="../../../api.html#pypal.models.gpr.build_coregionalized_model">[docs]</a><span class="k">def</span> <span class="nf">build_coregionalized_model</span><span class="p">(</span>
+<div class="viewcode-block" id="build_coregionalized_model"><a class="viewcode-back" href="../../../api.html#pyepal.models.gpr.build_coregionalized_model">[docs]</a><span class="k">def</span> <span class="nf">build_coregionalized_model</span><span class="p">(</span>
     <span class="n">X_train</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GPy</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">GPCoregionalizedRegression</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Wrapper for building a coregionalized GPR, it will have as many</span>
@@ -243,7 +243,7 @@
     <span class="k">return</span> <span class="n">m</span></div>
 
 
-<div class="viewcode-block" id="build_model"><a class="viewcode-back" href="../../../api.html#pypal.models.gpr.build_model">[docs]</a><span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span>
+<div class="viewcode-block" id="build_model"><a class="viewcode-back" href="../../../api.html#pyepal.models.gpr.build_model">[docs]</a><span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span>
     <span class="n">X_train</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">y_train</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GPy</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">GPRegression</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Build a single-output GPR model&quot;&quot;&quot;</span>
@@ -259,7 +259,7 @@
     <span class="k">return</span> <span class="n">m</span></div>
 
 
-<div class="viewcode-block" id="predict"><a class="viewcode-back" href="../../../api.html#pypal.models.gpr.predict">[docs]</a><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GPy</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">GPRegression</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]:</span>
+<div class="viewcode-block" id="predict"><a class="viewcode-back" href="../../../api.html#pyepal.models.gpr.predict">[docs]</a><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GPy</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">GPRegression</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Wrapper function for the prediction method of a GPy regression model.</span>
 <span class="sd">    It return the standard deviation instead of the variance&quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
@@ -269,7 +269,7 @@
     <span class="k">return</span> <span class="n">mu</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="predict_coregionalized"><a class="viewcode-back" href="../../../api.html#pypal.models.gpr.predict_coregionalized">[docs]</a><span class="k">def</span> <span class="nf">predict_coregionalized</span><span class="p">(</span>
+<div class="viewcode-block" id="predict_coregionalized"><a class="viewcode-back" href="../../../api.html#pyepal.models.gpr.predict_coregionalized">[docs]</a><span class="k">def</span> <span class="nf">predict_coregionalized</span><span class="p">(</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">GPy</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">GPCoregionalizedRegression</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Wrapper function for the prediction method of a coregionalized</span>
@@ -287,7 +287,7 @@
     <span class="k">return</span> <span class="n">mu_c0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var_c0</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="set_xy_coregionalized"><a class="viewcode-back" href="../../../api.html#pypal.models.gpr.set_xy_coregionalized">[docs]</a><span class="k">def</span> <span class="nf">set_xy_coregionalized</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="set_xy_coregionalized"><a class="viewcode-back" href="../../../api.html#pyepal.models.gpr.set_xy_coregionalized">[docs]</a><span class="k">def</span> <span class="nf">set_xy_coregionalized</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Wrapper to update a coregionalized model with new data&quot;&quot;&quot;</span>
     <span class="n">num_target</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

@@ -12,6 +12,7 @@ should not take more than a few minutes.
 .. image:: _static/basic_pypal_screenshot.png
     :width: 400px
     :align: center
+    :target: https://mybinder.org/v2/gh/kjappelbaum/pyepal/HEAD?filepath=examples/binh_korn_one_step.ipynb
 
 Topic covered
 ................
@@ -28,6 +29,7 @@ Topic covered
 .. image:: _static/active_learning_screenshot.png
     :width: 400px
     :align: center
+    :target: https://mybinder.org/v2/gh/kjappelbaum/pyepal/HEAD?filepath=examples/active_learning_example.ipynb
 
 Topic covered
 ................
@@ -44,6 +46,7 @@ Topic covered
 .. image:: _static/quantile_regression_screenshot.png
     :width: 400px
     :align: center
+    :target: https://mybinder.org/v2/gh/kjappelbaum/pyepal/HEAD?filepath=examples/quantile_regression.ipynb
 
 
 - Using LightGBM models with quantile loss with :py:obj:`pyepal.pal.pal_gbdt.PALGBDT`

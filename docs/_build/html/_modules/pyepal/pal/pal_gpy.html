@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pypal.pal.pal_gpy &#8212; pyepal v0.1.7+1.g6ba0ee7.dirty documentation</title>
+    <title>pyepal.pal.pal_gpy &#8212; pyepal v0.1.7+1.g6ba0ee7.dirty documentation</title>
 
   <link rel="stylesheet" href="../../../_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -157,9 +157,9 @@
 
               <div>
 
-  <h1>Source code for pypal.pal.pal_gpy</h1><div class="highlight"><pre>
+  <h1>Source code for pyepal.pal.pal_gpy</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="c1"># Copyright 2020 PyPAL authors</span>
+<span class="c1"># Copyright 2020 PyePAL authors</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -179,10 +179,9 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">..models.gpr</span> <span class="kn">import</span> <span class="n">predict</span>
 <span class="kn">from</span> <span class="nn">.pal_base</span> <span class="kn">import</span> <span class="n">PALBase</span>
 <span class="kn">from</span> <span class="nn">.schedules</span> <span class="kn">import</span> <span class="n">linear</span>
-<span class="kn">from</span> <span class="nn">.validate_inputs</span> <span class="kn">import</span> <span class="n">validate_gpy_model</span><span class="p">,</span> <span class="n">validate_njobs</span><span class="p">,</span> <span class="n">validate_number_models</span>
+<span class="kn">from</span> <span class="nn">.validate_inputs</span> <span class="kn">import</span> <span class="n">validate_njobs</span><span class="p">,</span> <span class="n">validate_number_models</span>
 
 
 <span class="k">def</span> <span class="nf">_train_model_picklable</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">restarts</span><span class="p">):</span>
@@ -191,10 +190,10 @@
     <span class="k">return</span> <span class="n">model</span>
 
 
-<div class="viewcode-block" id="PALGPy"><a class="viewcode-back" href="../../../api.html#pypal.pal.pal_gpy.PALGPy">[docs]</a><span class="k">class</span> <span class="nc">PALGPy</span><span class="p">(</span><span class="n">PALBase</span><span class="p">):</span>
+<div class="viewcode-block" id="PALGPy"><a class="viewcode-back" href="../../../api.html#pyepal.pal.pal_gpy.PALGPy">[docs]</a><span class="k">class</span> <span class="nc">PALGPy</span><span class="p">(</span><span class="n">PALBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;PAL class for a list of GPy GPR models, with one model per objective&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="PALGPy.__init__"><a class="viewcode-back" href="../../../api.html#pypal.pal.pal_gpy.PALGPy.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="PALGPy.__init__"><a class="viewcode-back" href="../../../api.html#pyepal.pal.pal_gpy.PALGPy.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Contruct the PALGPy instance</span>
 
 <span class="sd">        Args:</span>
@@ -220,6 +219,10 @@
 <span class="sd">            n_jobs (int): Number of parallel processes that are used to fit</span>
 <span class="sd">                the GPR models. Defaults to 1.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.validate_inputs</span> <span class="kn">import</span> <span class="p">(</span>  <span class="c1"># pylint:disable=import-outside-toplevel</span>
+            <span class="n">validate_gpy_model</span><span class="p">,</span>
+        <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">restarts</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;restarts&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">validate_njobs</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;n_jobs&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
@@ -242,6 +245,9 @@
         <span class="k">pass</span>  <span class="c1"># There is no training in instance based models</span>
 
     <span class="k">def</span> <span class="nf">_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="kn">from</span> <span class="nn">..models.gpr</span> <span class="kn">import</span> <span class="n">predict</span>  <span class="c1"># pylint:disable=import-outside-toplevel</span>
+
         <span class="n">means</span><span class="p">,</span> <span class="n">stds</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
             <span class="n">mean</span><span class="p">,</span> <span class="n">std</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">)</span>

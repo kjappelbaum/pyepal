@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pypal.pal.pal_gbdt &#8212; pyepal v0.1.7+1.g6ba0ee7.dirty documentation</title>
+    <title>pyepal.pal.pal_sklearn &#8212; pyepal v0.1.7+1.g6ba0ee7.dirty documentation</title>
 
   <link rel="stylesheet" href="../../../_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -157,9 +157,9 @@
 
               <div>
 
-  <h1>Source code for pypal.pal.pal_gbdt</h1><div class="highlight"><pre>
+  <h1>Source code for pyepal.pal.pal_sklearn</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="c1"># Copyright 2020 PyPAL authors</span>
+<span class="c1"># Copyright 2020 PyePAL authors</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -174,56 +174,37 @@
 <span class="c1"># limitations under the License.</span>
 
 
-<span class="sd">&quot;&quot;&quot;Implements a PAL class for GBDT models which can predict uncertainity intervals</span>
-<span class="sd">when used with quantile loss.</span>
-<span class="sd">For an example of GBDT with quantile loss see</span>
-<span class="sd">Jablonka, Kevin Maik; Moosavi, Seyed Mohamad; Asgari, Mehrdad; Ireland, Christopher;</span>
-<span class="sd">Patiny, Luc; Smit, Berend (2020): A Data-Driven Perspective on</span>
-<span class="sd">the Colours of Metal-Organic Frameworks. ChemRxiv. Preprint.</span>
-<span class="sd">https://doi.org/10.26434/chemrxiv.13033217.v1</span>
-
-<span class="sd">For general information about quantile regression</span>
-<span class="sd">see https://en.wikipedia.org/wiki/Quantile_regression</span>
-
-<span class="sd">Note that the scaling of the hyperrectangles has been derived</span>
-<span class="sd">for GPR models (with RBF kernels).</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">math</span>
+<span class="sd">&quot;&quot;&quot;PAL using Sklearn GPR models&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">concurrent.futures</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">.pal_base</span> <span class="kn">import</span> <span class="n">PALBase</span>
-<span class="kn">from</span> <span class="nn">.validate_inputs</span> <span class="kn">import</span> <span class="n">validate_gbdt_models</span><span class="p">,</span> <span class="n">validate_interquartile_scaler</span>
+<span class="kn">from</span> <span class="nn">.validate_inputs</span> <span class="kn">import</span> <span class="n">validate_njobs</span><span class="p">,</span> <span class="n">validate_sklearn_gpr_models</span>
 
 
 <span class="k">def</span> <span class="nf">_train_model_picklable</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">design_space</span><span class="p">,</span> <span class="n">objectives</span><span class="p">,</span> <span class="n">sampled</span><span class="p">):</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">objective</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
     <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-        <span class="n">design_space</span><span class="p">[</span><span class="n">sampled</span><span class="p">[:,</span> <span class="n">objective</span><span class="p">],</span> <span class="p">:],</span>
-        <span class="n">objectives</span><span class="p">[</span><span class="n">sampled</span><span class="p">[:,</span> <span class="n">objective</span><span class="p">],</span> <span class="n">objective</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+        <span class="n">design_space</span><span class="p">[</span><span class="n">sampled</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]],</span>
+        <span class="n">objectives</span><span class="p">[</span><span class="n">sampled</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">model</span>
 
 
-<div class="viewcode-block" id="PALGBDT"><a class="viewcode-back" href="../../../api.html#pypal.pal.pal_gbdt.PALGBDT">[docs]</a><span class="k">class</span> <span class="nc">PALGBDT</span><span class="p">(</span><span class="n">PALBase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;PAL class for a list of LightGBM GBDT models&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PALSklearn"><a class="viewcode-back" href="../../../api.html#pyepal.pal.pal_sklearn.PALSklearn">[docs]</a><span class="k">class</span> <span class="nc">PALSklearn</span><span class="p">(</span><span class="n">PALBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;PAL class for a list of Sklearn (GPR) models, with one model per objective&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="PALGBDT.__init__"><a class="viewcode-back" href="../../../api.html#pypal.pal.pal_gbdt.PALGBDT.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Construct the PALGBDT instance</span>
+<div class="viewcode-block" id="PALSklearn.__init__"><a class="viewcode-back" href="../../../api.html#pyepal.pal.pal_sklearn.PALSklearn.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Construct the PALSklearn instance</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            X_design (np.array): Design space (feature matrix)</span>
-<span class="sd">            models (List[Iterable[LGBMRegressor, LGBMRegressor, LGBMRegressor]]:</span>
-<span class="sd">                Machine learning models. You need to provide a list of iterables.</span>
-<span class="sd">                One iterable per objective and every iterable contains three</span>
-<span class="sd">                LGBMRegressors. The first one for the lower uncertainty limits,</span>
-<span class="sd">                the middle one for the median and the last one for the upper limit.</span>
-<span class="sd">                To create appropriate models, you need to use the quantile loss.</span>
-<span class="sd">                If you want to parallelize training, we recommend that you use</span>
-<span class="sd">                the LightGBM parallelization and fit the models for the different</span>
-<span class="sd">                objectives in serial fashion.s</span>
+<span class="sd">            models (list): Machine learning models. You can provide a list of</span>
+<span class="sd">                GaussianProcessRegressor instances or a list of *fitted*</span>
+<span class="sd">                RandomizedSearchCV/GridSearchCV instances with</span>
+<span class="sd">                GaussianProcessRegressor models</span>
 <span class="sd">            ndim (int): Number of objectives</span>
 <span class="sd">            epsilon (Union[list, float], optional): Epsilon hyperparameter.</span>
 <span class="sd">                Defaults to 0.01.</span>
@@ -239,63 +220,37 @@
 <span class="sd">            coef_var_threshold (float, optional): Use only points with</span>
 <span class="sd">                a coefficient of variation below this threshold</span>
 <span class="sd">                in the classification step. Defaults to 3.</span>
-<span class="sd">            interquartile_scaler (float, optional): Used to convert the difference</span>
-<span class="sd">                between the upper and lower quantile into a standard deviation.</span>
-<span class="sd">                This, is std = (up-low)/interquartile_scaler. Defaults to 1.35,</span>
-<span class="sd">                following Wan, X., Wang, W., Liu, J. et al.</span>
-<span class="sd">                Estimating the sample mean and standard deviation from the sample size,</span>
-<span class="sd">                median, range and/or interquartile range.</span>
-<span class="sd">                BMC Med Res Methodol 14, 135 (2014).</span>
-<span class="sd">                https://doi.org/10.1186/1471-2288-14-135</span>
-
+<span class="sd">            n_jobs (int): Number of parallel processes that are used to fit</span>
+<span class="sd">                the GPR models. Defaults to 1.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">interquartile_scaler</span> <span class="o">=</span> <span class="n">validate_interquartile_scaler</span><span class="p">(</span>
-            <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;interquartile_scaler&quot;</span><span class="p">,</span> <span class="mf">1.35</span><span class="p">)</span>
-        <span class="p">)</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">validate_njobs</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;n_jobs&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">validate_gbdt_models</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">validate_sklearn_gpr_models</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">models_flat</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c1"># not using list(sum(self.models, ())) such that we do not</span>
-        <span class="c1"># have to assume the type</span>
-        <span class="k">for</span> <span class="n">model_tuples</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">model_tuples</span><span class="p">:</span>
-                <span class="n">model</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">1</span>
-                <span class="n">model</span><span class="o">.</span><span class="n">nthreads</span> <span class="o">=</span> <span class="mi">1</span>
-                <span class="n">models_flat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-
         <span class="n">train_single_partial</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
             <span class="n">_train_model_picklable</span><span class="p">,</span>
-            <span class="n">models</span><span class="o">=</span><span class="n">models_flat</span><span class="p">,</span>
+            <span class="n">models</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">,</span>
             <span class="n">design_space</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">,</span>
             <span class="n">objectives</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
             <span class="n">sampled</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">train_single_partial</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">models_flat</span><span class="p">))):</span>
-            <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-
-        <span class="n">model_tuples</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">),</span> <span class="mi">3</span><span class="p">):</span>
-            <span class="n">chunk</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
-            <span class="n">model_tuples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">model_tuples</span>
+        <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">(</span>
+            <span class="n">max_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">train_single_partial</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">)):</span>
+                <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">models</span>
 
     <span class="k">def</span> <span class="nf">_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">means</span><span class="p">,</span> <span class="n">stds</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">model_tuple</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
-            <span class="n">mean</span> <span class="o">=</span> <span class="n">model_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">)</span>
-            <span class="n">upper</span> <span class="o">=</span> <span class="n">model_tuple</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">)</span>
-            <span class="n">lower</span> <span class="o">=</span> <span class="n">model_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">)</span>
-            <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">upper</span> <span class="o">-</span> <span class="n">lower</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">interquartile_scaler</span>
-
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
+            <span class="n">mean</span><span class="p">,</span> <span class="n">std</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_space</span><span class="p">,</span> <span class="n">return_std</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">means</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
             <span class="n">stds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
@@ -303,7 +258,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">stds</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_set_hyperparameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># ToDo</span>
         <span class="k">pass</span></div>
 </pre></div>
 

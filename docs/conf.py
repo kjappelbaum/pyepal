@@ -43,7 +43,7 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx_copybutton",
     "sphinx.ext.viewcode",
-    'sphinx.ext.autosectionlabel'
+    "sphinx.ext.autosectionlabel",
 ]
 
 copybutton_selector = "div:not(.no-copy)>div.highlight pre"
@@ -70,7 +70,7 @@ numfig = True
 # a list of builtin themes.
 #
 html_theme = "pydata_sphinx_theme"
-html_logo = "../pypal_logo.png"
+html_logo = "../pyepal_logo.png"
 
 # Register the theme as an extension to generate a sitemap.xml
 

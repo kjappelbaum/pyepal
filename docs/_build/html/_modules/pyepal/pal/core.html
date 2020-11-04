@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pypal.pal.core &#8212; pyepal v0.1.7+1.g6ba0ee7.dirty documentation</title>
+    <title>pyepal.pal.core &#8212; pyepal v0.1.7+1.g6ba0ee7.dirty documentation</title>
 
   <link rel="stylesheet" href="../../../_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -157,9 +157,9 @@
 
               <div>
 
-  <h1>Source code for pypal.pal.core</h1><div class="highlight"><pre>
+  <h1>Source code for pyepal.pal.core</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="c1"># Copyright 2020 PyPAL authors</span>
+<span class="c1"># Copyright 2020 PyePAL authors</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -187,7 +187,7 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="_get_uncertainty_region"><a class="viewcode-back" href="../../../api.html#pypal.pal.core._get_uncertainty_region">[docs]</a><span class="k">def</span> <span class="nf">_get_uncertainty_region</span><span class="p">(</span>  <span class="c1"># pylint:disable=invalid-name</span>
+<div class="viewcode-block" id="_get_uncertainty_region"><a class="viewcode-back" href="../../../api.html#pyepal.pal.core._get_uncertainty_region">[docs]</a><span class="k">def</span> <span class="nf">_get_uncertainty_region</span><span class="p">(</span>  <span class="c1"># pylint:disable=invalid-name</span>
     <span class="n">mu</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">std</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">beta_sqrt</span><span class="p">:</span> <span class="nb">float</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -204,7 +204,7 @@
     <span class="k">return</span> <span class="n">low_lim</span><span class="p">,</span> <span class="n">high_lim</span></div>
 
 
-<div class="viewcode-block" id="_get_uncertainty_regions"><a class="viewcode-back" href="../../../api.html#pypal.pal.core._get_uncertainty_regions">[docs]</a><span class="k">def</span> <span class="nf">_get_uncertainty_regions</span><span class="p">(</span>
+<div class="viewcode-block" id="_get_uncertainty_regions"><a class="viewcode-back" href="../../../api.html#pyepal.pal.core._get_uncertainty_regions">[docs]</a><span class="k">def</span> <span class="nf">_get_uncertainty_regions</span><span class="p">(</span>
     <span class="n">mus</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">stds</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">beta_sqrt</span><span class="p">:</span> <span class="nb">float</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -229,7 +229,7 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">low_lims</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">high_lims</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_union"><a class="viewcode-back" href="../../../api.html#pypal.pal.core._union">[docs]</a><span class="k">def</span> <span class="nf">_union</span><span class="p">(</span>
+<div class="viewcode-block" id="_union"><a class="viewcode-back" href="../../../api.html#pyepal.pal.core._union">[docs]</a><span class="k">def</span> <span class="nf">_union</span><span class="p">(</span>
     <span class="n">lows</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">ups</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">new_lows</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">new_ups</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Performing iterative intersection (eq. 6 in PAL paper) in all dimensions.</span>
@@ -258,7 +258,7 @@
     <span class="k">return</span> <span class="n">out_lows_array</span><span class="p">,</span> <span class="n">out_ups_array</span></div>
 
 
-<div class="viewcode-block" id="_union_one_dim"><a class="viewcode-back" href="../../../api.html#pypal.pal.core._union_one_dim">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="_union_one_dim"><a class="viewcode-back" href="../../../api.html#pyepal.pal.core._union_one_dim">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">_union_one_dim</span><span class="p">(</span>
     <span class="n">lows</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">ups</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">new_lows</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">new_ups</span><span class="p">:</span> <span class="n">Sequence</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]:</span>
@@ -305,7 +305,7 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">out_lows</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">out_ups</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_pareto_classify"><a class="viewcode-back" href="../../../api.html#pypal.pal.core._pareto_classify">[docs]</a><span class="k">def</span> <span class="nf">_pareto_classify</span><span class="p">(</span>  <span class="c1"># pylint:disable=too-many-arguments, too-many-locals</span>
+<div class="viewcode-block" id="_pareto_classify"><a class="viewcode-back" href="../../../api.html#pyepal.pal.core._pareto_classify">[docs]</a><span class="k">def</span> <span class="nf">_pareto_classify</span><span class="p">(</span>  <span class="c1"># pylint:disable=too-many-arguments, too-many-locals</span>
     <span class="n">pareto_optimal_0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
     <span class="n">not_pareto_optimal_0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
     <span class="n">unclassified_0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
@@ -405,7 +405,7 @@
 
 
 <span class="c1"># ToDo: maybe add jitter to avoid issues when the prediction is exactly 0</span>
-<div class="viewcode-block" id="_get_max_wt"><a class="viewcode-back" href="../../../api.html#pypal.pal.core._get_max_wt">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="_get_max_wt"><a class="viewcode-back" href="../../../api.html#pyepal.pal.core._get_max_wt">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">_get_max_wt</span><span class="p">(</span>  <span class="c1"># pylint:disable=too-many-arguments</span>
     <span class="n">rectangle_lows</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
     <span class="n">rectangle_ups</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
@@ -454,7 +454,7 @@
     <span class="k">return</span> <span class="n">maxid</span></div>
 
 
-<div class="viewcode-block" id="_uncertainty"><a class="viewcode-back" href="../../../api.html#pypal.pal.core._uncertainty">[docs]</a><span class="k">def</span> <span class="nf">_uncertainty</span><span class="p">(</span><span class="n">rectangle_ups</span><span class="p">,</span> <span class="n">rectangle_lows</span><span class="p">,</span> <span class="n">means</span><span class="p">):</span>
+<div class="viewcode-block" id="_uncertainty"><a class="viewcode-back" href="../../../api.html#pyepal.pal.core._uncertainty">[docs]</a><span class="k">def</span> <span class="nf">_uncertainty</span><span class="p">(</span><span class="n">rectangle_ups</span><span class="p">,</span> <span class="n">rectangle_lows</span><span class="p">,</span> <span class="n">means</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Hyperrectangle sizes&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">rectangle_lows</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">rectangle_ups</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
