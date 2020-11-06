@@ -36,7 +36,7 @@ Developers can install the extras `[testing, docs, pre-commit]`. Installation sh
 ## Usage
 
 The main logic is implemented in the `PALBase` class. There are some prebuilt classes for common use cases (`GPy`, `sklearn`) that inherit from this class.
-For more details about how to use the code and notes about the tutorials [see the docs]](https://kjappelbaum.github.io/pyepal/).
+For more details about how to use the code and notes about the tutorials [see the docs](https://kjappelbaum.github.io/pyepal/).
 
 ### Pre-Built classes
 
