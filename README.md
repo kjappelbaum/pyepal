@@ -1,17 +1,18 @@
 <p align="center">
  <img src="pyepal_logo.png" />
-</p>
 
 ![Python package](https://github.com/kjappelbaum/pyepal/workflows/Python%20package/badge.svg)
 ![pre-commit](https://github.com/kjappelbaum/pyepal/workflows/pre-commit/badge.svg)
 [![codecov](https://codecov.io/gh/kjappelbaum/pyepal/branch/master/graph/badge.svg?token=BL2CF4HQ06)](https://codecov.io/gh/kjappelbaum/pyepal)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+[![Maintainability](https://api.codeclimate.com/v1/badges/db9b3f21528574dfb141/maintainability)](https://codeclimate.com/github/kjappelbaum/pyepal/maintainability)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyepal)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Gitter](https://badges.gitter.im/kjappelbaum/pyepal.svg)](https://gitter.im/kjappelbaum/pyepal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/kjappelbaum/pyepal)
 [![Documentation Status](https://readthedocs.org/projects/pyepal/badge/?version=latest)](https://pyepal.readthedocs.io/en/latest/?badge=latest)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kjappelbaum/pyepal/HEAD?filepath=examples)
+</p>
 
 Generalized Python implementation of a modified version of the ε-PAL algorithm [[1](#1), [2](#2)].
 
