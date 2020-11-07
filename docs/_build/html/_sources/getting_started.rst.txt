@@ -172,7 +172,7 @@ Note that the `exhaust_loop` also supports the `batch_size` keyword argument
 Caveats and tricks with Gaussian processes
 -------------------------------------------
 
-One caveat to keep in mind is that :math:`\epsilon`-PAL will not work if the predictive variance does not make sense. For example, when the model is overconfident and the uncertainties for the training set is significantly lower than those for the predicted set. In this case, PyePAL will untimely, and often incorrectly, label the design points. An example situation where the predictions for an overconfident model due to a training set that excludes a part of design space is shown in the figure below
+One caveat to keep in mind is that :math:`\epsilon`-PAL will not work if the predictive variance does not make sense, for example, when the model is overconfident and the uncertainties for the training set is significantly lower than those for the predicted set. In this case, PyePAL will untimely, and often incorrectly, label the design points. An example situation where the predictions for an overconfident model due to a training set that excludes a part of design space is shown in the figure below
 
 .. image:: _static/overconfident_model.png
   :width: 600
@@ -186,7 +186,7 @@ This problem is exacerbated in conjunction with :math:`\beta_\mathrm{scale} < 1`
 - `to use a kernel that suits the problem <https://www.cs.toronto.edu/~duvenaud/cookbook/>`_
 - to turn off ARD. Automatic relevance determination (ARD) might increase the predictive performance, but also makes the model more prone to overfitting
 
-We also recommend to cross-validate the Gaussian process models and to check that the predicted variances make sense. When performing cross-validation, make sure that the index provided to PyePAL is the same size as the cross-validation folds.
+We also recommend cross-validating the Gaussian process models and checking that the predicted variances make sense. When performing cross-validation, make sure that the index provided to PyePAL is the same size as the cross-validation folds.
 By default, the code will run a simple cross-validation only on the first iteration and provide a warning if the mean absolute error is above the mean standard deviation. The warning will look something like
 
 .. code-block::
