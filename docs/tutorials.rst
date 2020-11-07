@@ -2,8 +2,8 @@ Tutorials
 ============
 
 To explore different use cases of PyePAL, we recommend checking out the `example notebooks <https://github.com/kjappelbaum/pyepal/tree/master/examples>`_.
-All notebooks can be run without installation on MyBinder. In the folder, you find the notebooks with the output cells, if you rerun them, the execution
-should not take more than a few minutes.
+All notebooks can be run without installation on MyBinder. In the folder you find the notebooks with pre-executed output cells. Rerunning them
+should take no more than a few minutes.
 
 
 1. One active learning step using GPR models built with :code:`GPy`

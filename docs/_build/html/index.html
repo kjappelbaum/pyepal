@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PyePAL: Pareto active learning for Python &#8212; pyepal v0.1.7+1.g6ba0ee7.dirty documentation</title>
+    <title>PyePAL: Pareto active learning for Python &#8212; pyepal v0.1.7+4.gbcc085a.dirty documentation</title>
 
-  <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
+  <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
 
   <link rel="stylesheet"
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
 
-  <link rel="preload" as="script" href="_static/js/index.30270b6e4c972e43c488.js">
+  <link rel="preload" as="script" href="_static/js/index.3da636dd464baa7582d2.js">
 
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -50,11 +50,11 @@
     <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
 <div class="container-xl">
 
-
     <a class="navbar-brand" href="#">
-      <img src="_static/pyepal_logo.png" class="logo" alt="logo">
-    </a>
 
+      <img src="_static/pyepal_logo.png" class="logo" alt="logo" />
+
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -68,11 +68,11 @@
         </li>
 
         <li class="nav-item ">
-            <a class="nav-link" href="tutorials.html">Tutorials</a>
+            <a class="nav-link" href="background.html">Background</a>
         </li>
 
         <li class="nav-item ">
-            <a class="nav-link" href="background.html">Background</a>
+            <a class="nav-link" href="tutorials.html">Tutorials</a>
         </li>
 
         <li class="nav-item ">
@@ -107,23 +107,16 @@
     <div class="container-xl">
       <div class="row">
 
-          <div class="col-12 col-md-3 bd-sidebar">
-
-<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form>
-
-
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
 
-  <div class="bd-toc-item active">
+    <div class="bd-toc-item active">
 
 
-  <ul class="nav bd-sidenav">
-
-
-
+    <ul class="nav bd-sidenav">
 
 
 
@@ -132,9 +125,12 @@
 
 
 
-    </ul>
 
-</nav>
+
+
+      </ul>
+
+  </nav>
           </div>
 
 
@@ -177,11 +173,11 @@
 
   <div class="section" id="pyepal-pareto-active-learning-for-python">
 <h1>PyePAL: Pareto active learning for Python<a class="headerlink" href="#pyepal-pareto-active-learning-for-python" title="Permalink to this headline">¶</a></h1>
-<p>This package uses an active learning approach to efficiently and confidently identify the Pareto front with any regression model that can output a mean and a standard deviation.</p>
+<p>This package implements an active learning approach to efficiently and confidently identify the Pareto front with any regression model that can output a mean and a standard deviation.</p>
 <p>It works with any number of objectives, missing data, and is highly customizable.</p>
 <p>If you find this code useful for your work, please cite:</p>
 <ul class="simple">
-<li><p>Jablonka, K. M.; Giriprasad, M. J.; Wang, S.; Smit, B.; Yoo, B. De Novo Polymer Design with Multi Objective Active Learning and Molecular Simulations. 2020.</p></li>
+<li><p>Jablonka, K. M.; Giriprasad, M. J.; Wang, S.; Smit, B.; Yoo, B. Bias Free Multiobjective Active Learning for Materials Design and Discovery. 2020.</p></li>
 <li><p><a class="reference external" href="https://jmlr.csail.mit.edu/papers/volume17/15-047/15-047.pdf">Zuluaga, M.; Krause, A.; Püschel, M. E-PAL: An Active Learning Approach to the Multi-Objective Optimization Problem. Journal of Machine Learning Research 2016, 17 (104), 1–32.</a></p></li>
 </ul>
 <div class="section" id="contents">
@@ -202,6 +198,11 @@
 <li class="toctree-l2"><a class="reference internal" href="getting_started.html#caveats-and-tricks-with-gaussian-processes">Caveats and tricks with Gaussian processes</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="background.html">Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="background.html#the-intuition-behind-the-algorithm">The intuition behind the algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="background.html#how-do-the-hyperparameters-influence-the-algorithm">How do the hyperparameters influence the algorithm?</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#one-active-learning-step-using-gpr-models-built-with-gpy">1. One active learning step using GPR models built with <code class="code docutils literal notranslate"><span class="pre">GPy</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="tutorials.html#topic-covered">Topic covered</a></li>
@@ -212,11 +213,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#quantile-regression">3. Quantile regression</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="background.html">Background</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="background.html#the-intuition-behind-the-algorithm">The intuition behind the algorithm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="background.html#how-do-the-hyperparameters-influence-the-algorithm">How do the hyperparameters influence the algorithm?</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">The PyePAL API reference</a><ul>
@@ -280,7 +276,7 @@
     </div>
 
 
-  <script src="_static/js/index.30270b6e4c972e43c488.js"></script>
+  <script src="_static/js/index.3da636dd464baa7582d2.js"></script>
 
 
     <footer class="footer mt-5 mt-md-0">

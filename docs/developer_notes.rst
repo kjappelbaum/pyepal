@@ -52,9 +52,9 @@ Currently, documentation is hosted on GitHub pages. Build it locally using :code
 Implementing a new PAL class
 -----------------------------
 
-If you want to use PyePAL  with a model that we do not support yet, i.e., not :code:`GPy` or :code:`sklearn` Gaussian process regression, it is easy to write your own class. For this, you need to inherit from `PALBase` and implement your  :code:`_train` and :code:`_predict` functions (and maybe also the :code:`_set_hyperparameters` and :code:`_should_optimize_hyperparameters` functions) using the :code:`design_space` and :code:`y` attributes of the class.
+If you want to use PyePAL  with a model that we do not support yet, i.e., not :code:`GPy` or :code:`sklearn` Gaussian process regression, it is easy to write your own class. For this, you will need to inherit from `PALBase` and implement your  :code:`_train` and :code:`_predict` functions (and maybe also the :code:`_set_hyperparameters` and :code:`_should_optimize_hyperparameters` functions) using the :code:`design_space` and :code:`y` attributes of the class.
 
-For instance, if we develop some multioutput model that has a :code:`train()` and a :code:`predict()` method we could simply use the following design pattern
+For instance, if we develop some multioutput model that has a :code:`train()` and a :code:`predict()` method, we could simply use the following design pattern
 
 .. code-block:: python
 
@@ -70,7 +70,7 @@ For instance, if we develop some multioutput model that has a :code:`train()` an
 
 Note that we typically provide the models, even if it is only one, in a list to keep the API consistent.
 
-In some instances, you might want to perform an operation in parallel, e.g., train the models for different objectives in parallel. One convenient way to do this in Python is `concurrent.futures <https://docs.python.org/3/library/concurrent.futures.html>`_. The only hitch is that this approach requires that the function is picklable. To ensure is, you may want to implement the function that is to be run in parallel outside the class. For example, you could use the following design pattern
+In some instances, you may want to perform an operation in parallel, e.g., train the models for different objectives in parallel. One convenient way to do this in Python is by using `concurrent.futures <https://docs.python.org/3/library/concurrent.futures.html>`_. The only caveat to this that this approach requires that the function is picklable. To ensure this, you may want to implement the function that you want to parallelize, outside the class. For example, you could use the following design pattern
 
 .. code-block:: python
 

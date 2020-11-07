@@ -79,7 +79,7 @@ If using a Gaussian process model built with :code:`sklearn` or :code:`GPy` we r
 
     - :code:`epsilon`: one :math:`\epsilon` per dimension in a :code:`np.ndarray`. This can be used to set different tolerances for each objective. Note that :math:`\epsilon_i \in [0,1]`.
     - :code:`delta`: the :math:`\delta` hyperparameter (:math:`\delta \in [0,1]`). Increasing this value will speed up the convergence.
-    - :code:`beta_scale`: an empirical scaling parameter for :math:`beta`. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, a much faster convergence can be achieved by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`.
+    - :code:`beta_scale`: an empirical scaling parameter for :math:`\beta`. The theoretical guarantees in the PAL paper are derived for this parameter set to 1. But in practice, a much faster convergence can be achieved by setting it to a number :math:`0< \beta_\mathrm{scale} \ll 1`.
     - :code:`goal`: By default, PyePAL assumes that the goal is to maximize every objective. If this is not the case, this argument can be set using a list of "min" and "max" strings, with "min" specifying whether to minimize the ith objective and "max" indicating whether to maximize this objective.
     - :code:`coef_var_threshold`: By default, PyePAL will not consider points with a coefficient of variation :math:`\ge 3` for the classification step of the algorithm. This is meant to avoid classifying design points for which the model is entirely unsure. This tends to happen when a model is severely overfit on the training data (i.e., the training data uncertainties are very low, whereas the prediction uncertainties are very high). To change this setting, reduce this value to make the check tighter or increase it to avoid this check (as in the original implementation).
 
@@ -125,7 +125,7 @@ For debugging there are some properties and attributes of the `PAL` class that c
     - :code:`pareto_optimal_points`: returns the points that are classified as Pareto-efficient
     - :code:`sampled_points`: returns the points that have been sampled
     - :code:`discarded_points`: returns the points that have been discarded
-- get the indicies of Pareto efficent, sampled,  discarded, and unclassified points with :code:`pareto_optimal_indices`, :code:`sampled_indices`, :code:`discarded_indices`, and :code:`unclassified_indices`
+- get the indices of Pareto efficent, sampled,  discarded, and unclassified points with :code:`pareto_optimal_indices`, :code:`sampled_indices`, :code:`discarded_indices`, and :code:`unclassified_indices`
 - similarly, the number of points in the different classes can be obtained using :code:`number_pareto_optimal_points`, :code:`number_discarded_points`, :code:`number_unclassified_points`, and :code:`number_sampled_points`
 - :code:`hyperrectangle_size` returns the sizes of the hyperrectangles, i.e., the weights that are used in the sampling step
 - :code:`means` and :code:`std` contain the predictions of the model
