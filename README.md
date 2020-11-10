@@ -155,7 +155,7 @@ To measure the performance, you can use the `get_hypervolume` function from `pye
 
 If you find this code useful for your work, please cite:
 
-- Our paper that describes the implementation and an application to materials discovery: Jablonka, K. M.; Giriprasad, M. J.; Wang, S.; Smit, B.; Yoo, B. Bias Free Multiobjective Active Learning for Materials Design and Discovery. 2020.
+- Our paper that describes the implementation and an application to materials discovery: [Jablonka, K. M.; Giriprasad, M. J.; Wang, S.; Smit, B.; Yoo, B. Bias Free Multiobjective Active Learning for Materials Design and Discovery, ChemRxiv 2020 (10.26434/chemrxiv.13200197.v1).](https://chemrxiv.org/articles/preprint/Bias_Free_Multiobjective_Active_Learning_for_Materials_Design_and_Discovery/13200197)
 
 - The original paper that describes the ε-PAL algorithm: [Zuluaga, M.; Krause, A.; Püschel, M. E-PAL: An Active Learning Approach to the Multi-Objective Optimization Problem. Journal of Machine Learning Research 2016, 17 (104), 1–32.](https://jmlr.csail.mit.edu/papers/volume17/15-047/15-047.pdf)
 
