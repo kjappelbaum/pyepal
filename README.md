@@ -59,10 +59,10 @@ gpr_objective_1 = GaussianProcessRegressor(RBF())
 # the design space (X, in ML terms "feature matrix") and the number of objectives
 palsklearn_instance = PALSklearn(X, [gpr_objective_0, gpr_objective_1], 2)
 
-# the next step is to provide some initial measurements,
-# you can do this with the update_train_set function, which you one
-# also uses through the active learning process to update the training set.
-# For this, you provide a numpy array of indices in your design space
+# the next step is to provide some initial measurements.
+# You can do this with the update_train_set function, which you
+# cann use throughout the active learning process to update the training set.
+# For this, provide a numpy array of indices in your design space
 # and the corresponding measurements
 sampled_indices = np.array([1,2,3])
 measurements = np.array([[1,2],
@@ -70,8 +70,8 @@ measurements = np.array([[1,2],
                         [7,1]])
 palsklearn_instance.update_train_set(sampled_indices, measurements)
 
-# Now, you're ready to run the first iteration,
-# this will return the next index to sample and update all the attributes
+# Now, you're ready to run the first iteration.
+# This will return the next index to sample and update all the attributes
 # If there are no unclassified samples left, it will return None and
 # print a statement saying that the classification is completed
 index_to_sample = palsklearn_instance.run_one_step()
@@ -83,13 +83,13 @@ If you want to use a list of [GPy](https://sheffieldml.github.io/GPy/) models, y
 
 #### Coregionalized GPR
 
-Coregionalized GPR models can harvest correlations between the objectives and also work in the cases in which some of the objectives are not measured for all samples.
+Coregionalized GPR models can utilize correlations between the objectives and also work in the cases in which some of the objectives are not measured for all samples.
 
 ### Custom classes
 
-You will need to implement the `_train()` and `_predict()` functions if you inherit from `PALBase`. If you want to tune the hyperparameters of your models while new training points are added, you can implement a schedule by setting the `_should_optimize_hyperparameters()` function and the `_set_hyperparameters()` function which sets the hyperparameters for the model(s).
+You will need to implement the `_train()` and `_predict()` functions if you inherit from `PALBase`. If you want to tune the hyperparameters of your models while new training points are added, you can implement a schedule by setting the `_should_optimize_hyperparameters()` function and the `_set_hyperparameters()` function, which sets the hyperparameters for the model(s).
 
-If you need to train a model, `self.design_space` is the feature matrix you want to use and `self.y` is the target vector. Note that in `self.y` all objectives are turned into maximization problems. This is, if one of your problems is a minimization problem, we will flip its sign in `self.y`.
+If you need to train a model, use `self.design_space` as the feature matrix and `self.y` as the target vector. Note that in `self.y` all objectives are turned into maximization problems. That is, if one of your problems is a minimization problem, PyePAL will flip its sign in `self.y`.
 
 A basic example of how a custom class can be implemented is the `PALSklearn` class:
 
@@ -117,12 +117,12 @@ class PALSklearn(PALBase):
         self.std = np.hstack(stds)
 ```
 
-For scheduling for the hyperparameter optimization we have some predefined schedules in the `pyepal.pal.schedules` module.
+For scheduling of the hyperparameter optimization, we have some predefined schedules in the `pyepal.pal.schedules` module.
 
 ### Test the algorithms
 
-If the full design space is known, you can use a while loop to fully explore the space.
-For the theoretical guarantees to hold, you'll need to sample until all uncertainties are below epsilon. In practice, it is usually enough to require as termination criterion that there are no unclassified samples left. For this you could use the following snippet
+If the full design space is known, you can use a while loop to fully explore the space with ePAL.
+For the theoretical guarantees of ePAL to hold, you'll need to sample until all uncertainties are below epsilon. In practice, it is usually enough to require as a termination criterion that there are no unclassified samples left. For this you can use the following snippet
 
 ```python
 from pyepal.utils import exhaust_loop
@@ -155,7 +155,7 @@ To measure the performance, you can use the `get_hypervolume` function from `pye
 
 If you find this code useful for your work, please cite:
 
-- Our paper that describes the implementation and an application to materials discovery: Jablonka, K. M.; Giriprasad, M. J.; Wang, S.; Smit, B.; Yoo, B. Bias Free Multiobjective Active Learning for Materials Design and Discovery. 2020.
+- Our paper that describes the implementation and an application to materials discovery: [Jablonka, K. M.; Giriprasad, M. J.; Wang, S.; Smit, B.; Yoo, B. Bias Free Multiobjective Active Learning for Materials Design and Discovery. 2020.](https://chemrxiv.org/articles/preprint/Bias_Free_Multiobjective_Active_Learning_for_Materials_Design_and_Discovery/13200197)
 
 - The original paper that describes the ε-PAL algorithm: [Zuluaga, M.; Krause, A.; Püschel, M. E-PAL: An Active Learning Approach to the Multi-Objective Optimization Problem. Journal of Machine Learning Research 2016, 17 (104), 1–32.](https://jmlr.csail.mit.edu/papers/volume17/15-047/15-047.pdf)
 
