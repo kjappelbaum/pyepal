@@ -61,7 +61,7 @@ palsklearn_instance = PALSklearn(X, [gpr_objective_0, gpr_objective_1], 2)
 
 # the next step is to provide some initial measurements.
 # You can do this with the update_train_set function, which you
-# cann use throughout the active learning process to update the training set.
+# can use throughout the active learning process to update the training set.
 # For this, provide a numpy array of indices in your design space
 # and the corresponding measurements
 sampled_indices = np.array([1,2,3])
@@ -121,8 +121,8 @@ For scheduling of the hyperparameter optimization, we have some predefined sched
 
 ### Test the algorithms
 
-If the full design space is known, you can use a while loop to fully explore the space with ePAL.
-For the theoretical guarantees of ePAL to hold, you'll need to sample until all uncertainties are below epsilon. In practice, it is usually enough to require as a termination criterion that there are no unclassified samples left. For this you can use the following snippet
+If the full design space is known, you can use a while loop to fully explore the space with PyePAL.
+For the theoretical guarantees of PyePAL to hold, you'll need to sample until all uncertainties are below epsilon. In practice, it is usually enough to require as a termination criterion that there are no unclassified samples left. For this you can use the following snippet
 
 ```python
 from pyepal.utils import exhaust_loop
