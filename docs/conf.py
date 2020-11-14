@@ -69,14 +69,20 @@ numfig = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "pydata_sphinx_theme"
+html_theme = "sphinx_book_theme"
 html_logo = "../pyepal_logo.png"
 
 # Register the theme as an extension to generate a sitemap.xml
 
 
 html_theme_options = {
-    "github_url": "https://github.com/kjappelbaum/pyepal",
+    "repository_url": "https://github.com/kjappelbaum/pyepal",
+    "use_repository_button": True,
+    "use_edit_page_button": True,
+    "use_issues_button": True,
+    "launch_buttons": {
+    "binderhub_url": "https://mybinder.org/v2/gh/kjappelbaum/pyepal/HEAD?filepath=examples",
+    }
 }
 
 
