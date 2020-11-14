@@ -13,7 +13,7 @@ COPY requirements.txt /tmp/pip-tmp/
 RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
    && rm -rf /tmp/pip-tmp
 RUN pip3 --disable-pip-version-check --no-cache-dir install  pre-commit black prospector pylint versioneer isort gitchangelog pytest \
-   "pytest-cov<2.11" sphinx pydata-sphinx-theme sphinx-autodoc-typehints sphinx-copybutton "GPy==1.9.9" matplotlib "lightgbm>=3.0.0"
+   "pytest-cov<2.11" sphinx sphinx-book-theme sphinx-autodoc-typehints sphinx-copybutton "GPy==1.9.9" matplotlib "lightgbm>=3.0.0"
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
