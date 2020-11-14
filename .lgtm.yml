@@ -1,0 +1,9 @@
+extraction:
+  python:  # Configure Python
+    python_setup:  # Configure the setup
+      version: 3  # Specify Version 3
+path_classifiers:
+  library:
+    - versioneer.py  # set versioneer.py to an external "library" (3rd party code)
+  generated:
+    - pyepal/_version.py

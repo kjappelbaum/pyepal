@@ -6,6 +6,7 @@
 [![codecov](https://codecov.io/gh/kjappelbaum/pyepal/branch/master/graph/badge.svg?token=BL2CF4HQ06)](https://codecov.io/gh/kjappelbaum/pyepal)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
 [![Maintainability](https://api.codeclimate.com/v1/badges/db9b3f21528574dfb141/maintainability)](https://codeclimate.com/github/kjappelbaum/pyepal/maintainability)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/kjappelbaum/pyepal.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/kjappelbaum/pyepal/context:python)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyepal)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Gitter](https://badges.gitter.im/kjappelbaum/pyepal.svg)](https://gitter.im/kjappelbaum/pyepal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
