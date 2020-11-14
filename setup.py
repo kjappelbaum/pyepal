@@ -40,7 +40,7 @@ setup(
         "testing": ["pytest", "pytest-cov<2.11"],
         "docs": [
             "sphinx",
-            "pydata-sphinx-theme",
+            "sphinx-book-theme",
             "sphinx-autodoc-typehints",
             "sphinx-copybutton",
         ],
