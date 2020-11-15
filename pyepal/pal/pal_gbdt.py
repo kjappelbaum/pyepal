@@ -36,6 +36,8 @@ import numpy as np
 from .pal_base import PALBase
 from .validate_inputs import validate_gbdt_models, validate_interquartile_scaler
 
+__all__ = ["PALGBDT"]
+
 
 def _train_model_picklable(i, models, design_space, objectives, sampled):
     model = models[i]

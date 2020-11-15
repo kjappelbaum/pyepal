@@ -40,18 +40,29 @@ import numpy as np
 
 from .coregionalized import GPCoregionalizedRegression
 
+__all__ = [
+    "get_matern_32_kernel",
+    "get_matern_52_kernel",
+    "get_ratquad_kernel",
+    "build_coregionalized_model",
+    "build_model",
+    "predict",
+    "predict_coregionalized",
+    "set_xy_coregionalized",
+]
 
-def _get_matern_32_kernel(NFEAT: int, ARD=True, **kwargs) -> GPy.kern.Matern32:
+
+def get_matern_32_kernel(NFEAT: int, ARD=True, **kwargs) -> GPy.kern.Matern32:
     """Matern-3/2 kernel without ARD"""
     return GPy.kern.Matern32(NFEAT, ARD=ARD, **kwargs)
 
 
-def _get_matern_52_kernel(NFEAT: int, ARD=True, **kwargs) -> GPy.kern.Matern52:
+def get_matern_52_kernel(NFEAT: int, ARD=True, **kwargs) -> GPy.kern.Matern52:
     """Matern-5/2 kernel without ARD"""
     return GPy.kern.Matern52(NFEAT, ARD=ARD, **kwargs)
 
 
-def _get_ratquad_kernel(NFEAT: int, ARD=True, **kwargs) -> GPy.kern.RatQuad:
+def get_ratquad_kernel(NFEAT: int, ARD=True, **kwargs) -> GPy.kern.RatQuad:
     """Rational quadratic kernel without ARD"""
     return GPy.kern.RatQuad(NFEAT, ARD=ARD, **kwargs)
 
@@ -67,7 +78,7 @@ def build_coregionalized_model(
     if isinstance(kernel, GPy.kern.src.kern.Kern):
         K = kernel
     else:
-        K = _get_matern_52_kernel(NFEAT)
+        K = get_matern_52_kernel(NFEAT)
     icm = GPy.util.multioutput.ICM(input_dim=NFEAT, num_outputs=num_targets, kernel=K)
 
     target_list = [y_train[:, i].reshape(-1, 1) for i in range(num_targets)]
@@ -91,7 +102,7 @@ def build_model(
     if isinstance(kernel, GPy.kern.src.kern.Kern):
         K = kernel
     else:
-        K = _get_matern_52_kernel(NFEAT)
+        K = get_matern_52_kernel(NFEAT)
     m = GPy.models.GPRegression(
         X_train, y_train[:, index].reshape(-1, 1), kernel=K, normalizer=True, **kwargs
     )

@@ -22,6 +22,23 @@ import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 
+__all__ = [
+    "base_validate_models",
+    "validate_beta_scale",
+    "validate_coef_var",
+    "validate_coregionalized_gpy",
+    "validate_delta",
+    "validate_epsilon",
+    "validate_gbdt_models",
+    "validate_goals",
+    "validate_gpy_model",
+    "validate_interquartile_scaler",
+    "validate_ndim",
+    "validate_njobs",
+    "validate_number_models",
+    "validate_sklearn_gpr_models",
+]
+
 
 def validate_ndim(ndim: Any) -> int:
     """Make sure that the number of dimensions makes sense

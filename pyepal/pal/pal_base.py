@@ -49,6 +49,9 @@ CONSOLE_HANDLER.setFormatter(CONSOLE_FORMAT)
 PAL_LOGGER.addHandler(CONSOLE_HANDLER)
 
 
+__all__ = ["PALBase", "PAL_LOGGER"]
+
+
 class PALBase:  # pylint:disable=too-many-instance-attributes
     """PAL base class"""
 

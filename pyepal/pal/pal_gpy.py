@@ -23,6 +23,8 @@ from .pal_base import PALBase
 from .schedules import linear
 from .validate_inputs import validate_njobs, validate_number_models
 
+__all__ = ["PALGPy"]
+
 
 def _train_model_picklable(i, models, restarts):
     model = models[i]

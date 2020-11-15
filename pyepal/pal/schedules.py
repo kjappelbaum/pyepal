@@ -20,6 +20,8 @@ import math
 
 import numpy as np
 
+__all__ = ["linear", "exp_decay"]
+
 
 def linear(iteration: int, frequency: int = 10) -> bool:
     """Optimize hyperparameters at equally spaced intervals
