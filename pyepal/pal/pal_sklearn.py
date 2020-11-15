@@ -23,6 +23,8 @@ import numpy as np
 from .pal_base import PALBase
 from .validate_inputs import validate_njobs, validate_sklearn_gpr_models
 
+__all__ = ["PALSklearn"]
+
 
 def _train_model_picklable(i, models, design_space, objectives, sampled):
     model = models[i]

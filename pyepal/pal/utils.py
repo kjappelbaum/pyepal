@@ -23,6 +23,18 @@ from sklearn.cluster import KMeans
 
 from ._hypervolume import HypervolumeIndicator
 
+__all__ = [
+    "dominance_check",
+    "dominance_check_jitted",
+    "dominance_check_jitted_2",
+    "dominance_check_jitted_3",
+    "is_pareto_efficient",
+    "exhaust_loop",
+    "get_kmeans_samples",
+    "get_maxmin_samples",
+    "get_hypervolume",
+]
+
 
 @jit(nopython=True)
 def dominance_check(point1, point2) -> bool:

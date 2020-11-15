@@ -8,6 +8,8 @@ from GPy import kern, util
 from GPy.core import GP
 from paramz import ObsAr
 
+__all__ = ["GPCoregionalizedRegression"]
+
 
 class GPCoregionalizedRegression(GP):  # pylint:disable=too-many-ancestors
     """

@@ -19,6 +19,8 @@ from typing import List, Tuple, Union
 import numpy as np
 from lightgbm import LGBMRegressor
 
+__all__ = ["build_gbdt_tuple"]
+
 
 def build_gbdt_tuple(
     alphas: Union[List[float], np.ndarray, Tuple[float, float, float]] = [

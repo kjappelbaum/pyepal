@@ -21,6 +21,8 @@ import numpy as np
 from .pal_base import PALBase
 from .schedules import linear
 
+__all__ = ["PALCoregionalized"]
+
 
 class PALCoregionalized(PALBase):
     """PAL class for a coregionalized GPR model"""
