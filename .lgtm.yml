@@ -1,10 +1,6 @@
 extraction:
-  python:  # Configure Python
-    python_setup:  # Configure the setup
-      version: 3  # Specify Version 3
-path_classifiers:
-  library:
-    - versioneer.py  # set versioneer.py to an external "library" (3rd party code)
-    - pyepal/pal/_hypervolume.py
-  generated:
-    - pyepal/_version.py
+  python:
+    index:
+      filters:
+        - exclude: versioneer.py
+        - exclude: "**/_version.py"
