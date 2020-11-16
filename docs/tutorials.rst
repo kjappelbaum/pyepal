@@ -17,10 +17,10 @@ should take no more than a few minutes.
 Topic covered
 ................
 
-- building a pal_coregionalized GPR model using :py:meth:`pyepal.pal.models.gpr.build_coregionalized_model`
--  using coregionalized models with :py:obj:`pyepal.pal.pal_coregionalized.PALCoregionalized`
+- building a pal_coregionalized GPR model using :py:meth:`~pyepal.pal.models.gpr.build_coregionalized_model`
+-  using coregionalized models with :py:class:`~pyepal.pal.pal_coregionalized.PALCoregionalized`
 - attributes of the :code:`PAL` instance
-- :py:meth:`pyepal.pal.utils.exhaust_loop`
+- :py:meth:`~pyepal.pal.utils.exhaust_loop`
 
 
 2. Active learning with "measure" function and :code:`sklearn` models
@@ -34,9 +34,9 @@ Topic covered
 Topic covered
 ................
 
-- using :code:`sklearn`  models with :py:obj:`pyepal.pal.pal_sklearn.PALSklearn`
-- selecting an initial set with :py:meth:`pyepal.pal.utils.get_maxmin_samples`
-- plotting with :py:meth:`pyepal.plotting.make_jointplot`
+- using :code:`sklearn`  models with :py:class:`~pyepal.pal.pal_sklearn.PALSklearn`
+- selecting an initial set with :py:meth:`~pyepal.pal.utils.get_maxmin_samples`
+- plotting with :py:meth:`~pyepal.plotting.make_jointplot`
 
 
 
@@ -49,5 +49,5 @@ Topic covered
     :target: https://mybinder.org/v2/gh/kjappelbaum/pyepal/HEAD?filepath=examples/quantile_regression.ipynb
 
 
-- Using LightGBM models with quantile loss with :py:obj:`pyepal.pal.pal_gbdt.PALGBDT`
-- selecting an initial set with :py:meth:`pyepal.pal.utils.get_kmeans_samples`
+- Using LightGBM models with quantile loss with :py:class:`~pyepal.pal.pal_gbdt.PALGBDT`
+- selecting an initial set with :py:meth:`~pyepal.pal.utils.get_kmeans_samples`

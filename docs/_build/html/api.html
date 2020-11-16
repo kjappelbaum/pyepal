@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The PyePAL API reference &#8212; pyepal v0.1.7+9.g7c57043.dirty documentation</title>
+    <title>The PyePAL API reference &#8212; pyepal v0.1.7+18.ge2b2d21.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -65,7 +65,7 @@
   <img src="_static/pyepal_logo.png" class="logo" alt="logo">
 
 
-  <h1 class="site-logo" id="site-title">pyepal v0.1.7+9.g7c57043.dirty documentation</h1>
+  <h1 class="site-logo" id="site-title">pyepal v0.1.7+18.ge2b2d21.dirty documentation</h1>
 
 </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -274,168 +274,6 @@
 <div class="section" id="module-pyepal.pal.core">
 <span id="core-functions"></span><h3>Core functions<a class="headerlink" href="#module-pyepal.pal.core" title="Permalink to this headline">¶</a></h3>
 <p>Core functions for PAL</p>
-<dl class="py function">
-<dt id="pyepal.pal.core._get_max_wt">
-<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_get_max_wt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rectangle_lows</span></em>, <em class="sig-param"><span class="n">rectangle_ups</span></em>, <em class="sig-param"><span class="n">means</span></em>, <em class="sig-param"><span class="n">pareto_optimal_t</span></em>, <em class="sig-param"><span class="n">unclassified_t</span></em>, <em class="sig-param"><span class="n">sampled</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_get_max_wt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._get_max_wt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the index in design space with the maximum size of the hyperrectangle
-(scaled by the mean predictions, i.e., effectively,
-we use the coefficient of variation).
-Samples only from unclassified or Pareto-optimal points.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>rectangle_lows</strong> (<em>np.array</em>) – Lower, pessimistic, bounds of the hyperrectangles</p></li>
-<li><p><strong>rectangle_ups</strong> (<em>np.array</em>) – Upper, optimistic, bounds of the hyperrectangles</p></li>
-<li><p><strong>means</strong> (<em>np.array</em>) – Mean predictions</p></li>
-<li><p><strong>pareto_optimal_t</strong> (<em>np.array</em>) – Mask array that is True
-for the Pareto optimal points</p></li>
-<li><p><strong>unclassified_t</strong> (<em>np.array</em>) – Mask array that is True for the unclassified points</p></li>
-<li><p><strong>sampled</strong> (<em>np.array</em>) – Mask array that is True for the sampled points</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>index with maximum size of hyperrectangle</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="pyepal.pal.core._get_uncertainty_region">
-<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_get_uncertainty_region</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mu</span></em>, <em class="sig-param"><span class="n">std</span></em>, <em class="sig-param"><span class="n">beta_sqrt</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_get_uncertainty_region"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._get_uncertainty_region" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>mu</strong> (<em>float</em>) – mean</p></li>
-<li><p><strong>std</strong> (<em>float</em>) – standard deviation</p></li>
-<li><p><strong>beta_sqrt</strong> (<em>float</em>) – scaling factor</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>lower bound, upper bound</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tuple[float, float]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="pyepal.pal.core._get_uncertainty_regions">
-<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_get_uncertainty_regions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mus</span></em>, <em class="sig-param"><span class="n">stds</span></em>, <em class="sig-param"><span class="n">beta_sqrt</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_get_uncertainty_regions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._get_uncertainty_regions" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>Compute the lower and upper bound of the uncertainty region</dt><dd><p>for each dimension (=target)</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>mus</strong> (<em>np.array</em>) – means</p></li>
-<li><p><strong>stds</strong> (<em>np.array</em>) – standard deviations</p></li>
-<li><p><strong>beta_sqrt</strong> (<em>float</em>) – scaling factors</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>lower bounds, upper bounds</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Union[np.array, np.array]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="pyepal.pal.core._pareto_classify">
-<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_pareto_classify</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pareto_optimal_0</span></em>, <em class="sig-param"><span class="n">not_pareto_optimal_0</span></em>, <em class="sig-param"><span class="n">unclassified_0</span></em>, <em class="sig-param"><span class="n">rectangle_lows</span></em>, <em class="sig-param"><span class="n">rectangle_ups</span></em>, <em class="sig-param"><span class="n">epsilon</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_pareto_classify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._pareto_classify" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs the classification part of the algorithm
-(p. 4 of the PAL paper, see algorithm 1/2 of the epsilon-PAL paper)</p>
-<p>One core concept is that once a point is classified,
-it does no longer change the class.</p>
-<p>When we do the comparison with +/- epsilon we always use the absolute values!
-Otherwise, we get inconcistent results depending on the sign!</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>pareto_optimal_0</strong> (<em>np.array</em>) – boolean mask of points classified as Pareto optimal</p></li>
-<li><p><strong>not_pareto_optimal_0</strong> (<em>np.array</em>) – boolean mask of points
-classified as non-Pareto optimal</p></li>
-<li><p><strong>unclassified_0</strong> (<em>np.array</em>) – boolean mask of unclassified points</p></li>
-<li><p><strong>rectangle_lows</strong> (<em>np.array</em>) – lower uncertainty boundaries</p></li>
-<li><p><strong>rectangle_ups</strong> (<em>np.array</em>) – upper uncertainty boundaries</p></li>
-<li><p><strong>epsilon</strong> (<em>np.array</em>) – granularity parameter (one per dimension)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>binary encoded list of Pareto optimal,</dt><dd><p>non-Pareto optimal and unclassified points</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tuple[list, list, list]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="pyepal.pal.core._uncertainty">
-<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_uncertainty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rectangle_ups</span></em>, <em class="sig-param"><span class="n">rectangle_lows</span></em>, <em class="sig-param"><span class="n">means</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_uncertainty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._uncertainty" title="Permalink to this definition">¶</a></dt>
-<dd><p>Hyperrectangle sizes</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="pyepal.pal.core._union">
-<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_union</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lows</span></em>, <em class="sig-param"><span class="n">ups</span></em>, <em class="sig-param"><span class="n">new_lows</span></em>, <em class="sig-param"><span class="n">new_ups</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_union"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._union" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performing iterative intersection (eq. 6 in PAL paper) in all dimensions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>lows</strong> (<em>np.array</em>) – lower bounds from previous iteration</p></li>
-<li><p><strong>ups</strong> (<em>np.array</em>) – upper bounds from previous iteration</p></li>
-<li><p><strong>new_lows</strong> (<em>np.array</em>) – lower bounds from current iteration</p></li>
-<li><p><strong>new_ups</strong> (<em>np.array</em>) – upper bounds from current iteration</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>lower bounds, upper bounds</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Union[np.array, np.array]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="pyepal.pal.core._union_one_dim">
-<code class="sig-prename descclassname">pyepal.pal.core.</code><code class="sig-name descname">_union_one_dim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lows</span></em>, <em class="sig-param"><span class="n">ups</span></em>, <em class="sig-param"><span class="n">new_lows</span></em>, <em class="sig-param"><span class="n">new_ups</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/core.html#_union_one_dim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.core._union_one_dim" title="Permalink to this definition">¶</a></dt>
-<dd><p>Used to intersect the confidence regions, for eq. 6 of the PAL paper.
-The iterative intersection ensures that all uncertainty regions
-are non-increasing with t.</p>
-<p>We do not check for the ordering in this function.
-We really assume that the lower limits are the lower limits
-and the upper limits are the upper limits.</p>
-<p>All arrays must have the same length.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>lows</strong> (<em>Sequence</em>) – lower bounds from previous iteration</p></li>
-<li><p><strong>ups</strong> (<em>Sequence</em>) – upper bounds from previous iteration</p></li>
-<li><p><strong>new_lows</strong> (<em>Sequence</em>) – lower bounds from current iteration</p></li>
-<li><p><strong>new_ups</strong> (<em>Sequence</em>) – upper bounds from current iteration</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>array of lower limits, array of upper limits</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tuple[np.array, np.array]</p>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 <div class="section" id="module-pyepal.pal.pal_base">
 <span id="base-class"></span><h3>Base class<a class="headerlink" href="#module-pyepal.pal.pal_base" title="Permalink to this headline">¶</a></h3>
@@ -484,40 +322,6 @@ in the classification step. Defaults to 3.</p></li>
 <dt id="pyepal.pal.pal_base.PALBase.__weakref__">
 <code class="sig-name descname">__weakref__</code><a class="headerlink" href="#pyepal.pal.pal_base.PALBase.__weakref__" title="Permalink to this definition">¶</a></dt>
 <dd><p>list of weak references to the object (if defined)</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pyepal.pal.pal_base.PALBase._replace_by_measurements">
-<code class="sig-name descname">_replace_by_measurements</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase._replace_by_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase._replace_by_measurements" title="Permalink to this definition">¶</a></dt>
-<dd><p>Implements one “trick”. Instead of using the GPR
-predictions for the sampled points we use the data that
-was actually measured and the actual uncertainty.
-This is different from the PAL implementation proposed
-by Zuluaga et al. This could make issues when the measurements
-are outliers</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pyepal.pal.pal_base.PALBase._update_beta">
-<code class="sig-name descname">_update_beta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase._update_beta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase._update_beta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update beta according to section 7.2. of the epsilon-PAL paper</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pyepal.pal.pal_base.PALBase._update_coef_var_mask">
-<code class="sig-name descname">_update_coef_var_mask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase._update_coef_var_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase._update_coef_var_mask" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the mask array of elements that have variance below
-the coefficient of variation threshold</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pyepal.pal.pal_base.PALBase._update_hyperrectangles">
-<code class="sig-name descname">_update_hyperrectangles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/pal_base.html#PALBase._update_hyperrectangles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.pal_base.PALBase._update_hyperrectangles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes new hyperrectangles based on beta,
-the means and the standard deviations.
-If the iteration is &gt; 0,
-then it uses iterative intersection to ensure that the size of the
-hyperrectangles is decreasing.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1235,18 +1039,6 @@ indicated in color.</p>
 <span id="input-validation"></span><h3>Input validation<a class="headerlink" href="#module-pyepal.pal.validate_inputs" title="Permalink to this headline">¶</a></h3>
 <p>Methods to validate inputs for the PAL classes</p>
 <dl class="py function">
-<dt id="pyepal.pal.validate_inputs._validate_sklearn_gpr_model">
-<code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">_validate_sklearn_gpr_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#_validate_sklearn_gpr_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs._validate_sklearn_gpr_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make sure that we deal with a GaussianProcessRegressor instance,
-if it is a fitted random or grid search instance, extract the model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GaussianProcessRegressor</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt id="pyepal.pal.validate_inputs.base_validate_models">
 <code class="sig-prename descclassname">pyepal.pal.validate_inputs.</code><code class="sig-name descname">base_validate_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">models</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/pal/validate_inputs.html#base_validate_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.pal.validate_inputs.base_validate_models" title="Permalink to this definition">¶</a></dt>
 <dd><p>Currently no validation as the predict and train function
@@ -1480,39 +1272,6 @@ be needed.</p>
 Matérn, RBF and RationalQuadrat are good quick and dirty solutions
 but have their caveats</p>
 <dl class="py function">
-<dt id="pyepal.models.gpr._get_matern_32_kernel">
-<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">_get_matern_32_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NFEAT</span></em>, <em class="sig-param"><span class="n">ARD</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#_get_matern_32_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr._get_matern_32_kernel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Matern-3/2 kernel without ARD</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Matern32</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="pyepal.models.gpr._get_matern_52_kernel">
-<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">_get_matern_52_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NFEAT</span></em>, <em class="sig-param"><span class="n">ARD</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#_get_matern_52_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr._get_matern_52_kernel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Matern-5/2 kernel without ARD</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Matern52</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="pyepal.models.gpr._get_ratquad_kernel">
-<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">_get_ratquad_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NFEAT</span></em>, <em class="sig-param"><span class="n">ARD</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#_get_ratquad_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr._get_ratquad_kernel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Rational quadratic kernel without ARD</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RatQuad</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt id="pyepal.models.gpr.build_coregionalized_model">
 <code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">build_coregionalized_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_train</span></em>, <em class="sig-param"><span class="n">y_train</span></em>, <em class="sig-param"><span class="n">kernel</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#build_coregionalized_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr.build_coregionalized_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper for building a coregionalized GPR, it will have as many
@@ -1532,6 +1291,39 @@ Each output will have its own noise term</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GPRegression</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyepal.models.gpr.get_matern_32_kernel">
+<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">get_matern_32_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NFEAT</span></em>, <em class="sig-param"><span class="n">ARD</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#get_matern_32_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr.get_matern_32_kernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Matern-3/2 kernel without ARD</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Matern32</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyepal.models.gpr.get_matern_52_kernel">
+<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">get_matern_52_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NFEAT</span></em>, <em class="sig-param"><span class="n">ARD</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#get_matern_52_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr.get_matern_52_kernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Matern-5/2 kernel without ARD</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Matern52</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyepal.models.gpr.get_ratquad_kernel">
+<code class="sig-prename descclassname">pyepal.models.gpr.</code><code class="sig-name descname">get_ratquad_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">NFEAT</span></em>, <em class="sig-param"><span class="n">ARD</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/models/gpr.html#get_ratquad_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.models.gpr.get_ratquad_kernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rational quadratic kernel without ARD</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RatQuad</span></code></p>
 </dd>
 </dl>
 </dd></dl>

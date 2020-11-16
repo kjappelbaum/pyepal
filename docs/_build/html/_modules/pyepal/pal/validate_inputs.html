@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyepal.pal.validate_inputs &#8212; pyepal v0.1.7+9.g7c57043.dirty documentation</title>
+    <title>pyepal.pal.validate_inputs &#8212; pyepal v0.1.7+18.ge2b2d21.dirty documentation</title>
 
   <link rel="stylesheet" href="../../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -63,7 +63,7 @@
   <img src="../../../_static/pyepal_logo.png" class="logo" alt="logo">
 
 
-  <h1 class="site-logo" id="site-title">pyepal v0.1.7+9.g7c57043.dirty documentation</h1>
+  <h1 class="site-logo" id="site-title">pyepal v0.1.7+18.ge2b2d21.dirty documentation</h1>
 
 </a>
 </div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
@@ -192,6 +192,23 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">sklearn.gaussian_process</span> <span class="kn">import</span> <span class="n">GaussianProcessRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span><span class="p">,</span> <span class="n">RandomizedSearchCV</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;base_validate_models&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_beta_scale&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_coef_var&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_coregionalized_gpy&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_delta&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_epsilon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_gbdt_models&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_goals&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_gpy_model&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_interquartile_scaler&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_ndim&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_njobs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_number_models&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate_sklearn_gpr_models&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 
 
 <div class="viewcode-block" id="validate_ndim"><a class="viewcode-back" href="../../../api.html#pyepal.pal.validate_inputs.validate_ndim">[docs]</a><span class="k">def</span> <span class="nf">validate_ndim</span><span class="p">(</span><span class="n">ndim</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -430,7 +447,7 @@
     <span class="k">return</span> <span class="n">coef_var</span></div>
 
 
-<div class="viewcode-block" id="_validate_sklearn_gpr_model"><a class="viewcode-back" href="../../../api.html#pyepal.pal.validate_inputs._validate_sklearn_gpr_model">[docs]</a><span class="k">def</span> <span class="nf">_validate_sklearn_gpr_model</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianProcessRegressor</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">_validate_sklearn_gpr_model</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianProcessRegressor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Make sure that we deal with a GaussianProcessRegressor instance,</span>
 <span class="sd">    if it is a fitted random or grid search instance, extract the model&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="n">RandomizedSearchCV</span><span class="p">,</span> <span class="n">GridSearchCV</span><span class="p">)):</span>
@@ -448,7 +465,7 @@
             <span class="p">)</span> <span class="kn">from</span> <span class="nn">not_fitted_exception</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">GaussianProcessRegressor</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">model</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You need to provide a GaussianProcessRegressor instance.&quot;</span><span class="p">)</span></div>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You need to provide a GaussianProcessRegressor instance.&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="validate_sklearn_gpr_models"><a class="viewcode-back" href="../../../api.html#pyepal.pal.validate_inputs.validate_sklearn_gpr_models">[docs]</a><span class="k">def</span> <span class="nf">validate_sklearn_gpr_models</span><span class="p">(</span>

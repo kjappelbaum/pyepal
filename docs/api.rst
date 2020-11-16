@@ -11,7 +11,7 @@ Core functions
     :members:
     :show-inheritance:
     :special-members:
-    :private-members:
+
 
 Base class
 ...............
@@ -20,7 +20,6 @@ Base class
     :members:
     :show-inheritance:
     :special-members:
-    :private-members:
 
 
 For GPy models
@@ -30,7 +29,6 @@ For GPy models
     :members:
     :show-inheritance:
     :special-members:
-    :private-members:
 
 
 For coregionalized GPy models
@@ -40,7 +38,6 @@ For coregionalized GPy models
     :members:
     :show-inheritance:
     :special-members:
-    :private-members:
 
 
 For sklearn GPR models
@@ -60,7 +57,7 @@ For quantile regression with LightGBM
     :members:
     :show-inheritance:
     :special-members:
-    :private-members:
+
 
 
 Schedules for hyperparameter optimization
@@ -70,7 +67,6 @@ Schedules for hyperparameter optimization
     :members:
     :show-inheritance:
     :special-members:
-    :private-members:
 
 
 Utilities for multiobjective optimization
@@ -80,7 +76,6 @@ Utilities for multiobjective optimization
     :members:
     :show-inheritance:
     :special-members:
-    :private-members:
 
 
 Utilities for plotting
@@ -90,7 +85,7 @@ Utilities for plotting
     :members:
     :show-inheritance:
     :special-members:
-    :private-members:
+
 
 
 Input validation
@@ -100,7 +95,7 @@ Input validation
     :members:
     :show-inheritance:
     :special-members:
-    :private-members:
+
 
 
 
@@ -114,4 +109,3 @@ Helper functions for GPR with GPy
     :members:
     :show-inheritance:
     :special-members:
-    :private-members:
