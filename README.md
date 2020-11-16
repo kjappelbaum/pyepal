@@ -1,19 +1,17 @@
 <p align="center">
  <img src="pyepal_logo.png" />
-
-![Python package](https://github.com/kjappelbaum/pyepal/workflows/Python%20package/badge.svg)
-![pre-commit](https://github.com/kjappelbaum/pyepal/workflows/pre-commit/badge.svg)
-[![codecov](https://codecov.io/gh/kjappelbaum/pyepal/branch/master/graph/badge.svg?token=BL2CF4HQ06)](https://codecov.io/gh/kjappelbaum/pyepal)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
-[![Maintainability](https://api.codeclimate.com/v1/badges/db9b3f21528574dfb141/maintainability)](https://codeclimate.com/github/kjappelbaum/pyepal/maintainability)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/kjappelbaum/pyepal.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/kjappelbaum/pyepal/context:python)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyepal)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Gitter](https://badges.gitter.im/kjappelbaum/pyepal.svg)](https://gitter.im/kjappelbaum/pyepal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-![GitHub last commit](https://img.shields.io/github/last-commit/kjappelbaum/pyepal)
-[![Documentation Status](https://readthedocs.org/projects/pyepal/badge/?version=latest)](https://pyepal.readthedocs.io/en/latest/?badge=latest)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kjappelbaum/pyepal/HEAD?filepath=examples)
 </p>
+
+|                            |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Continuos integration      | ![Python package](https://github.com/kjappelbaum/pyepal/workflows/Python%20package/badge.svg) ![pre-commit](https://github.com/kjappelbaum/pyepal/workflows/pre-commit/badge.svg)                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Code health                | [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) [![Maintainability](https://api.codeclimate.com/v1/badges/db9b3f21528574dfb141/maintainability)](https://codeclimate.com/github/kjappelbaum/pyepal/maintainability) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/kjappelbaum/pyepal.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/kjappelbaum/pyepal/context:python) ![GitHub last commit](https://img.shields.io/github/last-commit/kjappelbaum/pyepal) |
+| Documentation and tutorial | [![Documentation Status](https://readthedocs.org/projects/pyepal/badge/?version=latest)](https://pyepal.readthedocs.io/en/latest/?badge=latest) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kjappelbaum/pyepal/HEAD?filepath=examples)                                                                                                                                                                                                                                                                                                                  |
+| Social                     | [![Gitter](https://badges.gitter.im/kjappelbaum/pyepal.svg)](https://gitter.im/kjappelbaum/pyepal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Python                     | ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyepal) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)                                                                                                                                                                                                                                                                                                                                                                                                |
+| License                    | [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| [Citation](#citation) |[![Paper DOI](https://img.shields.io/badge/DOI-10.26434/chemrxiv.13200197.v1-blue.svg)](https://shields.io/) [![Zenodo archive](https://zenodo.org/badge/253408969.svg)](https://zenodo.org/badge/latestdoi/253408969) |
+
 
 Generalized Python implementation of a modified version of the ε-PAL algorithm [[1](#1), [2](#2)].
 
@@ -153,6 +151,7 @@ To measure the performance, you can use the `get_hypervolume` function from `pye
 2. <a name="2"></a> Zuluaga, M.; Sergent, G.; Krause, A.; Püschel, M. Active Learning for Multi-Objective Optimization; Dasgupta, S., McAllester, D., Eds.; Proceedings of machine learning research; PMLR: Atlanta, Georgia, USA, 2013; Vol. 28, pp 462–470.
 
 ## Citation
+<a name="citation"></a>
 
 If you find this code useful for your work, please cite:
 
