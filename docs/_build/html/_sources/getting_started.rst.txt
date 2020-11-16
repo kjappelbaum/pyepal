@@ -26,10 +26,10 @@ The latest version of PyePAL can be installed from GitHub using
 Which class do i use?
 -----------------------
 
-- For Gaussian processes built with :code:`sklearn` use :py:class:`pyepal.pal.pal_sklearn.PALSklearn`
-- For Gaussian processes built with :code:`GPy` use :py:class:`pyepal.pal.pal_gpy.PALGPy`
-- For coregionalized Gaussian processes (built with :code:`GPy`) use :py:class:`pyepal.pal.pal_coregionalized.PALCoregionalized`
-- For quantile regression using :code:`LightGBM` gradient boosted decision trees use :py:class:`pyepal.pal.pal_gbdt.PALGBDT`
+- For Gaussian processes built with :code:`sklearn` use :py:class:`~pyepal.pal.pal_sklearn.PALSklearn`
+- For Gaussian processes built with :code:`GPy` use :py:class:`~pyepal.pal.pal_gpy.PALGPy`
+- For coregionalized Gaussian processes (built with :code:`GPy`) use :py:class:`~pyepal.pal.pal_coregionalized.PALCoregionalized`
+- For quantile regression using :code:`LightGBM` gradient boosted decision trees use :py:class:`~pyepal.pal.pal_gbdt.PALGBDT`
 
 If your favorite model is not listed, you can easily implement it yourself (see :ref:`new_pal_class`)!
 
@@ -39,11 +39,11 @@ Running an active learning experiment
 
 The `examples` directory contains a `Jupyter notebook with an example <https://github.com/kjappelbaum/pyepal/blob/master/examples/test_pal.ipynb>`_ that can also be run on MyBinder.
 
-If using a Gaussian process model built with :code:`sklearn` or :code:`GPy` we recommend using a pre-built class such as :py:class:`pyepal.pal.pal_sklearn.PALSklearn`,  :py:class:`pyepal.pal.pal_coregionalized.PALCoregionalized`,  :py:class:`pyepal.pal.pal_gpy.PALGPy` and following the subsequent steps (for more details on which class to use see :ref:`Which class do i use?`):
+If using a Gaussian process model built with :code:`sklearn` or :code:`GPy` we recommend using a pre-built class such as :py:class:`~pyepal.pal.pal_sklearn.PALSklearn`,  :py:class:`~pyepal.pal.pal_coregionalized.PALCoregionalized`,  :py:class:`~pyepal.pal.pal_gpy.PALGPy` and following the subsequent steps (for more details on which class to use see :ref:`Which class do i use?`):
 
 1. For each objective create a model (if using a coregionalized Gaussian process model, only one model needs to be created)
 
-2. Sample a few initial points from the design space. We provide the :py:meth:`pyepal.pal.utils.get_maxmin_samples` or :py:meth:`pyepal.pal.utils.get_kmeans_samples` utilities that can help with the sampling. Our code assumes that :code:`X` is a :code:`np.array`.
+2. Sample a few initial points from the design space. We provide the :py:meth:`~pyepal.pal.utils.get_maxmin_samples` or :py:meth:`~pyepal.pal.utils.get_kmeans_samples` utilities that can help with the sampling. Our code assumes that :code:`X` is a :code:`np.array`.
 
     .. code-block:: python
 
@@ -109,7 +109,7 @@ Basic information such as the current iteration and the classification status ar
     # returns: pyepal at iteration 1. 10 Pareto optimal points, 1304 discarded points, 200 unclassified points.
 
 
-We also provide calculation of the hypervolume enclosed by the Pareto front with the function :py:meth:`pyepal.pal.utils.get_hypervolume`
+We also provide calculation of the hypervolume enclosed by the Pareto front with the function :py:meth:`~pyepal.pal.utils.get_hypervolume`
 
 .. code:: python
 
@@ -136,7 +136,7 @@ Exploring a space where all objectives are known
 .................................................
 
 In some cases, we may already posess all measurements, but would like to run PAL with different settings to test how the algorithm performs.
-In this case, we provide the :py:meth:`pyepal.pal.utils.exhaust_loop` wrapper.
+In this case, we provide the :py:meth:`~pyepal.pal.utils.exhaust_loop` wrapper.
 
 .. code-block:: python
 
@@ -197,7 +197,7 @@ By default, the code will run a simple cross-validation only on the first iterat
 
 This behavior can changed with the cross-validation test being performed more frequently by overriding the :code:`should_run_crossvalidation` function.
 
-Another way to detect overfitting is to use :py:func:`pyepal.plotting.make_jointplot` function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyePAL, this may suggest that the surrogate model is overfitted.
+Another way to detect overfitting is to use :py:func:`~pyepal.plotting.make_jointplot` function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyePAL, this may suggest that the surrogate model is overfitted.
 
 .. code-block:: python
 

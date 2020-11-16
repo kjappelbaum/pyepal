@@ -52,7 +52,7 @@ Currently, documentation is hosted on GitHub pages. Build it locally using :code
 Implementing a new PAL class
 -----------------------------
 
-If you want to use PyePAL  with a model that we do not support yet, i.e., not :code:`GPy` or :code:`sklearn` Gaussian process regression, it is easy to write your own class. For this, you will need to inherit from `PALBase` and implement your  :code:`_train` and :code:`_predict` functions (and maybe also the :code:`_set_hyperparameters` and :code:`_should_optimize_hyperparameters` functions) using the :code:`design_space` and :code:`y` attributes of the class.
+If you want to use PyePAL  with a model that we do not support yet, i.e., not :code:`GPy` or :code:`sklearn` Gaussian process regression, it is easy to write your own class. For this, you will need to inherit from :py:class:`~pyepal.pal.pal_base.PALBase` and implement your  :py:obj:`~pyepal.pal.pal_base.PALBase._train` and  :py:func:`~pyepal.pal.pal_base.PALBase._predict` functions (and maybe also the  :py:obj:`pyepal.pal.pal_base.PALBase._set_hyperparameters` and  :py:obj:`pyepal.pal.pal_base.PALBase._should_optimize_hyperparameters` functions) using the :code:`design_space` and :code:`y` attributes of the class.
 
 For instance, if we develop some multioutput model that has a :code:`train()` and a :code:`predict()` method, we could simply use the following design pattern
 
