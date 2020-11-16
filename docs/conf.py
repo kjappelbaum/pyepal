@@ -76,13 +76,14 @@ html_logo = "../pyepal_logo.png"
 
 
 html_theme_options = {
+    "path_to_docs": "docs",
     "repository_url": "https://github.com/kjappelbaum/pyepal",
     "use_repository_button": True,
     "use_edit_page_button": True,
     "use_issues_button": True,
     "launch_buttons": {
-    "binderhub_url": "https://mybinder.org/v2/gh/kjappelbaum/pyepal/HEAD?filepath=examples",
-    }
+        "binderhub_url": "https://mybinder.org/v2/gh/kjappelbaum/pyepal/HEAD?filepath=examples",
+    },
 }
 
 
