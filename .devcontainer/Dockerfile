@@ -12,7 +12,7 @@ RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "source /usr/local/shar
 COPY requirements.txt /tmp/pip-tmp/
 RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
    && rm -rf /tmp/pip-tmp
-RUN pip3 --disable-pip-version-check --no-cache-dir install  pre-commit black prospector pylint versioneer isort gitchangelog pytest \
+RUN pip3 --disable-pip-version-check --no-cache-dir install  pre-commit black prospector pylint versioneer isort pytest \
    "pytest-cov<2.11" sphinx sphinx-book-theme sphinx-autodoc-typehints sphinx-copybutton "GPy==1.9.9" matplotlib "lightgbm>=3.0.0"
 
 # [Optional] Uncomment this section to install additional OS packages.
