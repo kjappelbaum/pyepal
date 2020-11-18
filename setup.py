@@ -51,7 +51,6 @@ setup(
             "pylint",
             "versioneer",
             "isort",
-            "gitchangelog",
         ],
         "GPy": ["GPy==1.9.9", "matplotlib"],
         "GBDT": ["lightgbm>=3.0.0"],

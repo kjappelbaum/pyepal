@@ -7,7 +7,8 @@ Contribution Guidelines
 Commit messages
 .................
 
-- To automatically generate the changelog and version numbers we use `conventional commits <https://www.conventionalcommits.org/en/v1.0.0-beta.2/>`_ use the prefix :code:`feat` for new features, :code:`chore` `for updating grunt tasks etc; no production code change <https://stackoverflow.com/questions/26944762/when-to-use-chore-as-type-of-commit-message>`_, :code:`fix` for bug fixes and :code:`docs` for changes to the documentation.
+- To automatically generate the changelog and releases we use `conventional commits <https://www.conventionalcommits.org/en/v1.0.0-beta.2/>`_ use the prefix :code:`feat` for new features, :code:`chore` `for updating grunt tasks etc; no production code change <https://stackoverflow.com/questions/26944762/when-to-use-chore-as-type-of-commit-message>`_, :code:`fix` for bug fixes and :code:`docs` for changes to the documentation. Use `feat!:`, or `fix!:`, `refactor!:`, etc., to represent a breaking change (indicated by the `!`). This will result in bump of the SemVer major version number.
+
 
 Python code
 .................
