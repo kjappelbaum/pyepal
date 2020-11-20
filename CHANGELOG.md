@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://www.github.com/kjappelbaum/pyepal/compare/v0.2.0...v1.0.0) (2020-11-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* renamed make_jointplot to plot_jointplot and plot_res to plot_residuals for consistency and clarity
+
+### Features
+
+* testing and refactoring of the plotting module ([1ff9df5](https://www.github.com/kjappelbaum/pyepal/commit/1ff9df5ee02fb79a66850bc2131a5dcc7a1cf2cb)), closes [#102](https://www.github.com/kjappelbaum/pyepal/issues/102) [#105](https://www.github.com/kjappelbaum/pyepal/issues/105)
+
 ## [0.2.0](https://www.github.com/kjappelbaum/pyepal/compare/v0.1.7...v0.2.0) (2020-11-20)
 
 
