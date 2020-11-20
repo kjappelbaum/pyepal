@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyepal.pal.pal_base &#8212; pyepal v0.1.7+20.g9c7e5cc.dirty documentation</title>
+    <title>pyepal.pal.pal_base &#8212; pyepal v0.1.7+22.gc8be9f0.dirty documentation</title>
 
   <link rel="stylesheet" href="../../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -63,7 +63,7 @@
   <img src="../../../_static/pyepal_logo.png" class="logo" alt="logo">
 
 
-  <h1 class="site-logo" id="site-title">pyepal v0.1.7+20.g9c7e5cc.dirty documentation</h1>
+  <h1 class="site-logo" id="site-title">pyepal v0.1.7+22.gc8be9f0.dirty documentation</h1>
 
 </a>
 </div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
@@ -374,7 +374,7 @@
         <span class="sd">&quot;&quot;&quot;Return the sizes of the hyperrectangles&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_uncertainty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rectangle_ups</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rectangle_lows</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">means</span><span class="p">)</span>
 
-<div class="viewcode-block" id="PALBase._update_beta"><a class="viewcode-back" href="../../../api.html#pyepal.pal.pal_base.PALBase._update_beta">[docs]</a>    <span class="k">def</span> <span class="nf">_update_beta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_update_beta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Update beta according to section 7.2. of the epsilon-PAL paper&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">beta_scale</span>
@@ -386,7 +386,7 @@
                 <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iteration</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="o">/</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">)</span>
             <span class="p">)</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_log</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
@@ -452,7 +452,7 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="PALBase._update_hyperrectangles"><a class="viewcode-back" href="../../../api.html#pyepal.pal.pal_base.PALBase._update_hyperrectangles">[docs]</a>    <span class="k">def</span> <span class="nf">_update_hyperrectangles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_update_hyperrectangles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Computes new hyperrectangles based on beta,</span>
 <span class="sd">        the means and the standard deviations.</span>
 <span class="sd">        If the iteration is &gt; 0,</span>
@@ -466,9 +466,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rectangle_lows</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rectangle_ups</span> <span class="o">=</span> <span class="n">_union</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">rectangle_lows</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rectangle_ups</span><span class="p">,</span> <span class="n">lows</span><span class="p">,</span> <span class="n">ups</span>
-            <span class="p">)</span></div>
+            <span class="p">)</span>
 
-<div class="viewcode-block" id="PALBase._update_coef_var_mask"><a class="viewcode-back" href="../../../api.html#pyepal.pal.pal_base.PALBase._update_coef_var_mask">[docs]</a>    <span class="k">def</span> <span class="nf">_update_coef_var_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_update_coef_var_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Update the mask array of elements that have variance below</span>
 <span class="sd">        the coefficient of variation threshold&quot;&quot;&quot;</span>
         <span class="c1"># small workaround to avoid potential bugs due to division by zero</span>
@@ -485,7 +485,7 @@
             <span class="n">mean_variation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">std</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">coef_var_mask</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">std</span> <span class="o">/</span> <span class="n">mean_variation</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">coef_var_threshold</span>
-            <span class="p">)</span></div>
+            <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_classify</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_coef_var_mask</span><span class="p">()</span>
@@ -502,7 +502,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">discarded</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_var_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">discarded</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unclassified</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_var_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">unclassified</span>
 
-<div class="viewcode-block" id="PALBase._replace_by_measurements"><a class="viewcode-back" href="../../../api.html#pyepal.pal.pal_base.PALBase._replace_by_measurements">[docs]</a>    <span class="k">def</span> <span class="nf">_replace_by_measurements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_replace_by_measurements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Implements one &quot;trick&quot;. Instead of using the GPR</span>
 <span class="sd">        predictions for the sampled points we use the data that</span>
 <span class="sd">        was actually measured and the actual uncertainty.</span>
@@ -510,7 +510,7 @@
 <span class="sd">        by Zuluaga et al. This could make issues when the measurements</span>
 <span class="sd">        are outliers&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">means</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">std</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measurement_uncertainty</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">std</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measurement_uncertainty</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled</span><span class="p">]</span>
 
 <div class="viewcode-block" id="PALBase.run_one_step"><a class="viewcode-back" href="../../../api.html#pyepal.pal.pal_base.PALBase.run_one_step">[docs]</a>    <span class="k">def</span> <span class="nf">run_one_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;[summary]</span>
