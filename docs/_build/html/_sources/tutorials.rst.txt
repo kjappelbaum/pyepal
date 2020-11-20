@@ -36,7 +36,7 @@ Topic covered
 
 - using :code:`sklearn`  models with :py:class:`~pyepal.pal.pal_sklearn.PALSklearn`
 - selecting an initial set with :py:meth:`~pyepal.pal.utils.get_maxmin_samples`
-- plotting with :py:meth:`~pyepal.plotting.make_jointplot`
+- plotting with :py:meth:`~pyepal.plotting.plot_jointplot`
 
 
 
