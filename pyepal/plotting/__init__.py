@@ -21,7 +21,18 @@ from typing import List, Union
 import matplotlib.pyplot as plt
 import numpy as np
 
+from .. import PALBase
+
 plt.rcParams["font.family"] = "sans-serif"
+
+
+__all__ = [
+    "plot_bar_iterations",
+    "plot_pareto_front_2d",
+    "plot_residuals",
+    "plot_histogram",
+    "plot_jointplot",
+]
 
 
 def plot_bar_iterations(  # pylint:disable=invalid-name
@@ -43,7 +54,20 @@ def plot_bar_iterations(  # pylint:disable=invalid-name
     Returns:
         ax
     """
-    assert len(pareto_optimal) == len(non_pareto_points) == len(unclassified_points)
+    assert (
+        len(pareto_optimal) == len(non_pareto_points) == len(unclassified_points)
+    ), "Make sure that the arrays have the same length"
+
+    # We need numpy arrays as we assume that we can add the arrays
+    # ToDo: We could potentially cast any iterable
+    assert isinstance(pareto_optimal, np.ndarray), "The arguments must be numpy arrays"
+    assert isinstance(
+        non_pareto_points, np.ndarray
+    ), "The arguments must be numpy arrays"
+    assert isinstance(
+        unclassified_points, np.ndarray
+    ), "The arguments must be numpy arrays"
+
     if ax is None:
         _, ax = plt.subplots(1, 1)
     ax.bar(range(len(pareto_optimal)), unclassified_points, label="unclassified")
@@ -70,7 +94,7 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
     y_1: np.ndarray,
     std_0: np.ndarray,
     std_1: np.ndarray,
-    palinstance,
+    palinstance: PALBase,
     ax=None,
 ):
     """Plot a 2D pareto front, with the different categories
@@ -83,7 +107,24 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
         std_1 (np.ndarray): standard deviation objective 0
         palinstance (PALBase): PAL instance
         ax (ax, optional): Matplotlib figure axis. Defaults to None.
+
+    Returns:
+        ax
     """
+    # Here, we need numpy arrays for the indexing
+    for array in [y_0, y_1, std_0, std_1]:
+        assert isinstance(array, np.ndarray), "array must be a numpy array"
+    assert (
+        len(y_0)
+        == len(y_1)
+        == len(std_0)
+        == len(std_1)
+        == palinstance.design_space_size
+    ), "Make sure that the arrays have the same length"
+
+    if ax is None:
+        _, ax = plt.subplots(1, 1)
+
     ax.errorbar(
         y_0,
         y_1,
@@ -123,16 +164,32 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
         zorder=15,
     )
 
+    return ax
 
-def plot_histogram(y: np.ndarray, palinstance, ax):  # pylint:disable=invalid-name
+
+def plot_histogram(
+    y: np.ndarray, palinstance: PALBase, ax=None
+):  # pylint:disable=invalid-name
     """Plot histograms, with maxima scaled to one
     and different categories indicated in color
+    for one objective
 
     Args:
         y (np.ndarray): objective (measurement)
         palinstance (PALBase): instance of a PAL class
         ax (ax): Matplotlib figure axis
+
+    Returns:
+        ax
     """
+    assert isinstance(y, np.ndarray), "Input array y must be a numpy array"
+    assert y.ndim == 1, "Input array y must be one dimensional"
+    assert (
+        len(y) == palinstance.design_space_size
+    ), "Length of y must equal the size of the design space"
+
+    if ax is None:
+        _, ax = plt.subplots(1, 1)
     heights, bins = np.histogram(y)
     bin_width = bins[1] - bins[0]
     ax.bar(
@@ -165,18 +222,22 @@ def plot_histogram(y: np.ndarray, palinstance, ax):  # pylint:disable=invalid-na
         alpha=0.6,
     )
 
+    return ax
 
-def plot_res(  # pylint:disable=invalid-name
+
+def plot_residuals(  # pylint:disable=invalid-name
     y: np.array,
-    palinstance,
+    palinstance: PALBase,
     labels: Union[List[str], None] = None,
     figsize: tuple = (6.0, 4.0),
 ):
-    """Plot residual vs fitted plot of sampled points.
+    """Plot signed residual (on y axis) vs fitted (on x axis)
+    plot of sampled points.
+    Will create suplots for y.ndim > 1.
 
 
     Args:
-        y (np.array): array with the objectives (measurements)
+        y (np.array): Two-dimensional array with the objectives (measurements)
         palinstance (PALBase): "trained" PAL instance
         labels (Union[List[str], None], optional): Labels for each objective.
             Defaults to "objective [index]".
@@ -186,6 +247,16 @@ def plot_res(  # pylint:disable=invalid-name
     Returns:
         fig
     """
+
+    assert isinstance(y, np.ndarray), "Input array y must be a numpy array"
+    assert (
+        len(y) == palinstance.design_space_size
+    ), "Length of y must equal the size of the design space"
+    assert y.ndim == 2, "y must be a two-dimensional numpy array"
+    assert (
+        y.shape[1] == palinstance.ndim
+    ), "y needs to be a two-dimensional array which \
+        column number equals the number of targets"
     if palinstance.means is None:
         raise ValueError(
             "Predicted means is None. Execute run_one_step() \
@@ -214,7 +285,10 @@ def plot_res(  # pylint:disable=invalid-name
     if labels is None:
         labels = [f"objective {i}" for i in range(num_targets)]
     else:
-        assert len(labels) == num_targets
+        assert (
+            len(labels) == num_targets
+        ), "If labels are provided the length of the labels list \
+            must equal the number of targets"
 
     for index in range(num_targets):
         ax[index].set_title(labels[index])
@@ -222,16 +296,17 @@ def plot_res(  # pylint:disable=invalid-name
     return fig
 
 
-def make_jointplot(  # pylint:disable=invalid-name
+def plot_jointplot(  # pylint:disable=invalid-name
     y: np.array,
-    palinstance,
+    palinstance: PALBase,
     labels: Union[List[str], None] = None,
     figsize: tuple = (8.0, 6.0),
 ):
-    """Make a jointplot of the objective space
+    """Plot a jointplot of the objective space with histograms on the diagonal
+    and 2D-Pareto plots on the off-diagonal.
 
     Args:
-        y (np.array): array with the objectives (measurements)
+        y (np.array): Two-dimensional array with the objectives (measurements)
         palinstance (PALBase): "trained" PAL instance
         labels (Union[List[str], None], optional): Labels for each objective.
             Defaults to "objective [index]".
@@ -240,6 +315,24 @@ def make_jointplot(  # pylint:disable=invalid-name
     Returns:
         fig
     """
+    assert isinstance(y, np.ndarray), "Input array y must be a numpy array"
+    assert (
+        len(y) == palinstance.design_space_size
+    ), "Length of y must equal the size of the design space"
+    assert y.ndim == 2, "y must be a two-dimensional numpy array"
+    assert (
+        y.shape[1] == palinstance.ndim
+    ), "y needs to be a two-dimensional array which column number \
+        equals the number of targets"
+    if (
+        (palinstance.means is None)
+        or (palinstance.std is None)
+        or (palinstance.beta is None)
+    ):
+        raise ValueError(
+            "Predicted means is None. Execute run_one_step() \
+                to obtain predicted means for each model."
+        )
 
     num_targets = y.shape[1]
     fig, ax = plt.subplots(  # pylint:disable=invalid-name

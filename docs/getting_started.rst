@@ -197,17 +197,17 @@ By default, the code will run a simple cross-validation only on the first iterat
 
 This behavior can changed with the cross-validation test being performed more frequently by overriding the :code:`should_run_crossvalidation` function.
 
-Another way to detect overfitting is to use :py:func:`~pyepal.plotting.make_jointplot` function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyePAL, this may suggest that the surrogate model is overfitted.
+Another way to detect overfitting is to use :py:func:`~pyepal.plotting.plot_jointplot` function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyePAL, this may suggest that the surrogate model is overfitted.
 
 .. code-block:: python
 
-    from pyepal.plotting import make_jointplot
+    from pyepal.plotting import plot_jointplot
 
     # palinstance is a instance of a PAL class after
     # calling run_one_step
-    fig = make_jointplot(palinstance.means, palinstance)
+    fig = plot_jointplot(palinstance.means, palinstance)
 
 
 .. image:: _static/jointplot_example.png
     :width: 600
-    :alt: Example of the output of make_jointplot
+    :alt: Example of the output of plot_jointplot
