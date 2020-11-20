@@ -182,7 +182,7 @@ def plot_res(  # pylint:disable=invalid-name
             Defaults to "objective [index]".
         figsize (tuple, optional): Figure size for each individual residual
             vs fitted objective plot.
-        Defaults to (8.0, 6.0).
+        Defaults to (6.0, 4.0).
 
     Returns:
         fig
