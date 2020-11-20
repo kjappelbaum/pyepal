@@ -414,15 +414,15 @@ By default, the code will run a simple cross-validation only on the first iterat
 </pre></div>
 </div>
 <p>This behavior can changed with the cross-validation test being performed more frequently by overriding the <code class="code docutils literal notranslate"><span class="pre">should_run_crossvalidation</span></code> function.</p>
-<p>Another way to detect overfitting is to use <a class="reference internal" href="api.html#pyepal.plotting.make_jointplot" title="pyepal.plotting.make_jointplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">make_jointplot()</span></code></a> function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyePAL, this may suggest that the surrogate model is overfitted.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyepal.plotting</span> <span class="kn">import</span> <span class="n">make_jointplot</span>
+<p>Another way to detect overfitting is to use <a class="reference internal" href="api.html#pyepal.plotting.plot_jointplot" title="pyepal.plotting.plot_jointplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_jointplot()</span></code></a> function from the plotting subpackage. This function will plot all objectives against each other (with errorbars and different classes indicated with colors) and histograms of the objectives on the diagonal. If the majority of predicted points tend to overlap one another and get discarded by PyePAL, this may suggest that the surrogate model is overfitted.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyepal.plotting</span> <span class="kn">import</span> <span class="n">plot_jointplot</span>
 
 <span class="c1"># palinstance is a instance of a PAL class after</span>
 <span class="c1"># calling run_one_step</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">make_jointplot</span><span class="p">(</span><span class="n">palinstance</span><span class="o">.</span><span class="n">means</span><span class="p">,</span> <span class="n">palinstance</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_jointplot</span><span class="p">(</span><span class="n">palinstance</span><span class="o">.</span><span class="n">means</span><span class="p">,</span> <span class="n">palinstance</span><span class="p">)</span>
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/jointplot_example.png"><img alt="Example of the output of make_jointplot" src="_images/jointplot_example.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/jointplot_example.png"><img alt="Example of the output of plot_jointplot" src="_images/jointplot_example.png" style="width: 600px;" /></a>
 </div>
 </div>
 
