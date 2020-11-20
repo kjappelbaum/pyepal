@@ -181,8 +181,7 @@ def plot_res(  # pylint:disable=invalid-name
         labels (Union[List[str], None], optional): Labels for each objective.
             Defaults to "objective [index]".
         figsize (tuple, optional): Figure size for each individual residual
-            vs fitted objective plot.
-        Defaults to (6.0, 4.0).
+            vs fitted objective plot. Defaults to (6.0, 4.0).
 
     Returns:
         fig
@@ -235,7 +234,7 @@ def make_jointplot(  # pylint:disable=invalid-name
         y (np.array): array with the objectives (measurements)
         palinstance (PALBase): "trained" PAL instance
         labels (Union[List[str], None], optional): Labels for each objective.
-        Defaults to "objective [index]".
+            Defaults to "objective [index]".
         figsize (tuple, optional): Figure size for joint plot. Defaults to (8.0, 6.0).
 
     Returns:
