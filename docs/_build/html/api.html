@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The PyePAL API reference &#8212; pyepal v0.1.7+20.g9c7e5cc.dirty documentation</title>
+    <title>The PyePAL API reference &#8212; pyepal v0.1.7+22.gc8be9f0.dirty documentation</title>
 
   <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -65,7 +65,7 @@
   <img src="_static/pyepal_logo.png" class="logo" alt="logo">
 
 
-  <h1 class="site-logo" id="site-title">pyepal v0.1.7+20.g9c7e5cc.dirty documentation</h1>
+  <h1 class="site-logo" id="site-title">pyepal v0.1.7+22.gc8be9f0.dirty documentation</h1>
 
 </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -968,8 +968,8 @@ Defaults to True.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>y</strong> (<em>np.array</em>) – array with the objectives (measurements)</p></li>
 <li><p><strong>palinstance</strong> (<a class="reference internal" href="#pyepal.pal.pal_base.PALBase" title="pyepal.pal.pal_base.PALBase"><em>PALBase</em></a>) – “trained” PAL instance</p></li>
-<li><p><strong>labels</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – [description]. Defaults to None.</p></li>
-<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>optional</em>) – [description]. Defaults to (8.0, 6.0).</p></li>
+<li><p><strong>labels</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – Labels for each objective. Defaults to “objective [index]”.</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Figure size for joint plot. Defaults to (8.0, 6.0).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1030,6 +1030,25 @@ indicated in color.</p>
 <li><p><strong>palinstance</strong> (<a class="reference internal" href="#pyepal.pal.pal_base.PALBase" title="pyepal.pal.pal_base.PALBase"><em>PALBase</em></a>) – PAL instance</p></li>
 <li><p><strong>ax</strong> (<em>ax</em><em>, </em><em>optional</em>) – Matplotlib figure axis. Defaults to None.</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyepal.plotting.plot_res">
+<code class="sig-prename descclassname">pyepal.plotting.</code><code class="sig-name descname">plot_res</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">palinstance</span></em>, <em class="sig-param"><span class="n">labels</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">6.0, 4.0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyepal/plotting.html#plot_res"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyepal.plotting.plot_res" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot residual vs fitted plot of sampled points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>np.array</em>) – array with the objectives (measurements)</p></li>
+<li><p><strong>palinstance</strong> (<a class="reference internal" href="#pyepal.pal.pal_base.PALBase" title="pyepal.pal.pal_base.PALBase"><em>PALBase</em></a>) – “trained” PAL instance</p></li>
+<li><p><strong>labels</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – Labels for each objective. Defaults to “objective [index]”.</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Figure size for each individual residual vs fitted objective plot. Defaults to (8.0, 6.0).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>fig</p>
 </dd>
 </dl>
 </dd></dl>

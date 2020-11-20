@@ -166,6 +166,62 @@ def plot_histogram(y: np.ndarray, palinstance, ax):  # pylint:disable=invalid-na
     )
 
 
+def plot_res(  # pylint:disable=invalid-name
+    y: np.array,
+    palinstance,
+    labels: Union[List[str], None] = None,
+    figsize: tuple = (6.0, 4.0),
+):
+    """Plot residual vs fitted plot of sampled points.
+
+
+    Args:
+        y (np.array): array with the objectives (measurements)
+        palinstance (PALBase): "trained" PAL instance
+        labels (Union[List[str], None], optional): Labels for each objective.
+            Defaults to "objective [index]".
+        figsize (tuple, optional): Figure size for each individual residual
+            vs fitted objective plot. Defaults to (6.0, 4.0).
+
+    Returns:
+        fig
+    """
+    if palinstance.means is None:
+        raise ValueError(
+            "Predicted means is None. Execute run_one_step() \
+                to obtain predicted means for each model."
+        )
+
+    num_targets = palinstance.ndim
+
+    fig, ax = plt.subplots(  # pylint:disable=invalid-name
+        num_targets,
+        1,
+        figsize=(figsize[0], num_targets * figsize[1]),
+        tight_layout=True,
+    )
+
+    for index in range(num_targets):
+        sampled = palinstance.sampled[:, index]
+        fitted = palinstance.means[sampled, index]
+        residuals = y[sampled, index] - fitted
+        ax[index].scatter(fitted, residuals)
+        ax[index].spines["top"].set_color("none")
+        ax[index].spines["right"].set_color("none")
+        ax[index].spines["left"].set_smart_bounds(True)
+        ax[index].spines["bottom"].set_smart_bounds(True)
+
+    if labels is None:
+        labels = [f"objective {i}" for i in range(num_targets)]
+    else:
+        assert len(labels) == num_targets
+
+    for index in range(num_targets):
+        ax[index].set_title(labels[index])
+
+    return fig
+
+
 def make_jointplot(  # pylint:disable=invalid-name
     y: np.array,
     palinstance,
@@ -177,8 +233,9 @@ def make_jointplot(  # pylint:disable=invalid-name
     Args:
         y (np.array): array with the objectives (measurements)
         palinstance (PALBase): "trained" PAL instance
-        labels (Union[List[str], None], optional): [description]. Defaults to None.
-        figsize (tuple, optional): [description]. Defaults to (8.0, 6.0).
+        labels (Union[List[str], None], optional): Labels for each objective.
+            Defaults to "objective [index]".
+        figsize (tuple, optional): Figure size for joint plot. Defaults to (8.0, 6.0).
 
     Returns:
         fig
@@ -186,7 +243,7 @@ def make_jointplot(  # pylint:disable=invalid-name
 
     num_targets = y.shape[1]
     fig, ax = plt.subplots(  # pylint:disable=invalid-name
-        num_targets, num_targets, figsize=figsize
+        num_targets, num_targets, figsize=figsize, tight_layout=True
     )
 
     for row in range(num_targets):
@@ -218,6 +275,5 @@ def make_jointplot(  # pylint:disable=invalid-name
         ax[num_targets - 1, index].set_xlabel(labels[index])
 
     ax[0, num_targets - 1].legend()
-    fig.tight_layout()
 
     return fig
