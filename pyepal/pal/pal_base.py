@@ -450,6 +450,66 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
         self.sampled[indices] = ~np.isnan(measurements)
         self._turn_to_maximization()
 
+    def augment_design_space(  # pylint: disable=invalid-name
+        self, X_design: np.ndarray, re_classify: bool = True
+    ) -> None:
+        """Add new design points to PAL instance
+
+        Args:
+            X_design (np.ndarrary): Design matrix
+            re_classify (bool): Reclassifies the new design space, using the old model.
+                This is, it runs inference, calculates the hyperrectangles, and runs
+                the classification. Does not increase the iteration count.
+                Defaults to True.
+        """
+
+        if self.iteration <= 1:
+            ValueError("You must run a iteration before you augment the design space")
+
+        number_new_points = len(X_design)
+
+        if X_design.shape != self.design_space.shape:
+            raise ValueError(
+                "The design matrix you provided has shape {}, \
+                    the pyepal instance uses a design matrix of shape {}.".format(
+                    X_design.shape, self.design_space
+                )
+            )
+
+        # Update the status matrices
+        np.append(self.pareto_optimal, np.array([False] * number_new_points))
+        np.append(self.discarded, np.array([False] * number_new_points))
+        np.append(self.sampled, np.array([[False] * self.ndim] * number_new_points))
+        np.append(self.unclassified, np.array([True] * number_new_points))
+        np.append(self.rectangle_ups, np.full([number_new_points, self.ndim], np.nan))
+        np.append(self.rectangle_lows, np.full([number_new_points, self.ndim], np.nan))
+        np.append(self.coef_var_mask, np.array([True] * number_new_points))
+
+        # means/std are the model predictions
+        np.append(self.means, np.full([number_new_points, self.ndim], np.nan))
+        np.append(self.std, np.full([number_new_points, self.ndim], np.nan))
+
+        # self.y is what needs to be used for train/predict
+        # as there the data has been turned into maximization
+        np.append(self.y, np.zeros((number_new_points, self.ndim)))
+
+        # self._y contains the data as provided by the user
+        self._y = self.y
+
+        # measurement_uncertainity is provided in update_train_set by the user
+        np.append(
+            self.measurement_uncertainty, np.zeros((number_new_points, self.ndim))
+        )
+
+        # Make sure that the new points have the same "state" as the old ones
+        # This is, we can use the new design space in a proper way for sampling
+        # or classification
+        if re_classify:
+            self._predict()
+            self._replace_by_measurements()
+            self._update_hyperrectangles()
+            self._classify()
+
     def sample(self, exclude_idx: Union[np.array, None] = None) -> int:
         """Runs the sampling step based on the size of the hyperrectangle.
         I.e., favoring exploration.
