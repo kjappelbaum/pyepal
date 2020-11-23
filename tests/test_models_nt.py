@@ -17,7 +17,7 @@
 import pytest
 from neural_tangents import stax
 
-from pyepal.models.nt import build_dense_network
+from pyepal.models.nt import build_dense_network, get_optimizer
 
 
 def test_dense_network():
@@ -38,3 +38,11 @@ def test_dense_network():
     assert callable(net.apply_fn)
     assert callable(net.init_fn)
     assert callable(net.kernel_fn)
+
+
+def test_get_optimizer():
+    """Make sure that we can create an optimizer data class"""
+    optimizer = get_optimizer()
+    assert callable(optimizer.get_params)
+    assert callable(optimizer.opt_init)
+    assert callable(optimizer.opt_update)

@@ -25,6 +25,9 @@ with open("requirements.txt", "r") as fh:
 with open("README.md", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
 
+gpy_requirements = ["GPy==1.9.9", "matplotlib"]
+gbdt_requirements = ["lightgbm>=3.0.0"]
+neural_tangents_requirements = ["neural_tangents", "jaxlib"]
 setup(
     name="pyepal",
     version=versioneer.get_version(),
@@ -52,9 +55,10 @@ setup(
             "versioneer",
             "isort",
         ],
-        "GPy": ["GPy==1.9.9", "matplotlib"],
-        "GBDT": ["lightgbm>=3.0.0"],
-        "neural_tangents": ["neural_tangents", "jaxlib"],
+        "GPy": gpy_requirements,
+        "GBDT": gbdt_requirements,
+        "neural_tangents": neural_tangents_requirements,
+        "all": neural_tangents_requirements + gbdt_requirements + gpy_requirements,
     },
     author="PyePAL authors",
     author_email="kevin.jablonka@epfl.ch, brian.yoo@basf.com",
