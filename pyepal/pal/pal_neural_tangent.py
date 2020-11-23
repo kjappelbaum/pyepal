@@ -18,7 +18,6 @@
 This allows to perform
 1. Exact Bayesian inference (NNGP)
 2. Inference using gradient descent with MSE loss (NTK)
-3. Inference using an ensemble of finite-width neural networks
 
 Note that the neural tangent code usually assumes mean-zero Gaussians
 
@@ -41,6 +40,7 @@ from sklearn.preprocessing import StandardScaler
 from ..models.nt import NTModel
 from .pal_base import PALBase
 
+# ToDo: Probably, we do not need the high precision by default
 config.update("jax_enable_x64", True)
 __all__ = ["PALNT", "NTModel"]
 
