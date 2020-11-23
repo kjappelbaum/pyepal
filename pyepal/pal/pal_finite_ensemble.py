@@ -45,7 +45,9 @@ def _ensemble_train_one_finite_width(  # pylint:disable=too-many-arguments, too-
     grad_loss = jit(lambda state, x, y: grad(loss)(optimizer.get_params(state), x, y))
 
     x_train = design_space[sampled[:, i]]
-    y_train = objectives[sampled[:, i], i].reshape(-1, 1)
+
+    scaler = StandardScaler()
+    y_train = scaler.fit_transform(objectives[sampled[:, i], i].reshape(-1, 1))
 
     def train_network(key):
         _, params = model.init_fn(key, (-1, x_train.shape[1]))
@@ -61,7 +63,7 @@ def _ensemble_train_one_finite_width(  # pylint:disable=too-many-arguments, too-
     ensemble_key = random.split(key, ensemble_size)
     params = vmap(train_network)(ensemble_key)
 
-    return params
+    return params, scaler
 
 
 def _ensemble_predict_one_finite_width(i: int, models: Sequence[NTModel], design_space):
@@ -75,19 +77,43 @@ def _ensemble_predict_one_finite_width(i: int, models: Sequence[NTModel], design
     return mean_func, std_func
 
 
-class PALNTEnsemble(PALBase):
+class PALNTEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
     """Use PAL with and ensemble of finite-width neural networks"""
 
     def __init__(self, *args, **kwargs):
-        self.optimizer = kwargs.pop("optimizer")
+        self.optimizers = kwargs.pop("optimizers")
         self.training_steps = kwargs.pop("training_steps", 500)
         self.ensemble_size = kwargs.pop("ensemble_size", 100)
         self.key = kwargs.pop("key", random.PRNGKey(10))
         self.design_space_scaler = StandardScaler()
         super().__init__(*args, **kwargs)
 
+    def _set_data(self):
+        self.design_space = self.design_space_scaler.fit_transform(self.design_space)
+
     def _train(self):
-        ...
+        for i in range(len(self.models)):
+            params, scaler = _ensemble_train_one_finite_width(
+                i,
+                self.models,
+                self.design_space,
+                self.y,
+                self.sampled,
+                self.optimizers,
+                self.key,
+            )
+            self.models[i].params = params
+            self.models[i].scaler = scaler
+            self.y[:, i] = scaler.transform(self.y[:, i].reshape(-1, 1)).flatten()
 
     def _predict(self):
-        ...
+        means, stds = [], []
+        for i in range(len(self.models)):
+            mean, std = _ensemble_predict_one_finite_width(
+                i, self.models, self.design_space
+            )
+            means.append(mean.reshape(-1, 1))
+            stds.append(std.reshape(-1, 1))
+
+        self.means = np.hstack(means)
+        self.std = np.hstack(stds)
