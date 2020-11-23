@@ -13,23 +13,43 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Utility functions to build neutral tangents models for PALNT"""
-from collections import namedtuple
-from typing import Sequence, Union
+"""Utility functions to build neutral tangents models for PALNT
 
+Depending on the dataset there might be some issues with these models,
+some tricks are listed in https://github.com/google/neural-tangents/issues/76
+
+1. Use Erf as activation
+2. Initialize the weights with larger standard deviation
+3. Standardize the data
+
+The first two points are done by default in the `build_dense_network` function
+"""
+
+from dataclasses import dataclass
+from typing import Callable, Sequence, Union
+
+import jax.numpy as np
 from jax import jit
 from neural_tangents import stax
 
-__all__ = ["NT_TUPLE", "build_dense_network"]
 
-NT_TUPLE = namedtuple(  # pylint:disable=invalid-name
-    "NT_TUPLE", ("apply_fn", "init_fn", "kernel_fn", "predict_fn")
-)
+@dataclass
+class NTModel:
+    """Defining a dataclass for neural tangents models"""
+
+    apply_fn: Callable
+    init_fn: Callable
+    kernel_fn: Callable
+    predict_fn: Union[Callable, None] = None
+    scaler: Union[Callable, None] = None
+
+
+__all__ = ["NTModel", "build_dense_network"]
 
 
 def build_dense_network(
-    hidden_layers: Sequence[int], activations: Union[Sequence, str] = "relu"
-) -> NT_TUPLE:
+    hidden_layers: Sequence[int], activations: Union[Sequence, str] = "erf"
+) -> NTModel:
     """Utility function to build a simple feedforward network with the
     neural tangents library.
 
@@ -38,10 +58,10 @@ def build_dense_network(
             For example, [512, 512]
         activations (Union[Sequence, str], optional):
             Iterable with neural_tangents.stax axtivations or "relu" or "erf".
-            Defaults to "relu".
+            Defaults to "erf".
 
     Returns:
-        NT_TUPLE: jiited init, apply and
+        NTModel: jiited init, apply and
             kernel functions, predict_function (None)
     """
     assert len(hidden_layers) >= 1, "You must provide at least one hidden layer"
@@ -64,11 +84,13 @@ def build_dense_network(
     stack = []
 
     for hidden_layer, activation in zip(hidden_layers, activations):
-        stack.append(stax.Dense(hidden_layer))
+        stack.append(stax.Dense(hidden_layer, W_std=np.sqrt(1.5), b_std=0.2))
         stack.append(activation)
 
     stack.append(stax.Dense(1))
 
     init_fn, apply_fn, kernel_fn = stax.serial(*stack)
 
-    return NT_TUPLE(jit(init_fn), jit(apply_fn), jit(kernel_fn), None)
+    return NTModel(
+        jit(init_fn), jit(apply_fn), jit(kernel_fn, static_argnums=(2,)), None
+    )

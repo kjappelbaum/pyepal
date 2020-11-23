@@ -21,6 +21,10 @@ This allows to perform
 3. Inference using an ensemble of finite-width neural networks
 
 Note that the neural tangent code usually assumes mean-zero Gaussians
+
+
+Reducing predict_fn_kwargs['diag_reg'] typically improves the interpolation
+quality
 """
 
 from typing import Sequence, Tuple
@@ -28,42 +32,47 @@ from typing import Sequence, Tuple
 import jax.numpy as jnp
 import neural_tangents as nt
 import numpy as np
+from jax.config import config
 
 # from jax import random
 # from jax.api import grad, jit, vmap
 # from jax.experimental import optimizers
 from neural_tangents import stax
+from sklearn.preprocessing import StandardScaler
 
-from ..models.nt_stax import NT_TUPLE
-
-# Probably we also need to add jaxlib to the dependencies
+from ..models.nt import NTModel
 from .pal_base import PALBase
 
-__all__ = ["PALNT", "NT_TUPLE"]
+config.update("jax_enable_x64", True)
+__all__ = ["PALNT", "NTModel"]
 
 # We move those functions out of the class so that we can parallelize them
 def _set_one_infinite_width_model(
     i: int,
-    models: Sequence[NT_TUPLE],
+    models: Sequence[NTModel],
     design_space: np.ndarray,
     objectives: np.ndarray,
     sampled: np.ndarray,
-    # predict_fn_kwargs: dict = {},
-) -> stax.Callable:
+    predict_fn_kwargs: dict = {"diag_reg": 1e-6},
+) -> Tuple[stax.Callable, StandardScaler]:
     model = models[i]
     kernel_fn = model.kernel_fn
+    scaler = StandardScaler()
+    y = scaler.fit_transform(  # pylint:disable=invalid-name
+        objectives[sampled[:, i], i].reshape(-1, 1)
+    )
     predict_fn = nt.predict.gradient_descent_mse_ensemble(
         kernel_fn,
         design_space[sampled[:, i]],
-        objectives[sampled[:, i], i].reshape(-1, 1),
-        # **predict_fn_kwargs,
+        y,
+        **predict_fn_kwargs,
     )
 
-    return predict_fn
+    return predict_fn, scaler
 
 
 def _predict_one_infinite_width_model(
-    i: int, models: Sequence[NT_TUPLE], design_space: np.ndarray, kernel
+    i: int, models: Sequence[NTModel], design_space: np.ndarray, kernel: str
 ) -> Tuple[jnp.ndarray, jnp.ndarray]:
     predict_fn = models[i].predict_fn
     mean, covariance = predict_fn(x_test=design_space, get=kernel, compute_cov=True)
@@ -80,9 +89,9 @@ class PALNT(PALBase):
 
         Args:
             X_design (np.array): Design space (feature matrix)
-            models (Sequence[NT_TUPLE]): You need to provide a sequence of
-                namedtuples NT_TUPLE (`pyepal.models.nt_stax.NT_TUPLE`).
-                The elements of this tuple are the `apply_fn`, `init_fn`,
+            models (Sequence[NTModel]): You need to provide a sequence of
+                 NTModel (`pyepal.models.nt.NTModel`).
+                The elements of this dataclass are the `apply_fn`, `init_fn`,
                 `kernel_fn` and `predict_fn` (for latter you can typically
                 provide `None`)
             ndim (int): Number of objectives
@@ -104,15 +113,22 @@ class PALNT(PALBase):
                 Defaults to 'nngp'.
         """
         self.kernel = kwargs.pop("kernel", "nngp")
-
+        self.design_space_scaler = StandardScaler()
         super().__init__(*args, **kwargs)
 
     def _set_data(self):
+        self.design_space = self.design_space_scaler.fit_transform(self.design_space)
         for i in range(len(self.models)):
-            predict_fn = _set_one_infinite_width_model(
-                i, self.models, self.design_space, self.y, self.sampled
+
+            predict_fn, scaler = _set_one_infinite_width_model(
+                i,
+                self.models,
+                self.design_space,
+                self.y,
+                self.sampled,
             )
             self.models[i].predict_fn = predict_fn
+            self.models[i].scaler = scaler
 
     def _train(self):
         pass
@@ -121,10 +137,13 @@ class PALNT(PALBase):
         means, stds = [], []
         for i in range(len(self.models)):
             mean, std = _predict_one_infinite_width_model(
-                i, self.models, self.design_space, self.kernel
+                i,
+                self.models,
+                self.design_space,
+                self.kernel,
             )
-            means.append(mean)
-            stds.append(std)
+            means.append(mean.reshape(-1, 1))
+            stds.append(std.reshape(-1, 1))
 
         self.means = np.hstack(means)
         self.std = np.hstack(stds)

@@ -20,6 +20,7 @@ from .pal.pal_base import PALBase
 from .pal.pal_coregionalized import PALCoregionalized
 from .pal.pal_gbdt import PALGBDT
 from .pal.pal_gpy import PALGPy
+from .pal.pal_neural_tangent import PALNT, NTModel
 from .pal.pal_sklearn import PALSklearn
 from .pal.utils import (
     exhaust_loop,
@@ -37,6 +38,8 @@ __all__ = [
     "PALGBDT",
     "PALGPy",
     "PALSklearn",
+    "PALNT",
+    "NTModel",
     "exhaust_loop",
     "get_hypervolume",
     "get_kmeans_samples",

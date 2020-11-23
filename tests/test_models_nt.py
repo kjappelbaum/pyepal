@@ -17,7 +17,7 @@
 import pytest
 from neural_tangents import stax
 
-from pyepal.models.nt_stax import build_dense_network
+from pyepal.models.nt import build_dense_network
 
 
 def test_dense_network():
@@ -32,15 +32,9 @@ def test_dense_network():
     with pytest.raises(AssertionError):
         build_dense_network([512, 512], ["relu", "relu"])
 
-    init_fn, apply_fn, kernel_fn, _ = build_dense_network([512])
+    # check that we return a dataclass and can access the elements
+    net = build_dense_network([512])
 
-    assert callable(apply_fn)
-    assert callable(init_fn)
-    assert callable(kernel_fn)
-
-    # check that we return a named tuple and can access the elements
-    n_tuple = build_dense_network([512])
-
-    assert callable(n_tuple.apply_fn)
-    assert callable(n_tuple.init_fn)
-    assert callable(n_tuple.kernel_fn)
+    assert callable(net.apply_fn)
+    assert callable(net.init_fn)
+    assert callable(net.kernel_fn)
