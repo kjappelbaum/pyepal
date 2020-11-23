@@ -101,9 +101,41 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     idx = palinstance.run_one_step()
     assert len(idx) == 1
     assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
-    assert palinstance.number_sampled_points > 0
+    assert palinstance.number_sampled_points == len(sample_idx)
     assert sum(palinstance.unclassified) > 0
     assert sum(palinstance.discarded) == 0
+    for model in palinstance.models:
+        assert check_is_fitted(model) is None
+
+
+def test_augment_design_space(make_random_dataset):
+    """Test if the reclassification step in the design step
+    agumentation method works"""
+    np.random.seed(10)
+    # This random dataset is not really ideal for a Pareto test as there's only one
+    # optimal point it appears to me
+    X, y = make_random_dataset  # pylint:disable=invalid-name
+    gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
+    gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
+    gpr_2 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    palinstance = PALSklearn(X, [gpr_0, gpr_1, gpr_2], 3, beta_scale=1)
+    palinstance.cross_val_points = 0
+    palinstance.update_train_set(sample_idx, y[sample_idx])
+    _ = palinstance.run_one_step()
+    number_pareto_optimal_points_old = palinstance.number_pareto_optimal_points
+    number_unclassified_points_old = palinstance.number_unclassified_points
+    X_new = X + 1  # pylint:disable=invalid-name
+    palinstance.augment_design_space(X_new)
+    assert palinstance.number_design_points == 200
+
+    assert palinstance.number_sampled_points == len(sample_idx)
+    assert (
+        palinstance.number_unclassified_points == number_unclassified_points_old + 100
+    )
+    assert palinstance.number_discarded_points == 0
+    assert palinstance.number_pareto_optimal_points == number_pareto_optimal_points_old
+    # Adding new design points should not mess up with the models
     for model in palinstance.models:
         assert check_is_fitted(model) is None
 

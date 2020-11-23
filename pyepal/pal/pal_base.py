@@ -454,16 +454,20 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
         self._turn_to_maximization()
 
     def augment_design_space(  # pylint: disable=invalid-name
-        self, X_design: np.ndarray, re_classify: bool = True
+        self, X_design: np.ndarray, classify: bool = True
     ) -> None:
         """Add new design points to PAL instance
 
         Args:
             X_design (np.ndarrary): Design matrix. Two-dimensional array containing
                 measurements in the rows and the features as the columns.
-            re_classify (bool): Reclassifies the new design space, using the old model.
+            classify (bool): Reclassifies the new design space, using the old model.
                 This is, it runs inference, calculates the hyperrectangles, and runs
                 the classification. Does not increase the iteration count.
+                Note though that points that already have been classified
+                as Pareto-optimal will not be re-classified,
+                e.g., discarded---even if the new design points
+                dominate the existing "Pareto optimal" points.
                 Defaults to True.
         """
 
@@ -536,7 +540,7 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
         # Make sure that the new points have the same "state" as the old ones
         # This is, we can use the new design space in a proper way for sampling
         # or classification
-        if re_classify:
+        if classify:
             self._predict()
             self._replace_by_measurements()
             self._update_hyperrectangles()
