@@ -53,7 +53,7 @@ def build_dense_network(
     hidden_layers: Sequence[int],
     activations: Union[Sequence, str] = "erf",
     w_std: float = 2.5,
-    b_std=2.5,
+    b_std=1,
 ) -> NTModel:
     """Utility function to build a simple feedforward network with the
     neural tangents library.

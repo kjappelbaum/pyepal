@@ -47,14 +47,16 @@ config.update("jax_enable_x64", True)
 __all__ = ["PALNT", "NTModel"]
 
 # We move those functions out of the class so that we can parallelize them
-def _set_one_infinite_width_model(
+def _set_one_infinite_width_model(  # pylint:disable=too-many-arguments
     i: int,
     models: Sequence[NTModel],
     design_space: np.ndarray,
     objectives: np.ndarray,
     sampled: np.ndarray,
-    predict_fn_kwargs: dict = {"diag_reg": 1e-3},
+    predict_fn_kwargs: dict = None,
 ) -> Tuple[stax.Callable, StandardScaler]:
+    if predict_fn_kwargs is None:
+        predict_fn_kwargs = {"diag_reg": 1e-3}
     model = models[i]
     kernel_fn = model.kernel_fn
     scaler = StandardScaler()
@@ -75,7 +77,11 @@ def _predict_one_infinite_width_model(
     i: int, models: Sequence[NTModel], design_space: np.ndarray, kernel: str
 ) -> Tuple[jnp.ndarray, jnp.ndarray]:
     predict_fn = models[i].predict_fn
-    mean, covariance = predict_fn(x_test=design_space, get=kernel, compute_cov=True)
+    mean, covariance = predict_fn(  # type: ignore
+        x_test=design_space,
+        get=kernel,
+        compute_cov=True,
+    )
 
     return mean.flatten(), np.sqrt(np.diag(covariance))
 
@@ -129,6 +135,7 @@ class PALNT(PALBase):
             )
             self.models[i].predict_fn = predict_fn
             self.models[i].scaler = scaler
+            self.y[:, i] = scaler.transform(self.y[:, i].reshape(-1, 1)).flatten()
 
     def _train(self):
         pass

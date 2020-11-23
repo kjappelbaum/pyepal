@@ -402,7 +402,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                 """The mean absolute error in crossvalidation is {:.2f},
 the mean standard deviation is {:.2f}.
 Your model might not be predictive and/or overconfident.
-In the docs, you find hints on how to make GPRs more robust.""".format(
+In the docs, you find hints on how to make models more robust.""".format(
                     mae, mean_std
                 ),
                 UserWarning,
