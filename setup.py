@@ -34,7 +34,7 @@ setup(
     packages=find_packages(),
     url="https://github.com/kjappelbaum/PyePAL",
     license="Apache 2.0",
-    python_requires=">=3.6",
+    python_requires=">3.6",
     install_requires=REQUIREMENTS,
     extras_require={
         "testing": ["pytest", "pytest-cov<2.11"],
