@@ -54,6 +54,7 @@ setup(
         ],
         "GPy": ["GPy==1.9.9", "matplotlib"],
         "GBDT": ["lightgbm>=3.0.0"],
+        "neural_tangents": ["neural_tangents", "jaxlib"],
     },
     author="PyePAL authors",
     author_email="kevin.jablonka@epfl.ch, brian.yoo@basf.com",
