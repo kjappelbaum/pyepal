@@ -179,6 +179,9 @@ Adding new points to the design matrix can be easily achieved using the :py:func
 
 Alternatively, you can use the :code:`classify` flag that keeps all previous classifications. This means that if there is a point that was perviously Pareto-efficient in the non-augmented design space, but is now augmented by a new design points, it will no longer certainly be classified as Pareto-efficient.
 
+Note that is important that the new points are sampled from the same distribution as the previous points in the design space. Otherwise the model will have to deal with unexpected datashift.
+
+
 Caveats and tricks with Gaussian processes
 -------------------------------------------
 
