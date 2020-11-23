@@ -173,13 +173,13 @@ Note that the `exhaust_loop` also supports the `batch_size` keyword argument
 Adding new points to the design matrix
 ........................................
 
-In some applications, you might want to augment the design matrix after a few iterations of PyePAL. This could be useful, for example, if you start with a coarse discretization of your design space then then want to refine this grid in subsequent iterations in the relevant regions of the design space.
+In some applications, you might want to augment the design matrix after a few iterations of PyePAL. This could be useful, for example, if you start with a coarse discretization of your design space then want to refine this grid in subsequent iterations in the relevant regions of the design space.
 
-Adding new points to the design matrix can be easily achieved using the :py:func:`~pyepal.pal.pal_base.PALBase.augment_design_matrix` function that takes the new design matrix as input. By default, it will run the current model for the new, augmented, design matrix and re-classify all points. You can turn this behavior off using the :code:`clean_classify` parameter.
+Adding new points to the design matrix can be easily achieved using the :py:func:`~pyepal.pal.pal_base.PALBase.augment_design_matrix` function that takes the new design matrix as input. By default, it will run the current model for the new, augmented, design matrix, and re-classify all points. You can turn this behavior off using the :code:`clean_classify` parameter.
 
-Alternatively, you can use the :code:`classify` flag that keeps all previous classifications. This means that if there is a point that was perviously Pareto-efficient in the non-augmented design space, but is now augmented by a new design points, it will no longer certainly be classified as Pareto-efficient.
+Alternatively, you can use the :code:`classify` flag that keeps all previous classifications. This means that if there is a point that was previously Pareto-efficient in the non-augmented design space but is now dominated by a new design point, it will no longer certainly be classified as Pareto-efficient.
 
-Note that is important that the new points are sampled from the same distribution as the previous points in the design space. Otherwise the model will have to deal with unexpected datashift.
+Note that is important that the new points are sampled from the same distribution as the previous points in the design space. Otherwise, the model will have to deal with unexpected data shift.
 
 
 Caveats and tricks with Gaussian processes
