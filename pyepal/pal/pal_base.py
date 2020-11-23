@@ -284,21 +284,44 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             return True
         return False
 
-    def _update_hyperrectangles(self):
+    def _update_hyperrectangles(self, new_indices: np.ndarray = None):
         """Computes new hyperrectangles based on beta,
         the means and the standard deviations.
         If the iteration is > 0,
         then it uses iterative intersection to ensure that the size of the
         hyperrectangles is decreasing.
+
+        Args:
+            new_indices (np.ndarray): If provided, it will not use the
+                iterative intersection algorithm for these hyperrectangles.
+                Instead, it will just use the scaled edges based on the
+                model's prediction. Defaults to None.
         """
         lows, ups = _get_uncertainty_regions(self.means, self.std, np.sqrt(self.beta))
         if self.iteration == 1:
             # initialization
             self.rectangle_lows, self.rectangle_ups = lows, ups
         else:
-            self.rectangle_lows, self.rectangle_ups = _union(
-                self.rectangle_lows, self.rectangle_ups, lows, ups
-            )
+            if new_indices is None:
+                self.rectangle_lows, self.rectangle_ups = _union(
+                    self.rectangle_lows, self.rectangle_ups, lows, ups
+                )
+            else:
+                not_new = np.array(
+                    [
+                        i
+                        for i in range(self.number_design_points)
+                        if i not in new_indices
+                    ]
+                )
+                self.rectangle_lows[new_indices] = lows[new_indices]
+                self.rectangle_ups[new_indices] = ups[new_indices]
+                self.rectangle_lows[not_new], self.rectangle_ups[not_new] = _union(
+                    self.rectangle_lows[not_new],
+                    self.rectangle_ups[not_new],
+                    lows[not_new],
+                    ups[not_new],
+                )
 
     def _update_coef_var_mask(self):
         """Update the mask array of elements that have variance below
@@ -490,6 +513,7 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
                 "You must run a iteration before you augment the design space"
             )
 
+        number_old_points = self.number_design_points
         number_new_points = len(X_design)
 
         assert isinstance(
@@ -560,13 +584,17 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
         # Update the design space
         self.design_space = np.append(self.design_space, X_design, 0)
 
+        new_indices = np.arange(number_old_points, self.number_design_points)
+
         # Make sure that the new points have the same "state" as the old ones
         # This is, we can use the new design space in a proper way for sampling
         # or classification
+        # ToDo: the bug is here that iteration !=1 wherefore it will intersect
+        # But this makes no sense here when we initialize the highs and lows with zeros
         if classify:
             self._predict()
             self._replace_by_measurements()
-            self._update_hyperrectangles()
+            self._update_hyperrectangles(new_indices=new_indices)
             self._classify()
 
         if clean_classify:
@@ -577,7 +605,7 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
             self.unclassified[self.discarded_indices] = False
             self._predict()
             self._replace_by_measurements()
-            self._update_hyperrectangles()
+            self._update_hyperrectangles(new_indices=new_indices)
             self._classify()
 
     def sample(self, exclude_idx: Union[np.array, None] = None) -> int:

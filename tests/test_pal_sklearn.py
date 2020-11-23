@@ -125,7 +125,7 @@ def test_augment_design_space(make_random_dataset):
     _ = palinstance.run_one_step()
 
     X_new = X + 1  # pylint:disable=invalid-name
-    palinstance.augment_design_space(X_new, classify=True)
+    palinstance.augment_design_space(X_new, classify=True, clean_classify=False)
     assert palinstance.number_design_points == 200
     assert palinstance.number_sampled_points == len(sample_idx)
 
@@ -142,13 +142,34 @@ def test_augment_design_space(make_random_dataset):
     palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y[sample_idx])
     _ = palinstance.run_one_step()
-    old_pareto_optimal_indices = palinstance.pareto_optimal_indices
-    # the new points should dominate all the old ones
+
     X_new = X + np.full((1, 10), 1)  # pylint:disable=invalid-name
     palinstance.augment_design_space(X_new)
-    assert palinstance.pareto_optimal_indices != old_pareto_optimal_indices
     assert palinstance.number_design_points == 200
     assert palinstance.number_sampled_points == len(sample_idx)
+
+
+def test_augment_design_space_bk(binh_korn_points, binh_korn_points_finer):
+    """Test the augment function by using a finer sampling of the Binh-Korn function
+    for augmentation"""
+    np.random.seed(10)
+    X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
+    (
+        X_binh_korn_finer,  # pylint:disable=invalid-name
+        _,
+    ) = binh_korn_points_finer
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
+    gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
+    palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1)
+    palinstance.cross_val_points = 0
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    new_idx = palinstance.run_one_step()
+    palinstance.update_train_set(new_idx, y_binh_korn[new_idx])
+    number_pareto_optimal_points_old = palinstance.number_pareto_optimal_points
+    palinstance.augment_design_space(X_binh_korn_finer)
+    assert palinstance.number_discarded_points == 0
+    assert palinstance.number_pareto_optimal_points > number_pareto_optimal_points_old
 
 
 def test_orchestration_run_one_step_batch(  # pylint:disable=too-many-statements

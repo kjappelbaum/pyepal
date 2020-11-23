@@ -36,6 +36,15 @@ def binh_korn_points():
 
 
 @pytest.fixture()
+def binh_korn_points_finer():
+    """Create a dataset based on the Binh-Korn test function"""
+    x = np.linspace(0, 5, 399)  # pylint:disable=invalid-name
+    y = np.linspace(0, 3, 399)  # pylint:disable=invalid-name
+    array = np.array([binh_korn(xi, yi) for xi, yi in zip(x, y)])
+    return np.hstack([x.reshape(-1, 1), y.reshape(-1, 1)]), array
+
+
+@pytest.fixture()
 def make_random_dataset(targets=3):
     """Make a dataset with three targets"""
     return make_regression(

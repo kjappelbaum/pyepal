@@ -103,7 +103,7 @@ def test_augment_design_space(make_random_dataset):
     palinstance.unclassified = unclassified
 
     # As we do not have a model, we cannot test the classification
-    palinstance.augment_design_space(X_augmented, classify=False)
+    palinstance.augment_design_space(X_augmented, clean_classify=False)
     assert palinstance.number_discarded_points == 0
     assert palinstance.number_pareto_optimal_points == 2
     assert palinstance.number_unclassified_points == 298
