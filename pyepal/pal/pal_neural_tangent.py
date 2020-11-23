@@ -53,7 +53,7 @@ def _set_one_infinite_width_model(
     design_space: np.ndarray,
     objectives: np.ndarray,
     sampled: np.ndarray,
-    predict_fn_kwargs: dict = {"diag_reg": 1e-6},
+    predict_fn_kwargs: dict = {"diag_reg": 1e-3},
 ) -> Tuple[stax.Callable, StandardScaler]:
     model = models[i]
     kernel_fn = model.kernel_fn

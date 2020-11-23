@@ -15,6 +15,7 @@
 
 """Test running PAL with neural tangents models"""
 
+from sklearn.preprocessing import StandardScaler
 
 from pyepal.models.nt import build_dense_network
 from pyepal.pal.pal_neural_tangent import PALNT
@@ -24,10 +25,11 @@ from pyepal.pal.utils import get_kmeans_samples
 def test_run_one_step(binh_korn_points):
     """Test the neural tangent network using the Binh-Korn testfunction"""
     X, y = binh_korn_points  # pylint:disable=invalid-name
-
+    X = StandardScaler().fit_transform(X)  # pylint:disable=invalid-name
+    y = StandardScaler().fit_transform(y)  # pylint:disable=invalid-name
     # We create one model per objective
-    model_tuple_1 = build_dense_network([1024, 1024])
-    model_tuple_2 = build_dense_network([1024, 1024])
+    model_tuple_1 = build_dense_network([128])
+    model_tuple_2 = build_dense_network([128])
     palinstance = PALNT(
         X, [model_tuple_1, model_tuple_2], 2, beta_scale=1, kernel="ntk"
     )
@@ -44,8 +46,8 @@ def test_run_one_step(binh_korn_points):
     assert sum(palinstance.discarded) == 0
 
     # We create one model per objective
-    model_tuple_1 = build_dense_network([1024, 1024])
-    model_tuple_2 = build_dense_network([1024, 1024])
+    model_tuple_1 = build_dense_network([128])
+    model_tuple_2 = build_dense_network([128])
     palinstance = PALNT(
         X, [model_tuple_1, model_tuple_2], 2, beta_scale=1, kernel="nngp"
     )

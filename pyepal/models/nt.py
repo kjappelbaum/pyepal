@@ -23,12 +23,14 @@ some tricks are listed in https://github.com/google/neural-tangents/issues/76
 3. Standardize the data
 
 The first two points are done by default in the `build_dense_network` function
+
+Note that following the law of total variance the prior, intialized via
+W_std and b_std give an upper bound on the std of the posterior
 """
 
 from dataclasses import dataclass
 from typing import Callable, Sequence, Union
 
-import jax.numpy as np
 from jax import jit
 from neural_tangents import stax
 
@@ -48,7 +50,10 @@ __all__ = ["NTModel", "build_dense_network"]
 
 
 def build_dense_network(
-    hidden_layers: Sequence[int], activations: Union[Sequence, str] = "erf"
+    hidden_layers: Sequence[int],
+    activations: Union[Sequence, str] = "erf",
+    w_std: float = 2.5,
+    b_std=2.5,
 ) -> NTModel:
     """Utility function to build a simple feedforward network with the
     neural tangents library.
@@ -59,6 +64,8 @@ def build_dense_network(
         activations (Union[Sequence, str], optional):
             Iterable with neural_tangents.stax axtivations or "relu" or "erf".
             Defaults to "erf".
+        w_std (float): Standard deviation of the weight distribution.
+        b_std (float): Standard deviation of the bias distribution.
 
     Returns:
         NTModel: jiited init, apply and
@@ -84,7 +91,7 @@ def build_dense_network(
     stack = []
 
     for hidden_layer, activation in zip(hidden_layers, activations):
-        stack.append(stax.Dense(hidden_layer, W_std=np.sqrt(1.5), b_std=0.2))
+        stack.append(stax.Dense(hidden_layer, W_std=w_std, b_std=b_std))
         stack.append(activation)
 
     stack.append(stax.Dense(1))
