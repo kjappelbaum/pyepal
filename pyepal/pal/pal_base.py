@@ -454,7 +454,7 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
         self._turn_to_maximization()
 
     def augment_design_space(  # pylint: disable=invalid-name
-        self, X_design: np.ndarray, classify: bool = True
+        self, X_design: np.ndarray, classify: bool = False, clean_classify: bool = True
     ) -> None:
         """Add new design points to PAL instance
 
@@ -468,6 +468,20 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
                 as Pareto-optimal will not be re-classified,
                 e.g., discarded---even if the new design points
                 dominate the existing "Pareto optimal" points.
+                Defaults to False.
+            clean_classify (bool): Reclassifies the new design space,
+                using the old model. This is, it runs inference,
+                calculates the hyperrectangles, and runs the classification.
+                Does not increase the iteration count.
+                But, in contrast to `classify` it erases all previous classifications,
+                before running the new classification. Hence, if some new design point
+                dominates a previously Pareto efficient point,
+                the previous Pareto optimal point will no longer be classified
+                as Pareto efficient.
+                This flag is incompatible with `classify`.
+                If you choose `clean_classify`, PyePAL will erase
+                all previous classifications,
+                independent of what you choose for `classify`.
                 Defaults to True.
         """
 
@@ -490,6 +504,15 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
                     X_design.shape, self.design_space.shape
                 )
             )
+
+        if classify and clean_classify:
+            warnings.warn(
+                "You choose both `classify` and `clean_classify`. \
+                PyePAL will use the `clean_classify` behavior and override \
+                    all previous classifications.",
+                UserWarning,
+            )
+            classify = False
 
         # Update the status matrices
         self.pareto_optimal = np.append(
@@ -541,6 +564,17 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
         # This is, we can use the new design space in a proper way for sampling
         # or classification
         if classify:
+            self._predict()
+            self._replace_by_measurements()
+            self._update_hyperrectangles()
+            self._classify()
+
+        if clean_classify:
+            self.pareto_optimal = np.array([False] * self.number_design_points)
+            # We can be a bit more clever and only re-consider the Pareto optimal
+            # points. We can leave the
+            self.unclassified = np.array([True] * self.number_design_points)
+            self.unclassified[self.discarded_indices] = False
             self._predict()
             self._replace_by_measurements()
             self._update_hyperrectangles()

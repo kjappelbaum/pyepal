@@ -175,8 +175,9 @@ Adding new points to the design matrix
 
 In some applications, you might want to augment the design matrix after a few iterations of PyePAL. This could be useful, for example, if you start with a coarse discretization of your design space then then want to refine this grid in subsequent iterations in the relevant regions of the design space.
 
-Adding new points to the design matrix can be easily achieved using the :py:func:`~pyepal.pal.pal_base.PALBase.augment_design_matrix` function that takes the new design matrix as input. By default, it will run the current model for the new, augmented, design matrix and classify the points that were just added to the design matrix. You can turn this behavior off using the :code:`classify` parameter.
+Adding new points to the design matrix can be easily achieved using the :py:func:`~pyepal.pal.pal_base.PALBase.augment_design_matrix` function that takes the new design matrix as input. By default, it will run the current model for the new, augmented, design matrix and re-classify all points. You can turn this behavior off using the :code:`clean_classify` parameter.
 
+Alternatively, you can use the :code:`classify` flag that keeps all previous classifications. This means that if there is a point that was perviously Pareto-efficient in the non-augmented design space, but is now augmented by a new design points, it will no longer certainly be classified as Pareto-efficient.
 
 Caveats and tricks with Gaussian processes
 -------------------------------------------

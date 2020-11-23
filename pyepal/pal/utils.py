@@ -131,7 +131,7 @@ def exhaust_loop(
     Returns:
         None. The PAL instance is updated in place
     """
-    assert palinstance.design_space_size == len(
+    assert palinstance.number_design_points == len(
         y
     ), "The number of points in the design space must equal the number of measurements"
     while sum(palinstance.unclassified):
