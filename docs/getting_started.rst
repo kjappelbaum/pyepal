@@ -30,6 +30,8 @@ Which class do i use?
 - For Gaussian processes built with :code:`GPy` use :py:class:`~pyepal.pal.pal_gpy.PALGPy`
 - For coregionalized Gaussian processes (built with :code:`GPy`) use :py:class:`~pyepal.pal.pal_coregionalized.PALCoregionalized`
 - For quantile regression using :code:`LightGBM` gradient boosted decision trees use :py:class:`~pyepal.pal.pal_gbdt.PALGBDT`
+- For infinite wide neural networks with the neural tangent kernel or exact Bayesian inference use :py:class:`~pyepal.pal.pal_neutral_tangent.PALNT`
+- For an ensemble of finite width neural networks (built with JAX) use :py:class:`~pyepal.pal.pal_finite_ensemble.PALNTEnsemble`
 
 If your favorite model is not listed, you can easily implement it yourself (see :ref:`new_pal_class`)!
 
