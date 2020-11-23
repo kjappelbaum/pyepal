@@ -34,8 +34,6 @@ import neural_tangents as nt
 import numpy as np
 from jax.config import config
 
-# from jax import random
-# from jax.api import grad, jit, vmap
 # from jax.experimental import optimizers
 from neural_tangents import stax
 from sklearn.preprocessing import StandardScaler

@@ -32,6 +32,7 @@ from dataclasses import dataclass
 from typing import Callable, Sequence, Union
 
 from jax import jit
+from jax.experimental import optimizers
 from neural_tangents import stax
 
 
@@ -39,14 +40,27 @@ from neural_tangents import stax
 class NTModel:
     """Defining a dataclass for neural tangents models"""
 
-    apply_fn: Callable
+    # Initialization functions construct parameters for neural networks
+    # given a random key and an input shape.
     init_fn: Callable
+    # Apply functions do computations with finite-width neural networks.
+    apply_fn: Callable
     kernel_fn: Callable
     predict_fn: Union[Callable, None] = None
-    scaler: Union[Callable, None] = None
+    scaler: Union[Callable, None] = None  # Used to store Standard Scaler objects
+    params: Union[list, None] = None  # Used to store parameters for the ensemble models
 
 
-__all__ = ["NTModel", "build_dense_network"]
+@dataclass
+class JaxOptimizer:
+    """Defining a dataclass for a JAX optimizer"""
+
+    opt_init: Callable
+    opt_update: Callable
+    get_params: Callable
+
+
+__all__ = ["NTModel", "build_dense_network", "JaxOptimizer"]
 
 
 def build_dense_network(
@@ -94,10 +108,52 @@ def build_dense_network(
         stack.append(stax.Dense(hidden_layer, W_std=w_std, b_std=b_std))
         stack.append(activation)
 
-    stack.append(stax.Dense(1))
+    stack.append(stax.Dense(1, W_std=w_std, b_std=b_std))
 
     init_fn, apply_fn, kernel_fn = stax.serial(*stack)
 
-    return NTModel(
-        jit(init_fn), jit(apply_fn), jit(kernel_fn, static_argnums=(2,)), None
-    )
+    return NTModel(init_fn, jit(apply_fn), jit(kernel_fn, static_argnums=(2,)), None)
+
+
+def get_optimizer(
+    learning_rate: float = 1e-4, optimizer="sdg", optimizer_kwargs: dict = None
+) -> JaxOptimizer:
+    """Return a `JaxOptimizer` dataclass for a JAX optimizer
+
+    Args:
+        learning_rate (float, optional): Step size. Defaults to 1e-4.
+        optimizer (str, optional): Optimizer type (Allowed types: "adam",
+            "adamax", "adagrad", "rmsprop", "sdg"). Defaults to "sdg".
+        optimizer_kwargs (dict, optional): Additional keyword arguments
+            that are passed to the optimizer. Defaults to None.
+
+    Returns:
+        JaxOptimizer
+    """
+    if optimizer_kwargs is None:
+        optimizer_kwargs = {}
+    optimizer = optimizer.lower()
+    if optimizer == "adam":
+        opt_init, opt_update, get_params = optimizers.adam(
+            learning_rate, **optimizer_kwargs
+        )
+    elif optimizer == "adagrad":
+        opt_init, opt_update, get_params = optimizers.adagrad(
+            learning_rate, **optimizer_kwargs
+        )
+    elif optimizer == "adamax":
+        opt_init, opt_update, get_params = optimizers.adamax(
+            learning_rate, **optimizer_kwargs
+        )
+    elif optimizer == "rmsprop":
+        opt_init, opt_update, get_params = optimizers.rmsprop(
+            learning_rate, **optimizer_kwargs
+        )
+    else:
+        opt_init, opt_update, get_params = optimizers.sgd(
+            learning_rate, **optimizer_kwargs
+        )
+
+    opt_update = jit(opt_update)
+
+    return JaxOptimizer(opt_init, opt_update, get_params)
