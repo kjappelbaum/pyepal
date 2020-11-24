@@ -114,6 +114,10 @@ class PALNT(PALBase):
                 a coefficient of variation below this threshold
                 in the classification step. Defaults to 3.
             kernel (str, optional): The kernel type you want to use ('nngp' or 'ntk').
+                NNGP corresponds to a Neural Network Gaussian Process, frist established
+                by Neal in 1994.  NTK refers to the neural tangent kernel,
+                i.e., the linear approximation of an infinite width neural network
+                (LeCun initialized) trained with gradient descent (Jacot et al., 2018).
                 Defaults to 'nngp'.
         """
         self.kernel = kwargs.pop("kernel", "nngp")

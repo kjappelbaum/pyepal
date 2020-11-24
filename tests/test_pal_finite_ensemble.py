@@ -15,20 +15,15 @@
 
 """Test running PAL with ensembles of finite width neural networks"""
 
-from sklearn.preprocessing import StandardScaler
-
 from pyepal.models.nt import build_dense_network, get_optimizer
-from pyepal.pal.pal_finite_ensemble import PALNTEnsemble
+from pyepal.pal.pal_finite_ensemble import PALJaxEnsemble
 from pyepal.pal.utils import get_kmeans_samples
 
 
-def test_pal_palntensemble(binh_korn_points):
+def test_pal_paljaxensemble(binh_korn_points):
     """Test the ensemble of finite width
     neural networks with the Binh-Korn testfunction"""
     X, y = binh_korn_points  # pylint:disable=invalid-name
-    X = StandardScaler().fit_transform(X)  # pylint:disable=invalid-name
-    y = StandardScaler().fit_transform(y)  # pylint:disable=invalid-name
-    # We create one model per objective
 
     network_a = build_dense_network([512])
     network_b = build_dense_network([512])
@@ -36,7 +31,7 @@ def test_pal_palntensemble(binh_korn_points):
     optimizer_a = get_optimizer()
     optimizer_b = get_optimizer()
 
-    palinstance = PALNTEnsemble(
+    palinstance = PALJaxEnsemble(
         X, models=[network_a, network_b], optimizers=[optimizer_a, optimizer_b], ndim=2
     )
 

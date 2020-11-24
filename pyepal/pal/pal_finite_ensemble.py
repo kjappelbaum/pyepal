@@ -17,6 +17,7 @@
 """Run PAL with the same models for finite ensemble models
 and infinite width models (`PALNT`)
 """
+
 from typing import Sequence
 
 import numpy as np
@@ -28,6 +29,8 @@ from ..models.nt import JaxOptimizer, NTModel
 from .pal_base import PALBase
 
 
+# Again, the idea of having the core as pure functions outside of the class is that
+# we could parallelize it easier in this way
 def _ensemble_train_one_finite_width(  # pylint:disable=too-many-arguments, too-many-locals
     i: int,
     models: Sequence[NTModel],
@@ -77,14 +80,55 @@ def _ensemble_predict_one_finite_width(i: int, models: Sequence[NTModel], design
     return mean_func, std_func
 
 
-class PALNTEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
+__all__ = ["PALJaxEnsemble", "NTModel", "JaxOptimizer"]
+
+
+class PALJaxEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
     """Use PAL with and ensemble of finite-width neural networks"""
 
     def __init__(self, *args, **kwargs):
+        """Construct the PALJaxEnsemble instance
+
+        Args:
+            X_design (np.array): Design space (feature matrix)
+            models (Sequence[NTModel]): You need to provide a sequence of
+                 NTModel (`pyepal.models.nt.NTModel`).
+                The elements of this dataclass are the `apply_fn`, `init_fn`,
+                `kernel_fn` and `predict_fn` (for latter you can typically
+                provide `None`).
+                Can be constructed with
+                :py:func:`pyepal.pal.models.nt.build_dense_network`.
+            optimizer (Sequence[JaxOptimizer]): Sequence of dataclasses
+                with functions for a JAX optimizer,
+                can be constructed with :py:func:`pyepal.pal.models.nt.get_optimizer`.
+            ndim (int): Number of objectives
+            epsilon (Union[list, float], optional): Epsilon hyperparameter.
+                Defaults to 0.01.
+            delta (float, optional): Delta hyperparameter. Defaults to 0.05.
+            beta_scale (float, optional): Scaling parameter for beta.
+                If not equal to 1, the theoretical guarantees do not necessarily hold.
+                Also note that the parametrization depends on the kernel type.
+                Defaults to 1/9.
+            goals (List[str], optional): If a list, provide "min" for every objective
+                that shall be minimized and "max" for every objective
+                that shall be maximized. Defaults to None, which means
+                that the code maximizes all objectives.
+            coef_var_threshold (float, optional): Use only points with
+                a coefficient of variation below this threshold
+                in the classification step. Defaults to 3.
+            key (int): Seed to generate the key for the JAX
+                pseudo-random number generator. Defaults to 10.
+            training_steps (int): Number of epochs, the networks are trained.
+                Defaults to 500.
+            ensemble_size (int): Size of the ensemble, i.e., over how many randomly
+                initialized neural networks we average to obtain estimates of mean
+                and standard deviation. Automatically vectorized using `vmap`.
+                Defaults to 100.
+        """
         self.optimizers = kwargs.pop("optimizers")
         self.training_steps = kwargs.pop("training_steps", 500)
         self.ensemble_size = kwargs.pop("ensemble_size", 100)
-        self.key = kwargs.pop("key", random.PRNGKey(10))
+        self.key = random.PRNGKey(kwargs.pop("key", 10))
         self.design_space_scaler = StandardScaler()
         super().__init__(*args, **kwargs)
 
