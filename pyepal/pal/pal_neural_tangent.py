@@ -39,6 +39,7 @@ from sklearn.preprocessing import StandardScaler
 
 from ..models.nt import NTModel
 from .pal_base import PALBase
+from .validate_inputs import validate_nt_models
 
 # ToDo: Probably, we do not need the high precision by default
 config.update("jax_enable_x64", True)
@@ -123,6 +124,7 @@ class PALNT(PALBase):
         self.kernel = kwargs.pop("kernel", "nngp")
         self.design_space_scaler = StandardScaler()
         super().__init__(*args, **kwargs)
+        self.models = validate_nt_models(self.models, self.ndim)
 
     def _set_data(self):
         self.design_space = self.design_space_scaler.fit_transform(self.design_space)

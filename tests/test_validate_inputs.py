@@ -37,7 +37,10 @@ from pyepal.pal.validate_inputs import (
     validate_interquartile_scaler,
     validate_ndim,
     validate_njobs,
+    validate_nt_models,
     validate_number_models,
+    validate_optimizers,
+    validate_positive_integer_list,
 )
 
 
@@ -246,3 +249,70 @@ def test_validate_interquartile_scaler():
         validate_interquartile_scaler(-1)
 
     assert validate_interquartile_scaler(1.35) == 1.35
+
+
+def test_validate_optimizers():
+    """Make sure we correctly check/standardize the optimizers."""
+    from jax.api import jit  # pylint:disable=import-outside-toplevel
+    from jax.experimental import optimizers  # pylint:disable=import-outside-toplevel
+
+    from pyepal.models.nt import JaxOptimizer  # pylint:disable=import-outside-toplevel
+
+    opt_init, opt_update, get_params = optimizers.sgd(1e-3)
+    opt_update = jit(opt_update)
+
+    optimizer = JaxOptimizer(opt_init, opt_update, get_params)
+    optimizers = [
+        JaxOptimizer(opt_init, opt_update, get_params),
+        JaxOptimizer(opt_init, opt_update, get_params),
+    ]
+    with pytest.raises(ValueError):
+        validate_optimizers(opt_init, 2)
+
+    with pytest.raises(ValueError):
+        validate_optimizers([optimizer], 2)
+
+    assert validate_optimizers(optimizers, 2) == optimizers
+    assert validate_optimizers(optimizer, 2) == optimizers
+
+
+def test_validate_nt_models():
+    """Test that we correctly validate the sequence of NTModel"""
+    from pyepal.models.nt import (  # pylint:disable=import-outside-toplevel
+        build_dense_network,
+    )
+
+    with pytest.raises(ValueError):
+        validate_nt_models(["a", "b"], 2)
+
+    with pytest.raises(ValueError):
+        validate_nt_models([build_dense_network([512])], 2)
+
+    assert (
+        len(
+            validate_nt_models(
+                [build_dense_network([512]), build_dense_network([512])], 2
+            )
+        )
+        == 2
+    )
+
+
+def test_validate_positive_integer_list():
+    """Make sure that we can validate and standardize a positive integer list."""
+    with pytest.raises(ValueError):
+        validate_positive_integer_list(0.5, 1)
+
+    with pytest.raises(ValueError):
+        validate_positive_integer_list([0.5, 0, 5], 2)
+
+    with pytest.raises(ValueError):
+        validate_positive_integer_list([1], 2)
+
+    with pytest.raises(ValueError):
+        validate_positive_integer_list(0, 2)
+
+    with pytest.raises(ValueError):
+        validate_positive_integer_list(-1, 2)
+
+    assert validate_positive_integer_list(1, 2) == [1, 1]

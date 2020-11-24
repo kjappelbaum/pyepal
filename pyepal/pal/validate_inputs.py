@@ -15,8 +15,10 @@
 
 
 """Methods to validate inputs for the PAL classes"""
+import collections
 import warnings
-from typing import Any, Iterable, List
+from copy import deepcopy
+from typing import Any, Iterable, List, Sequence
 
 import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
@@ -35,7 +37,10 @@ __all__ = [
     "validate_interquartile_scaler",
     "validate_ndim",
     "validate_njobs",
+    "validate_nt_models",
     "validate_number_models",
+    "validate_optimizers",
+    "validate_positive_integer_list",
     "validate_sklearn_gpr_models",
 ]
 
@@ -368,3 +373,76 @@ def validate_interquartile_scaler(interquartile_scaler: Any) -> float:
         raise ValueError("interquartile_scaler must be a number greater 0.")
 
     return interquartile_scaler
+
+
+def _is_jaxoptimizer(optimizer: Any) -> bool:
+    from ..models.nt import JaxOptimizer  # pylint:disable=import-outside-toplevel
+
+    return isinstance(optimizer, JaxOptimizer)
+
+
+def validate_optimizers(optimizers: Any, ndim: int) -> Sequence:
+    """Make sure that we can work with a Sequence if JaxOptimizer"""
+    if not isinstance(optimizers, collections.Sequence):
+        if not _is_jaxoptimizer(optimizers):
+            raise ValueError(
+                "You need to provide a `pyepal.models.nt.JaxOptimizer` instance"
+            )
+        return [deepcopy(optimizers) for _ in range(ndim)]
+
+    if not len(optimizers) == ndim:
+        raise ValueError(
+            "If you provide a sequence it must have one optimizer per objective."
+        )
+    for optimizer in optimizers:
+        if not _is_jaxoptimizer(optimizer):
+            raise ValueError(
+                "You need to provide a `pyepal.models.nt.JaxOptimizer` instance"
+            )
+    return optimizers
+
+
+def validate_nt_models(models: Any, ndim: int) -> Sequence:
+    """Make sure that we can work with a sequence of
+    :py:func:`pyepal.pal.models.nt.NTModel`"""
+    from pyepal.models.nt import NTModel  # pylint:disable=import-outside-toplevel
+
+    if not isinstance(models, collections.Sequence):
+        raise ValueError(
+            "You need to provide a sequence of `pyepal.models.nt.NTModel` instances"
+        )
+
+    for model in models:
+        if not len(models) == ndim:
+            raise ValueError("You need to provide one model per objective.")
+        if not isinstance(model, NTModel):
+            raise ValueError(
+                "You need to provide a sequence of `pyepal.models.nt.NTModel` instances"
+            )
+
+    return models
+
+
+def validate_positive_integer_list(
+    seq: Any, ndim: int, parameter_name: str = "Parameter"
+) -> Sequence[int]:
+    """Can be used, e.g., to validate and standardize the ensemble size
+    and epochs input"""
+
+    if not isinstance(seq, collections.Sequence):
+        if (not isinstance(seq, int)) or (seq < 1):
+            raise ValueError("{} must be a positive integer".format(parameter_name))
+        return [seq] * ndim
+
+    if not len(seq) == ndim:
+        raise ValueError(
+            "If you provide a sequence for {} its length must match \
+                the number of objectives".format(
+                parameter_name
+            )
+        )
+    for elem in seq:
+        if (not isinstance(elem, int)) or (elem < 1):
+            raise ValueError("{} must be a positive integer".format(parameter_name))
+
+    return seq

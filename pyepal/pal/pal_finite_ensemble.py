@@ -27,6 +27,11 @@ from sklearn.preprocessing import StandardScaler
 
 from ..models.nt import JaxOptimizer, NTModel
 from .pal_base import PALBase
+from .validate_inputs import (
+    validate_nt_models,
+    validate_optimizers,
+    validate_positive_integer_list,
+)
 
 
 # Again, the idea of having the core as pure functions outside of the class is that
@@ -39,8 +44,8 @@ def _ensemble_train_one_finite_width(  # pylint:disable=too-many-arguments, too-
     sampled: np.ndarray,
     optimizers: Sequence[JaxOptimizer],
     key: random.PRNGKey,
-    training_steps: int = 500,
-    ensemble_size: int = 100,
+    training_steps: Sequence[int],
+    ensemble_size: Sequence[int],
 ):
     model = models[i]
     optimizer = optimizers[i]
@@ -56,14 +61,14 @@ def _ensemble_train_one_finite_width(  # pylint:disable=too-many-arguments, too-
         _, params = model.init_fn(key, (-1, x_train.shape[1]))
         opt_state = optimizer.opt_init(params)
 
-        for i in range(training_steps):
+        for j in range(training_steps[i]):
             opt_state = optimizer.opt_update(
-                i, grad_loss(opt_state, x_train, y_train), opt_state
+                j, grad_loss(opt_state, x_train, y_train), opt_state
             )
 
         return optimizer.get_params(opt_state)
 
-    ensemble_key = random.split(key, ensemble_size)
+    ensemble_key = random.split(key, ensemble_size[i])
     params = vmap(train_network)(ensemble_key)
 
     return params, scaler
@@ -84,7 +89,10 @@ __all__ = ["PALJaxEnsemble", "NTModel", "JaxOptimizer"]
 
 
 class PALJaxEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
-    """Use PAL with and ensemble of finite-width neural networks"""
+    """Use PAL with and ensemble of finite-width neural networks.
+    Note that we current assume that there is one model per output,
+    i.e., we did not yet implement multihead support.
+    """
 
     def __init__(self, *args, **kwargs):
         """Construct the PALJaxEnsemble instance
@@ -98,8 +106,8 @@ class PALJaxEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
                 provide `None`).
                 Can be constructed with
                 :py:func:`pyepal.pal.models.nt.build_dense_network`.
-            optimizer (Sequence[JaxOptimizer]): Sequence of dataclasses
-                with functions for a JAX optimizer,
+            optimizer (Union[JaxOptimizer, Sequence[JaxOptimizer]]):
+                Sequence of dataclasses with functions for a JAX optimizer,
                 can be constructed with :py:func:`pyepal.pal.models.nt.get_optimizer`.
             ndim (int): Number of objectives
             epsilon (Union[list, float], optional): Epsilon hyperparameter.
@@ -118,19 +126,28 @@ class PALJaxEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
                 in the classification step. Defaults to 3.
             key (int): Seed to generate the key for the JAX
                 pseudo-random number generator. Defaults to 10.
-            training_steps (int): Number of epochs, the networks are trained.
-                Defaults to 500.
-            ensemble_size (int): Size of the ensemble, i.e., over how many randomly
-                initialized neural networks we average to obtain estimates of mean
-                and standard deviation. Automatically vectorized using `vmap`.
+            training_steps (Union[int, Sequence[int]]): Number of epochs,
+                the networks are trained. Defaults to 500.
+            ensemble_size (Union[int, Sequence[int]]): Size of the ensemble, i.e.,
+                over how many randomly initialized neural networks we average
+                to obtain estimates of mean and standard deviation.
+                Automatically vectorized using `vmap`.
                 Defaults to 100.
         """
-        self.optimizers = kwargs.pop("optimizers")
-        self.training_steps = kwargs.pop("training_steps", 500)
-        self.ensemble_size = kwargs.pop("ensemble_size", 100)
+        self.optimizers = validate_optimizers(
+            kwargs.pop("optimizers"), kwargs.get("ndim")
+        )
+
+        self.training_steps = validate_positive_integer_list(
+            kwargs.pop("training_steps", 500), kwargs.get("ndim")
+        )
+        self.ensemble_size = validate_positive_integer_list(
+            kwargs.pop("ensemble_size", 100), kwargs.get("ndim")
+        )
         self.key = random.PRNGKey(kwargs.pop("key", 10))
         self.design_space_scaler = StandardScaler()
         super().__init__(*args, **kwargs)
+        self.models = validate_nt_models(self.models, self.ndim)
 
     def _set_data(self):
         self.design_space = self.design_space_scaler.fit_transform(self.design_space)
@@ -145,6 +162,8 @@ class PALJaxEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
                 self.sampled,
                 self.optimizers,
                 self.key,
+                self.training_steps,
+                self.ensemble_size,
             )
             self.models[i].params = params
             self.models[i].scaler = scaler
