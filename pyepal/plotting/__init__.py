@@ -119,7 +119,7 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
         == len(y_1)
         == len(std_0)
         == len(std_1)
-        == palinstance.design_space_size
+        == palinstance.number_design_points
     ), "Make sure that the arrays have the same length"
 
     if ax is None:
@@ -185,7 +185,7 @@ def plot_histogram(
     assert isinstance(y, np.ndarray), "Input array y must be a numpy array"
     assert y.ndim == 1, "Input array y must be one dimensional"
     assert (
-        len(y) == palinstance.design_space_size
+        len(y) == palinstance.number_design_points
     ), "Length of y must equal the size of the design space"
 
     if ax is None:
@@ -250,7 +250,7 @@ def plot_residuals(  # pylint:disable=invalid-name
 
     assert isinstance(y, np.ndarray), "Input array y must be a numpy array"
     assert (
-        len(y) == palinstance.design_space_size
+        len(y) == palinstance.number_design_points
     ), "Length of y must equal the size of the design space"
     assert y.ndim == 2, "y must be a two-dimensional numpy array"
     assert (
@@ -317,7 +317,7 @@ def plot_jointplot(  # pylint:disable=invalid-name
     """
     assert isinstance(y, np.ndarray), "Input array y must be a numpy array"
     assert (
-        len(y) == palinstance.design_space_size
+        len(y) == palinstance.number_design_points
     ), "Length of y must equal the size of the design space"
     assert y.ndim == 2, "y must be a two-dimensional numpy array"
     assert (

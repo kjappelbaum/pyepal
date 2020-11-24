@@ -101,9 +101,9 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.rectangle_lows: np.array = None
         self.models = base_validate_models(models)
         self.iteration = 1
-        self.design_space_size = len(X_design)
+        design_space_size = len(X_design)
         self.coef_var_threshold = validate_coef_var(coef_var_threshold)
-        self.coef_var_mask = np.array([True] * self.design_space_size)
+        self.coef_var_mask = np.array([True] * design_space_size)
         # means/std are the model predictions
         self.means: np.array = None
         self.std: np.array = None
@@ -115,12 +115,10 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         # self.y is what needs to be used for train/predict
         # as there the data has been turned into maximization
         # self._y contains the data as provided by the user
-        self.y = np.zeros(  # pylint:disable=invalid-name
-            (self.design_space_size, self.ndim)
-        )
+        self.y = np.zeros((design_space_size, self.ndim))  # pylint:disable=invalid-name
         self._y = self.y
         # measurement_uncertainity is provided in update_train_set by the user
-        self.measurement_uncertainty = np.zeros((self.design_space_size, self.ndim))
+        self.measurement_uncertainty = np.zeros((design_space_size, self.ndim))
         self._has_train_set = False
 
     def __repr__(self):
@@ -137,6 +135,11 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         array in which some columns can be false if a measurement
         has not been performed"""
         return self.sampled.sum(axis=1) > 0
+
+    @property
+    def number_design_points(self):
+        """Return the number of points in the design space"""
+        return len(self.design_space)
 
     @property
     def pareto_optimal_points(self):
@@ -210,7 +213,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             * 2
             * np.log(
                 self.ndim
-                * self.design_space_size
+                * self.number_design_points
                 * np.square(np.pi)
                 * np.square(self.iteration + 1)
                 / (6 * self.delta)
@@ -281,21 +284,44 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             return True
         return False
 
-    def _update_hyperrectangles(self):
+    def _update_hyperrectangles(self, new_indices: np.ndarray = None):
         """Computes new hyperrectangles based on beta,
         the means and the standard deviations.
         If the iteration is > 0,
         then it uses iterative intersection to ensure that the size of the
         hyperrectangles is decreasing.
+
+        Args:
+            new_indices (np.ndarray): If provided, it will not use the
+                iterative intersection algorithm for these hyperrectangles.
+                Instead, it will just use the scaled edges based on the
+                model's prediction. Defaults to None.
         """
         lows, ups = _get_uncertainty_regions(self.means, self.std, np.sqrt(self.beta))
         if self.iteration == 1:
             # initialization
             self.rectangle_lows, self.rectangle_ups = lows, ups
         else:
-            self.rectangle_lows, self.rectangle_ups = _union(
-                self.rectangle_lows, self.rectangle_ups, lows, ups
-            )
+            if new_indices is None:
+                self.rectangle_lows, self.rectangle_ups = _union(
+                    self.rectangle_lows, self.rectangle_ups, lows, ups
+                )
+            else:
+                not_new = np.array(
+                    [
+                        i
+                        for i in range(self.number_design_points)
+                        if i not in new_indices
+                    ]
+                )
+                self.rectangle_lows[new_indices] = lows[new_indices]
+                self.rectangle_ups[new_indices] = ups[new_indices]
+                self.rectangle_lows[not_new], self.rectangle_ups[not_new] = _union(
+                    self.rectangle_lows[not_new],
+                    self.rectangle_ups[not_new],
+                    lows[not_new],
+                    ups[not_new],
+                )
 
     def _update_coef_var_mask(self):
         """Update the mask array of elements that have variance below
@@ -449,6 +475,138 @@ In the docs, you find hints on how to make GPRs more robust.""".format(
         # This sets "sampled" to False for the objectives that have not been measured
         self.sampled[indices] = ~np.isnan(measurements)
         self._turn_to_maximization()
+
+    def augment_design_space(  # pylint: disable=invalid-name
+        self, X_design: np.ndarray, classify: bool = False, clean_classify: bool = True
+    ) -> None:
+        """Add new design points to PAL instance
+
+        Args:
+            X_design (np.ndarrary): Design matrix. Two-dimensional array containing
+                measurements in the rows and the features as the columns.
+            classify (bool): Reclassifies the new design space, using the old model.
+                This is, it runs inference, calculates the hyperrectangles, and runs
+                the classification. Does not increase the iteration count.
+                Note though that points that already have been classified
+                as Pareto-optimal will not be re-classified,
+                e.g., discarded---even if the new design points
+                dominate the existing "Pareto optimal" points.
+                Defaults to False.
+            clean_classify (bool): Reclassifies the new design space,
+                using the old model. This is, it runs inference,
+                calculates the hyperrectangles, and runs the classification.
+                Does not increase the iteration count.
+                But, in contrast to `classify` it erases all previous classifications,
+                before running the new classification. Hence, if some new design point
+                dominates a previously Pareto efficient point,
+                the previous Pareto optimal point will no longer be classified
+                as Pareto efficient.
+                This flag is incompatible with `classify`.
+                If you choose `clean_classify`, PyePAL will erase
+                all previous classifications,
+                independent of what you choose for `classify`.
+                Defaults to True.
+        """
+
+        if self.iteration <= 1:
+            raise ValueError(
+                "You must run a iteration before you augment the design space"
+            )
+
+        number_old_points = self.number_design_points
+        number_new_points = len(X_design)
+
+        assert isinstance(
+            X_design, np.ndarray
+        ), "You must provide a two-dimensional numpy array"
+        assert X_design.ndim == 2, "You must provide a two-dimensional numpy array"
+
+        if X_design.shape[1] != self.design_space.shape[1]:
+            raise ValueError(
+                "The design matrix you provided has shape {}, \
+                    the pyepal instance uses a design matrix of shape {}.".format(
+                    X_design.shape, self.design_space.shape
+                )
+            )
+
+        if classify and clean_classify:
+            warnings.warn(
+                "You choose both `classify` and `clean_classify`. \
+                PyePAL will use the `clean_classify` behavior and override \
+                    all previous classifications.",
+                UserWarning,
+            )
+            classify = False
+
+        # Update the status matrices
+        self.pareto_optimal = np.append(
+            self.pareto_optimal, np.array([False] * number_new_points), 0
+        )
+        self.discarded = np.append(
+            self.discarded, np.array([False] * number_new_points), 0
+        )
+        self.sampled = np.append(
+            self.sampled, np.array([[False] * self.ndim] * number_new_points), 0
+        )
+        self.unclassified = np.append(
+            self.unclassified, np.array([True] * number_new_points), 0
+        )
+        self.rectangle_ups = np.append(
+            self.rectangle_ups, np.full([number_new_points, self.ndim], np.nan), 0
+        )
+        self.rectangle_lows = np.append(
+            self.rectangle_lows, np.full([number_new_points, self.ndim], np.nan), 0
+        )
+        self.coef_var_mask = np.append(
+            self.coef_var_mask, np.array([True] * number_new_points), 0
+        )
+
+        # means/std are the model predictions
+        self.means = np.append(
+            self.means, np.full([number_new_points, self.ndim], np.nan), 0
+        )
+        self.std = np.append(
+            self.std, np.full([number_new_points, self.ndim], np.nan), 0
+        )
+
+        # self.y is what needs to be used for train/predict
+        # as there the data has been turned into maximization
+        self.y = np.append(self.y, np.zeros((number_new_points, self.ndim)), 0)
+
+        # self._y contains the data as provided by the user
+        self._y = self.y
+
+        # measurement_uncertainity is provided in update_train_set by the user
+        self.measurement_uncertainty = np.append(
+            self.measurement_uncertainty, np.zeros((number_new_points, self.ndim)), 0
+        )
+
+        # Update the design space
+        self.design_space = np.append(self.design_space, X_design, 0)
+
+        new_indices = np.arange(number_old_points, self.number_design_points)
+
+        # Make sure that the new points have the same "state" as the old ones
+        # This is, we can use the new design space in a proper way for sampling
+        # or classification
+        # ToDo: the bug is here that iteration !=1 wherefore it will intersect
+        # But this makes no sense here when we initialize the highs and lows with zeros
+        if classify:
+            self._predict()
+            self._replace_by_measurements()
+            self._update_hyperrectangles(new_indices=new_indices)
+            self._classify()
+
+        if clean_classify:
+            self.pareto_optimal = np.array([False] * self.number_design_points)
+            # We can be a bit more clever and only re-consider the Pareto optimal
+            # points. We can leave the
+            self.unclassified = np.array([True] * self.number_design_points)
+            self.unclassified[self.discarded_indices] = False
+            self._predict()
+            self._replace_by_measurements()
+            self._update_hyperrectangles(new_indices=new_indices)
+            self._classify()
 
     def sample(self, exclude_idx: Union[np.array, None] = None) -> int:
         """Runs the sampling step based on the size of the hyperrectangle.

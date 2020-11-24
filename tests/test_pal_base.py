@@ -28,6 +28,7 @@ def test_pal_base(make_random_dataset):
     assert palinstance.number_pareto_optimal_points == 0
     assert palinstance.number_unclassified_points == 100
     assert palinstance.number_sampled_points == 0
+    assert palinstance.number_design_points == 100
     assert palinstance.should_cross_validate()
     assert len(palinstance.discarded_points) == 0
     assert len(palinstance.pareto_optimal_points) == 0
@@ -64,6 +65,52 @@ def test_update_train_set(make_random_dataset):
     assert palinstance.sampled_indices == np.array([0])
     assert palinstance.number_sampled_points == 1
     assert (palinstance.y[0] == y[0, :]).all()
+
+
+def test_augment_design_space(make_random_dataset):
+    """Testing the basic functionality of the augmentation method
+    Does NOT test the re-classification step, which needs a model"""
+    X, _ = make_random_dataset  # pylint: disable=invalid-name
+    X_augmented = np.vstack([X, X])  # pylint: disable=invalid-name
+    palinstance = PALBase(X, ["model"], 3)
+    # Iteration count to low
+    with pytest.raises(ValueError):
+        palinstance.augment_design_space(X_augmented)
+
+    palinstance.iteration = 2
+    # Incorrect shape
+    with pytest.raises(AssertionError):
+        palinstance.augment_design_space(X_augmented[:, 2])
+
+    with pytest.raises(ValueError):
+        palinstance.augment_design_space(X_augmented[:, :2])
+
+    #  Mock that we already ran that
+    lows = np.zeros((100, 3))
+    highs = np.zeros((100, 3))
+
+    means = np.full((100, 3), 1)
+    palinstance.means = means
+    palinstance.std = np.full((100, 3), 0.1)
+    pareto_optimal = np.array([False] * 98 + [True, True])
+    sampled = np.array([[False] * 3, [False] * 3, [False] * 3, [False] * 3])
+    unclassified = np.array([True] * 98 + [False, False])
+
+    palinstance.rectangle_lows = lows
+    palinstance.rectangle_ups = highs
+    palinstance.sampled = sampled
+    palinstance.pareto_optimal = pareto_optimal
+    palinstance.unclassified = unclassified
+
+    # As we do not have a model, we cannot test the classification
+    palinstance.augment_design_space(X_augmented, clean_classify=False)
+    assert palinstance.number_discarded_points == 0
+    assert palinstance.number_pareto_optimal_points == 2
+    assert palinstance.number_unclassified_points == 298
+    assert palinstance.number_sampled_points == 0
+    assert palinstance.number_design_points == 300
+    assert len(palinstance.means) == 300
+    assert len(palinstance.std) == 300
 
 
 def test_beta_update(make_random_dataset):

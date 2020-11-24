@@ -126,7 +126,7 @@ For debugging there are some properties and attributes of the `PAL` class that c
     - :code:`sampled_points`: returns the points that have been sampled
     - :code:`discarded_points`: returns the points that have been discarded
 - get the indices of Pareto efficent, sampled,  discarded, and unclassified points with :code:`pareto_optimal_indices`, :code:`sampled_indices`, :code:`discarded_indices`, and :code:`unclassified_indices`
-- similarly, the number of points in the different classes can be obtained using :code:`number_pareto_optimal_points`, :code:`number_discarded_points`, :code:`number_unclassified_points`, and :code:`number_sampled_points`
+- similarly, the number of points in the different classes can be obtained using :code:`number_pareto_optimal_points`, :code:`number_discarded_points`, :code:`number_unclassified_points`, and :code:`number_sampled_points`. The total number of design points can be obtained with :code:`number_design_points`.
 - :code:`hyperrectangle_size` returns the sizes of the hyperrectangles, i.e., the weights that are used in the sampling step
 - :code:`means` and :code:`std` contain the predictions of the model
 - :code:`sampled` is a mask array. In case one objective has not been measured its cell is :code:`False`
@@ -168,6 +168,19 @@ Note that the `exhaust_loop` also supports the `batch_size` keyword argument
     # sample always 10 points and do this until there is no unclassified
     # point left
     exhaust_loop(palinstance, y, batch_size=10)
+
+
+Adding new points to the design matrix
+........................................
+
+In some applications, you might want to augment the design matrix after a few iterations of PyePAL. This could be useful, for example, if you start with a coarse discretization of your design space then want to refine this grid in subsequent iterations in the relevant regions of the design space.
+
+Adding new points to the design matrix can be easily achieved using the :py:func:`~pyepal.pal.pal_base.PALBase.augment_design_matrix` function that takes the new design matrix as input. By default, it will run the current model for the new, augmented, design matrix, and re-classify all points. You can turn this behavior off using the :code:`clean_classify` parameter.
+
+Alternatively, you can use the :code:`classify` flag that keeps all previous classifications. This means that if there is a point that was previously Pareto-efficient in the non-augmented design space but is now dominated by a new design point, it will no longer certainly be classified as Pareto-efficient.
+
+Note that is important that the new points are sampled from the same distribution as the previous points in the design space. Otherwise, the model will have to deal with unexpected data shift.
+
 
 Caveats and tricks with Gaussian processes
 -------------------------------------------
