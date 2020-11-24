@@ -87,12 +87,12 @@ def build_dense_network(
     """
     assert len(hidden_layers) >= 1, "You must provide at least one hidden layer"
     if activations is None:
-        activations = [stax.Relu() for x in hidden_layers]
+        activations = [stax.Relu() for _ in hidden_layers]
     elif isinstance(activations, str):
         if activations.lower() == "relu":
-            activations = [stax.Relu() for x in hidden_layers]
+            activations = [stax.Relu() for _ in hidden_layers]
         elif activations.lower() == "erf":
-            activations = [stax.Erf() for x in hidden_layers]
+            activations = [stax.Erf() for _ in hidden_layers]
     else:
         for activation in activations:
             assert callable(

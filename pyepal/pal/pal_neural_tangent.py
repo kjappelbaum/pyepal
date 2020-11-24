@@ -32,9 +32,6 @@ import jax.numpy as jnp
 import neural_tangents as nt
 import numpy as np
 from jax.config import config
-
-# from jax.experimental import optimizers
-from neural_tangents import stax
 from sklearn.preprocessing import StandardScaler
 
 from ..models.nt import NTModel
@@ -53,7 +50,7 @@ def _set_one_infinite_width_model(  # pylint:disable=too-many-arguments
     objectives: np.ndarray,
     sampled: np.ndarray,
     predict_fn_kwargs: dict = None,
-) -> Tuple[stax.Callable, StandardScaler]:
+) -> Tuple[nt.stax.Callable, StandardScaler]:
     if predict_fn_kwargs is None:
         predict_fn_kwargs = {"diag_reg": 1e-3}
     model = models[i]
