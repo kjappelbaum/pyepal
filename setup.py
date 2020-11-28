@@ -19,7 +19,7 @@ from setuptools import find_packages, setup
 import versioneer
 
 with open("requirements.txt", "r") as fh:
-    REQUIREMENTS = [line.strip() for line in fh]
+    REQUIREMENTS = [line.strip().split(";")[0] for line in fh]
 
 
 with open("README.md", encoding="utf-8") as fh:
@@ -37,7 +37,7 @@ setup(
     packages=find_packages(),
     url="https://github.com/kjappelbaum/PyePAL",
     license="Apache 2.0",
-    python_requires=">3.6",
+    python_requires=">=3.6",
     install_requires=REQUIREMENTS,
     extras_require={
         "testing": ["pytest", "pytest-cov<2.11"],
