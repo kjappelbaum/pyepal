@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://www.github.com/kjappelbaum/pyepal/compare/v0.3.0...v0.4.0) (2020-11-28)
+
+
+### Features
+
+* neural tangents support ([#117](https://www.github.com/kjappelbaum/pyepal/issues/117)) ([5911cc5](https://www.github.com/kjappelbaum/pyepal/commit/5911cc5b7a06d1667f7a879d2fff37ecbdd76c37))
+
 ## [0.3.0](https://www.github.com/kjappelbaum/pyepal/compare/v1.0.0...v0.3.0) (2020-11-21)
 
 
