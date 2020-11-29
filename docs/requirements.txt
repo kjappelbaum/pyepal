@@ -4,3 +4,5 @@ sklearn
 GPy
 pydata-sphinx-theme
 sphinx-autodoc-typehints
+neural_tangents
+jaxlib
