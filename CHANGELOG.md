@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.4.2](https://www.github.com/kjappelbaum/pyepal/compare/v0.4.1...v0.4.2) (2020-11-29)
+
+
+### Bug Fixes
+
+* add missing dependencies for docs, removing useless requirements file ([#124](https://www.github.com/kjappelbaum/pyepal/issues/124)) ([1045e48](https://www.github.com/kjappelbaum/pyepal/commit/1045e488a0d7e1529017a0fb10f63f631b3b1efd))
+
 ### [0.4.1](https://www.github.com/kjappelbaum/pyepal/compare/v0.4.0...v0.4.1) (2020-11-29)
 
 
