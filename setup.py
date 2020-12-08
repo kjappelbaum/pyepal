@@ -50,7 +50,6 @@ setup(
         "pre-commit": [
             "pre-commit",
             "black",
-            "prospector",
             "pylint",
             "versioneer",
             "isort",

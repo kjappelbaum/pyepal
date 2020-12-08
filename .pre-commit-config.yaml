@@ -34,32 +34,38 @@ repos:
         language: python
         types: [text]
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "" # Use the sha / tag you want to point at
-    hooks:
-      - id: mypy
-        exclude: (versioneer.py|_version.py|^docs/|pyepal/pal/_hypervolume.py)
+  # - repo: https://github.com/pre-commit/mirrors-mypy
+  #   rev: "" # Use the sha / tag you want to point at
+  #   hooks:
+  #     - id: mypy
+  #       exclude: (versioneer.py|_version.py|^docs/)
+
+
+  -   repo: https://github.com/psf/black
+      rev: 20.8b1
+      hooks:
+      -   id: black
+          language_version: python3
+          name: black
+          exclude: versioneer.py|mofchecker/_version.py|^docs/
+          entry: black
+          types: [python]
+
+  -   repo: https://github.com/pre-commit/mirrors-isort
+      rev: 'v5.6.4'  # Use the revision sha / tag you want to point at
+      hooks:
+      -   id: isort
+          name: isort
+          language: system
+          exclude: versioneer.py|mofchecker/_version.py|^docs/
+          types: [python]
+          entry: isort
 
   - repo: local
     hooks:
-      - id: black
-        language_version: python3
-        name: black
-        exclude: versioneer.py|pyepal/_version.py|^docs/|pyepal/pal/_hypervolume.py
-        entry: black
-        language: system
-        types: [python]
-
-      - id: isort
-        name: isort
-        language: system
-        exclude: versioneer.py|pyepal/_version.py|^docs/|pyepal/pal/_hypervolume.py
-        types: [python]
-        entry: isort
-
-      - id: prospector
+      - id: pylint
         language: system
         types: [file, python]
-        exclude: versioneer.py|pyepal/_version.py|^docs|pyepal/pal/_hypervolume.py
-        name: prospector
-        entry: prospector
+        exclude: versioneer.py|mofchecker/_version.py|^docs
+        name: pylint
+        entry: pylint
