@@ -26,8 +26,8 @@ with open("README.md", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
 
 gpy_requirements = [
-    "numpy<=1.19.2;python_version<3.7",
-    "numpy~=1.19.2;python_version>=3.7",
+    "numpy<=1.19.2;python_version<'3.7'",
+    "numpy~=1.19.2;python_version>='3.7'",
     "GPy~=1.9.9",
     "matplotlib~=3.3.2",
 ]
