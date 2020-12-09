@@ -26,8 +26,6 @@ with open("README.md", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
 
 gpy_requirements = [
-    "numpy<=1.19.2;python_version<'3.7'",
-    "numpy~=1.19.2;python_version>='3.7'",
     "GPy~=1.9.9",
     "matplotlib~=3.3.2",
 ]
@@ -70,7 +68,6 @@ setup(
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Development Status :: 4 - Beta",
