@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.7, 3.8]
 
     steps:
       - uses: actions/checkout@v2
@@ -33,9 +33,6 @@ jobs:
         run: pytest --cov=./ --cov-report=xml
         env:
           NUMBA_DISABLE_JIT: 1
-
-      - name: prospector
-        run: prospector
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1

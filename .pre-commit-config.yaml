@@ -47,7 +47,7 @@ repos:
       -   id: black
           language_version: python3
           name: black
-          exclude: versioneer.py|mofchecker/_version.py|^docs/
+          exclude: versioneer.py|pyepal/_version.py|^docs/
           entry: black
           types: [python]
 
@@ -57,7 +57,7 @@ repos:
       -   id: isort
           name: isort
           language: system
-          exclude: versioneer.py|mofchecker/_version.py|^docs/
+          exclude: versioneer.py|pyepal/_version.py|^docs/
           types: [python]
           entry: isort
 
@@ -66,6 +66,6 @@ repos:
       - id: pylint
         language: system
         types: [file, python]
-        exclude: versioneer.py|mofchecker/_version.py|^docs
+        exclude: versioneer.py|pyepal/_version.py|^docs|pyepal/pal/_hypervolume.py|pyepal/models/coregionalized.py/tests
         name: pylint
         entry: pylint

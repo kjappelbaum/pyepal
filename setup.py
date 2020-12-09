@@ -19,13 +19,16 @@ from setuptools import find_packages, setup
 import versioneer
 
 with open("requirements.txt", "r") as fh:
-    REQUIREMENTS = [line.strip().split(";")[0] for line in fh]
+    REQUIREMENTS = fh.readlines()
 
 
 with open("README.md", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
 
-gpy_requirements = ["GPy~=1.9.9", "matplotlib"]
+gpy_requirements = [
+    "GPy~=1.9.9",
+    "matplotlib~=3.3.2",
+]
 gbdt_requirements = ["lightgbm~=3.0.0"]
 neural_tangents_requirements = ["neural_tangents~=0.3.5", "jaxlib~=0.1.57"]
 setup(
@@ -37,7 +40,6 @@ setup(
     packages=find_packages(),
     url="https://github.com/kjappelbaum/PyePAL",
     license="Apache 2.0",
-    python_requires=">3.6",
     install_requires=REQUIREMENTS,
     extras_require={
         "testing": ["pytest~=6.1.0", "pytest-cov~=2.10"],
@@ -49,10 +51,12 @@ setup(
         ],
         "pre-commit": [
             "pre-commit~=2.7.1",
-            "black",
             "pylint~=2.6",
-            "versioneer~=0.18",
             "isort~=5.5.3",
+        ],
+        "dev": [
+            "versioneer~=0.18",
+            "black~=20.8b1",
         ],
         "GPy": gpy_requirements,
         "GBDT": gbdt_requirements,
@@ -63,6 +67,9 @@ setup(
     author_email="kevin.jablonka@epfl.ch, brian.yoo@basf.com",
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Development Status :: 4 - Beta",
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: Apache Software License",

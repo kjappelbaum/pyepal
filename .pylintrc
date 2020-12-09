@@ -1,6 +1,17 @@
+[MASTER]
+ignore=docs
+ignore_patterns=versioneer.py,*version.py,*hypervolume.py,models.coregionalized.py
+
+
 [MESSAGES CONTROL]
 disable = C0330, C0326, locally-disabled, fixme
 
 
 [format]
 max-line-length = 88
+
+
+[SIMILARITIES]
+
+# Minimum lines number of a similarity.
+min-similarity-lines=10
