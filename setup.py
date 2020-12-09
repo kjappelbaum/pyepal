@@ -25,7 +25,7 @@ with open("requirements.txt", "r") as fh:
 with open("README.md", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
 
-gpy_requirements = ["GPy==1.9.9", "matplotlib"]
+gpy_requirements = ["GPy~=1.9.9", "matplotlib"]
 gbdt_requirements = ["lightgbm~=3.0.0"]
 neural_tangents_requirements = ["neural_tangents~=0.3.5", "jaxlib~=0.1.57"]
 setup(
@@ -49,7 +49,7 @@ setup(
         ],
         "pre-commit": [
             "pre-commit~=2.7.1",
-            "black~=20",
+            "black~=20.7",
             "pylint~=2.6",
             "versioneer~=0.18",
             "isort~=5.5.3",
