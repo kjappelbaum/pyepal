@@ -49,10 +49,12 @@ setup(
         ],
         "pre-commit": [
             "pre-commit~=2.7.1",
-            "black~=20.8b1",
             "pylint~=2.6",
-            "versioneer~=0.18",
             "isort~=5.5.3",
+        ],
+        "dev": [
+            "versioneer~=0.18",
+            "black~=20.8b1",
         ],
         "GPy": gpy_requirements,
         "GBDT": gbdt_requirements,
