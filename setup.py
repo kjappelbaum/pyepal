@@ -26,8 +26,8 @@ with open("README.md", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
 
 gpy_requirements = ["GPy==1.9.9", "matplotlib"]
-gbdt_requirements = ["lightgbm>=3.0.0"]
-neural_tangents_requirements = ["neural_tangents", "jaxlib"]
+gbdt_requirements = ["lightgbm~=3.0.0"]
+neural_tangents_requirements = ["neural_tangents~=0.3.5", "jaxlib~=0.1.57"]
 setup(
     name="pyepal",
     version=versioneer.get_version(),
@@ -40,19 +40,19 @@ setup(
     python_requires=">=3.6",
     install_requires=REQUIREMENTS,
     extras_require={
-        "testing": ["pytest", "pytest-cov<2.11"],
+        "testing": ["pytest~=6.1.0", "pytest-cov~=2.11"],
         "docs": [
-            "sphinx",
-            "sphinx-book-theme",
-            "sphinx-autodoc-typehints",
-            "sphinx-copybutton",
+            "sphinx~=3.2.1",
+            "sphinx-book-theme~=0.0.39",
+            "sphinx-autodoc-typehints~=1.11.0",
+            "sphinx-copybutton~=0.3.0",
         ],
         "pre-commit": [
-            "pre-commit",
-            "black",
-            "pylint",
-            "versioneer",
-            "isort",
+            "pre-commit~=2.7.1",
+            "black~=20.8",
+            "pylint~=2.6",
+            "versioneer~=0.18",
+            "isort~=5.5.3",
         ],
         "GPy": gpy_requirements,
         "GBDT": gbdt_requirements,
