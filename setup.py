@@ -25,9 +25,9 @@ with open("requirements.txt", "r") as fh:
 with open("README.md", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
 
-gpy_requirements = ["GPy==1.9.9", "matplotlib"]
-gbdt_requirements = ["lightgbm>=3.0.0"]
-neural_tangents_requirements = ["neural_tangents", "jaxlib"]
+gpy_requirements = ["GPy~=1.9.9", "matplotlib"]
+gbdt_requirements = ["lightgbm~=3.0.0"]
+neural_tangents_requirements = ["neural_tangents~=0.3.5", "jaxlib~=0.1.57"]
 setup(
     name="pyepal",
     version=versioneer.get_version(),
@@ -37,23 +37,22 @@ setup(
     packages=find_packages(),
     url="https://github.com/kjappelbaum/PyePAL",
     license="Apache 2.0",
-    python_requires=">=3.6",
+    python_requires=">3.6",
     install_requires=REQUIREMENTS,
     extras_require={
-        "testing": ["pytest", "pytest-cov<2.11"],
+        "testing": ["pytest~=6.1.0", "pytest-cov~=2.10"],
         "docs": [
-            "sphinx",
-            "sphinx-book-theme",
-            "sphinx-autodoc-typehints",
-            "sphinx-copybutton",
+            "sphinx~=3.2.1",
+            "sphinx-book-theme~=0.0.39",
+            "sphinx-autodoc-typehints~=1.11.0",
+            "sphinx-copybutton~=0.3.0",
         ],
         "pre-commit": [
-            "pre-commit",
+            "pre-commit~=2.7.1",
             "black",
-            "prospector",
-            "pylint",
-            "versioneer",
-            "isort",
+            "pylint~=2.6",
+            "versioneer~=0.18",
+            "isort~=5.5.3",
         ],
         "GPy": gpy_requirements,
         "GBDT": gbdt_requirements,
