@@ -13,11 +13,12 @@
 
 
 import typing as tp
+
 import numpy as np
 
 
 class VectorNode:
-    """ A node object of the VectorLinkedList.
+    """A node object of the VectorLinkedList.
     A VectorNode is a point in a space with dim = `dimension`, and an optional
     `coordinate` (which can be assigned after the VectorNode initialization).
     The VectorNode object points to two arrays with self.next and self.prev attributes.
@@ -32,7 +33,11 @@ class VectorNode:
     The VectorNode data structure is introduced in section III.A of the original paper..
     """
 
-    def __init__(self, dimension: int, coordinates: tp.Optional[tp.Union[np.ndarray, tp.List[float]]] = None) -> None:
+    def __init__(
+        self,
+        dimension: int,
+        coordinates: tp.Optional[tp.Union[np.ndarray, tp.List[float]]] = None,
+    ) -> None:
         self.dimension = dimension
         self.coordinates = np.array(coordinates, copy=False)
         self._next: tp.List["VectorNode"] = [self for _ in range(self.dimension)]
@@ -50,7 +55,7 @@ class VectorNode:
 
     def configure_area(self, dimension: int) -> None:
         self.area[0] = 1.0
-        self.area[1: dimension + 1] = [
+        self.area[1 : dimension + 1] = [
             -self.area[i] * self.coordinates[i] for i in range(dimension)
         ]
 
@@ -63,7 +68,7 @@ class VectorNode:
         return self._prev
 
     def pop(self, index: int) -> None:
-        """ Assigns the references of the self predecessor and successor at
+        """Assigns the references of the self predecessor and successor at
         `index` index to each other, removes the links to the `self` node.
         """
         predecessor = self.prev[index]
@@ -82,7 +87,7 @@ class VectorLinkedList:
 
     @classmethod
     def create_sorted(cls, dimension: int, points: tp.Any) -> "VectorLinkedList":
-        """ Instantiate a VectorLinkedList of dimension `dimension`. The list is
+        """Instantiate a VectorLinkedList of dimension `dimension`. The list is
         populated by nodes::VectorNode created from `points`. The nodes are sorted
         by i-th coordinate attribute in i-th row."""
         linked_list = cls(dimension)
@@ -93,8 +98,10 @@ class VectorLinkedList:
         return linked_list
 
     @staticmethod
-    def sort_by_index(node_list: tp.List[VectorNode], dimension_index: int) -> tp.List[VectorNode]:
-        """ Returns a sorted list of `VectorNode`, with the sorting key defined by the
+    def sort_by_index(
+        node_list: tp.List[VectorNode], dimension_index: int
+    ) -> tp.List[VectorNode]:
+        """Returns a sorted list of `VectorNode`, with the sorting key defined by the
         `dimension_index`-th coordinates of the nodes in the `node_list`."""
         return sorted(node_list, key=lambda node: node.coordinates[dimension_index])
 
@@ -122,16 +129,14 @@ class VectorLinkedList:
         current_last.next[index] = node
 
     def extend(self, nodes: tp.List[VectorNode], index: int) -> None:
-        """ Extends the VectorLinkedList with a list of nodes
+        """Extends the VectorLinkedList with a list of nodes
         at `index` position"""
         for node in nodes:
             self.append(node, index)
 
     @staticmethod
     def update_coordinate_bounds(
-            bounds: np.ndarray,
-            node: VectorNode,
-            index: int
+        bounds: np.ndarray, node: VectorNode, index: int
     ) -> np.ndarray:
         for i in range(index):
             if bounds[i] > node.coordinates[i]:
@@ -139,7 +144,7 @@ class VectorLinkedList:
         return bounds
 
     def pop(self, node: VectorNode, index: int) -> VectorNode:
-        """ Removes and returns 'node' from all lists at the
+        """Removes and returns 'node' from all lists at the
         positions from 0 in index (exclusively)."""
         for i in range(index):
             node.pop(i)
@@ -157,7 +162,9 @@ class VectorLinkedList:
             node.prev[i].next[i] = node
             node.next[i].prev[i] = node
 
-    def iterate(self, index: int, start: tp.Optional[VectorNode] = None) -> tp.Iterator[VectorNode]:
+    def iterate(
+        self, index: int, start: tp.Optional[VectorNode] = None
+    ) -> tp.Iterator[VectorNode]:
         if start is None:
             node = self.sentinel.next[index]
         else:
@@ -167,7 +174,9 @@ class VectorLinkedList:
             yield node
             node = node.next[index]
 
-    def reverse_iterate(self, index: int, start: tp.Optional[VectorNode] = None) -> tp.Iterator[VectorNode]:
+    def reverse_iterate(
+        self, index: int, start: tp.Optional[VectorNode] = None
+    ) -> tp.Iterator[VectorNode]:
         if start is None:
             node = self.sentinel.prev[index]
         else:
@@ -179,7 +188,7 @@ class VectorLinkedList:
 
 
 class HypervolumeIndicator:
-    """ Core class to calculate the hypervolme value of a set of points.
+    """Core class to calculate the hypervolme value of a set of points.
     As introduced in the original paper, "the indicator is a measure of
     the region which is simultaneously dominated by a set of points P,
     and bounded by a reference point r = `self.reference_bounds`. It is
@@ -213,8 +222,8 @@ class HypervolumeIndicator:
         return hypervolume
 
     def plane_hypervolume(self) -> float:
-        """ Calculates the hypervolume on a two dimensional plane. The algorithm
-        is described in Section III-A of the original paper. """
+        """Calculates the hypervolume on a two dimensional plane. The algorithm
+        is described in Section III-A of the original paper."""
         dimension = 1
         hypervolume = 0.0
         h = self.multilist.sentinel.next[dimension].coordinates[dimension - 1]
@@ -222,14 +231,16 @@ class HypervolumeIndicator:
             next_node = node.next[dimension]
             if next_node is self.multilist.sentinel:
                 break
-            hypervolume += h * (node.coordinates[dimension] - next_node.coordinates[dimension])
+            hypervolume += h * (
+                node.coordinates[dimension] - next_node.coordinates[dimension]
+            )
             h = min(h, next_node.coordinates[dimension - 1])
         last_node = self.multilist.sentinel.prev[dimension]
         hypervolume += h * last_node.coordinates[dimension]
         return hypervolume
 
     def recursive_hypervolume(self, dimension: int) -> float:
-        """ Recursive hypervolume computation. The algorithm is provided by Algorithm 3.
+        """Recursive hypervolume computation. The algorithm is provided by Algorithm 3.
         of the original paper."""
         if self.multilist.chain_length(dimension - 1) == 0:
             return 0
@@ -254,8 +265,9 @@ class HypervolumeIndicator:
             assert node is not None
             current_node = node
             if self.multilist.chain_length(dimension - 1) > 1 and (
-                    node.coordinates[dimension] > self.reference_bounds[dimension]
-                    or node.prev[dimension].coordinates[dimension] >= self.reference_bounds[dimension]
+                node.coordinates[dimension] > self.reference_bounds[dimension]
+                or node.prev[dimension].coordinates[dimension]
+                >= self.reference_bounds[dimension]
             ):
                 # Line 9
                 self.reference_bounds = self.multilist.update_coordinate_bounds(
@@ -273,7 +285,8 @@ class HypervolumeIndicator:
             # Line 14
             hypervolume = current_node.prev[dimension].volume[dimension]
             hypervolume += current_node.prev[dimension].area[dimension] * (
-                current_node.coordinates[dimension] - current_node.prev[dimension].coordinates[dimension]
+                current_node.coordinates[dimension]
+                - current_node.prev[dimension].coordinates[dimension]
             )
         else:
             current_node.configure_area(dimension)
@@ -284,11 +297,14 @@ class HypervolumeIndicator:
         self.skip_dominated_points(current_node, dimension)
 
         # Line 17
-        for node in self.multilist.iterate(dimension, start=current_node.next[dimension]):
+        for node in self.multilist.iterate(
+            dimension, start=current_node.next[dimension]
+        ):
             assert node is not None
             # Line 18
             hypervolume += node.prev[dimension].area[dimension] * (
-                node.coordinates[dimension] - node.prev[dimension].coordinates[dimension]
+                node.coordinates[dimension]
+                - node.prev[dimension].coordinates[dimension]
             )
             # Line 19
             self.reference_bounds[dimension] = node.coordinates[dimension]
