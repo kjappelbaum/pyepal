@@ -19,7 +19,7 @@ from setuptools import find_packages, setup
 import versioneer
 
 with open("requirements.txt", "r") as fh:
-    REQUIREMENTS = [line.strip().split(";")[0] for line in fh]
+    REQUIREMENTS = fh.readlines()
 
 
 with open("README.md", encoding="utf-8") as fh:
