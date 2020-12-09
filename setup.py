@@ -37,7 +37,6 @@ setup(
     packages=find_packages(),
     url="https://github.com/kjappelbaum/PyePAL",
     license="Apache 2.0",
-    # python_requires="<3.9,>=3.7",
     install_requires=REQUIREMENTS,
     extras_require={
         "testing": ["pytest~=6.1.0", "pytest-cov~=2.10"],
@@ -65,6 +64,10 @@ setup(
     author_email="kevin.jablonka@epfl.ch, brian.yoo@basf.com",
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Development Status :: 4 - Beta",
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: Apache Software License",
