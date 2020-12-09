@@ -26,10 +26,10 @@ with open("README.md", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
 
 gpy_requirements = [
-    "GPy~=1.9.9",
-    "matplotlib~=3.3.2",
     "numpy<=1.19.2;python_version<3.7",
     "numpy~=1.19.2;python_version>=3.7",
+    "GPy~=1.9.9",
+    "matplotlib~=3.3.2",
 ]
 gbdt_requirements = ["lightgbm~=3.0.0"]
 neural_tangents_requirements = ["neural_tangents~=0.3.5", "jaxlib~=0.1.57"]
