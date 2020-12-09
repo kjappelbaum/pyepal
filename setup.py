@@ -40,7 +40,7 @@ setup(
     python_requires=">=3.6",
     install_requires=REQUIREMENTS,
     extras_require={
-        "testing": ["pytest~=6.1.0", "pytest-cov~=2.11"],
+        "testing": ["pytest~=6.1.0", "pytest-cov~=2.10"],
         "docs": [
             "sphinx~=3.2.1",
             "sphinx-book-theme~=0.0.39",
