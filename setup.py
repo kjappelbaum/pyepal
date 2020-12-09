@@ -49,7 +49,7 @@ setup(
         ],
         "pre-commit": [
             "pre-commit~=2.7.1",
-            "black~=20.8",
+            "black~=20",
             "pylint~=2.6",
             "versioneer~=0.18",
             "isort~=5.5.3",
