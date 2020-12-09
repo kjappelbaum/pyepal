@@ -66,6 +66,6 @@ repos:
       - id: pylint
         language: system
         types: [file, python]
-        exclude: versioneer.py|pyepal/_version.py|^docs|pyepal/pal/_hypervolume.py
+        exclude: versioneer.py|pyepal/_version.py|^docs|pyepal/pal/_hypervolume.py|pyepal/models/coregionalized.py
         name: pylint
         entry: pylint
