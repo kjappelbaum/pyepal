@@ -9,5 +9,5 @@ about: Create a report to help us improve the library.
 ## Specifications
 
 - pyepal version:
-- operation system:
-- python version:
+- operating system:
+- Python version:
