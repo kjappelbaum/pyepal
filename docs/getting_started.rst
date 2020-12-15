@@ -21,7 +21,7 @@ The latest version of PyePAL can be installed from GitHub using
     pip install git+https://github.com/kjappelbaum/pyepal.git
 
 
-
+On MacOS you might need to install `libomp` (e.g., `brew install libomp`) for multihreading in some of the models.
 
 Which class do i use?
 -----------------------

@@ -33,6 +33,8 @@ pip install git+https://github.com/kjappelbaum/pyepal.git
 
 Developers can install the extras `[testing, docs, pre-commit]`. Installation should take only a few minutes.
 
+On MacOS you might need to install `libomp` (e.g., `brew install libomp`) for multihreading in some of the models.
+
 ## Usage
 
 The main logic is implemented in the `PALBase` class. There are some prebuilt classes for common use cases (`GPy`, `sklearn`) that inherit from this class.
