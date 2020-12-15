@@ -159,8 +159,12 @@ def test_augment_design_space_bk(binh_korn_points, binh_korn_points_finer):
         _,
     ) = binh_korn_points_finer
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-    gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
-    gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
+    gpr_0 = GaussianProcessRegressor(
+        RBF(), normalize_y=True, n_restarts_optimizer=5, random_state=10
+    )
+    gpr_1 = GaussianProcessRegressor(
+        RBF(), normalize_y=True, n_restarts_optimizer=5, random_state=10
+    )
     palinstance = PALSklearn(X_binh_korn, [gpr_0, gpr_1], 2, beta_scale=1)
     palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
