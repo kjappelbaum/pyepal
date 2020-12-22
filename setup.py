@@ -37,7 +37,7 @@ setup(
     cmdclass=versioneer.get_cmdclass(),
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    packages=find_packages(include=["pyepal"]),
+    packages=find_packages(include=["pyepal", "pyepal.*"]),
     url="https://github.com/kjappelbaum/PyePAL",
     license="Apache 2.0",
     install_requires=REQUIREMENTS,
