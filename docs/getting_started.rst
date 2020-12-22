@@ -5,7 +5,7 @@ Installation
 ---------------
 
 
-We recommend installing PyePAL in a dedicated `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ or `conda environment <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_.
+We recommend installing PyePAL in a dedicated `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ or `conda environment <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_. Note that we currently support Python 3.7 and 3.8.
 
 To install the latest stable release use
 
