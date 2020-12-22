@@ -33,7 +33,12 @@ pip install git+https://github.com/kjappelbaum/pyepal.git
 
 Developers can install the extras `[testing, docs, pre-commit]`. Installation should take only a few minutes.
 
-Note that we currently support Python 3.7 and 3.8.
+### Additional Notes
+
+- On MacOS you might need to install `libomp` (e.g., `brew install libomp`) for multithreading in some of the models.
+
+- We currently support Python 3.7 and 3.8.
+
 
 ## Usage
 

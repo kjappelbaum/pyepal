@@ -11,10 +11,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
+        os: [ubuntu-latest, macOS-latest]
         python-version: [3.7, 3.8]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v2
@@ -22,6 +23,11 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install lightgbm support
+        run: |
+          if [ "$RUNNER_OS" == "macOS" ]; then
+          brew install libomp;
+          fi
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
