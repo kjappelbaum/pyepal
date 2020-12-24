@@ -18,11 +18,11 @@ import numpy as np
 
 from pyepal.pal.core import (
     _get_max_wt,
+    _get_max_wt_all,
     _get_uncertainty_region,
     _get_uncertainty_regions,
     _pareto_classify,
     _uncertainty,
-    _union,
     _union_one_dim,
 )
 
@@ -161,6 +161,47 @@ def test__get_max_wt():
 
     max_wt = _get_max_wt(lows, highs, means, pareto_optimal, unclassified, sampled)
     assert max_wt == 1
+
+    max_wt = _get_max_wt(
+        lows, highs, means, pareto_optimal, unclassified, sampled, pooling_method="mean"
+    )
+    assert max_wt == 1
+
+    max_wt = _get_max_wt(
+        lows,
+        highs,
+        means,
+        pareto_optimal,
+        unclassified,
+        sampled,
+        pooling_method="median",
+    )
+    assert max_wt == 1
+
+
+def test__get_max_wt_all():
+    """Test sampling also from the discarded points"""
+    lows = np.array(
+        [
+            [0.0, 0.0, 0.0, 0.0],
+            [-1.0, -1.0, -1.0, -1.0],
+            [-2.0, -2.0, -2.0, -2.0],
+            [2.0, 2.0, 2.0, 2.0],
+        ]
+    )
+    highs = np.array(
+        [
+            [1.0, 1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0, 1.0],
+            [2.0, 2.0, 2.0, 2.0],
+        ]
+    )
+    means = np.array([[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]])
+    sampled = np.array([False, False, False, False])
+
+    max_wt = _get_max_wt_all(lows, highs, means, sampled)
+    assert max_wt == 2
 
 
 def test_pareto_classify(binh_korn_points):  # pylint:disable=too-many-locals

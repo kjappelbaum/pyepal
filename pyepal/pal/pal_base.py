@@ -26,6 +26,7 @@ from sklearn.metrics import mean_absolute_error
 
 from .core import (
     _get_max_wt,
+    _get_max_wt_all,
     _get_uncertainty_regions,
     _pareto_classify,
     _uncertainty,
@@ -608,7 +609,12 @@ In the docs, you find hints on how to make models more robust.""".format(
             self._update_hyperrectangles(new_indices=new_indices)
             self._classify()
 
-    def sample(self, exclude_idx: Union[np.array, None] = None) -> int:
+    def sample(
+        self,
+        exclude_idx: Union[np.array, None] = None,
+        pooling_method: str = "fro",
+        sample_discarded: bool = False,
+    ) -> int:
         """Runs the sampling step based on the size of the hyperrectangle.
         I.e., favoring exploration.
 
@@ -616,6 +622,12 @@ In the docs, you find hints on how to make models more robust.""".format(
             exclude_idx (Union[np.array, None], optional):
                 Points in design space to exclude from sampling.
                 Defaults to None.
+            pooling_method (str): Method that is used to aggregate
+                the uncertainty in different objectives into one scalar.
+                Available options are:  "fro" (Frobenius/Euclidean norm), "mean",
+                "median". Defaults to "fro".
+            sample_discarded (bool): if true, it will sample from all points
+                and not only from the unclassified and Pareto optimal ones
 
         Raises:
             ValueError: In case there are no uncertainty rectangles,
@@ -640,13 +652,23 @@ In the docs, you find hints on how to make models more robust.""".format(
 
                 sampled_mask += exclude_mask
 
-        sampled_idx = _get_max_wt(
-            self.rectangle_lows,
-            self.rectangle_ups,
-            self.means,
-            self.pareto_optimal,
-            self.unclassified,
-            sampled_mask,
-        )
+        if sample_discarded:
+            sampled_idx = _get_max_wt_all(
+                self.rectangle_lows,
+                self.rectangle_ups,
+                self.means,
+                sampled_mask,
+                pooling_method,
+            )
+        else:
+            sampled_idx = _get_max_wt(
+                self.rectangle_lows,
+                self.rectangle_ups,
+                self.means,
+                self.pareto_optimal,
+                self.unclassified,
+                sampled_mask,
+                pooling_method,
+            )
 
         return sampled_idx
