@@ -23,6 +23,8 @@ from sklearn.utils.validation import check_is_fitted
 
 from pyepal.pal.pal_sklearn import PALSklearn
 
+np.random.seed(10)
+
 
 def test_pal_sklearn(make_random_dataset):
     """Test that we can create a instanec of the PAL sklearn class"""
@@ -74,9 +76,6 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     In the base class it should raise an error as without
     prediction function we cannot do anything
     """
-    np.random.seed(10)
-    # This random dataset is not really ideal for a Pareto test as there's only one
-    # optimal point it appears to me
     X, y = make_random_dataset  # pylint:disable=invalid-name
     gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
@@ -111,9 +110,6 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
 def test_augment_design_space(make_random_dataset):
     """Test if the reclassification step in the design step
     agumentation method works"""
-    np.random.seed(10)
-    # This random dataset is not really ideal for a Pareto test as there's only one
-    # optimal point it appears to me
     X, y = make_random_dataset  # pylint:disable=invalid-name
     gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
@@ -152,7 +148,6 @@ def test_augment_design_space(make_random_dataset):
 def test_augment_design_space_bk(binh_korn_points, binh_korn_points_finer):
     """Test the augment function by using a finer sampling of the Binh-Korn function
     for augmentation"""
-    np.random.seed(10)
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
     (
         X_binh_korn_finer,  # pylint:disable=invalid-name
@@ -180,7 +175,6 @@ def test_orchestration_run_one_step_batch(  # pylint:disable=too-many-statements
     binh_korn_points,
 ):
     """Test the batch sampling"""
-    np.random.seed(10)
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
@@ -266,7 +260,6 @@ def test_orchestration_run_one_step_batch(  # pylint:disable=too-many-statements
 
 def test_orchestration_run_one_step_parallel(binh_korn_points):
     """Test the parallel processing"""
-    np.random.seed(10)
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
     gpr_0 = GaussianProcessRegressor(Matern(), normalize_y=True, n_restarts_optimizer=3)
     gpr_1 = GaussianProcessRegressor(Matern(), normalize_y=True, n_restarts_optimizer=3)
@@ -287,7 +280,6 @@ def test_orchestration_run_one_step_parallel(binh_korn_points):
 
 def test_orchestration_run_one_step_missing_data(binh_korn_points):
     """Test that the model also works with missing observations"""
-    np.random.seed(10)
     gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
 
@@ -311,7 +303,6 @@ def test_orchestration_run_one_step_missing_data(binh_korn_points):
 
 def test_crossvalidate(binh_korn_points):
     """Test the crossvalidation routine"""
-    np.random.seed(10)
     gpr_0 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
     gpr_1 = GaussianProcessRegressor(RBF(), normalize_y=True, n_restarts_optimizer=3)
 
