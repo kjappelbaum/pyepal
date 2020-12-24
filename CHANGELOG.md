@@ -1,5 +1,18 @@
 # Changelog
 
+### [0.4.3](https://www.github.com/kjappelbaum/pyepal/compare/v0.4.2...v0.4.3) (2020-12-24)
+
+
+### Bug Fixes
+
+* also include subpackages ([#145](https://www.github.com/kjappelbaum/pyepal/issues/145)) ([6a5d868](https://www.github.com/kjappelbaum/pyepal/commit/6a5d868c51539caf88d1f7a9e7149f852b578189))
+* only install pyepal package ([#138](https://www.github.com/kjappelbaum/pyepal/issues/138)) ([33d2d53](https://www.github.com/kjappelbaum/pyepal/commit/33d2d539b044a80d416870db7c8a9fd8ff6dda74))
+
+
+### Documentation
+
+* dev notes and py version updated ([#132](https://www.github.com/kjappelbaum/pyepal/issues/132)) ([4879846](https://www.github.com/kjappelbaum/pyepal/commit/487984605f4c419f8d4888950d9b2b5e4db9076c)), closes [#131](https://www.github.com/kjappelbaum/pyepal/issues/131)
+
 ### [0.4.2](https://www.github.com/kjappelbaum/pyepal/compare/v0.4.1...v0.4.2) (2020-11-29)
 
 
