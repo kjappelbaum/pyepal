@@ -16,10 +16,12 @@
 
 """Plotting utilities"""
 
-from typing import List, Union
+from collections import defaultdict
+from typing import List, Tuple, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 from .. import PALBase
 
@@ -52,7 +54,8 @@ def plot_bar_iterations(  # pylint:disable=invalid-name
             for every iteration
 
     Returns:
-        ax
+        axis: matplotlib axis (the same that was provided as input
+            or one from a new figure if no axis was provided)
     """
     assert (
         len(pareto_optimal) == len(non_pareto_points) == len(unclassified_points)
@@ -106,10 +109,11 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
         std_0 (np.ndarray): standard deviation objective 0
         std_1 (np.ndarray): standard deviation objective 0
         palinstance (PALBase): PAL instance
-        ax (ax, optional): Matplotlib figure axis. Defaults to None.
+        ax (axix, optional): Matplotlib figure axis. Defaults to None.
 
     Returns:
-        ax
+        ax: matplotlib axis (the same that was provided as input
+            or one from a new figure if no axis was provided)
     """
     # Here, we need numpy arrays for the indexing
     for array in [y_0, y_1, std_0, std_1]:
@@ -180,7 +184,8 @@ def plot_histogram(
         ax (ax): Matplotlib figure axis
 
     Returns:
-        ax
+        ax: matplotlib axis (the same that was provided as input
+            or one from a new figure if no axis was provided)ƒ
     """
     assert isinstance(y, np.ndarray), "Input array y must be a numpy array"
     assert y.ndim == 1, "Input array y must be one dimensional"
@@ -245,7 +250,7 @@ def plot_residuals(  # pylint:disable=invalid-name
             vs fitted objective plot. Defaults to (6.0, 4.0).
 
     Returns:
-        fig
+        fig: matplotlib Figure object
     """
 
     assert isinstance(y, np.ndarray), "Input array y must be a numpy array"
@@ -313,7 +318,7 @@ def plot_jointplot(  # pylint:disable=invalid-name
         figsize (tuple, optional): Figure size for joint plot. Defaults to (8.0, 6.0).
 
     Returns:
-        fig
+        fig: matplotlib Figure object.
     """
     assert isinstance(y, np.ndarray), "Input array y must be a numpy array"
     assert (
@@ -370,3 +375,80 @@ def plot_jointplot(  # pylint:disable=invalid-name
     ax[0, num_targets - 1].legend()
 
     return fig
+
+
+def plot_learning_curve(  # pylint:disable=dangerous-default-value, too-many-arguments, too-many-locals
+    palinstance,
+    observations: np.ndarray,
+    indices: np.ndarray = None,
+    num_steps: int = 5,
+    figsize: Tuple[(float, float)] = (8.0, 6.0),
+    metrics: List[Tuple(str, callable)] = [
+        ("MAE", mean_absolute_error),
+        ("MSE", mean_squared_error),
+        ("r2", r2_score),
+    ],
+):
+    """Plot learning curve
+
+    Args:
+        palinstance (pyepal.PALBase): A palinstance object
+            (must have implemented _train and _predict methods)
+        observations (np.ndarray): y array, measurements
+        indices (np.ndarray, optional): Indices in the design space
+            to wish the observations belong to. If none, it will default
+            to the first ones. Defaults to None.
+        num_steps (int, optional): Number of points on the learning curve.
+            The maximum point will be the number of observation. Defaults to 5.
+        figsize (Tuple[(float, float)], optional): Figure size.
+            Defaults to (8.0, 6.0).
+        metrics (List[Tuple[(str, callable)], optional):
+            List of tuples (name, function) where the function is a metric function that
+            takes an array of true values and predictions and returns a float.
+            Defaults to [ ("MAE", mean_absolute_error), ("MSE", mean_squared_error),
+            ("r2", r2_score), ].
+
+    Returns:
+        fig, dict: figure and dictionary with the learning curve results
+    """
+    if indices is None:
+        indices = np.arange(0, len(observations) - 1)
+    assert len(indices) == len(
+        observations
+    ), "The number of indices and observations must be equal"
+    grid = np.linspace(2, len(observations), num_steps, dtype=np.int8)
+    grid = np.unique(grid)
+
+    metrics = defaultdict(list)
+
+    for num_points in range(grid):
+        sampled_indices = np.arange(0, num_points - 1)
+        palinstance.update_train_set(
+            np.arange(0, num_points - 1), observations[indices]
+        )
+        palinstance._set_data()  # pylint: disable=protected-access
+        if (
+            palinstance._should_optimize_hyperparameters()  # pylint: disable=protected-access
+        ):
+            palinstance._set_hyperparameters()  # pylint: disable=protected-access
+        palinstance._train()  # pylint: disable=protected-access
+        palinstance._predict()  # pylint: disable=protected-access
+
+        for metric_name, metric_function in metrics:
+            metrics[metric_name] = metric_function(
+                palinstance.y[sampled_indices], palinstance.means[sampled_indices]
+            )
+
+    fig, ax = plt.subplots(  # pylint:disable=invalid-name
+        len(metrics),
+        1,
+        figsize=figsize,
+        tight_layout=True,
+    )
+
+    for i, items in enumerate(metrics.items()):
+        metric_name, metric_errors = items
+        ax[i].plot(grid, metric_errors, label=metric_name)
+        ax[i].set_ylabel(metric_name)
+
+    return fig, metrics
