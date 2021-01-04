@@ -22,6 +22,7 @@ from typing import List, Tuple, Union
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.model_selection import KFold
 
 from .. import PALBase
 
@@ -382,12 +383,13 @@ def plot_learning_curve(  # pylint:disable=dangerous-default-value, too-many-arg
     observations: np.ndarray,
     indices: np.ndarray = None,
     num_steps: int = 5,
-    figsize: Tuple[(float, float)] = (8.0, 6.0),
-    metrics: List[Tuple(str, callable)] = [
+    figsize: Tuple[float, float] = (8.0, 6.0),
+    metrics: List[Tuple[str, callable]] = [
         ("MAE", mean_absolute_error),
         ("MSE", mean_squared_error),
         ("r2", r2_score),
     ],
+    k_fold: object = KFold(n_splits=5, shuffle=True),
 ):
     """Plot learning curve
 
@@ -407,37 +409,52 @@ def plot_learning_curve(  # pylint:disable=dangerous-default-value, too-many-arg
             takes an array of true values and predictions and returns a float.
             Defaults to [ ("MAE", mean_absolute_error), ("MSE", mean_squared_error),
             ("r2", r2_score), ].
+        k_fold (object): Object with split method that takes an array and returns
+            train/test indicies like the sklearn.model_selection.KFold object.
+            Defaults to KFold(n_splits=5, shuffle=True).
 
     Returns:
         fig, dict: figure and dictionary with the learning curve results
     """
     if indices is None:
-        indices = np.arange(0, len(observations) - 1)
+        indices = np.arange(0, len(observations))
     assert len(indices) == len(
         observations
     ), "The number of indices and observations must be equal"
-    grid = np.linspace(2, len(observations), num_steps, dtype=np.int8)
+    assert len(indices) > 5, "You need to use at least five points"
+    grid = np.linspace(5, len(observations), num_steps, dtype=np.int8)
     grid = np.unique(grid)
+    true_grid = []
+    metrics_dict = defaultdict(list)
 
-    metrics = defaultdict(list)
+    for num_points in grid:
+        sampled_indices = np.arange(0, num_points)
+        sampled_indices = indices[sampled_indices]
+        test_errors = defaultdict(list)
+        num_training_points = None
 
-    for num_points in range(grid):
-        sampled_indices = np.arange(0, num_points - 1)
-        palinstance.update_train_set(
-            np.arange(0, num_points - 1), observations[indices]
-        )
-        palinstance._set_data()  # pylint: disable=protected-access
-        if (
-            palinstance._should_optimize_hyperparameters()  # pylint: disable=protected-access
-        ):
+        for train_idx, test_idx in k_fold.split(sampled_indices):
+            train_idx = indices[train_idx]
+            test_idx = [i for i in indices if i not in train_idx]
+
+            num_training_points = len(train_idx)
+            palinstance._reset()  # pylint: disable=protected-access
+            palinstance.update_train_set(train_idx, observations[train_idx])
+            palinstance._set_data()  # pylint: disable=protected-access
             palinstance._set_hyperparameters()  # pylint: disable=protected-access
-        palinstance._train()  # pylint: disable=protected-access
-        palinstance._predict()  # pylint: disable=protected-access
+            palinstance._train()  # pylint: disable=protected-access
+            palinstance._predict()  # pylint: disable=protected-access
 
-        for metric_name, metric_function in metrics:
-            metrics[metric_name] = metric_function(
-                palinstance.y[sampled_indices], palinstance.means[sampled_indices]
-            )
+            for metric_name, metric_function in metrics:
+                test_errors[metric_name].append(
+                    metric_function(
+                        observations[test_idx],
+                        palinstance.means[test_idx],
+                    )
+                )
+        for metric_name, results in test_errors.items():
+            metrics_dict[metric_name].append(np.mean(results))
+        true_grid.append(num_training_points)
 
     fig, ax = plt.subplots(  # pylint:disable=invalid-name
         len(metrics),
@@ -445,10 +462,13 @@ def plot_learning_curve(  # pylint:disable=dangerous-default-value, too-many-arg
         figsize=figsize,
         tight_layout=True,
     )
+    true_grid = list(true_grid)
 
-    for i, items in enumerate(metrics.items()):
+    for i, items in enumerate(metrics_dict.items()):
         metric_name, metric_errors = items
-        ax[i].plot(grid, metric_errors, label=metric_name)
+        ax[i].plot(true_grid, metric_errors, label=metric_name)
         ax[i].set_ylabel(metric_name)
 
-    return fig, metrics
+    ax[-1].set_xlabel("number of training points")
+    metrics_dict["grid"] = grid
+    return fig, metrics_dict

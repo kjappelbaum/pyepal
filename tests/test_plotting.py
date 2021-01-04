@@ -19,12 +19,14 @@ We do not test if the plots are readable etc."""
 import matplotlib
 import numpy as np
 import pytest
+from sklearn.gaussian_process import GaussianProcessRegressor
 
-from pyepal import PALBase
+from pyepal import PALBase, PALSklearn
 from pyepal.plotting import (
     plot_bar_iterations,
     plot_histogram,
     plot_jointplot,
+    plot_learning_curve,
     plot_pareto_front_2d,
     plot_residuals,
 )
@@ -136,3 +138,22 @@ def test_plot_jointplot(make_random_dataset):
     fig = plot_jointplot(np.array([[1, 1, 1]] * 100), palinstance)
 
     assert isinstance(fig, matplotlib.figure.Figure)
+
+
+def test_plot_learningcurve(make_random_dataset):
+    """Make sure that the learning curve function can be used as expected"""
+    X, y = make_random_dataset  # pylint:disable=invalid-name
+    palinstance = PALSklearn(
+        X,
+        [
+            GaussianProcessRegressor(),
+            GaussianProcessRegressor(),
+            GaussianProcessRegressor(),
+        ],
+        3,
+    )
+
+    fig, dictionary = plot_learning_curve(palinstance, y)
+    assert isinstance(dictionary, dict)
+    assert isinstance(fig, matplotlib.figure.Figure)
+    assert "grid" in dictionary.keys()

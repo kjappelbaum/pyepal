@@ -1,4 +1,5 @@
 {
     "restructuredtext.confPath": "",
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": true,
+    "jupyter.jupyterServerType": "local"
 }
