@@ -184,6 +184,12 @@ Alternatively, you can use the :code:`classify` flag that keeps all previous cla
 Note that is important that the new points are sampled from the same distribution as the previous points in the design space. Otherwise, the model will have to deal with unexpected data shift.
 
 
+Plotting a learning curve
+............................
+
+To plot a learning curve one can use the :py:func:`~pyepal.plotting.plot_learning_curve` function. This can be useful to estimate if the number of initial points is reasonable and to see if the model is predictive.
+
+
 Caveats and tricks with Gaussian processes
 -------------------------------------------
 

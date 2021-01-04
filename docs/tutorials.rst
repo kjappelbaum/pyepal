@@ -51,3 +51,15 @@ Topic covered
 
 - Using LightGBM models with quantile loss with :py:class:`~pyepal.pal.pal_gbdt.PALGBDT`
 - selecting an initial set with :py:meth:`~pyepal.pal.utils.get_kmeans_samples`
+
+
+4. Plotting a learning curve
+-------------------------------
+
+.. image:: _static/learning_curve.png
+    :width: 400px
+    :align: center
+    :target: https://mybinder.org/v2/gh/kjappelbaum/pyepal/HEAD?filepath=examples/learning_curve.ipynb
+
+- Using `sklearn` Gaussian process models with RBF kernels
+- Plotting learning curves
