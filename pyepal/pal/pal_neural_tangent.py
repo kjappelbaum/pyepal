@@ -28,18 +28,13 @@ quality
 
 from typing import Sequence, Tuple
 
-import jax.numpy as jnp
-import neural_tangents as nt
 import numpy as np
-from jax.config import config
 from sklearn.preprocessing import StandardScaler
 
 from ..models.nt import NTModel
 from .pal_base import PALBase
 from .validate_inputs import validate_nt_models
 
-# ToDo: Probably, we do not need the high precision by default
-config.update("jax_enable_x64", True)
 __all__ = ["PALNT", "NTModel"]
 
 # We move those functions out of the class so that we can parallelize them
@@ -50,7 +45,12 @@ def _set_one_infinite_width_model(  # pylint:disable=too-many-arguments
     objectives: np.ndarray,
     sampled: np.ndarray,
     predict_fn_kwargs: dict = None,
-) -> Tuple[nt.stax.Callable, StandardScaler]:
+) -> Tuple[callable, StandardScaler]:
+    from jax.config import config  # pylint:disable=import-outside-toplevel
+
+    config.update("jax_enable_x64", True)
+    import neural_tangents as nt  # pylint:disable=import-outside-toplevel
+
     if predict_fn_kwargs is None:
         predict_fn_kwargs = {"diag_reg": 1e-3}
     model = models[i]
@@ -71,7 +71,7 @@ def _set_one_infinite_width_model(  # pylint:disable=too-many-arguments
 
 def _predict_one_infinite_width_model(
     i: int, models: Sequence[NTModel], design_space: np.ndarray, kernel: str
-) -> Tuple[jnp.ndarray, jnp.ndarray]:
+):
     predict_fn = models[i].predict_fn
     mean, covariance = predict_fn(  # type: ignore
         x_test=design_space,
@@ -118,6 +118,7 @@ class PALNT(PALBase):
                 (LeCun initialized) trained with gradient descent (Jacot et al., 2018).
                 Defaults to 'nngp'.
         """
+
         self.kernel = kwargs.pop("kernel", "nngp")
         self.design_space_scaler = StandardScaler()
         super().__init__(*args, **kwargs)
