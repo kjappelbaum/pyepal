@@ -31,10 +31,6 @@ W_std and b_std give an upper bound on the std of the posterior
 from dataclasses import dataclass
 from typing import Callable, Sequence, Union
 
-from jax import jit
-from jax.experimental import optimizers
-from neural_tangents import stax
-
 
 @dataclass
 class NTModel:
@@ -85,6 +81,12 @@ def build_dense_network(
         NTModel: jiited init, apply and
             kernel functions, predict_function (None)
     """
+    from jax.config import config  # pylint:disable=import-outside-toplevel
+
+    config.update("jax_enable_x64", True)
+    from jax import jit  # pylint:disable=import-outside-toplevel
+    from neural_tangents import stax  # pylint:disable=import-outside-toplevel
+
     assert len(hidden_layers) >= 1, "You must provide at least one hidden layer"
     if activations is None:
         activations = [stax.Relu() for _ in hidden_layers]
@@ -130,6 +132,12 @@ def get_optimizer(
     Returns:
         JaxOptimizer
     """
+    from jax.config import config  # pylint:disable=import-outside-toplevel
+
+    config.update("jax_enable_x64", True)
+    from jax import jit  # pylint:disable=import-outside-toplevel
+    from jax.experimental import optimizers  # pylint:disable=import-outside-toplevel
+
     if optimizer_kwargs is None:
         optimizer_kwargs = {}
     optimizer = optimizer.lower()
