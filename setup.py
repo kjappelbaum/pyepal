@@ -35,6 +35,7 @@ setup(
     name="pyepal",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
+    description="PyePAL implemented the epsilon-PAL active learning algorithm",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     packages=find_packages(include=["pyepal", "pyepal.*"]),
