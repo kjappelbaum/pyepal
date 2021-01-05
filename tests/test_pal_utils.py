@@ -196,6 +196,28 @@ def test_exhaust_loop(binh_korn_points):
     assert palinstance.number_discarded_points == 0
     assert palinstance.number_sampled_points > 0
 
+    model_0 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0)
+    model_1 = build_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 1)
+
+    palinstance = PALGPy(
+        X_binh_korn,
+        [model_0, model_1],
+        2,
+        beta_scale=1,
+        goals=["max", "min"],
+        restarts=1,
+    )
+
+    palinstance.cross_val_points = 0
+
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+
+    exhaust_loop(palinstance, y_binh_korn, batch_size=10, max_iter=2)
+    assert sum(palinstance.discarded) == 0
+    assert palinstance.number_discarded_points == 0
+    assert palinstance.number_sampled_points > 0
+    assert palinstance.iteration == 2
+
 
 def test_kmeans_samples(make_random_dataset):
     """test generation of a set of points closest to the k centroids"""
