@@ -68,7 +68,7 @@ def get_ratquad_kernel(NFEAT: int, ARD=True, **kwargs) -> GPy.kern.RatQuad:
 
 
 def build_coregionalized_model(
-    X_train: np.array, y_train: np.array, kernel=None, **kwargs
+    X_train: np.array, y_train: np.array, kernel=None, w_rank: int = 1, **kwargs
 ) -> GPy.models.GPCoregionalizedRegression:
     """Wrapper for building a coregionalized GPR, it will have as many
     outputs as y_train.shape[1].
@@ -79,7 +79,9 @@ def build_coregionalized_model(
         K = kernel
     else:
         K = get_matern_52_kernel(NFEAT)
-    icm = GPy.util.multioutput.ICM(input_dim=NFEAT, num_outputs=num_targets, kernel=K)
+    icm = GPy.util.multioutput.ICM(
+        input_dim=NFEAT, num_outputs=num_targets, kernel=K, W_rank=w_rank
+    )
 
     target_list = [y_train[:, i].reshape(-1, 1) for i in range(num_targets)]
     m = GPCoregionalizedRegression(
