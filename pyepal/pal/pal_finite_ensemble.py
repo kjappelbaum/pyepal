@@ -21,8 +21,6 @@ and infinite width models (`PALNT`)
 from typing import Sequence
 
 import numpy as np
-from jax import random
-from jax.api import grad, jit, vmap
 from sklearn.preprocessing import StandardScaler
 
 from ..models.nt import JaxOptimizer, NTModel
@@ -43,10 +41,13 @@ def _ensemble_train_one_finite_width(  # pylint:disable=too-many-arguments, too-
     objectives: np.ndarray,
     sampled: np.ndarray,
     optimizers: Sequence[JaxOptimizer],
-    key: random.PRNGKey,
+    key: object,
     training_steps: Sequence[int],
     ensemble_size: Sequence[int],
 ):
+    from jax import random  # pylint:disable=import-outside-toplevel
+    from jax.api import grad, jit, vmap  # pylint:disable=import-outside-toplevel
+
     model = models[i]
     optimizer = optimizers[i]
     loss = jit(lambda params, x, y: 0.5 * np.mean((model.apply_fn(params, x) - y) ** 2))
@@ -75,6 +76,8 @@ def _ensemble_train_one_finite_width(  # pylint:disable=too-many-arguments, too-
 
 
 def _ensemble_predict_one_finite_width(i: int, models: Sequence[NTModel], design_space):
+    from jax.api import vmap  # pylint:disable=import-outside-toplevel
+
     model = models[i]
 
     ensemble_func = vmap(model.apply_fn, (0, None))(model.params, design_space)
@@ -134,6 +137,8 @@ class PALJaxEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
                 Automatically vectorized using `vmap`.
                 Defaults to 100.
         """
+        from jax import random  # pylint:disable=import-outside-toplevel
+
         self.optimizers = validate_optimizers(
             kwargs.pop("optimizers"), kwargs.get("ndim")
         )
