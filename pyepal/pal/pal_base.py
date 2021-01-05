@@ -128,6 +128,34 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         {self.number_discarded_points} discarded points, \
         {self.number_unclassified_points} unclassified points."
 
+    def _reset(self):
+        self.pareto_optimal = np.array([False] * self.number_design_points)
+        self.discarded = np.array([False] * self.number_design_points)
+        self.sampled = np.array([[False] * self.ndim] * self.number_design_points)
+        self.unclassified = np.array([True] * self.number_design_points)
+        self.rectangle_ups: np.array = None
+        self.rectangle_lows: np.array = None
+
+        self.iteration = 1
+
+        self.coef_var_mask = np.array([True] * self.number_design_points)
+
+        # means/std are the model predictions
+        self.means: np.array = None
+        self.std: np.array = None
+        self.beta = None
+
+        # self.y is what needs to be used for train/predict
+        # as there the data has been turned into maximization
+        # self._y contains the data as provided by the user
+        self.y = np.zeros(
+            (self.number_design_points, self.ndim)
+        )  # pylint:disable=invalid-name
+        self._y = self.y
+        # measurement_uncertainity is provided in update_train_set by the user
+        self.measurement_uncertainty = np.zeros((self.number_design_points, self.ndim))
+        self._has_train_set = False
+
     @property
     def sampled_mask(self):
         """Create a mask for the sampled points
