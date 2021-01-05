@@ -396,12 +396,23 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.means[self.sampled] = self.y[self.sampled]
         self.std[self.sampled] = self.measurement_uncertainty[self.sampled]
 
-    def run_one_step(self, batch_size: int = 1) -> Union[np.array, None]:
+    def run_one_step(
+        self,
+        batch_size: int = 1,
+        pooling_method: str = "fro",
+        sample_discarded: bool = False,
+    ) -> Union[np.array, None]:
         """[summary]
 
         Args:
             batch_size (int, optional): Number of indices that will be returned.
                 Defaults to 1.
+            pooling_method (str): Method that is used to aggregate
+                the uncertainty in different objectives into one scalar.
+                Available options are:  "fro" (Frobenius/Euclidean norm), "mean",
+                "median". Defaults to "fro".
+            sample_discarded (bool): if true, it will sample from all points
+                and not only from the unclassified and Pareto optimal ones
 
         Raises:
             ValueError: In case the PAL instance was not initialized with
@@ -437,7 +448,11 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             return None
         if sum(self.unclassified):
             for _ in range(batch_size):
-                sampled_idx = self.sample(exclude_idx=samples)
+                sampled_idx = self.sample(
+                    exclude_idx=samples,
+                    pooling_method=pooling_method,
+                    sample_discarded=sample_discarded,
+                )
                 samples = np.append(samples, [sampled_idx])
                 self._log()
 
