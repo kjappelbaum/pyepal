@@ -391,10 +391,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
     ):
         """Implements one "trick". Instead of using the GPR
         predictions for the sampled points we use the data that
-        was actually measured and the actual uncertainty.
-        This is different from the PAL implementation proposed
-        by Zuluaga et al. This could make issues when the measurements
-        are outliers"""
+        was actually measured and the actual uncertainty."""
         if replace_mean:
             self.means[self.sampled] = self.y[self.sampled]
         if replace_std:
