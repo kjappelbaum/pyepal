@@ -401,6 +401,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         batch_size: int = 1,
         pooling_method: str = "fro",
         sample_discarded: bool = False,
+        use_coef_var: bool = True,
     ) -> Union[np.array, None]:
         """[summary]
 
@@ -413,6 +414,8 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                 "median". Defaults to "fro".
             sample_discarded (bool): if true, it will sample from all points
                 and not only from the unclassified and Pareto optimal ones
+            use_coef_var (bool): If True, uses the coefficient of variation instead of
+                the unscaled rectangle sizes
 
         Raises:
             ValueError: In case the PAL instance was not initialized with
@@ -452,6 +455,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                     exclude_idx=samples,
                     pooling_method=pooling_method,
                     sample_discarded=sample_discarded,
+                    use_coef_var=use_coef_var,
                 )
                 samples = np.append(samples, [sampled_idx])
                 self._log()
@@ -657,6 +661,7 @@ In the docs, you find hints on how to make models more robust.""".format(
         exclude_idx: Union[np.array, None] = None,
         pooling_method: str = "fro",
         sample_discarded: bool = False,
+        use_coef_var: bool = True,
     ) -> int:
         """Runs the sampling step based on the size of the hyperrectangle.
         I.e., favoring exploration.
@@ -671,6 +676,8 @@ In the docs, you find hints on how to make models more robust.""".format(
                 "median". Defaults to "fro".
             sample_discarded (bool): if true, it will sample from all points
                 and not only from the unclassified and Pareto optimal ones
+            use_coef_var (bool): If True, uses the coefficient of variation instead of
+                the unscaled rectangle sizes
 
         Raises:
             ValueError: In case there are no uncertainty rectangles,
@@ -702,6 +709,7 @@ In the docs, you find hints on how to make models more robust.""".format(
                 self.means,
                 sampled_mask,
                 pooling_method,
+                use_coef_var,
             )
         else:
             sampled_idx = _get_max_wt(
@@ -712,6 +720,7 @@ In the docs, you find hints on how to make models more robust.""".format(
                 self.unclassified,
                 sampled_mask,
                 pooling_method,
+                use_coef_var,
             )
 
         return sampled_idx
