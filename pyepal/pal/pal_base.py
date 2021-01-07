@@ -386,22 +386,25 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.discarded[self.coef_var_mask] = discarded
         self.unclassified[self.coef_var_mask] = unclassified
 
-    def _replace_by_measurements(self):
+    def _replace_by_measurements(
+        self, replace_mean: bool = True, replace_std: bool = True
+    ):
         """Implements one "trick". Instead of using the GPR
         predictions for the sampled points we use the data that
-        was actually measured and the actual uncertainty.
-        This is different from the PAL implementation proposed
-        by Zuluaga et al. This could make issues when the measurements
-        are outliers"""
-        self.means[self.sampled] = self.y[self.sampled]
-        self.std[self.sampled] = self.measurement_uncertainty[self.sampled]
+        was actually measured and the actual uncertainty."""
+        if replace_mean:
+            self.means[self.sampled] = self.y[self.sampled]
+        if replace_std:
+            self.std[self.sampled] = self.measurement_uncertainty[self.sampled]
 
-    def run_one_step(
+    def run_one_step(  # pylint:disable=too-many-arguments
         self,
         batch_size: int = 1,
         pooling_method: str = "fro",
         sample_discarded: bool = False,
         use_coef_var: bool = True,
+        replace_mean: bool = True,
+        replace_std: bool = True,
     ) -> Union[np.array, None]:
         """[summary]
 
@@ -416,6 +419,9 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
                 and not only from the unclassified and Pareto optimal ones
             use_coef_var (bool): If True, uses the coefficient of variation instead of
                 the unscaled rectangle sizes
+            replace_mean (bool): If true uses the measured means for the sampled points
+            replace_std (bool): If true uses the measured standard deviation for the
+                sampled points
 
         Raises:
             ValueError: In case the PAL instance was not initialized with
@@ -442,7 +448,9 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self._predict()
 
         self._update_beta()
-        self._replace_by_measurements()
+        self._replace_by_measurements(
+            replace_mean=replace_mean, replace_std=replace_std
+        )
         self._update_hyperrectangles()
         self._classify()
         samples = np.array([], dtype=np.int)
