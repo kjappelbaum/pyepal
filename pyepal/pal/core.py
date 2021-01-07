@@ -255,6 +255,7 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
     unclassified_t: np.array,
     sampled: np.array,
     pooling_method: str = "fro",
+    use_coef_var: bool = True,
 ) -> int:
     """Returns the index in design space with the maximum size of the hyperrectangle
     (scaled by the mean predictions, i.e., effectively,
@@ -272,6 +273,8 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
         pooling_method (str): Swtich to select the pooling method with which
             the uncertainty in different objectives is aggregated into one number.
             Available options are "fro" (Frobenius/Euclidean norm), "mean", "median"
+        use_coef_var (bool): If True, uses the coefficient of variation instead of
+            the unscaled rectangle sizes
 
     Returns:
         int: index with maximum size of hyperrectangle
@@ -290,10 +293,14 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
             i
         ] == 1:
             # weight is the length of the diagonal of the uncertainty region
-            coeff_var = np.divide(
-                rectangle_ups[i, :] - rectangle_lows[i, :], means[i, :]
-            )
-            uncertainty = _pool(coeff_var, pooling_method)
+            if use_coef_var:
+                uncer = np.divide(
+                    rectangle_ups[i, :] - rectangle_lows[i, :], means[i, :]
+                )
+            else:
+                uncer = rectangle_ups[i, :] - rectangle_lows[i, :]
+
+            uncertainty = _pool(uncer, pooling_method)
             if uncertainty > max_uncertainty:
                 max_uncertainty = uncertainty
                 maxid = i
@@ -308,6 +315,7 @@ def _get_max_wt_all(  # pylint:disable=too-many-arguments
     means: np.array,
     sampled: np.array,
     pooling_method: str = "fro",
+    use_coef_var: bool = True,
 ) -> int:
     """Returns the index in design space with the maximum size of the hyperrectangle
     (scaled by the mean predictions, i.e., effectively,
@@ -324,6 +332,8 @@ def _get_max_wt_all(  # pylint:disable=too-many-arguments
         pooling_method (str): Swtich to select the pooling method with which the
             uncertainty in different objectives is aggregated into one number.
             Available options are: "fro" (Frobenius/Euclidean norm), "mean", "median"
+        use_coef_var (bool): If True, uses the coefficient of variation instead of
+            the unscaled rectangle sizes
 
     Returns:
         int: index with maximum size of hyperrectangle
@@ -340,10 +350,13 @@ def _get_max_wt_all(  # pylint:disable=too-many-arguments
         # and thus improving the model for, the points most likely to be Pareto-optimal.
         if not sampled[i] == 1:
             # weight is the length of the diagonal of the uncertainty region
-            coeff_var = np.divide(
-                rectangle_ups[i, :] - rectangle_lows[i, :], means[i, :]
-            )
-            uncertainty = _pool(coeff_var, pooling_method)
+            if use_coef_var:
+                uncer = np.divide(
+                    rectangle_ups[i, :] - rectangle_lows[i, :], means[i, :]
+                )
+            else:
+                uncer = rectangle_ups[i, :] - rectangle_lows[i, :]
+            uncertainty = _pool(uncer, pooling_method)
             if uncertainty > max_uncertainty:
                 max_uncertainty = uncertainty
                 maxid = i
