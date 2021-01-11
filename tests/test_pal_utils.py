@@ -27,6 +27,7 @@ from pyepal.pal.utils import (
     get_hypervolume,
     get_kmeans_samples,
     get_maxmin_samples,
+    get_nondimensional_pareto_error,
     is_pareto_efficient,
 )
 
@@ -221,3 +222,11 @@ def test_get_hypervolume():
 
     points = np.array([[1, 1, 1], [0.5, 0.5, 0.5]])
     assert get_hypervolume(points, np.array([0, 0, 0])) == 1
+
+
+def test_get_nondimensional_pareto_error():
+    """Testing get_nondimensional_pareto_error"""
+    distance = get_nondimensional_pareto_error(
+        np.array([[0, 1], [1, 0]]), np.array([0, 0]), np.array([1, 1])
+    )
+    assert distance == 1

@@ -296,3 +296,32 @@ def get_hypervolume(
     hv_instance = HypervolumeIndicator(reference_vector)
     volume = hv_instance.compute(pareto_front * prefactor)
     return volume
+
+
+@jit(nopython=True)
+def get_nondimensional_pareto_error(
+    y_true: np.ndarray, y_pred: np.ndarray, ranges: np.ndarray
+) -> float:
+    """Calculates a non-dimensional error metric,
+    the scaled minimum maximum average distance of a Pareto-optimal
+    point to one in the predicted set.
+
+    Args:
+        y_true (np.ndarray): True Pareto front
+        y_pred (np.ndarray): Predicted Pareto front
+        ranges (np.ndarray): Range of every objective
+
+    Returns:
+        float: error metric
+    """
+    cum_distance = 0
+    for i in range(len(y_true)):  # pylint:disable=consider-using-enumerate
+        maximum_distance = np.inf
+        for j in range(len(y_pred)):  # pylint:disable=consider-using-enumerate
+            current_maximum_distance = np.max(np.abs(y_true[i] - y_pred[j]) / ranges)
+            if current_maximum_distance < maximum_distance:
+                maximum_distance = current_maximum_distance
+
+        cum_distance += maximum_distance
+
+    return cum_distance / len(y_true)
