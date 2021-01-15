@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/kjappelbaum/pyepal/compare/v0.4.2...v0.5.0) (2021-01-15)
+
+
+### Features
+
+* Add learning curve plot  ([#150](https://www.github.com/kjappelbaum/pyepal/issues/150)) ([1a9766b](https://www.github.com/kjappelbaum/pyepal/commit/1a9766b6524a476637ba8c786c516fcfab699289))
+* added new non-dimensional metric  ([#161](https://www.github.com/kjappelbaum/pyepal/issues/161)) ([91588be](https://www.github.com/kjappelbaum/pyepal/commit/91588be1ccfc01e465809b9590784f8bc8493f91))
+* added new sampling options ([#148](https://www.github.com/kjappelbaum/pyepal/issues/148)) ([9ee846d](https://www.github.com/kjappelbaum/pyepal/commit/9ee846dd28688c62e0adbcde8765f0ba8252bf70))
+* adding option to sample without dimensionless uncertainties ([#159](https://www.github.com/kjappelbaum/pyepal/issues/159)) ([431919c](https://www.github.com/kjappelbaum/pyepal/commit/431919c27c31abe099ea6004212eaee5d2091644))
+* allow to change the rank of the ICM models ([#151](https://www.github.com/kjappelbaum/pyepal/issues/151)) ([0ea8bab](https://www.github.com/kjappelbaum/pyepal/commit/0ea8baba3cc6394db1e0accac043c44c47779432))
+* Replace by measurement ([#160](https://www.github.com/kjappelbaum/pyepal/issues/160)) ([3d7b1f9](https://www.github.com/kjappelbaum/pyepal/commit/3d7b1f99ff82a9f748eb6d1c6581fdf084e3702b))
+
+
+### Bug Fixes
+
+* add description ([#157](https://www.github.com/kjappelbaum/pyepal/issues/157)) ([e260cb1](https://www.github.com/kjappelbaum/pyepal/commit/e260cb174018fc0427731113fc41e54eaef52762))
+* also include subpackages ([#145](https://www.github.com/kjappelbaum/pyepal/issues/145)) ([6a5d868](https://www.github.com/kjappelbaum/pyepal/commit/6a5d868c51539caf88d1f7a9e7149f852b578189))
+* closes [#153](https://www.github.com/kjappelbaum/pyepal/issues/153) ([#155](https://www.github.com/kjappelbaum/pyepal/issues/155)) ([51c2e67](https://www.github.com/kjappelbaum/pyepal/commit/51c2e67701db4212432b1680aaf92db6a4587645))
+* jax not imported on top level ([#158](https://www.github.com/kjappelbaum/pyepal/issues/158)) ([113a242](https://www.github.com/kjappelbaum/pyepal/commit/113a24292ede5551d191f2514802506d22caa72b))
+* only install pyepal package ([#138](https://www.github.com/kjappelbaum/pyepal/issues/138)) ([33d2d53](https://www.github.com/kjappelbaum/pyepal/commit/33d2d539b044a80d416870db7c8a9fd8ff6dda74))
+
+
+### Documentation
+
+* dev notes and py version updated ([#132](https://www.github.com/kjappelbaum/pyepal/issues/132)) ([4879846](https://www.github.com/kjappelbaum/pyepal/commit/487984605f4c419f8d4888950d9b2b5e4db9076c)), closes [#131](https://www.github.com/kjappelbaum/pyepal/issues/131)
+
 ### [0.4.2](https://www.github.com/kjappelbaum/pyepal/compare/v0.4.1...v0.4.2) (2020-11-29)
 
 
