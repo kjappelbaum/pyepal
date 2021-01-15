@@ -304,12 +304,18 @@ def get_nondimensional_pareto_error(
 ) -> float:
     """Calculates a non-dimensional error metric,
     the scaled minimum maximum average distance of a Pareto-optimal
-    point to one in the predicted set.
+    point to one in the predicted set. This metric is typically used
+    if the full objective space is known, i.e., when we know all y_true
+    (the true Pareto front) and when we can calculate the ranges based on
+    the full objective space. A use case can be to compare runs with different
+    epsilon or with different algorithms in a "fairer" way as no choice of
+    a hypervolume reference point is needed.
 
     Args:
         y_true (np.ndarray): True Pareto front
         y_pred (np.ndarray): Predicted Pareto front
-        ranges (np.ndarray): Range of every objective
+        ranges (np.ndarray): Range of every objective, typically calculated
+            based on the full objective space
 
     Returns:
         float: error metric
