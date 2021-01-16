@@ -18,7 +18,7 @@
 import collections
 import warnings
 from copy import deepcopy
-from typing import Any, Iterable, List, Sequence
+from typing import Any, Iterable, List, Sequence, Union
 
 import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
@@ -446,3 +446,20 @@ def validate_positive_integer_list(
             raise ValueError("{} must be a positive integer".format(parameter_name))
 
     return seq
+
+
+def validate_ranges(ranges: Any, ndim: int) -> Union[None, np.ndarray]:
+    """Make sure that it has the correct numnber of elements and that all
+    elements are positive."""
+    if not isinstance(ranges, (np.ndarray, list)):
+        return None
+
+    if not len(ranges) == ndim:
+        raise ValueError(
+            "The number of elements in ranges must match the number of objectives."
+        )
+    for elem in ranges:
+        if not elem > 0:
+            raise ValueError("Ranges must be positive.")
+
+    return np.array(ranges)

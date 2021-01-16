@@ -41,6 +41,7 @@ from pyepal.pal.validate_inputs import (
     validate_number_models,
     validate_optimizers,
     validate_positive_integer_list,
+    validate_ranges,
 )
 
 
@@ -316,3 +317,18 @@ def test_validate_positive_integer_list():
         validate_positive_integer_list(-1, 2)
 
     assert validate_positive_integer_list(1, 2) == [1, 1]
+
+
+def test_validate_ranges():
+    """Check that the range validation works"""
+    arr = np.array([1, 1, 1])
+    assert (arr == validate_ranges(arr, 3)).all()
+
+    with pytest.raises(ValueError):
+        validate_ranges(arr, 2)
+
+    with pytest.raises(ValueError):
+        validate_ranges(np.array([-0.1, 0.1, 1]), 2)
+
+    assert validate_ranges(None, 3) is None
+    assert (validate_ranges([1, 1, 1], 3) == np.array([1, 1, 1])).all()

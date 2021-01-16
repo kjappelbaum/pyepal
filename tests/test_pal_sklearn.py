@@ -277,6 +277,34 @@ def test_orchestration_run_one_step_batch(  # pylint:disable=too-many-statements
     for model in palinstance.models:
         assert check_is_fitted(model) is None
 
+    # test using the "fixed" epsilon
+    gpr_0 = GaussianProcessRegressor(
+        RBF(), normalize_y=True, n_restarts_optimizer=6, random_state=10
+    )
+    gpr_1 = GaussianProcessRegressor(
+        RBF(), normalize_y=True, n_restarts_optimizer=6, random_state=10
+    )
+    palinstance = PALSklearn(
+        X_binh_korn,
+        [gpr_0, gpr_1],
+        2,
+        beta_scale=1 / 9,
+        ranges=np.ptp(y_binh_korn, axis=0),
+    )
+    assert palinstance.uses_fixed_epsilon
+    palinstance.cross_val_points = 0
+    sample_idx = np.array([1, 10, 20, 40, 70, 90])
+    palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    idx = palinstance.run_one_step(batch_size=1)
+    for index in idx:
+        assert index not in [1, 10, 20, 40, 70, 90]
+    assert palinstance.number_sampled_points > 0
+    assert sum(palinstance.unclassified) > 0
+    assert sum(palinstance.discarded) == 0
+
+    for model in palinstance.models:
+        assert check_is_fitted(model) is None
+
 
 def test_orchestration_run_one_step_parallel(binh_korn_points):
     """Test the parallel processing"""
