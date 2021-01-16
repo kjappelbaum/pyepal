@@ -273,6 +273,28 @@ def test_pareto_classify(binh_korn_points):  # pylint:disable=too-many-locals
         == np.array([False, False, False, False, False, False, False, True])
     ).all()
 
+    pareto_optimal_t, discarded_t, unclassified_t = _pareto_classify(
+        is_pareto_optimal,
+        is_discarded,
+        is_unclassified,
+        rectangle_lows,
+        rectangle_ups,
+        np.array([0.1, 0.1]),
+        is_fixed_epsilon=True,
+    )
+
+    assert (
+        pareto_optimal_t
+        == np.array([True, True, True, False, True, False, False, False])
+    ).all()
+    assert (
+        discarded_t == np.array([False, False, False, True, False, True, True, False])
+    ).all()
+    assert (
+        unclassified_t
+        == np.array([False, False, False, False, False, False, False, True])
+    ).all()
+
     # 3D arrays, but 3rd dimenension alsways 0
 
     pareto_optimal_points = np.array([[0.5, 2, 0], [3, 1, 0], [4, 0.5, 0]])
