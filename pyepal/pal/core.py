@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint:disable=anomalous-backslash-in-string
 # Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -147,15 +148,16 @@ def _union_one_dim(
     return np.array(out_lows), np.array(out_ups)
 
 
-def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
+def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals, too-many-branches
     pareto_optimal_0: np.array,
     not_pareto_optimal_0: np.array,
     unclassified_0: np.array,
     rectangle_lows: np.array,
     rectangle_ups: np.array,
     epsilon: np.array,
+    is_fixed_epsilon: bool = False,
 ) -> Tuple[np.array, np.array, np.array]:
-    """Performs the classification part of the algorithm
+    """Performs the classification of the algorithm
     (p. 4 of the PAL paper, see algorithm 1/2 of the epsilon-PAL paper)
 
     One core concept is that once a point is classified,
@@ -172,6 +174,13 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
         rectangle_lows (np.array): lower uncertainty boundaries
         rectangle_ups (np.array): upper uncertainty boundaries
         epsilon (np.array): granularity parameter (one per dimension)
+        is_fixed_epsilon (bool): If true it assumes that epsilon contains *absolute*
+            tolerance values for every objective. These would typically be calculated as
+            :math:`\epsilon_i = \varepsilon_i \cdot r_i`, where :math:`r_i` is the range
+            of objective :math:`i`. By default this is False. This is, we will use
+            :math:`\epsilon_i = \varepsilon_i \cdot y_i` to compute the objectives,
+            which hence avoids the need of knowing the range of a objective before
+            using the algorithm.
 
     Returns:
         Tuple[list, list, list]: binary encoded list of Pareto optimal,
@@ -186,11 +195,17 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     if sum(pareto_optimal_0) > 0:
         pareto_indices = np.where(pareto_optimal_0)[0]
         pareto_pessimistic_lows = rectangle_lows[pareto_indices]  # p_pess(P)
+
+        if is_fixed_epsilon:
+            tolerances_0 = np.tile(epsilon, (len(pareto_pessimistic_lows), 1))
+        else:
+            tolerances_0 = np.abs(epsilon * pareto_pessimistic_lows)
+
         for i in range(0, len(unclassified_0)):
             if unclassified_t[i] == 1:
                 # discard if any lower-bound epsilon dominates the upper bound
                 if dominance_check_jitted_2(
-                    pareto_pessimistic_lows + np.abs(epsilon * pareto_pessimistic_lows),
+                    pareto_pessimistic_lows + tolerances_0,
                     rectangle_ups[i],
                 ):
                     not_pareto_optimal_t[i] = True
@@ -207,14 +222,21 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
     pareto_unclassified_pessimistic_points = pareto_unclassified_lows[
         pareto_unclassified_pessimistic_mask
     ]
+
+    if is_fixed_epsilon:
+        tolerances_1 = np.tile(
+            epsilon, (len(pareto_unclassified_pessimistic_points), 1)
+        )
+    else:
+        tolerances_1 = epsilon * np.abs(pareto_unclassified_pessimistic_points)
+
     for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
         # We can only discard points that are unclassified so far
         # We cannot discard points that are part of p_pess(P \cup U)
         if unclassified_t[i] and (i not in original_indices):
             # discard if any lower-bound epsilon dominates the upper bound
             if dominance_check_jitted_2(
-                epsilon * np.abs(pareto_unclassified_pessimistic_points)
-                + pareto_unclassified_pessimistic_points,
+                tolerances_1 + pareto_unclassified_pessimistic_points,
                 rectangle_ups[i],
             ):
                 not_pareto_optimal_t[i] = True
@@ -228,6 +250,11 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
 
     index_map = {index: i for i, index in enumerate(unclassified_indices)}
 
+    if is_fixed_epsilon:
+        tolerances_2 = np.tile(epsilon, (len(rectangle_lows), 1))
+    else:
+        tolerances_2 = epsilon * np.abs(rectangle_lows)
+
     # The index map helps us to mask the current point from the unclassified_ups list
     for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
         # again, we only care about unclassified points
@@ -237,7 +264,7 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals
             # the current point is epsilon-accurate Pareto optimal
             if not dominance_check_jitted_3(
                 unclassified_ups,
-                rectangle_lows[i] + epsilon * np.abs(rectangle_lows[i]),
+                rectangle_lows[i] + tolerances_2[i],
                 index_map[i],
             ):
                 pareto_optimal_t[i] = True

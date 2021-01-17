@@ -7,6 +7,8 @@ This implementation has the following features:
 
 - We ensure that the sampling is scale-invariant and that the algorithm can deal with positive and negative objective values.
 
+- In contrast to the `original implementation by Zuluaga et al. <https://jmlr.org/papers/v17/15-047.html>`_ we do not assume that the range of the objectives is known a priori. In their implementation it is used to calculate fixed tolerance values :math:`\epsilon_i \cdot r_i` (where :math:`r_i` is the range of objective :math:`i`). We instead use by default :math:`\epsilon_i \cdot |\mu_i|`.
+
 - Instead of using the predicted :math:`\hat{\mu}` and :math:`\hat{\sigma}` also for the sampled points we use the measured :math:`\mu` and :math:`\sigma`.
 
 - This implementation is directly scalable to :math:`n`-dimensional problems.

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint:disable=anomalous-backslash-in-string
 # Copyright 2020 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -40,6 +41,7 @@ from .validate_inputs import (
     validate_epsilon,
     validate_goals,
     validate_ndim,
+    validate_ranges,
 )
 
 PAL_LOGGER = logging.getLogger("PALLogger")
@@ -53,7 +55,7 @@ PAL_LOGGER.addHandler(CONSOLE_HANDLER)
 __all__ = ["PALBase", "PAL_LOGGER"]
 
 
-class PALBase:  # pylint:disable=too-many-instance-attributes
+class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-methods
     """PAL base class"""
 
     def __init__(  # pylint:disable=too-many-arguments
@@ -66,6 +68,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         beta_scale: float = 1 / 9,
         goals: List[str] = None,
         coef_var_threshold: float = 3,
+        ranges: Union[np.ndarray, None] = None,
     ):
         """Initialize the PAL instance
 
@@ -87,6 +90,11 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
             coef_var_threshold (float, optional): Use only points with
                 a coefficient of variation below this threshold
                 in the classification step. Defaults to 3.
+            ranges (np.ndarray, optional): Numpy array of length ndmin,
+                where each element contains the value range of given objective.
+                If this is provided, we will use :math:`\epsilon \cdot ranges`
+                to computer the uncertainties of the hyperrectangles instead
+                of the default behavior :math:`\epsilon \cdot |\mu|`
 
         """
         self.cross_val_points = 10  # maybe we make it an argument at some point
@@ -112,6 +120,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         self.design_space = X_design
         self.beta = None
         self.goals = validate_goals(goals, ndim)
+        self.ranges = validate_ranges(ranges, ndim)
 
         # self.y is what needs to be used for train/predict
         # as there the data has been turned into maximization
@@ -127,6 +136,16 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
         {self.number_pareto_optimal_points} Pareto optimal points, \
         {self.number_discarded_points} discarded points, \
         {self.number_unclassified_points} unclassified points."
+
+    def _uses_fixed_epsilon(self):
+        if self.ranges is not None:
+            return True
+        return False
+
+    @property
+    def uses_fixed_epsilon(self):
+        """True if it uses the fixed epsilon :math:`\epsilon \cdot ranges`"""
+        return self._uses_fixed_epsilon()
 
     def _reset(self):
         self.pareto_optimal = np.array([False] * self.number_design_points)
@@ -373,15 +392,26 @@ class PALBase:  # pylint:disable=too-many-instance-attributes
 
     def _classify(self):
         self._update_coef_var_mask()
-        pareto_optimal, discarded, unclassified = _pareto_classify(
-            self.pareto_optimal[self.coef_var_mask],
-            self.discarded[self.coef_var_mask],
-            self.unclassified[self.coef_var_mask],
-            self.rectangle_lows[self.coef_var_mask],
-            self.rectangle_ups[self.coef_var_mask],
-            self.epsilon,
-        )
-
+        if self.uses_fixed_epsilon:
+            pareto_optimal, discarded, unclassified = _pareto_classify(
+                self.pareto_optimal[self.coef_var_mask],
+                self.discarded[self.coef_var_mask],
+                self.unclassified[self.coef_var_mask],
+                self.rectangle_lows[self.coef_var_mask],
+                self.rectangle_ups[self.coef_var_mask],
+                self.epsilon * self.ranges,
+                is_fixed_epsilon=True,
+            )
+        else:
+            pareto_optimal, discarded, unclassified = _pareto_classify(
+                self.pareto_optimal[self.coef_var_mask],
+                self.discarded[self.coef_var_mask],
+                self.unclassified[self.coef_var_mask],
+                self.rectangle_lows[self.coef_var_mask],
+                self.rectangle_ups[self.coef_var_mask],
+                self.epsilon,
+                is_fixed_epsilon=False,
+            )
         self.pareto_optimal[self.coef_var_mask] = pareto_optimal
         self.discarded[self.coef_var_mask] = discarded
         self.unclassified[self.coef_var_mask] = unclassified

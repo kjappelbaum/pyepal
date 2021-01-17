@@ -52,6 +52,10 @@ def test_pal_base(make_random_dataset):
         palinstance.sample()
 
     assert palinstance.y.shape == (100, 3)
+    assert not palinstance.uses_fixed_epsilon
+
+    palinstance = PALBase(make_random_dataset[0], ["model"], 3, ranges=[1, 1, 1])
+    assert palinstance.uses_fixed_epsilon
 
 
 def test_update_train_set(make_random_dataset):
