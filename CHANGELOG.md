@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://www.github.com/kjappelbaum/pyepal/compare/v0.5.0...v0.6.0) (2021-01-17)
+
+
+### Features
+
+* added option to use fixed epsilon ([#163](https://www.github.com/kjappelbaum/pyepal/issues/163)) ([44472d1](https://www.github.com/kjappelbaum/pyepal/commit/44472d1955715b0e7983f0e8bbe9b12eb55d2c5f))
+
 ## [0.5.0](https://www.github.com/kjappelbaum/pyepal/compare/v0.4.2...v0.5.0) (2021-01-15)
 
 
