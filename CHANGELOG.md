@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.6.1](https://www.github.com/kjappelbaum/pyepal/compare/v0.6.0...v0.6.1) (2021-01-19)
+
+
+### Bug Fixes
+
+* including requirements.txt in manifest ([#168](https://www.github.com/kjappelbaum/pyepal/issues/168)) ([d2225af](https://www.github.com/kjappelbaum/pyepal/commit/d2225af528ed1d84ce615ff2c703d6c8514736a9))
+
 ## [0.6.0](https://www.github.com/kjappelbaum/pyepal/compare/v0.5.0...v0.6.0) (2021-01-17)
 
 
