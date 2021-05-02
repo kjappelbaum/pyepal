@@ -13,6 +13,12 @@ To install the latest stable release use
 
     pip install pyepal
 
+or the conda channel (recommended)
+
+.. code-block:: bash
+
+    conda install pyepal -c conda-forge
+
 
 The latest version of PyePAL can be installed from GitHub using
 
@@ -21,9 +27,11 @@ The latest version of PyePAL can be installed from GitHub using
     pip install git+https://github.com/kjappelbaum/pyepal.git
 
 
-On MacOS you might need to install `libomp` (e.g., `brew install libomp`) for multihreading in some of the models.
+On macOS you might need to install `libomp` (e.g., `brew install libomp`) for multihreading in some models.
 
-Which class do i use?
+If you want to `limit how many CPUs openblas uses <https://github.com/numpy/numpy/issues/8120>`_, you can :code:`export OPENBLAS_NUM_THREADS=1`
+
+Which class do I use?
 -----------------------
 
 - For Gaussian processes built with :code:`sklearn` use :py:class:`~pyepal.pal.pal_sklearn.PALSklearn`

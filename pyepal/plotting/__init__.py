@@ -285,8 +285,6 @@ def plot_residuals(  # pylint:disable=invalid-name
         ax[index].scatter(fitted, residuals)
         ax[index].spines["top"].set_color("none")
         ax[index].spines["right"].set_color("none")
-        ax[index].spines["left"].set_smart_bounds(True)
-        ax[index].spines["bottom"].set_smart_bounds(True)
 
     if labels is None:
         labels = [f"objective {i}" for i in range(num_targets)]
@@ -361,8 +359,6 @@ def plot_jointplot(  # pylint:disable=invalid-name
 
             ax[row, column].spines["top"].set_color("none")
             ax[row, column].spines["right"].set_color("none")
-            ax[row, column].spines["left"].set_smart_bounds(True)
-            ax[row, column].spines["bottom"].set_smart_bounds(True)
 
     if labels is None:
         labels = [f"objective {i}" for i in range(num_targets)]
