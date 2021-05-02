@@ -382,6 +382,8 @@ def _is_jaxoptimizer(optimizer: Any) -> bool:
 
 def validate_optimizers(optimizers: Any, ndim: int) -> Sequence:
     """Make sure that we can work with a Sequence if JaxOptimizer"""
+    if not isinstance(optimizers, Sequence):
+        raise ValueError("You must have one optimizer per objective.")
     if not len(optimizers) == ndim:
         raise ValueError(
             "If you provide a sequence it must have one optimizer per objective."
