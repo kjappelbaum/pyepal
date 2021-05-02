@@ -17,7 +17,6 @@
 """Methods to validate inputs for the PAL classes"""
 import collections
 import warnings
-from copy import deepcopy
 from typing import Any, Iterable, List, Sequence, Union
 
 import numpy as np
@@ -383,17 +382,11 @@ def _is_jaxoptimizer(optimizer: Any) -> bool:
 
 def validate_optimizers(optimizers: Any, ndim: int) -> Sequence:
     """Make sure that we can work with a Sequence if JaxOptimizer"""
-    if not isinstance(optimizers, collections.Sequence):
-        if not _is_jaxoptimizer(optimizers):
-            raise ValueError(
-                "You need to provide a `pyepal.models.nt.JaxOptimizer` instance"
-            )
-        return [deepcopy(optimizers) for _ in range(ndim)]
-
     if not len(optimizers) == ndim:
         raise ValueError(
             "If you provide a sequence it must have one optimizer per objective."
         )
+
     for optimizer in optimizers:
         if not _is_jaxoptimizer(optimizer):
             raise ValueError(

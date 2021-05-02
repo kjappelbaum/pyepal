@@ -274,7 +274,8 @@ def test_validate_optimizers():
         validate_optimizers([optimizer], 2)
 
     assert validate_optimizers(optimizers, 2) == optimizers
-    assert validate_optimizers(optimizer, 2) == optimizers
+    with pytest.raises(ValueError):
+        validate_optimizers(optimizer, 2)
 
 
 def test_validate_nt_models():
