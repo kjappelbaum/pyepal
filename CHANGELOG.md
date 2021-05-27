@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.6.2](https://www.github.com/kjappelbaum/pyepal/compare/v0.6.1...v0.6.2) (2021-05-03)
+
+
+### Bug Fixes
+
+* smart bounds, jax optimizer  docs: add conda instructions (closes [#171](https://www.github.com/kjappelbaum/pyepal/issues/171)), add openblas comments ([#172](https://www.github.com/kjappelbaum/pyepal/issues/172)) ([#173](https://www.github.com/kjappelbaum/pyepal/issues/173)) ([82f87a7](https://www.github.com/kjappelbaum/pyepal/commit/82f87a700d017f39f228ee1fa5ce6c10d230155c))
+
 ### [0.6.1](https://www.github.com/kjappelbaum/pyepal/compare/v0.6.0...v0.6.1) (2021-01-19)
 
 
