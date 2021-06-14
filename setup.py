@@ -31,6 +31,7 @@ gpy_requirements = [
 ]
 gbdt_requirements = ["lightgbm==3.*"]
 neural_tangents_requirements = ["neural_tangents==0.*", "jaxlib==0.*"]
+gpflow_requirements = ["gpflow"]
 setup(
     name="pyepal",
     version=versioneer.get_version(),
@@ -62,7 +63,11 @@ setup(
         "GPy": gpy_requirements,
         "GBDT": gbdt_requirements,
         "neural_tangents": neural_tangents_requirements,
-        "all": neural_tangents_requirements + gbdt_requirements + gpy_requirements,
+        "all": neural_tangents_requirements
+        + gbdt_requirements
+        + gpy_requirements
+        + gpflow_requirements,
+        "gpflow": gpflow_requirements,
     },
     author="PyePAL authors",
     author_email="kevin.jablonka@epfl.ch, brian.yoo@basf.com",
