@@ -23,26 +23,29 @@ from .pal_base import PALBase
 from .schedules import linear
 from .validate_inputs import validate_njobs, validate_number_models
 
-__all__ = ["PALGPflow"]
+__all__ = ["PALGPflowGPR"]
 
 
 def _train_model_picklable(i, models, opt, opt_kwargs):
+    print(f"training {i}")
     model = models[i]
     _ = opt.minimize(model.training_loss, model.trainable_variables, options=opt_kwargs)
     return model
 
 
-class PALGPflow(PALBase):
+class PALGPflowGPR(PALBase):
     """PAL class for a list of GPFlow GPR models, with one model per objective.
     Please consider that there are specific multioutput models
     (https://gpflow.readthedocs.io/en/master/notebooks/advanced/multioutput.html)
     for which the train and prediction function would need to be adjusted.
+    You might also consider using streaming GPRs
+    (https://github.com/thangbui/streaming_sparse_gp).
     In future releases we might support this case automatically
-    (i.e., handle the case in which only one model is provided)
+    (i.e., handle the case in which only one model is provided).
     """
 
     def __init__(self, *args, **kwargs):
-        """Contruct the PALGPflow instance
+        """Contruct the PALGPflowGPR instance
 
         Args:
             X_design (np.array): Design space (feature matrix)
@@ -66,47 +69,54 @@ class PALGPflow(PALBase):
                 If None (default), then we will use ` gpflow.optimizers.Scipy()`
             opt_kwargs (dict, optional): Keyword arguments passed to the optimizer.
                 If None, PyePAL will pass `{"maxiter": 100}`
-            n_jobs (int): Number of parallel processes that are used to fit
+            n_jobs (int): Number of parallel threads that are used to fit
                 the GPR models. Defaults to 1.
         """
         import gpflow  # pylint:disable=import-outside-toplevel
 
         self.n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
         self.opt = kwargs.pop("opt", gpflow.optimizers.Scipy())
-        self.opt_kwargs = kwargs.pop("opt", {"maxiter": 100})
+        self.opt_kwargs = kwargs.pop("opt_kwargs", {"maxiter": 100})
         super().__init__(*args, **kwargs)
 
         validate_number_models(self.models, self.ndim)
         # validate_gpy_model(self.models)
 
     def _set_data(self):
+        from gpflow.models.util import (  # pylint:disable=import-outside-toplevel
+            data_input_to_tensor,
+        )
+
         for i, model in enumerate(self.models):
-            model.set_XY(
-                self.design_space[self.sampled[:, i]],
-                self.y[self.sampled[:, i], i].reshape(-1, 1),
+            model.data = data_input_to_tensor(
+                (
+                    self.design_space[self.sampled[:, i]],
+                    self.y[self.sampled[:, i], i].reshape(-1, 1),
+                )
             )
 
     def _train(self):
         models = []
-
         train_model_pickleable_partial = partial(
             _train_model_picklable,
             models=self.models,
             opt=self.opt,
             opt_kwargs=self.opt_kwargs,
         )
-        with concurrent.futures.ProcessPoolExecutor(
-            max_workers=self.n_jobs
+        with concurrent.futures.ThreadPoolExecutor(
+            max_workers=self.n_jobs,
         ) as executor:
             for model in executor.map(train_model_pickleable_partial, range(self.ndim)):
                 models.append(model)
         self.models = models
+        print("training done")
 
     def _predict(self):
-
         means, stds = [], []
         for model in self.models:
             mean, std = model.predict_f(self.design_space)
+            mean = mean.numpy()
+            std = std.numpy()
             means.append(mean.reshape(-1, 1))
             stds.append(np.sqrt(std.reshape(-1, 1)))
 
