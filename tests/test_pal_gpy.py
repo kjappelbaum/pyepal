@@ -14,11 +14,14 @@
 # limitations under the License.
 
 """Testing the PALGPy class"""
+import logging
+
 import numpy as np
 import pytest
 
 from pyepal.models.gpr import build_model
 from pyepal.pal.pal_gpy import PALGPy
+from pyepal.pal.schedules import linear
 
 
 def test_pal_gpy(make_random_dataset):
@@ -99,6 +102,42 @@ def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
     assert idx[0] not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70]
     assert palinstance.number_sampled_points > 0
     assert sum(palinstance.discarded) == 0
+
+
+def test_reclassification_schedule(make_random_dataset, caplog):
+    """Ensure that we can patch in a re-classification schedule
+    as described in the docs"""
+    X, y = make_random_dataset  # pylint:disable=invalid-name
+    sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    model_0 = build_model(X[sample_idx], y[sample_idx], 0)
+    model_1 = build_model(X[sample_idx], y[sample_idx], 1)
+    model_2 = build_model(X[sample_idx], y[sample_idx], 2)
+
+    class PALGPyReclassify(PALGPy):  # pylint:disable=missing-class-docstring
+        def _should_reclassify(self):
+            return linear(self.iteration, 1)
+
+    palinstance = PALGPyReclassify(
+        X,
+        [model_0, model_1, model_2],
+        3,
+        beta_scale=1,
+        epsilon=0.01,
+        delta=0.01,
+        restarts=3,
+    )
+    palinstance.cross_val_points = 0
+
+    palinstance.update_train_set(sample_idx, y[sample_idx])
+    idx = palinstance.run_one_step()
+    assert "Resetting the classifications." in caplog.text
+
+    palinstance.update_train_set(idx, y[idx])
+    old_length = len(caplog.records)
+    with caplog.at_level(logging.INFO):
+        _ = palinstance.run_one_step()
+    assert "Resetting the classifications." in caplog.text
+    assert len(caplog.records) == 2 * old_length
 
 
 def test_orchestration_run_one_step_parallel(binh_korn_points):

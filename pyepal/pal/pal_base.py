@@ -45,7 +45,7 @@ from .validate_inputs import (
 )
 
 PAL_LOGGER = logging.getLogger("PALLogger")
-PAL_LOGGER.setLevel(logging.INFO)
+PAL_LOGGER.setLevel(level="INFO")
 CONSOLE_HANDLER = logging.StreamHandler()
 CONSOLE_FORMAT = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
 CONSOLE_HANDLER.setFormatter(CONSOLE_FORMAT)
