@@ -59,6 +59,14 @@ For quantile regression with LightGBM
     :special-members:
 
 
+For GPR with GPFlow
+.......................................
+
+.. automodule:: pyepal.pal.pal_gpflowgpr
+    :members:
+    :show-inheritance:
+    :special-members:
+
 
 Schedules for hyperparameter optimization
 ...........................................
