@@ -45,7 +45,7 @@ from .validate_inputs import (
 )
 
 PAL_LOGGER = logging.getLogger("PALLogger")
-PAL_LOGGER.setLevel(logging.INFO)
+PAL_LOGGER.setLevel(level="INFO")
 CONSOLE_HANDLER = logging.StreamHandler()
 CONSOLE_FORMAT = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
 CONSOLE_HANDLER.setFormatter(CONSOLE_FORMAT)
@@ -175,6 +175,13 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         self.measurement_uncertainty = np.zeros((self.number_design_points, self.ndim))
         self._has_train_set = False
 
+    def _reset_classification(self):
+        """Resetting the mask arrays that keep track of the classifications.
+        But do *not* reset the sampling status"""
+        self.pareto_optimal = np.array([False] * self.number_design_points)
+        self.discarded = np.array([False] * self.number_design_points)
+        self.unclassified = np.array([True] * self.number_design_points)
+
     @property
     def sampled_mask(self):
         """Create a mask for the sampled points
@@ -273,6 +280,11 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
 
     def _should_optimize_hyperparameters(self) -> bool:  # pylint:disable=no-self-use
         return True
+
+    def _should_reclassify(self) -> bool:  # pylint:disable=no-self-use
+        if self.number_unclassified_points <= 1:
+            return True
+        return False
 
     def _predict(self):
         raise NotImplementedError("The predict function is not implemented")
@@ -392,6 +404,9 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
 
     def _classify(self):
         self._update_coef_var_mask()
+        if self._should_reclassify:  # pylint:disable=using-constant-test
+            PAL_LOGGER.info("Resetting the classifications.")
+            self._reset_classification()
         if self.uses_fixed_epsilon:
             pareto_optimal, discarded, unclassified = _pareto_classify(
                 self.pareto_optimal[self.coef_var_mask],

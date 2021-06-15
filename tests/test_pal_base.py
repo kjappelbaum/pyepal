@@ -58,6 +58,34 @@ def test_pal_base(make_random_dataset):
     assert palinstance.uses_fixed_epsilon
 
 
+def test_reset_classification(make_random_dataset):
+    """Make sure the reset of the reclassification status works as expected."""
+    X, _ = make_random_dataset  # pylint: disable=invalid-name
+
+    palinstance = PALBase(X, ["model"], 3)
+    lows = np.zeros((100, 3))
+    highs = np.zeros((100, 3))
+
+    means = np.full((100, 3), 1)
+    palinstance.means = means
+    palinstance.std = np.full((100, 3), 0.1)
+    pareto_optimal = np.array([False] * 98 + [True, True])
+    sampled = np.array([[False] * 3, [False] * 3, [False] * 3, [False] * 3])
+    unclassified = np.array([True] * 98 + [False, False])
+
+    palinstance.rectangle_lows = lows
+    palinstance.rectangle_ups = highs
+    palinstance.sampled = sampled
+    palinstance.pareto_optimal = pareto_optimal
+    palinstance.unclassified = unclassified
+
+    palinstance._reset_classification()
+
+    assert palinstance.number_unclassified_points == len(X)
+    assert palinstance.number_pareto_optimal_points == 0
+    assert palinstance.number_discarded_points == 0
+
+
 def test_update_train_set(make_random_dataset):
     """Check if the update of the training set works"""
     X, y = make_random_dataset  # pylint:disable=invalid-name

@@ -108,6 +108,35 @@ Hyperparameter optimization
 Usually, the hyperparameters of a machine learning model, in particular the kernel hyperparameters of a Gaussian process regression model, should be optimized as new training data is added.
 However, since this is usually a computationally expensive process, it may not be desirable to perform this at every iteration of the active learning process. The iteration frequency of the hyperparameter optimization is internally set by the :code:`_should_optimize_hyperparameters` function, which by default uses a schedule that optimizes the hyperparameter every 10th iteration. This behavior can be changed by override this function.
 
+
+Reclassification schedule
+.............................
+
+A problem of the e-PAL algorithm can be the case where the initial GPR predictions are wrong. This might lead to points that are actually Pareto-efficient being confidently discarded (in case the GPR predicts with low variance a performance that is dominated by some other point).
+Under the assumption that the GPR predictions improve over the course of the use of the algorithm, this behavior can be mitigated by "resetting" all the classification, i.e. reconsidering discarded points.
+In PyePAL, we automatically do this in case there is only one point left. In general, you might want to customize this behavior, which you can do, for example, by `monkey patching <https://stackoverflow.com/questions/5626193/what-is-monkey-patching>`_
+
+.. code-block:: python
+
+    from pyepal.pal.schedules import linear
+
+    def my_schedule(self):
+        return linear(self.iteration, 1)
+
+    PALGPyReclassify._should_reclassify = my_schedule
+
+
+or by subclassing
+
+.. code-block:: python
+
+    from pyepal.pal.schedules import linear
+    class PALGPyReclassify(PALGPy):
+        def _should_reclassify(self):
+            return linear(self.iteration, 1)
+
+In the examples above the full design space would be re-classified each iteration.
+
 Logging
 ........
 Basic information such as the current iteration and the classification status are logged and can be viewed by printing the :code:`PAL` object
