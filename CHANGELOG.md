@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.0](https://www.github.com/kjappelbaum/pyepal/compare/v0.6.2...v0.7.0) (2021-06-15)
+
+
+### Features
+
+* add basic GPflow support ([#178](https://www.github.com/kjappelbaum/pyepal/issues/178)) ([69a8bec](https://www.github.com/kjappelbaum/pyepal/commit/69a8becf01d2009de8c6138d559a6028c4264c75))
+* add option to schedule reclassification of all points ([#177](https://www.github.com/kjappelbaum/pyepal/issues/177)) ([01d97a4](https://www.github.com/kjappelbaum/pyepal/commit/01d97a4cb366055a821fa1f2aaaac52a5a9f878b))
+
 ### [0.6.2](https://www.github.com/kjappelbaum/pyepal/compare/v0.6.1...v0.6.2) (2021-05-03)
 
 
