@@ -1,5 +1,4 @@
-# YAML 1.2
----
+cff-version: "1.1.0"
 authors:
   -
     affiliation: EPFL
@@ -24,10 +23,9 @@ authors:
     family-names: Brian
     given-names: "Yoo "
     orcid: "https://orcid.org/0000-0002-0326-0831"
-cff-version: "1.1.0"
 doi: "10.1038/s41467-021-22437-0"
 license: "Apache-2.0"
 message: "If you use this software, please cite it using these metadata."
 repository-code: "https://github.com/kjappelbaum/pyepal"
 title: pyepal
-...
+
