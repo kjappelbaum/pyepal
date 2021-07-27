@@ -18,3 +18,4 @@ doi: "10.1038/s41467-021-22437-0"
 license: "Apache-2.0"
 repository-code: "https://github.com/kjappelbaum/pyepal"
 title: pyepal
+version: v0.7.0
