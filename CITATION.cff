@@ -1,21 +1,16 @@
 cff-version: "1.1.0"
 authors:
-  - affiliation: EPFL
-    family-names: "Kevin Maik"
+  - family-names: "Kevin Maik"
     given-names: "Kevin Maik"
     orcid: "https://orcid.org/0000-0003-4894-4660"
-  - affiliation: BASF
-    family-names: "Melpatti Jothiappan"
+  - family-names: "Melpatti Jothiappan"
     given-names: "Giriprasad "
-  - affiliation: BASF
-    family-names: Wang
+  - family-names: Wang
     given-names: Shefang
-  - affiliation: EPFL
-    family-names: Smit
+  - family-names: Smit
     given-names: Berend
     orcid: "https://orcid.org/0000-0003-4653-8562"
-  - affiliation: BASF
-    family-names: Brian
+  - family-names: Brian
     given-names: "Yoo "
     orcid: "https://orcid.org/0000-0002-0326-0831"
 doi: "10.1038/s41467-021-22437-0"
