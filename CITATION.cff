@@ -1,25 +1,20 @@
 cff-version: "1.1.0"
 authors:
-  -
-    affiliation: EPFL
+  - affiliation: EPFL
     family-names: "Kevin Maik"
     given-names: "Kevin Maik"
     orcid: "https://orcid.org/0000-0003-4894-4660"
-  -
-    affiliation: BASF
+  - affiliation: BASF
     family-names: "Melpatti Jothiappan"
     given-names: "Giriprasad "
-  -
-    affiliation: BASF
+  - affiliation: BASF
     family-names: Wang
     given-names: Shefang
-  -
-    affiliation: EPFL
+  - affiliation: EPFL
     family-names: Smit
     given-names: Berend
     orcid: "https://orcid.org/0000-0003-4653-8562"
-  -
-    affiliation: BASF
+  - affiliation: BASF
     family-names: Brian
     given-names: "Yoo "
     orcid: "https://orcid.org/0000-0002-0326-0831"
@@ -28,4 +23,3 @@ license: "Apache-2.0"
 message: "If you use this software, please cite it using these metadata."
 repository-code: "https://github.com/kjappelbaum/pyepal"
 title: pyepal
-
