@@ -67,7 +67,7 @@ def test_reset_classification(make_random_dataset):
     highs = np.zeros((100, 3))
 
     means = np.full((100, 3), 1)
-    palinstance.means = means
+    palinstance._means = means
     palinstance.std = np.full((100, 3), 0.1)
     pareto_optimal = np.array([False] * 98 + [True, True])
     sampled = np.array([[False] * 3, [False] * 3, [False] * 3, [False] * 3])
@@ -122,7 +122,7 @@ def test_augment_design_space(make_random_dataset):
     highs = np.zeros((100, 3))
 
     means = np.full((100, 3), 1)
-    palinstance.means = means
+    palinstance._means = means
     palinstance.std = np.full((100, 3), 0.1)
     pareto_optimal = np.array([False] * 98 + [True, True])
     sampled = np.array([[False] * 3, [False] * 3, [False] * 3, [False] * 3])
@@ -199,7 +199,7 @@ def test_sample(make_random_dataset):
     )
 
     means = np.array([[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]])
-    palinstance.means = means
+    palinstance._means = means
     pareto_optimal = np.array([False, False, True, True])
     sampled = np.array([[False] * 4, [False] * 4, [False] * 4, [False] * 4])
     unclassified = np.array([True, True, False, False])
@@ -255,7 +255,7 @@ def test__update_hyperrectangles(make_random_dataset):
     X, _ = make_random_dataset  # pylint:disable=invalid-name
     palinstance = PALBase(X, ["model"], 4, beta_scale=1)
 
-    palinstance.means = np.array([[0, 0, 1, 0], [0, 0, 0, 1]])
+    palinstance._means = np.array([[0, 0, 1, 0], [0, 0, 0, 1]])
     palinstance.std = np.array([[0, 0, 0, 0], [1, 0, 0, 0]])
     with pytest.raises(TypeError):
         # Beta is not defined
@@ -275,7 +275,7 @@ def test__update_hyperrectangles(make_random_dataset):
     assert palinstance.rectangle_lows[1][0] < -1
     assert palinstance.rectangle_ups[1][0] > 1
 
-    assert len(palinstance.hyperrectangle_sizes) == len(palinstance.means)
+    assert len(palinstance.hyperrectangle_sizes) == len(palinstance._means)
 
 
 def test_orchestration_run_one_step(make_random_dataset):
@@ -298,7 +298,7 @@ def test__replace_by_measurements(make_random_dataset):
     assert palinstance.measurement_uncertainty.sum() == 0
     sample_idx = np.array([1, 2, 3, 4])
     palinstance.update_train_set(sample_idx, y[sample_idx], y[sample_idx])
-    palinstance.means = palinstance.measurement_uncertainty
+    palinstance._means = palinstance.measurement_uncertainty
     palinstance.std = palinstance.measurement_uncertainty
     palinstance._replace_by_measurements()
     assert (palinstance.y == palinstance.std).all()
@@ -309,7 +309,7 @@ def test__update_coef_var_mask(make_random_dataset):
     X, _ = make_random_dataset  # pylint:disable=invalid-name
     palinstance = PALBase(X[:2], ["model"], 3, beta_scale=1)
 
-    palinstance.means = np.array([[1, 1, 1, 1], [1, 1, 1, 1]])
+    palinstance._means = np.array([[1, 1, 1, 1], [1, 1, 1, 1]])
     palinstance.std = np.array([[0, 0, 0, 0], [3, 1, 1, 1]])
 
     assert (palinstance.coef_var_mask == np.array([True, True])).all()
@@ -317,7 +317,7 @@ def test__update_coef_var_mask(make_random_dataset):
 
     assert (palinstance.coef_var_mask == np.array([True, False])).all()
 
-    palinstance.means = np.array([[0, 0, 0, 0], [0, 0, 0, 0]])
+    palinstance._means = np.array([[0, 0, 0, 0], [0, 0, 0, 0]])
     palinstance.std = np.array([[0, 0, 0, 0], [3, 1, 1, 1]])
 
     assert (palinstance.coef_var_mask == np.array([True, False])).all()

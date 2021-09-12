@@ -125,7 +125,7 @@ class PALSklearn(PALBase):
             means.append(mean.reshape(-1, 1))
             stds.append(std.reshape(-1, 1))
 
-        self.means = np.hstack(mean)
+        self._means = np.hstack(mean)
         self.std = np.hstack(stds)
 ```
 

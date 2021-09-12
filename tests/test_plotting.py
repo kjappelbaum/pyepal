@@ -103,7 +103,7 @@ def test_plot_residuals(make_random_dataset):
     with pytest.raises(ValueError):
         plot_residuals(np.array([[1, 2, 1]] * 100), palinstance)
 
-    palinstance.means = means
+    palinstance._means = means  # pylint:disable=protected-access
     with pytest.raises(AssertionError):
         plot_residuals(np.array([1] * 100), palinstance)
 
@@ -126,7 +126,7 @@ def test_plot_jointplot(make_random_dataset):
     with pytest.raises(ValueError):
         plot_jointplot(np.array([[1, 2, 1]] * 100), palinstance)
 
-    palinstance.means = means
+    palinstance._means = means  # pylint:disable=protected-access
     palinstance.std = means
     palinstance.beta = 1
     with pytest.raises(AssertionError):

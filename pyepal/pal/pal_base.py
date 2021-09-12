@@ -85,7 +85,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
                 Defaults to 1/9.
             goals (List[str], optional): If a list, provide "min" for every objective
                 that shall be minimized and "max" for every objective
-                that shall be maximized. Defaults to None, which means
+                that shall be maximized. Defaults to None, which _means
                 that the code maximizes all objectives.
             coef_var_threshold (float, optional): Use only points with
                 a coefficient of variation below this threshold
@@ -113,8 +113,8 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         design_space_size = len(X_design)
         self.coef_var_threshold = validate_coef_var(coef_var_threshold)
         self.coef_var_mask = np.array([True] * design_space_size)
-        # means/std are the model predictions
-        self.means: np.array = None
+        # _means/std are the model predictions
+        self._means: np.array = None
         self.std: np.array = None
 
         self.design_space = X_design
@@ -127,7 +127,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         # self._y contains the data as provided by the user
         self.y = np.zeros((design_space_size, self.ndim))  # pylint:disable=invalid-name
         self._y = self.y
-        # measurement_uncertainity is provided in update_train_set by the user
+        # measurement_uncertainty is provided in update_train_set by the user
         self.measurement_uncertainty = np.zeros((design_space_size, self.ndim))
         self._has_train_set = False
 
@@ -159,8 +159,8 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
 
         self.coef_var_mask = np.array([True] * self.number_design_points)
 
-        # means/std are the model predictions
-        self.means: np.array = None
+        # _means/std are the model predictions
+        self._means: np.array = None
         self.std: np.array = None
         self.beta = None
 
@@ -171,7 +171,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
             (self.number_design_points, self.ndim)
         )  # pylint:disable=invalid-name
         self._y = self.y
-        # measurement_uncertainity is provided in update_train_set by the user
+        # measurement_uncertainty is provided in update_train_set by the user
         self.measurement_uncertainty = np.zeros((self.number_design_points, self.ndim))
         self._has_train_set = False
 
@@ -243,7 +243,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
 
     @property
     def number_discarded_points(self):
-        """Return the nnumber of discarded points"""
+        """Return the number of discarded points"""
         return sum(self.discarded)
 
     @property
@@ -259,7 +259,17 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
     @property
     def hyperrectangle_sizes(self):
         """Return the sizes of the hyperrectangles"""
-        return _uncertainty(self.rectangle_ups, self.rectangle_lows, self.means)
+        return _uncertainty(self.rectangle_ups, self.rectangle_lows, self._means)
+
+    @property
+    def means(self):
+        """Return the means predicted by the model"""
+        if self._means is None:
+            raise ValueError(
+                "Predicted means is None. Execute run_one_step() \
+                    to obtain predicted means for each model."
+            )
+        return self._means * self.goals
 
     def _update_beta(self):
         """Update beta according to section 7.2. of the epsilon-PAL paper"""
@@ -320,7 +330,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         for sampled_idx in sample_subset:
             # make sure that we do not run into errors due to np.nan
             if self.sampled[sampled_idx].sum() == self.ndim:
-                # copy here is important, otherewise all
+                # copy here is important, otherwise all
                 # points we set to False remain False
                 self.sampled = sampled_original.copy()
                 self.sampled[sampled_idx, :] = False
@@ -331,7 +341,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
                 self._train()
                 self._predict()
                 error = mean_absolute_error(
-                    self.y[sampled_idx], self.means[sampled_idx]
+                    self.y[sampled_idx], self._means[sampled_idx]
                 )
                 errors.append(error)
 
@@ -346,7 +356,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
 
     def _update_hyperrectangles(self, new_indices: np.ndarray = None):
         """Computes new hyperrectangles based on beta,
-        the means and the standard deviations.
+        the _means and the standard deviations.
         If the iteration is > 0,
         then it uses iterative intersection to ensure that the size of the
         hyperrectangles is decreasing.
@@ -357,7 +367,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
                 Instead, it will just use the scaled edges based on the
                 model's prediction. Defaults to None.
         """
-        lows, ups = _get_uncertainty_regions(self.means, self.std, np.sqrt(self.beta))
+        lows, ups = _get_uncertainty_regions(self._means, self.std, np.sqrt(self.beta))
         if self.iteration == 1:
             # initialization
             self.rectangle_lows, self.rectangle_ups = lows, ups
@@ -390,11 +400,11 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         # this will fail if everything is zero in this case,
         # I feel we might just give up for now,
         # in the future we can think fo just applying a shift
-        if self.means.sum() != 0:
-            means_no_zero = self.means.copy()
-            means_no_zero[means_no_zero == 0] = np.median(means_no_zero)
+        if self._means.sum() != 0:
+            _means_no_zero = self._means.copy()
+            _means_no_zero[_means_no_zero == 0] = np.median(_means_no_zero)
             self.coef_var_mask = (
-                np.max(self.std / means_no_zero, axis=1) < self.coef_var_threshold
+                np.max(self.std / _means_no_zero, axis=1) < self.coef_var_threshold
             )
         else:
             mean_variation = self.std.mean()
@@ -438,7 +448,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         predictions for the sampled points we use the data that
         was actually measured and the actual uncertainty."""
         if replace_mean:
-            self.means[self.sampled] = self.y[self.sampled]
+            self._means[self.sampled] = self.y[self.sampled]
         if replace_std:
             self.std[self.sampled] = self.measurement_uncertainty[self.sampled]
 
@@ -464,7 +474,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
                 and not only from the unclassified and Pareto optimal ones
             use_coef_var (bool): If True, uses the coefficient of variation instead of
                 the unscaled rectangle sizes
-            replace_mean (bool): If true uses the measured means for the sampled points
+            replace_mean (bool): If true uses the measured _means for the sampled points
             replace_std (bool): If true uses the measured standard deviation for the
                 sampled points
 
@@ -662,9 +672,9 @@ In the docs, you find hints on how to make models more robust.""".format(
             self.coef_var_mask, np.array([True] * number_new_points), 0
         )
 
-        # means/std are the model predictions
-        self.means = np.append(
-            self.means, np.full([number_new_points, self.ndim], np.nan), 0
+        # _means/std are the model predictions
+        self._means = np.append(
+            self._means, np.full([number_new_points, self.ndim], np.nan), 0
         )
         self.std = np.append(
             self.std, np.full([number_new_points, self.ndim], np.nan), 0
@@ -677,7 +687,7 @@ In the docs, you find hints on how to make models more robust.""".format(
         # self._y contains the data as provided by the user
         self._y = self.y
 
-        # measurement_uncertainity is provided in update_train_set by the user
+        # measurement_uncertainty is provided in update_train_set by the user
         self.measurement_uncertainty = np.append(
             self.measurement_uncertainty, np.zeros((number_new_points, self.ndim)), 0
         )
@@ -759,7 +769,7 @@ In the docs, you find hints on how to make models more robust.""".format(
             sampled_idx = _get_max_wt_all(
                 self.rectangle_lows,
                 self.rectangle_ups,
-                self.means,
+                self._means,
                 sampled_mask,
                 pooling_method,
                 use_coef_var,
@@ -768,7 +778,7 @@ In the docs, you find hints on how to make models more robust.""".format(
             sampled_idx = _get_max_wt(
                 self.rectangle_lows,
                 self.rectangle_ups,
-                self.means,
+                self._means,
                 self.pareto_optimal,
                 self.unclassified,
                 sampled_mask,

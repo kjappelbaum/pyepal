@@ -96,7 +96,7 @@ class PALGPy(PALBase):
             means.append(mean.reshape(-1, 1))
             stds.append(std.reshape(-1, 1))
 
-        self.means = np.hstack(means)
+        self._means = np.hstack(means)
         self.std = np.hstack(stds)
 
     def _set_hyperparameters(self):
