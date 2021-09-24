@@ -114,7 +114,7 @@ def test_means_property(binh_korn_points):
     )
     indices = np.array([0, 1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99])
     palinstance.update_train_set(indices, points[indices])
-    exhaust_loop(palinstance, points)
+    palinstance.run_one_step()
     assert np.all(palinstance.means[:, 0] >= 0)
 
 
@@ -129,7 +129,7 @@ def test_means_property2(binh_korn_points):
     )
     indices = np.array([0, 1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99])
     palinstance.update_train_set(indices, points[indices])
-    exhaust_loop(palinstance, points)
+    palinstance.run_one_step()
     assert np.all(palinstance.means[:, 0] >= 0)
     assert np.all(palinstance.means[:, 1] >= 0)
 
