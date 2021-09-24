@@ -18,7 +18,10 @@
 import numpy as np
 import pytest
 
+from pyepal.models.gpr import build_coregionalized_model
 from pyepal.pal.pal_base import PALBase
+from pyepal.pal.pal_coregionalized import PALCoregionalized
+from pyepal.pal.utils import exhaust_loop
 
 
 def test_pal_base(make_random_dataset):
@@ -89,6 +92,7 @@ def test_reset_classification(make_random_dataset):
 def test_update_train_set(make_random_dataset):
     """Check if the update of the training set works"""
     X, y = make_random_dataset  # pylint:disable=invalid-name
+
     palinstance = PALBase(X, ["model"], 3)
     assert not palinstance._has_train_set
     assert palinstance.sampled.sum() == 0
@@ -97,6 +101,37 @@ def test_update_train_set(make_random_dataset):
     assert palinstance.sampled_indices == np.array([0])
     assert palinstance.number_sampled_points == 1
     assert (palinstance.y[0] == y[0, :]).all()
+
+
+def test_means_property(binh_korn_points):
+    """based on #185 and example in https://deepnote.com/project/Pyepal-mirrored-results-Yeuc095QRE6ToMXFtwFjnA/%2Fbinh_korn_goals_issue.ipynb/#00012-ebf692a0-f995-4e25-98b6-8d34a7db7f54"""
+    x, points = binh_korn_points  # pylint:disable=invalid-name
+    np.random.seed(10)
+    points[:, 0] = -points[:, 0]
+    model = build_coregionalized_model(x, points)
+    palinstance = PALCoregionalized(
+        x, [model], 2, goals=["min", "max"], epsilon=[0.5, 0.5]
+    )
+    indices = np.array([0, 1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99])
+    palinstance.update_train_set(indices, points[indices])
+    exhaust_loop(palinstance, points)
+    assert np.all(palinstance.means[:, 0] >= 0)
+
+
+def test_means_property2(binh_korn_points):
+    """based on #185 and example in https://deepnote.com/project/Pyepal-mirrored-results-Yeuc095QRE6ToMXFtwFjnA/%2Fbinh_korn_goals_issue.ipynb/#00012-ebf692a0-f995-4e25-98b6-8d34a7db7f54"""
+    x, points = binh_korn_points  # pylint:disable=invalid-name
+    points = -points
+    np.random.seed(10)
+    model = build_coregionalized_model(x, points)
+    palinstance = PALCoregionalized(
+        x, [model], 2, goals=["min", "min"], epsilon=[0.5, 0.5]
+    )
+    indices = np.array([0, 1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99])
+    palinstance.update_train_set(indices, points[indices])
+    exhaust_loop(palinstance, points)
+    assert np.all(palinstance.means[:, 0] >= 0)
+    assert np.all(palinstance.means[:, 1] >= 0)
 
 
 def test_augment_design_space(make_random_dataset):
