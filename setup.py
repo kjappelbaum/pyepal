@@ -30,7 +30,7 @@ gpy_requirements = [
     "matplotlib==3.*",
 ]
 gbdt_requirements = ["lightgbm==3.*"]
-neural_tangents_requirements = ["neural_tangents==0.*", "jaxlib==0.*"]
+neural_tangents_requirements = ["neural_tangents==0.*"]
 gpflow_requirements = ["gpflow"]
 setup(
     name="pyepal",
