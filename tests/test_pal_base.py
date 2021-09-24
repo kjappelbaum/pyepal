@@ -110,7 +110,7 @@ def test_means_property(binh_korn_points):
     points[:, 0] = -points[:, 0]
     model = build_coregionalized_model(x, points)
     palinstance = PALCoregionalized(
-        x, [model], 2, goals=["min", "max"], epsilon=[0.5, 0.5]
+        x, [model], 2, goals=["min", "max"], epsilon=[0.5, 0.5], restarts=3
     )
     indices = np.array([0, 1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99])
     palinstance.update_train_set(indices, points[indices])
@@ -125,7 +125,7 @@ def test_means_property2(binh_korn_points):
     np.random.seed(10)
     model = build_coregionalized_model(x, points)
     palinstance = PALCoregionalized(
-        x, [model], 2, goals=["min", "min"], epsilon=[0.5, 0.5]
+        x, [model], 2, goals=["min", "min"], epsilon=[0.5, 0.5], restarts=3
     )
     indices = np.array([0, 1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99])
     palinstance.update_train_set(indices, points[indices])
