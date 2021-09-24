@@ -30,8 +30,12 @@ gpy_requirements = [
     "matplotlib==3.*",
 ]
 gbdt_requirements = ["lightgbm==3.*"]
-neural_tangents_requirements = ["jaxlib", "jax<=0.2.20", "neural_tangents==0.*"]
-gpflow_requirements = ["tensorflow>=2.6", "gpflow>=2.2"]
+neural_tangents_requirements = [
+    "jaxlib<=0.1.65",
+    "jax<=0.2.12",
+    "neural_tangents==0.3.*",
+]
+gpflow_requirements = ["tensorflow==2.5.*", "gpflow==2.2.*"]
 setup(
     name="pyepal",
     version=versioneer.get_version(),
