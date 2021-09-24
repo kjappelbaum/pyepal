@@ -46,7 +46,7 @@ def _ensemble_train_one_finite_width(  # pylint:disable=too-many-arguments, too-
     ensemble_size: Sequence[int],
 ):
     from jax import random  # pylint:disable=import-outside-toplevel
-    from jax.api import grad, jit, vmap  # pylint:disable=import-outside-toplevel
+    from jax import grad, jit, vmap  # pylint:disable=import-outside-toplevel
 
     model = models[i]
     optimizer = optimizers[i]
