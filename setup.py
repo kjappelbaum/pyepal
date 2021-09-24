@@ -35,7 +35,11 @@ neural_tangents_requirements = [
     "jax<=0.2.12",
     "neural_tangents==0.3.*",
 ]
-gpflow_requirements = ["tensorflow==2.5.*", "gpflow==2.2.*"]
+gpflow_requirements = [
+    "tensorflow==2.5.*",
+    "tensorflow-probability==0.12.*",
+    "gpflow==2.2.*",
+]
 setup(
     name="pyepal",
     version=versioneer.get_version(),
