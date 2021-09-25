@@ -18,11 +18,11 @@ from setuptools import find_packages, setup
 
 import versioneer
 
-with open("requirements.txt", "r") as fh:
+with open("requirements.txt", "r", encoding="utf-8") as fh:
     REQUIREMENTS = fh.readlines()
 
 
-with open("README.md", encoding="utf-8") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
 
 gpy_requirements = [
@@ -30,8 +30,16 @@ gpy_requirements = [
     "matplotlib==3.*",
 ]
 gbdt_requirements = ["lightgbm==3.*"]
-neural_tangents_requirements = ["neural_tangents==0.*", "jaxlib==0.*"]
-gpflow_requirements = ["gpflow"]
+neural_tangents_requirements = [
+    "jaxlib<=0.1.65",
+    "jax<=0.2.12",
+    "neural_tangents==0.3.*",
+]
+gpflow_requirements = [
+    "tensorflow==2.5.*",
+    "tensorflow-probability==0.12.*",
+    "gpflow==2.2.*",
+]
 setup(
     name="pyepal",
     version=versioneer.get_version(),

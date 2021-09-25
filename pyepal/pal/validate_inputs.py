@@ -426,19 +426,17 @@ def validate_positive_integer_list(
 
     if not isinstance(seq, collections.Sequence):
         if (not isinstance(seq, int)) or (seq < 1):
-            raise ValueError("{} must be a positive integer".format(parameter_name))
+            raise ValueError(f"{parameter_name} must be a positive integer")
         return [seq] * ndim
 
     if not len(seq) == ndim:
         raise ValueError(
-            "If you provide a sequence for {} its length must match \
-                the number of objectives".format(
-                parameter_name
-            )
+            f"If you provide a sequence for {parameter_name} its length must match \
+                the number of objectives"
         )
     for elem in seq:
         if (not isinstance(elem, int)) or (elem < 1):
-            raise ValueError("{} must be a positive integer".format(parameter_name))
+            raise ValueError(f"{parameter_name} must be a positive integer")
 
     return seq
 

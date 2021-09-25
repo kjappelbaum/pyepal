@@ -46,7 +46,7 @@ def _ensemble_train_one_finite_width(  # pylint:disable=too-many-arguments, too-
     ensemble_size: Sequence[int],
 ):
     from jax import random  # pylint:disable=import-outside-toplevel
-    from jax.api import grad, jit, vmap  # pylint:disable=import-outside-toplevel
+    from jax import grad, jit, vmap  # pylint:disable=import-outside-toplevel
 
     model = models[i]
     optimizer = optimizers[i]
@@ -158,7 +158,7 @@ class PALJaxEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
         self.design_space = self.design_space_scaler.fit_transform(self.design_space)
 
     def _train(self):
-        for i in range(len(self.models)):
+        for i, _ in enumerate(self.models):
             params, scaler = _ensemble_train_one_finite_width(
                 i,
                 self.models,
@@ -183,5 +183,5 @@ class PALJaxEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
             means.append(mean.reshape(-1, 1))
             stds.append(std.reshape(-1, 1))
 
-        self.means = np.hstack(means)
+        self._means = np.hstack(means)
         self.std = np.hstack(stds)

@@ -126,7 +126,7 @@ class PALNT(PALBase):
 
     def _set_data(self):
         self.design_space = self.design_space_scaler.fit_transform(self.design_space)
-        for i in range(len(self.models)):
+        for i, _ in enumerate(self.models):
 
             predict_fn, scaler = _set_one_infinite_width_model(
                 i,
@@ -144,7 +144,7 @@ class PALNT(PALBase):
 
     def _predict(self):
         means, stds = [], []
-        for i in range(len(self.models)):
+        for i, _ in enumerate(self.models):
             mean, std = _predict_one_infinite_width_model(
                 i,
                 self.models,
@@ -154,5 +154,5 @@ class PALNT(PALBase):
             means.append(mean.reshape(-1, 1))
             stds.append(std.reshape(-1, 1))
 
-        self.means = np.hstack(means)
+        self._means = np.hstack(means)
         self.std = np.hstack(stds)

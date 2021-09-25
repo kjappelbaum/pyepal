@@ -280,7 +280,7 @@ def plot_residuals(  # pylint:disable=invalid-name
 
     for index in range(num_targets):
         sampled = palinstance.sampled[:, index]
-        fitted = palinstance.means[sampled, index]
+        fitted = palinstance._means[sampled, index]  # pylint:disable=protected-access
         residuals = y[sampled, index] - fitted
         ax[index].scatter(fitted, residuals)
         ax[index].spines["top"].set_color("none")
@@ -445,7 +445,7 @@ def plot_learning_curve(  # pylint:disable=dangerous-default-value, too-many-arg
                 test_errors[metric_name].append(
                     metric_function(
                         observations[test_idx],
-                        palinstance.means[test_idx],
+                        palinstance._means[test_idx],  # pylint:disable=protected-access
                     )
                 )
         for metric_name, results in test_errors.items():

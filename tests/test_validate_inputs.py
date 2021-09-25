@@ -254,7 +254,7 @@ def test_validate_interquartile_scaler():
 
 def test_validate_optimizers():
     """Make sure we correctly check/standardize the optimizers."""
-    from jax.api import jit  # pylint:disable=import-outside-toplevel
+    from jax import jit  # pylint:disable=import-outside-toplevel
     from jax.experimental import optimizers  # pylint:disable=import-outside-toplevel
 
     from pyepal.models.nt import JaxOptimizer  # pylint:disable=import-outside-toplevel
