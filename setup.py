@@ -18,11 +18,11 @@ from setuptools import find_packages, setup
 
 import versioneer
 
-with open("requirements.txt", "r") as fh:
+with open("requirements.txt", "r", encoding="utf-8") as fh:
     REQUIREMENTS = fh.readlines()
 
 
-with open("README.md", encoding="utf-8") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
 
 gpy_requirements = [

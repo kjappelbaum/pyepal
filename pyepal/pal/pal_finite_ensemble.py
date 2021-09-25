@@ -158,7 +158,7 @@ class PALJaxEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
         self.design_space = self.design_space_scaler.fit_transform(self.design_space)
 
     def _train(self):
-        for i in range(len(self.models)):
+        for i, _ in enumerate(self.models):
             params, scaler = _ensemble_train_one_finite_width(
                 i,
                 self.models,
