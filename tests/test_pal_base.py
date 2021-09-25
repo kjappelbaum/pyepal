@@ -21,7 +21,6 @@ import pytest
 from pyepal.models.gpr import build_coregionalized_model
 from pyepal.pal.pal_base import PALBase
 from pyepal.pal.pal_coregionalized import PALCoregionalized
-from pyepal.pal.utils import exhaust_loop
 
 
 def test_pal_base(make_random_dataset):
@@ -104,7 +103,10 @@ def test_update_train_set(make_random_dataset):
 
 
 def test_means_property(binh_korn_points):
-    """based on #185 and example in https://deepnote.com/project/Pyepal-mirrored-results-Yeuc095QRE6ToMXFtwFjnA/%2Fbinh_korn_goals_issue.ipynb/#00012-ebf692a0-f995-4e25-98b6-8d34a7db7f54"""
+    """based on #185 and example in
+    https://deepnote.com/project/
+    Pyepal-mirrored-results-Yeuc095QRE6ToMXFtwFjnA/
+    %2Fbinh_korn_goals_issue.ipynb/#00012-ebf692a0-f995-4e25-98b6-8d34a7db7f54"""
     x, points = binh_korn_points  # pylint:disable=invalid-name
     np.random.seed(10)
     points[:, 0] = -points[:, 0]
@@ -119,7 +121,10 @@ def test_means_property(binh_korn_points):
 
 
 def test_means_property2(binh_korn_points):
-    """based on #185 and example in https://deepnote.com/project/Pyepal-mirrored-results-Yeuc095QRE6ToMXFtwFjnA/%2Fbinh_korn_goals_issue.ipynb/#00012-ebf692a0-f995-4e25-98b6-8d34a7db7f54"""
+    """based on #185 and example in
+    https://deepnote.com/project/
+    Pyepal-mirrored-results-Yeuc095QRE6ToMXFtwFjnA/
+    %2Fbinh_korn_goals_issue.ipynb/#00012-ebf692a0-f995-4e25-98b6-8d34a7db7f54"""
     x, points = binh_korn_points  # pylint:disable=invalid-name
     points = -points
     np.random.seed(10)
