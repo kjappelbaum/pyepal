@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://www.github.com/kjappelbaum/pyepal/compare/v0.7.0...v0.8.0) (2022-04-25)
+
+
+### Features
+
+* introduce `means` property ([#186](https://www.github.com/kjappelbaum/pyepal/issues/186)) ([88aab4f](https://www.github.com/kjappelbaum/pyepal/commit/88aab4f9efb4a815a094a360639e9945c27dd844))
+
 ## [0.7.0](https://www.github.com/kjappelbaum/pyepal/compare/v0.6.2...v0.7.0) (2021-06-15)
 
 
