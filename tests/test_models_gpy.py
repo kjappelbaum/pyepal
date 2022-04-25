@@ -56,7 +56,7 @@ def test_predict(make_random_dataset):
 
 
 def test_predict_coregionalized(make_random_dataset):
-    """"Test that the prediction utility for coregionalized models works"""
+    """ "Test that the prediction utility for coregionalized models works"""
     X, y = make_random_dataset  # pylint:disable=invalid-name
     m = build_coregionalized_model(X, y)  # pylint:disable=invalid-name
     prediction = predict_coregionalized(m, X)
