@@ -15,7 +15,7 @@
 
 
 """PyePAL"""
-from ._version import get_versions
+from .version import VERSION
 from .models.nt import JaxOptimizer, NTModel
 from .pal.pal_base import PALBase
 from .pal.pal_coregionalized import PALCoregionalized
@@ -32,8 +32,7 @@ from .pal.utils import (
     get_maxmin_samples,
 )
 
-__version__ = get_versions()["version"]
-del get_versions
+__version__ = VERSION
 
 __all__ = [
     "PALBase",

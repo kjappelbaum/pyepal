@@ -34,38 +34,31 @@ repos:
         language: python
         types: [text]
 
-  # - repo: https://github.com/pre-commit/mirrors-mypy
-  #   rev: "" # Use the sha / tag you want to point at
-  #   hooks:
-  #     - id: mypy
-  #       exclude: (versioneer.py|_version.py|^docs/)
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        language_version: python3
+        name: black
+        exclude: ^docs/
+        entry: black
+        types: [python]
 
-
-  -   repo: https://github.com/psf/black
-      rev: 22.3.0
-      hooks:
-      -   id: black
-          language_version: python3
-          name: black
-          exclude: versioneer.py|pyepal/_version.py|^docs/
-          entry: black
-          types: [python]
-
-  -   repo: https://github.com/PyCQA/isort
-      rev: '5.10.1'  # Use the revision sha / tag you want to point at
-      hooks:
-      -   id: isort
-          name: isort
-          language: python
-          exclude: versioneer.py|pyepal/_version.py|^docs/
-          types: [python]
-          entry: isort
+  - repo: https://github.com/PyCQA/isort
+    rev: "5.10.1" # Use the revision sha / tag you want to point at
+    hooks:
+      - id: isort
+        name: isort
+        language: python
+        exclude: ^docs/
+        types: [python]
+        entry: isort
 
   - repo: local
     hooks:
       - id: pylint
         language: python
         types: [file, python]
-        exclude: versioneer.py|pyepal/_version.py|^docs|pyepal/pal/_hypervolume.py|pyepal/models/coregionalized.py/tests
+        exclude: ^docs|pyepal/pal/_hypervolume.py|pyepal/models/coregionalized.py/tests
         name: pylint
         entry: pylint
