@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 import numpy as np
+import pytest
+
 from pyepal.metrics.stationarity import levene_stationarity_test
 from pyepal.metrics.uncertainty import picp
-import pytest
 
 
 def test_levene_stationarity_test():
