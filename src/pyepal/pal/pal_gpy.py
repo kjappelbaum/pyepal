@@ -61,16 +61,12 @@ class PALGPy(PALBase):
             n_jobs (int): Number of parallel processes that are used to fit
                 the GPR models. Defaults to 1.
         """
-        from .validate_inputs import (  # pylint:disable=import-outside-toplevel
-            validate_gpy_model,
-        )
+        from .validate_inputs import validate_gpy_model  # pylint:disable=import-outside-toplevel
 
         self.restarts = kwargs.pop("restarts", 20)
         self.n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
 
-        assert isinstance(
-            self.restarts, int
-        ), "the restarts keyword must be of type int"
+        assert isinstance(self.restarts, int), "the restarts keyword must be of type int"
         super().__init__(*args, **kwargs)
 
         validate_number_models(self.models, self.ndim)
@@ -105,9 +101,7 @@ class PALGPy(PALBase):
         train_model_pickleable_partial = partial(
             _train_model_picklable, models=self.models, restarts=self.restarts
         )
-        with concurrent.futures.ProcessPoolExecutor(
-            max_workers=self.n_jobs
-        ) as executor:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=self.n_jobs) as executor:
             for model in executor.map(train_model_pickleable_partial, range(self.ndim)):
                 models.append(model)
         self.models = models

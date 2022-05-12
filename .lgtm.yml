@@ -1,6 +1,0 @@
-extraction:
-  python:
-    index:
-      filters:
-        - exclude: versioneer.py
-        - exclude: "**/_version.py"

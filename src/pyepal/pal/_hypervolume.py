@@ -98,9 +98,7 @@ class VectorLinkedList:
         return linked_list
 
     @staticmethod
-    def sort_by_index(
-        node_list: tp.List[VectorNode], dimension_index: int
-    ) -> tp.List[VectorNode]:
+    def sort_by_index(node_list: tp.List[VectorNode], dimension_index: int) -> tp.List[VectorNode]:
         """Returns a sorted list of `VectorNode`, with the sorting key defined by the
         `dimension_index`-th coordinates of the nodes in the `node_list`."""
         return sorted(node_list, key=lambda node: node.coordinates[dimension_index])
@@ -135,9 +133,7 @@ class VectorLinkedList:
             self.append(node, index)
 
     @staticmethod
-    def update_coordinate_bounds(
-        bounds: np.ndarray, node: VectorNode, index: int
-    ) -> np.ndarray:
+    def update_coordinate_bounds(bounds: np.ndarray, node: VectorNode, index: int) -> np.ndarray:
         for i in range(index):
             if bounds[i] > node.coordinates[i]:
                 bounds[i] = node.coordinates[i]
@@ -162,9 +158,7 @@ class VectorLinkedList:
             node.prev[i].next[i] = node
             node.next[i].prev[i] = node
 
-    def iterate(
-        self, index: int, start: tp.Optional[VectorNode] = None
-    ) -> tp.Iterator[VectorNode]:
+    def iterate(self, index: int, start: tp.Optional[VectorNode] = None) -> tp.Iterator[VectorNode]:
         if start is None:
             node = self.sentinel.next[index]
         else:
@@ -231,9 +225,7 @@ class HypervolumeIndicator:
             next_node = node.next[dimension]
             if next_node is self.multilist.sentinel:
                 break
-            hypervolume += h * (
-                node.coordinates[dimension] - next_node.coordinates[dimension]
-            )
+            hypervolume += h * (node.coordinates[dimension] - next_node.coordinates[dimension])
             h = min(h, next_node.coordinates[dimension - 1])
         last_node = self.multilist.sentinel.prev[dimension]
         hypervolume += h * last_node.coordinates[dimension]
@@ -266,8 +258,7 @@ class HypervolumeIndicator:
             current_node = node
             if self.multilist.chain_length(dimension - 1) > 1 and (
                 node.coordinates[dimension] > self.reference_bounds[dimension]
-                or node.prev[dimension].coordinates[dimension]
-                >= self.reference_bounds[dimension]
+                or node.prev[dimension].coordinates[dimension] >= self.reference_bounds[dimension]
             ):
                 # Line 9
                 self.reference_bounds = self.multilist.update_coordinate_bounds(
@@ -297,14 +288,11 @@ class HypervolumeIndicator:
         self.skip_dominated_points(current_node, dimension)
 
         # Line 17
-        for node in self.multilist.iterate(
-            dimension, start=current_node.next[dimension]
-        ):
+        for node in self.multilist.iterate(dimension, start=current_node.next[dimension]):
             assert node is not None
             # Line 18
             hypervolume += node.prev[dimension].area[dimension] * (
-                node.coordinates[dimension]
-                - node.prev[dimension].coordinates[dimension]
+                node.coordinates[dimension] - node.prev[dimension].coordinates[dimension]
             )
             # Line 19
             self.reference_bounds[dimension] = node.coordinates[dimension]

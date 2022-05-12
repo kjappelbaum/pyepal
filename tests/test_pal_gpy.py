@@ -42,9 +42,7 @@ def test_pal_gpy(make_random_dataset):
     palgpy_instance.cross_val_points = 0
     assert palgpy_instance.restarts == 20
 
-    palgpy_instance.update_train_set(
-        np.array([1, 2, 3, 4, 5]), y[np.array([1, 2, 3, 4, 5]), :]
-    )
+    palgpy_instance.update_train_set(np.array([1, 2, 3, 4, 5]), y[np.array([1, 2, 3, 4, 5]), :])
     assert palgpy_instance.models[0].kern.variance.values[0] == 1
     palgpy_instance._train()  # pylint:disable=protected-access
     assert palgpy_instance.models[0].kern.variance.values[0] == 1
@@ -371,11 +369,5 @@ def test_epsilon_sensitivity(binh_korn_points):
     assert palinstance1.number_discarded_points == 0
     assert palinstance2.number_discarded_points == 0
 
-    assert (
-        palinstance0.number_unclassified_points
-        > palinstance1.number_unclassified_points
-    )
-    assert (
-        palinstance1.number_unclassified_points
-        > palinstance2.number_unclassified_points
-    )
+    assert palinstance0.number_unclassified_points > palinstance1.number_unclassified_points
+    assert palinstance1.number_unclassified_points > palinstance2.number_unclassified_points

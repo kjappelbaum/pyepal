@@ -186,13 +186,9 @@ def test__validate_sklearn_gpr_model(make_random_dataset):
 
     assert _validate_sklearn_gpr_model(gpr) == gpr
 
-    grid_search = GridSearchCV(
-        GaussianProcessRegressor(), {"kernel": [RBF(), Matern()]}
-    )
+    grid_search = GridSearchCV(GaussianProcessRegressor(), {"kernel": [RBF(), Matern()]})
 
-    random_search = RandomizedSearchCV(
-        GaussianProcessRegressor(), {"kernel": [RBF(), Matern()]}
-    )
+    random_search = RandomizedSearchCV(GaussianProcessRegressor(), {"kernel": [RBF(), Matern()]})
 
     grid_search.fit(X, y)
     random_search.fit(X, y)
@@ -205,9 +201,7 @@ def test__validate_sklearn_gpr_model(make_random_dataset):
         y_classification,
     ) = make_classification()
 
-    grid_search_class = GridSearchCV(
-        GaussianProcessClassifier(), {"kernel": [RBF(), Matern()]}
-    )
+    grid_search_class = GridSearchCV(GaussianProcessClassifier(), {"kernel": [RBF(), Matern()]})
     random_search_class = RandomizedSearchCV(
         GaussianProcessClassifier(), {"kernel": [RBF(), Matern()]}
     )
@@ -280,9 +274,7 @@ def test_validate_optimizers():
 
 def test_validate_nt_models():
     """Test that we correctly validate the sequence of NTModel"""
-    from pyepal.models.nt import (  # pylint:disable=import-outside-toplevel
-        build_dense_network,
-    )
+    from pyepal.models.nt import build_dense_network  # pylint:disable=import-outside-toplevel
 
     with pytest.raises(ValueError):
         validate_nt_models(["a", "b"], 2)
@@ -290,14 +282,7 @@ def test_validate_nt_models():
     with pytest.raises(ValueError):
         validate_nt_models([build_dense_network([512])], 2)
 
-    assert (
-        len(
-            validate_nt_models(
-                [build_dense_network([512]), build_dense_network([512])], 2
-            )
-        )
-        == 2
-    )
+    assert len(validate_nt_models([build_dense_network([512]), build_dense_network([512])], 2)) == 2
 
 
 def test_validate_positive_integer_list():

@@ -30,9 +30,7 @@ def test_run_one_step(binh_korn_points):
     # We create one model per objective
     model_tuple_1 = build_dense_network([128])
     model_tuple_2 = build_dense_network([128])
-    palinstance = PALNT(
-        X, [model_tuple_1, model_tuple_2], 2, beta_scale=1, kernel="ntk"
-    )
+    palinstance = PALNT(X, [model_tuple_1, model_tuple_2], 2, beta_scale=1, kernel="ntk")
 
     palinstance.cross_val_points = 0
     sample_idx = get_kmeans_samples(X, 5)
@@ -48,9 +46,7 @@ def test_run_one_step(binh_korn_points):
     # We create one model per objective
     model_tuple_1 = build_dense_network([128])
     model_tuple_2 = build_dense_network([128])
-    palinstance = PALNT(
-        X, [model_tuple_1, model_tuple_2], 2, beta_scale=1, kernel="nngp"
-    )
+    palinstance = PALNT(X, [model_tuple_1, model_tuple_2], 2, beta_scale=1, kernel="nngp")
 
     palinstance.cross_val_points = 0
     sample_idx = get_kmeans_samples(X, 5)

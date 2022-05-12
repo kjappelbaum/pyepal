@@ -65,13 +65,9 @@ class GPCoregionalizedRegression(GP):  # pylint:disable=too-many-ancestors
             )
 
         # Likelihood
-        likelihood = util.multioutput.build_likelihood(
-            Y_list, self.output_index, likelihoods_list
-        )
+        likelihood = util.multioutput.build_likelihood(Y_list, self.output_index, likelihoods_list)
 
-        super(  # pylint:disable=super-with-arguments
-            GPCoregionalizedRegression, self
-        ).__init__(
+        super(GPCoregionalizedRegression, self).__init__(  # pylint:disable=super-with-arguments
             X,
             Y,
             kernel,

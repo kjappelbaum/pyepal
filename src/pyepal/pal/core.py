@@ -21,11 +21,7 @@ from typing import List, Sequence, Tuple, Union
 import numpy as np
 from numba import jit
 
-from .utils import (
-    dominance_check_jitted_2,
-    dominance_check_jitted_3,
-    is_pareto_efficient,
-)
+from .utils import dominance_check_jitted_2, dominance_check_jitted_3, is_pareto_efficient
 
 __all__: List[str] = []
 
@@ -215,18 +211,14 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals, too
     pareto_unclassified_lows = rectangle_lows[pareto_unclassified_indices]
 
     # assuming maximization
-    pareto_unclassified_pessimistic_mask = is_pareto_efficient(
-        -pareto_unclassified_lows
-    )
+    pareto_unclassified_pessimistic_mask = is_pareto_efficient(-pareto_unclassified_lows)
     original_indices = pareto_unclassified_indices[pareto_unclassified_pessimistic_mask]
     pareto_unclassified_pessimistic_points = pareto_unclassified_lows[
         pareto_unclassified_pessimistic_mask
     ]
 
     if is_fixed_epsilon:
-        tolerances_1 = np.tile(
-            epsilon, (len(pareto_unclassified_pessimistic_points), 1)
-        )
+        tolerances_1 = np.tile(epsilon, (len(pareto_unclassified_pessimistic_points), 1))
     else:
         tolerances_1 = epsilon * np.abs(pareto_unclassified_pessimistic_points)
 
@@ -316,14 +308,10 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
         # is chosen as the next sample xt to be evaluated.
         # Intuitively, this rule biases the sampling towards exploring,
         # and thus improving the model for, the points most likely to be Pareto-optimal.
-        if ((unclassified_t[i] == 1) or (pareto_optimal_t[i] == 1)) and not sampled[
-            i
-        ] == 1:
+        if ((unclassified_t[i] == 1) or (pareto_optimal_t[i] == 1)) and not sampled[i] == 1:
             # weight is the length of the diagonal of the uncertainty region
             if use_coef_var:
-                uncer = np.divide(
-                    rectangle_ups[i, :] - rectangle_lows[i, :], means[i, :]
-                )
+                uncer = np.divide(rectangle_ups[i, :] - rectangle_lows[i, :], means[i, :])
             else:
                 uncer = rectangle_ups[i, :] - rectangle_lows[i, :]
 
@@ -378,9 +366,7 @@ def _get_max_wt_all(  # pylint:disable=too-many-arguments
         if not sampled[i] == 1:
             # weight is the length of the diagonal of the uncertainty region
             if use_coef_var:
-                uncer = np.divide(
-                    rectangle_ups[i, :] - rectangle_lows[i, :], means[i, :]
-                )
+                uncer = np.divide(rectangle_ups[i, :] - rectangle_lows[i, :], means[i, :])
             else:
                 uncer = rectangle_ups[i, :] - rectangle_lows[i, :]
             uncertainty = _pool(uncer, pooling_method)

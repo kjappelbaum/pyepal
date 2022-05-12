@@ -23,13 +23,9 @@ from typing import Sequence
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
-from ..models.nt import JaxOptimizer, NTModel
 from .pal_base import PALBase
-from .validate_inputs import (
-    validate_nt_models,
-    validate_optimizers,
-    validate_positive_integer_list,
-)
+from .validate_inputs import validate_nt_models, validate_optimizers, validate_positive_integer_list
+from ..models.nt import JaxOptimizer, NTModel
 
 
 # Again, the idea of having the core as pure functions outside of the class is that
@@ -63,9 +59,7 @@ def _ensemble_train_one_finite_width(  # pylint:disable=too-many-arguments, too-
         opt_state = optimizer.opt_init(params)
 
         for j in range(training_steps[i]):
-            opt_state = optimizer.opt_update(
-                j, grad_loss(opt_state, x_train, y_train), opt_state
-            )
+            opt_state = optimizer.opt_update(j, grad_loss(opt_state, x_train, y_train), opt_state)
 
         return optimizer.get_params(opt_state)
 
@@ -139,9 +133,7 @@ class PALJaxEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
         """
         from jax import random  # pylint:disable=import-outside-toplevel
 
-        self.optimizers = validate_optimizers(
-            kwargs.pop("optimizers"), kwargs.get("ndim")
-        )
+        self.optimizers = validate_optimizers(kwargs.pop("optimizers"), kwargs.get("ndim"))
 
         self.training_steps = validate_positive_integer_list(
             kwargs.pop("training_steps", 500), kwargs.get("ndim")
@@ -177,9 +169,7 @@ class PALJaxEnsemble(PALBase):  # pylint:disable=too-many-instance-attributes
     def _predict(self):
         means, stds = [], []
         for i in range(len(self.models)):
-            mean, std = _ensemble_predict_one_finite_width(
-                i, self.models, self.design_space
-            )
+            mean, std = _ensemble_predict_one_finite_width(i, self.models, self.design_space)
             means.append(mean.reshape(-1, 1))
             stds.append(std.reshape(-1, 1))
 

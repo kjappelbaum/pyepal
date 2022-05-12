@@ -28,7 +28,7 @@ def build_gbdt_tuple(
         0.5,
         0.75,
     ],
-    **kwargs  # pylint:disable=dangerous-default-value
+    **kwargs,  # pylint:disable=dangerous-default-value
 ) -> Tuple[LGBMRegressor, LGBMRegressor, LGBMRegressor]:
     """Build a Tuple of LGBMRegressors in the correct
     format for PALGBDT

@@ -212,9 +212,7 @@ def test_pareto_classify(binh_korn_points):  # pylint:disable=too-many-locals
     discarded_points = np.array([[0.5, 0.5]])
     unclassified_points = np.array([[3.8, 2.1], [2.4, 0.5], [2.4, 0.5], [0.5, 0.5]])
 
-    design_space = np.vstack(
-        [pareto_optimal_points, discarded_points, unclassified_points]
-    )
+    design_space = np.vstack([pareto_optimal_points, discarded_points, unclassified_points])
 
     is_pareto_optimal = np.array(
         [True] * len(pareto_optimal_points)
@@ -262,15 +260,11 @@ def test_pareto_classify(binh_korn_points):  # pylint:disable=too-many-locals
     )
 
     assert (
-        pareto_optimal_t
-        == np.array([True, True, True, False, True, False, False, False])
+        pareto_optimal_t == np.array([True, True, True, False, True, False, False, False])
     ).all()
+    assert (discarded_t == np.array([False, False, False, True, False, True, True, False])).all()
     assert (
-        discarded_t == np.array([False, False, False, True, False, True, True, False])
-    ).all()
-    assert (
-        unclassified_t
-        == np.array([False, False, False, False, False, False, False, True])
+        unclassified_t == np.array([False, False, False, False, False, False, False, True])
     ).all()
 
     pareto_optimal_t, discarded_t, unclassified_t = _pareto_classify(
@@ -284,28 +278,20 @@ def test_pareto_classify(binh_korn_points):  # pylint:disable=too-many-locals
     )
 
     assert (
-        pareto_optimal_t
-        == np.array([True, True, True, False, True, False, False, False])
+        pareto_optimal_t == np.array([True, True, True, False, True, False, False, False])
     ).all()
+    assert (discarded_t == np.array([False, False, False, True, False, True, True, False])).all()
     assert (
-        discarded_t == np.array([False, False, False, True, False, True, True, False])
-    ).all()
-    assert (
-        unclassified_t
-        == np.array([False, False, False, False, False, False, False, True])
+        unclassified_t == np.array([False, False, False, False, False, False, False, True])
     ).all()
 
     # 3D arrays, but 3rd dimenension alsways 0
 
     pareto_optimal_points = np.array([[0.5, 2, 0], [3, 1, 0], [4, 0.5, 0]])
     discarded_points = np.array([[0.5, 0.5, 0]])
-    unclassified_points = np.array(
-        [[3.8, 2.1, 0], [2.4, 0.5, 0], [2.4, 0.5, 0], [0.5, 0.5, 0]]
-    )
+    unclassified_points = np.array([[3.8, 2.1, 0], [2.4, 0.5, 0], [2.4, 0.5, 0], [0.5, 0.5, 0]])
 
-    design_space = np.vstack(
-        [pareto_optimal_points, discarded_points, unclassified_points]
-    )
+    design_space = np.vstack([pareto_optimal_points, discarded_points, unclassified_points])
 
     epsilon = np.array([0, 0, 0])
 
@@ -335,15 +321,11 @@ def test_pareto_classify(binh_korn_points):  # pylint:disable=too-many-locals
     )
 
     assert (
-        pareto_optimal_t
-        == np.array([True, True, True, False, True, False, False, False])
+        pareto_optimal_t == np.array([True, True, True, False, True, False, False, False])
     ).all()
+    assert (discarded_t == np.array([False, False, False, True, False, True, True, False])).all()
     assert (
-        discarded_t == np.array([False, False, False, True, False, True, True, False])
-    ).all()
-    assert (
-        unclassified_t
-        == np.array([False, False, False, False, False, False, False, True])
+        unclassified_t == np.array([False, False, False, False, False, False, False, True])
     ).all()
 
     # Now, also test it on a real Pareto frontier
@@ -404,9 +386,7 @@ def test_pareto_classify(binh_korn_points):  # pylint:disable=too-many-locals
     )
 
     scale = np.array([1, 1000, 0.0001, 2])
-    means = np.array(
-        [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]
-    )
+    means = np.array([[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]])
     pareto_optimal = np.array([False, False, True, True, True])
     sampled = np.array([False, False, False, False, False])
     unclassified = np.array([True, True, False, False, False])
@@ -442,9 +422,7 @@ def test__uncertainty():
             [2.0, 2.0, 2.0, 2.0],
         ]
     )
-    means = np.array(
-        [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]
-    )
+    means = np.array([[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]])
 
     uncertainites = _uncertainty(highs, lows, means)
     assert len(uncertainites) == len(means)

@@ -152,9 +152,7 @@ will automatically expand to use the same value in every dimension""",
     return np.array([epsilon] * ndim)
 
 
-def validate_goals(  # pylint:disable=too-many-branches
-    goals: Any, ndim: int
-) -> np.ndarray:
+def validate_goals(goals: Any, ndim: int) -> np.ndarray:  # pylint:disable=too-many-branches
     """Create a valid array of goals. 1 for maximization, -1
         for objectives that are to be minimized.
 
@@ -256,9 +254,7 @@ def validate_coregionalized_gpy(models: Any):
     )
 
     if not isinstance(models[0], GPCoregionalizedRegression):
-        raise ValueError(
-            "Model must be a GPCoregionalized regression object from this package!"
-        )
+        raise ValueError("Model must be a GPCoregionalized regression object from this package!")
 
 
 def validate_njobs(njobs: Any) -> int:
@@ -301,9 +297,7 @@ it needs to contain a GaussianProcessRegressor instance."""
     raise ValueError("You need to provide a GaussianProcessRegressor instance.")
 
 
-def validate_sklearn_gpr_models(
-    models: Any, ndim: int
-) -> List[GaussianProcessRegressor]:
+def validate_sklearn_gpr_models(models: Any, ndim: int) -> List[GaussianProcessRegressor]:
     """Make sure that there is a list of GPR models, one model per objective"""
     validate_number_models(models, ndim)
     models_validated = []
@@ -385,15 +379,11 @@ def validate_optimizers(optimizers: Any, ndim: int) -> Sequence:
     if not isinstance(optimizers, Sequence):
         raise ValueError("You must have one optimizer per objective.")
     if not len(optimizers) == ndim:
-        raise ValueError(
-            "If you provide a sequence it must have one optimizer per objective."
-        )
+        raise ValueError("If you provide a sequence it must have one optimizer per objective.")
 
     for optimizer in optimizers:
         if not _is_jaxoptimizer(optimizer):
-            raise ValueError(
-                "You need to provide a `pyepal.models.nt.JaxOptimizer` instance"
-            )
+            raise ValueError("You need to provide a `pyepal.models.nt.JaxOptimizer` instance")
     return optimizers
 
 
@@ -403,9 +393,7 @@ def validate_nt_models(models: Any, ndim: int) -> Sequence:
     from pyepal.models.nt import NTModel  # pylint:disable=import-outside-toplevel
 
     if not isinstance(models, collections.Sequence):
-        raise ValueError(
-            "You need to provide a sequence of `pyepal.models.nt.NTModel` instances"
-        )
+        raise ValueError("You need to provide a sequence of `pyepal.models.nt.NTModel` instances")
 
     for model in models:
         if not len(models) == ndim:
@@ -448,9 +436,7 @@ def validate_ranges(ranges: Any, ndim: int) -> Union[None, np.ndarray]:
         return None
 
     if not len(ranges) == ndim:
-        raise ValueError(
-            "The number of elements in ranges must match the number of objectives."
-        )
+        raise ValueError("The number of elements in ranges must match the number of objectives.")
     for elem in ranges:
         if not elem > 0:
             raise ValueError("Ranges must be positive.")

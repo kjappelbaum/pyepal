@@ -1,6 +1,6 @@
 [MASTER]
 ignore=docs
-ignore_patterns=versioneer.py,*version.py,*hypervolume.py,models.coregionalized.py
+ignore_patterns=*hypervolume.py,models.coregionalized.py
 
 
 [MESSAGES CONTROL]

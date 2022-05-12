@@ -14,7 +14,7 @@
 import os
 import sys
 
-from pyepal import __version__
+from pyepal.version import VERSION
 
 sys.path.insert(0, os.path.abspath(".."))
 
@@ -26,7 +26,7 @@ copyright = "2020, Kevin Maik Jablonka, Brian Yoo, Berend Smit"
 author = "Kevin Maik Jablonka, Brian Yoo, Berend Smit"
 
 # The full version, including alpha/beta/rc tags
-release = __version__
+release = VERSION
 
 
 # -- General configuration ---------------------------------------------------

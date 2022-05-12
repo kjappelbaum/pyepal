@@ -40,9 +40,7 @@ def test_plot_bar_iterations():
     with pytest.raises(AssertionError):
         plot_bar_iterations(np.array([1, 1, 2]), np.array([2, 2, 2]), np.array([3, 3]))
 
-    axis = plot_bar_iterations(
-        np.array([1, 1, 2]), np.array([1, 1, 2]), np.array([1, 1, 2])
-    )
+    axis = plot_bar_iterations(np.array([1, 1, 2]), np.array([1, 1, 2]), np.array([1, 1, 2]))
     assert isinstance(axis, matplotlib.axes.Axes)
 
 
