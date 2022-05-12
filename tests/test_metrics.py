@@ -6,7 +6,7 @@ import pytest
 
 def test_levene_stationarity_test():
     a = np.random.multivariate_normal([0, 0], [[1, 1], [1, 1]], size=(10))
-    assert pytest.approx(levene_stationarity_test(a)[1], 1)
+    assert levene_stationarity_test(a)[1] == pytest.approx(1)
 
 
 def test_picp():
@@ -14,5 +14,5 @@ def test_picp():
     b = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
     c = np.array([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1])
 
-    assert pytest.approx(picp(a, c, b), 1)
-    assert pytest.approx(picp(a, c + 2, b + 1), 0)
+    assert picp(a, c, b) == pytest.approx(1)
+    assert picp(a, c + 2, b + 1) == pytest.approx(0)
