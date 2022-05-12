@@ -2,7 +2,7 @@
 # This code is part of the nevergrad package (https://github.com/facebookresearch/nevergrad)
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 #
-# (C) Copyright 2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This work is implemented under the Formulations and Computational Engineering (FORCE) project within Horizon 2020

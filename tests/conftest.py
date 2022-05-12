@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 PyePAL authors
+# Copyright 2022 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ from sklearn.datasets import make_regression
 
 def binh_korn(x, y):  # pylint:disable=invalid-name
     """https://en.wikipedia.org/wiki/Test_functions_for_optimization"""
-    obj1 = 4 * x**2 + 4 * y**2
+    obj1 = 4 * x ** 2 + 4 * y ** 2
     obj2 = (x - 5) ** 2 + (y - 5) ** 2
     return -obj1, -obj2
 
