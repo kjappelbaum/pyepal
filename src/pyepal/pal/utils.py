@@ -110,9 +110,7 @@ def is_pareto_efficient(costs: np.array, return_mask: bool = True) -> np.array:
     return is_efficient
 
 
-def exhaust_loop(
-    palinstance, y: np.array, batch_size: int = 1
-):  # pylint:disable=invalid-name
+def exhaust_loop(palinstance, y: np.array, batch_size: int = 1):  # pylint:disable=invalid-name
     """Helper function that takes an initialized PAL instance
     and loops the sampling until there is no unclassified point left.
     This is useful if all measurements are already taken and one
@@ -177,7 +175,7 @@ def get_maxmin_samples(  # pylint:disable=invalid-name
     metric: str = "euclidean",
     init: str = "mean",
     seed: int = None,
-    **kwargs
+    **kwargs,
 ) -> np.array:
     """Greedy maxmin sampling, also known as Kennard-Stone sampling (1).
     Note that a greedy sampling is not guaranteed to give the ideal solution

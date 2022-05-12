@@ -167,9 +167,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         # self.y is what needs to be used for train/predict
         # as there the data has been turned into maximization
         # self._y contains the data as provided by the user
-        self.y = np.zeros(
-            (self.number_design_points, self.ndim)
-        )  # pylint:disable=invalid-name
+        self.y = np.zeros((self.number_design_points, self.ndim))  # pylint:disable=invalid-name
         self._y = self.y
         # measurement_uncertainty is provided in update_train_set by the user
         self.measurement_uncertainty = np.zeros((self.number_design_points, self.ndim))
@@ -340,9 +338,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
                     self._set_hyperparameters()
                 self._train()
                 self._predict()
-                error = mean_absolute_error(
-                    self.y[sampled_idx], self._means[sampled_idx]
-                )
+                error = mean_absolute_error(self.y[sampled_idx], self._means[sampled_idx])
                 errors.append(error)
 
         self.sampled = sampled_original
@@ -378,11 +374,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
                 )
             else:
                 not_new = np.array(
-                    [
-                        i
-                        for i in range(self.number_design_points)
-                        if i not in new_indices
-                    ]
+                    [i for i in range(self.number_design_points) if i not in new_indices]
                 )
                 self.rectangle_lows[new_indices] = lows[new_indices]
                 self.rectangle_ups[new_indices] = ups[new_indices]
@@ -403,14 +395,10 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         if self._means.sum() != 0:
             _means_no_zero = self._means.copy()
             _means_no_zero[_means_no_zero == 0] = np.median(_means_no_zero)
-            self.coef_var_mask = (
-                np.max(self.std / _means_no_zero, axis=1) < self.coef_var_threshold
-            )
+            self.coef_var_mask = np.max(self.std / _means_no_zero, axis=1) < self.coef_var_threshold
         else:
             mean_variation = self.std.mean()
-            self.coef_var_mask = (
-                np.max(self.std / mean_variation, axis=1) < self.coef_var_threshold
-            )
+            self.coef_var_mask = np.max(self.std / mean_variation, axis=1) < self.coef_var_threshold
 
     def _classify(self):
         self._update_coef_var_mask()
@@ -441,9 +429,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         self.discarded[self.coef_var_mask] = discarded
         self.unclassified[self.coef_var_mask] = unclassified
 
-    def _replace_by_measurements(
-        self, replace_mean: bool = True, replace_std: bool = True
-    ):
+    def _replace_by_measurements(self, replace_mean: bool = True, replace_std: bool = True):
         """Implements one "trick". Instead of using the GPR
         predictions for the sampled points we use the data that
         was actually measured and the actual uncertainty."""
@@ -503,9 +489,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         self._predict()
 
         self._update_beta()
-        self._replace_by_measurements(
-            replace_mean=replace_mean, replace_std=replace_std
-        )
+        self._replace_by_measurements(replace_mean=replace_mean, replace_std=replace_std)
         self._update_hyperrectangles()
         self._classify()
         samples = np.array([], dtype=np.int)
@@ -620,16 +604,12 @@ In the docs, you find hints on how to make models more robust.""".format(
         """
 
         if self.iteration <= 1:
-            raise ValueError(
-                "You must run a iteration before you augment the design space"
-            )
+            raise ValueError("You must run a iteration before you augment the design space")
 
         number_old_points = self.number_design_points
         number_new_points = len(X_design)
 
-        assert isinstance(
-            X_design, np.ndarray
-        ), "You must provide a two-dimensional numpy array"
+        assert isinstance(X_design, np.ndarray), "You must provide a two-dimensional numpy array"
         assert X_design.ndim == 2, "You must provide a two-dimensional numpy array"
 
         if X_design.shape[1] != self.design_space.shape[1]:
@@ -653,32 +633,22 @@ In the docs, you find hints on how to make models more robust.""".format(
         self.pareto_optimal = np.append(
             self.pareto_optimal, np.array([False] * number_new_points), 0
         )
-        self.discarded = np.append(
-            self.discarded, np.array([False] * number_new_points), 0
-        )
+        self.discarded = np.append(self.discarded, np.array([False] * number_new_points), 0)
         self.sampled = np.append(
             self.sampled, np.array([[False] * self.ndim] * number_new_points), 0
         )
-        self.unclassified = np.append(
-            self.unclassified, np.array([True] * number_new_points), 0
-        )
+        self.unclassified = np.append(self.unclassified, np.array([True] * number_new_points), 0)
         self.rectangle_ups = np.append(
             self.rectangle_ups, np.full([number_new_points, self.ndim], np.nan), 0
         )
         self.rectangle_lows = np.append(
             self.rectangle_lows, np.full([number_new_points, self.ndim], np.nan), 0
         )
-        self.coef_var_mask = np.append(
-            self.coef_var_mask, np.array([True] * number_new_points), 0
-        )
+        self.coef_var_mask = np.append(self.coef_var_mask, np.array([True] * number_new_points), 0)
 
         # _means/std are the model predictions
-        self._means = np.append(
-            self._means, np.full([number_new_points, self.ndim], np.nan), 0
-        )
-        self.std = np.append(
-            self.std, np.full([number_new_points, self.ndim], np.nan), 0
-        )
+        self._means = np.append(self._means, np.full([number_new_points, self.ndim], np.nan), 0)
+        self.std = np.append(self.std, np.full([number_new_points, self.ndim], np.nan), 0)
 
         # self.y is what needs to be used for train/predict
         # as there the data has been turned into maximization

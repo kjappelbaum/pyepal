@@ -31,9 +31,9 @@ from typing import Sequence, Tuple
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
-from ..models.nt import NTModel
 from .pal_base import PALBase
 from .validate_inputs import validate_nt_models
+from ..models.nt import NTModel
 
 __all__ = ["PALNT", "NTModel"]
 

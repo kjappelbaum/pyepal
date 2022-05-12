@@ -43,24 +43,16 @@ def test_gridsearch_object(binh_korn_points):
     """Test the initialization of PALSklearn with a GridsearchCV object"""
     X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
-    grid_search_0 = GridSearchCV(
-        GaussianProcessRegressor(), {"kernel": [RBF(), Matern()]}
-    )
-    grid_search_1 = GridSearchCV(
-        GaussianProcessRegressor(), {"kernel": [RBF(), Matern()]}
-    )
+    grid_search_0 = GridSearchCV(GaussianProcessRegressor(), {"kernel": [RBF(), Matern()]})
+    grid_search_1 = GridSearchCV(GaussianProcessRegressor(), {"kernel": [RBF(), Matern()]})
 
     with pytest.raises(ValueError):
-        palinstance = PALSklearn(
-            X_binh_korn, [grid_search_0, grid_search_1], 2, beta_scale=1
-        )
+        palinstance = PALSklearn(X_binh_korn, [grid_search_0, grid_search_1], 2, beta_scale=1)
 
     grid_search_0.fit(X_binh_korn, y_binh_korn[:, 0])
     grid_search_1.fit(X_binh_korn, y_binh_korn[:, 1])
 
-    palinstance = PALSklearn(
-        X_binh_korn, [grid_search_0, grid_search_1], 2, beta_scale=1
-    )
+    palinstance = PALSklearn(X_binh_korn, [grid_search_0, grid_search_1], 2, beta_scale=1)
     palinstance.cross_val_points = 0
     palinstance.update_train_set(sample_idx, y_binh_korn[sample_idx])
 

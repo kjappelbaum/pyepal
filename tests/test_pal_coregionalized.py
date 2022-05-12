@@ -33,19 +33,13 @@ def test_pal_coregionalized(make_random_dataset):
     slice_idx = np.array([0, 1, 2, 3, 4])
     pal_coregionalized.update_train_set(slice_idx, y[slice_idx])
 
-    assert (
-        pal_coregionalized.models[0].kern.B.kappa.values == np.array([0.5, 0.5, 0.5])
-    ).all()
+    assert (pal_coregionalized.models[0].kern.B.kappa.values == np.array([0.5, 0.5, 0.5])).all()
 
     pal_coregionalized._set_hyperparameters()  # pylint:disable=protected-access
 
-    assert (
-        pal_coregionalized._should_optimize_hyperparameters()  # pylint:disable=protected-access
-    )
+    assert pal_coregionalized._should_optimize_hyperparameters()  # pylint:disable=protected-access
 
-    assert (
-        pal_coregionalized.models[0].kern.B.kappa.values != np.array([0.5, 0.5, 0.5])
-    ).any()
+    assert (pal_coregionalized.models[0].kern.B.kappa.values != np.array([0.5, 0.5, 0.5])).any()
 
 
 def test_orchestration_run_one_step(make_random_dataset, binh_korn_points):
@@ -113,9 +107,7 @@ def test_orchestration_run_one_step_missing_data(binh_korn_points):
 
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 60, 70])
 
-    model = build_coregionalized_model(
-        X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0
-    )
+    model = build_coregionalized_model(X_binh_korn[sample_idx], y_binh_korn[sample_idx], 0)
 
     palinstance = PALCoregionalized(
         X_binh_korn, [model], 2, beta_scale=1, epsilon=0.01, delta=0.01, restarts=3

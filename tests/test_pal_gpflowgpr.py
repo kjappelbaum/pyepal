@@ -27,9 +27,7 @@ def test_pal_gpflow(binh_korn_points):
     X_binh_korn = (  # pylint:disable=invalid-name
         X_binh_korn - X_binh_korn.mean()
     ) / X_binh_korn.std()  # pylint:disable=invalid-name
-    y_binh_korn = (
-        y_binh_korn - y_binh_korn.mean()
-    ) / y_binh_korn.std() + 0.01 * np.random.rand()
+    y_binh_korn = (y_binh_korn - y_binh_korn.mean()) / y_binh_korn.std() + 0.01 * np.random.rand()
 
     def build_model(x, y):  # pylint:disable=invalid-name
         k = gpflow.kernels.RationalQuadratic()

@@ -59,19 +59,13 @@ class PALCoregionalized(PALBase):
 
         self.restarts = kwargs.pop("restarts", 20)
         self.parallel = kwargs.pop("parallel", False)
-        assert isinstance(
-            self.parallel, bool
-        ), "the parallel keyword must be of type bool"
-        assert isinstance(
-            self.restarts, int
-        ), "the restarts keyword must be of type int"
+        assert isinstance(self.parallel, bool), "the parallel keyword must be of type bool"
+        assert isinstance(self.restarts, int), "the restarts keyword must be of type int"
         super().__init__(*args, **kwargs)
         validate_coregionalized_gpy(self.models)
 
     def _set_data(self):
-        from ..models.gpr import (  # pylint:disable=import-outside-toplevel
-            set_xy_coregionalized,
-        )
+        from ..models.gpr import set_xy_coregionalized  # pylint:disable=import-outside-toplevel
 
         self.models[0] = set_xy_coregionalized(
             self.models[0],
@@ -84,9 +78,7 @@ class PALCoregionalized(PALBase):
         pass
 
     def _predict(self):
-        from ..models.gpr import (  # pylint:disable=import-outside-toplevel
-            predict_coregionalized,
-        )
+        from ..models.gpr import predict_coregionalized  # pylint:disable=import-outside-toplevel
 
         means, stds = [], []
         for i in range(self.ndim):

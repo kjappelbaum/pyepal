@@ -82,9 +82,7 @@ class PALSklearn(PALBase):
             sampled=self.sampled,
         )
         models = []
-        with concurrent.futures.ProcessPoolExecutor(
-            max_workers=self.n_jobs
-        ) as executor:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=self.n_jobs) as executor:
             for model in executor.map(train_single_partial, range(self.ndim)):
                 models.append(model)
         self.models = models

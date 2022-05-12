@@ -97,9 +97,7 @@ def build_dense_network(
             activations = [stax.Erf() for _ in hidden_layers]
     else:
         for activation in activations:
-            assert callable(
-                activation
-            ), "You need to provide `neural_tangents.stax` activations"
+            assert callable(activation), "You need to provide `neural_tangents.stax` activations"
 
     assert len(activations) == len(
         hidden_layers
@@ -142,25 +140,15 @@ def get_optimizer(
         optimizer_kwargs = {}
     optimizer = optimizer.lower()
     if optimizer == "adam":
-        opt_init, opt_update, get_params = optimizers.adam(
-            learning_rate, **optimizer_kwargs
-        )
+        opt_init, opt_update, get_params = optimizers.adam(learning_rate, **optimizer_kwargs)
     elif optimizer == "adagrad":
-        opt_init, opt_update, get_params = optimizers.adagrad(
-            learning_rate, **optimizer_kwargs
-        )
+        opt_init, opt_update, get_params = optimizers.adagrad(learning_rate, **optimizer_kwargs)
     elif optimizer == "adamax":
-        opt_init, opt_update, get_params = optimizers.adamax(
-            learning_rate, **optimizer_kwargs
-        )
+        opt_init, opt_update, get_params = optimizers.adamax(learning_rate, **optimizer_kwargs)
     elif optimizer == "rmsprop":
-        opt_init, opt_update, get_params = optimizers.rmsprop(
-            learning_rate, **optimizer_kwargs
-        )
+        opt_init, opt_update, get_params = optimizers.rmsprop(learning_rate, **optimizer_kwargs)
     else:
-        opt_init, opt_update, get_params = optimizers.sgd(
-            learning_rate, **optimizer_kwargs
-        )
+        opt_init, opt_update, get_params = optimizers.sgd(learning_rate, **optimizer_kwargs)
 
     opt_update = jit(opt_update)
 

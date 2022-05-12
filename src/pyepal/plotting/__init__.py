@@ -65,12 +65,8 @@ def plot_bar_iterations(  # pylint:disable=invalid-name
     # We need numpy arrays as we assume that we can add the arrays
     # ToDo: We could potentially cast any iterable
     assert isinstance(pareto_optimal, np.ndarray), "The arguments must be numpy arrays"
-    assert isinstance(
-        non_pareto_points, np.ndarray
-    ), "The arguments must be numpy arrays"
-    assert isinstance(
-        unclassified_points, np.ndarray
-    ), "The arguments must be numpy arrays"
+    assert isinstance(non_pareto_points, np.ndarray), "The arguments must be numpy arrays"
+    assert isinstance(unclassified_points, np.ndarray), "The arguments must be numpy arrays"
 
     if ax is None:
         _, ax = plt.subplots(1, 1)
@@ -120,11 +116,7 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
     for array in [y_0, y_1, std_0, std_1]:
         assert isinstance(array, np.ndarray), "array must be a numpy array"
     assert (
-        len(y_0)
-        == len(y_1)
-        == len(std_0)
-        == len(std_1)
-        == palinstance.number_design_points
+        len(y_0) == len(y_1) == len(std_0) == len(std_1) == palinstance.number_design_points
     ), "Make sure that the arrays have the same length"
 
     if ax is None:
@@ -172,9 +164,7 @@ def plot_pareto_front_2d(  # pylint:disable=too-many-arguments, invalid-name
     return ax
 
 
-def plot_histogram(
-    y: np.ndarray, palinstance: PALBase, ax=None
-):  # pylint:disable=invalid-name
+def plot_histogram(y: np.ndarray, palinstance: PALBase, ax=None):  # pylint:disable=invalid-name
     """Plot histograms, with maxima scaled to one
     and different categories indicated in color
     for one objective
@@ -328,11 +318,7 @@ def plot_jointplot(  # pylint:disable=invalid-name
         y.shape[1] == palinstance.ndim
     ), "y needs to be a two-dimensional array which column number \
         equals the number of targets"
-    if (
-        (palinstance.means is None)
-        or (palinstance.std is None)
-        or (palinstance.beta is None)
-    ):
+    if (palinstance.means is None) or (palinstance.std is None) or (palinstance.beta is None):
         raise ValueError(
             "Predicted means is None. Execute run_one_step() \
                 to obtain predicted means for each model."
@@ -414,9 +400,7 @@ def plot_learning_curve(  # pylint:disable=dangerous-default-value, too-many-arg
     """
     if indices is None:
         indices = np.arange(0, len(observations))
-    assert len(indices) == len(
-        observations
-    ), "The number of indices and observations must be equal"
+    assert len(indices) == len(observations), "The number of indices and observations must be equal"
     assert len(indices) > 5, "You need to use at least five points"
     grid = np.linspace(5, len(observations), num_steps, dtype=np.int8)
     grid = np.unique(grid)
