@@ -1,5 +1,6 @@
 {
-    "restructuredtext.confPath": "",
-    "python.linting.pylintEnabled": true,
-    "jupyter.jupyterServerType": "local"
+  "restructuredtext.confPath": "",
+  "python.linting.pylintEnabled": true,
+  "jupyter.jupyterServerType": "local",
+  "esbonio.sphinx.confDir": ""
 }

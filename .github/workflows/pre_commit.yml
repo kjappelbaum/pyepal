@@ -2,12 +2,12 @@ name: pre-commit
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
- pre-commit:
+  pre-commit:
     strategy:
       matrix:
         python-version: ["3.8"]
@@ -24,5 +24,4 @@ jobs:
           pip install  -e .[all,pre-commit,testing]
           pip freeze
       - name: Run pre-commit
-        run:
-          pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
+        run: pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
