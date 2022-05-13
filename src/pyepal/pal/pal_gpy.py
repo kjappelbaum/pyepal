@@ -18,6 +18,7 @@ import concurrent.futures
 from functools import partial
 
 import numpy as np
+from sklearn.preprocessing import PowerTransformer
 
 from .pal_base import PALBase
 from .schedules import linear
@@ -60,24 +61,31 @@ class PALGPy(PALBase):
                 optimization. Defaults to 20.
             n_jobs (int): Number of parallel processes that are used to fit
                 the GPR models. Defaults to 1.
+            power_transformer (bool): If True, use Yeo-Johnson transform on the inputs.
+                Defaults to True.
         """
         from .validate_inputs import validate_gpy_model  # pylint:disable=import-outside-toplevel
 
         self.restarts = kwargs.pop("restarts", 20)
+        power_transformer = kwargs.pop("power_transformer", True)
         self.n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
 
         assert isinstance(self.restarts, int), "the restarts keyword must be of type int"
         super().__init__(*args, **kwargs)
+
+        self.power_transformer = (
+            [PowerTransformer() for _ in range(self.n_dmin)] if power_transformer else None
+        )
 
         validate_number_models(self.models, self.ndim)
         validate_gpy_model(self.models)
 
     def _set_data(self):
         for i, model in enumerate(self.models):
-            model.set_XY(
-                self.design_space[self.sampled[:, i]],
-                self.y[self.sampled[:, i], i].reshape(-1, 1),
-            )
+            y = (self.y[self.sampled[:, i], i].reshape(-1, 1),)
+            if self.power_transformer is not None:
+                y = self.power_transformer[i].fit_transform(y)
+            model.set_XY(self.design_space[self.sampled[:, i]], y)
 
     def _train(self):
         pass  # There is no training in instance based models
@@ -87,10 +95,15 @@ class PALGPy(PALBase):
         from ..models.gpr import predict  # pylint:disable=import-outside-toplevel
 
         means, stds = [], []
-        for model in self.models:
+        for i, model in enumerate(self.models):
             mean, std = predict(model, self.design_space)
-            means.append(mean.reshape(-1, 1))
-            stds.append(std.reshape(-1, 1))
+            mean = mean.reshape(-1, 1)
+            std = std.reshape(-1, 1)
+            if self.power_transformer is not None:
+                mean = self.power_transformer[i].inverse_transform(mean)
+                std = self.power_transformer[i].inverse_transform(std)
+            means.append(mean)
+            stds.append(std)
 
         self._means = np.hstack(means)
         self.std = np.hstack(stds)

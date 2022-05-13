@@ -130,6 +130,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         # measurement_uncertainty is provided in update_train_set by the user
         self.measurement_uncertainty = np.zeros((design_space_size, self.ndim))
         self._has_train_set = False
+        self.power_transformer = PowerTransformer()
 
     def __repr__(self):
         return f"pyepal at iteration {self.iteration}. \
@@ -172,6 +173,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         # measurement_uncertainty is provided in update_train_set by the user
         self.measurement_uncertainty = np.zeros((self.number_design_points, self.ndim))
         self._has_train_set = False
+        self.power_transformer = PowerTransformer()
 
     def _reset_classification(self):
         """Resetting the mask arrays that keep track of the classifications.
