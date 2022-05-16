@@ -16,8 +16,8 @@
 """Test the PALGBDT class"""
 import numpy as np
 
-from pyepal.pal.pal_botorch import PALBoTorch
-from pyepal.models.botorch_gp import build_model
+from pyepal.pal.pal_botorch import PALBoTorch, PALMultiTaskBoTorch
+from pyepal.models.botorch_gp import build_model, build_multioutput_model
 
 
 def test_pal_botorch(binh_korn_points):
@@ -42,6 +42,31 @@ def test_pal_botorch(binh_korn_points):
     )
     palinstance0.cross_val_points = 0
 
+    palinstance0.update_train_set(sample_idx, y_binh_korn[sample_idx])
+    _ = palinstance0.run_one_step()
+
+    assert palinstance0.number_discarded_points == 0
+    assert palinstance0.number_unclassified_points < 100
+
+
+def test_pal_multitask_botorch(binh_korn_points):
+    """Test the basic funtionality of the PALGBDT class"""
+
+    X_binh_korn, y_binh_korn = binh_korn_points  # pylint:disable=invalid-name
+    sample_idx = np.arange(0, 100, 5)
+
+    model_func_1 = build_multioutput_model(X_binh_korn, y_binh_korn, warped=True)
+
+    palinstance0 = PALMultiTaskBoTorch(
+        X_binh_korn,
+        model_functions=[model_func_1],
+        ndim=2,
+        beta_scale=1,
+        epsilon=0.01,
+        coef_var_threshold=100,
+        power_transformer=True,
+    )
+    palinstance0.cross_val_points = 0
     palinstance0.update_train_set(sample_idx, y_binh_korn[sample_idx])
     _ = palinstance0.run_one_step()
 
