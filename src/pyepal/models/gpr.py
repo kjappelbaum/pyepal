@@ -36,7 +36,6 @@ but have their caveats
 from typing import Tuple
 
 import GPy
-from GPy.models.input_warped_gp import InputWarpedGP
 import numpy as np
 
 from .coregionalized import GPCoregionalizedRegression
@@ -98,7 +97,7 @@ def build_coregionalized_model(
 
 
 def build_model(
-    X_train: np.array, y_train: np.array, index: int = 0, kernel=None, warp: bool = True, **kwargs
+    X_train: np.array, y_train: np.array, index: int = 0, kernel=None ** kwargs
 ) -> GPy.models.GPRegression:
     """Build a single-output GPR model"""
     NFEAT = X_train.shape[1]
@@ -106,14 +105,10 @@ def build_model(
         K = kernel
     else:
         K = get_matern_52_kernel(NFEAT)
-    if warp:
-        m = InputWarpedGP(
-            X_train, y_train[:, index].reshape(-1, 1), kernel=K, normalizer=True, **kwargs
-        )
-    else:
-        m = GPy.models.GPRegression(
-            X_train, y_train[:, index].reshape(-1, 1), kernel=K, normalizer=True, **kwargs
-        )
+
+    m = GPy.models.GPRegression(
+        X_train, y_train[:, index].reshape(-1, 1), kernel=K, normalizer=True, **kwargs
+    )
     m[".*Gaussian_noise_*"] = 0.1
     return m
 
