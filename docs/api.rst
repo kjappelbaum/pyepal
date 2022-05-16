@@ -67,6 +67,14 @@ For GPR with GPFlow
     :show-inheritance:
     :special-members:
 
+For GPR with BoTorch
+.......................................
+
+.. automodule:: pyepal.pal.pal_botorch
+    :members:
+    :show-inheritance:
+    :special-members:
+
 
 Schedules for hyperparameter optimization
 ...........................................
@@ -114,6 +122,15 @@ Helper functions for GPR with GPy
 ...................................
 
 .. automodule:: pyepal.models.gpr
+    :members:
+    :show-inheritance:
+    :special-members:
+
+
+Helper functions for GPR with BoTorch
+........................................
+
+.. automodule:: pyepal.models.botorch_gp
     :members:
     :show-inheritance:
     :special-members:

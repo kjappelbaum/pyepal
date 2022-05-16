@@ -17,6 +17,7 @@
 """PAL for coregionalized GPR models"""
 
 from re import I
+
 import numpy as np
 from sklearn.preprocessing import PowerTransformer
 

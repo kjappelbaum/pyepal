@@ -97,7 +97,7 @@ def build_coregionalized_model(
 
 
 def build_model(
-    X_train: np.array, y_train: np.array, index: int = 0, kernel=None ** kwargs
+    X_train: np.array, y_train: np.array, index: int = 0, kernel=None**kwargs
 ) -> GPy.models.GPRegression:
     """Build a single-output GPR model"""
     NFEAT = X_train.shape[1]

@@ -15,8 +15,10 @@
 
 """Testing some of the model utilities"""
 from typing import Callable
-from pyepal.models.botorch_gp import build_model, build_multioutput_model
+
 from botorch.models.model import Model
+
+from pyepal.models.botorch_gp import build_model, build_multioutput_model
 
 
 def test_build_model(make_random_dataset):

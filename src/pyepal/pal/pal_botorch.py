@@ -12,16 +12,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import concurrent.futures
+
 import numpy as np
+import torch
 from botorch.fit import fit_gpytorch_model
 from sklearn.preprocessing import PowerTransformer
-import concurrent.futures
-import torch
+
 from .pal_base import PALBase
 from .schedules import linear
 from .validate_inputs import validate_njobs, validate_number_models
 
-__all__ = ["PALBoTorch"]
+__all__ = ["PALBoTorch", "PALMultiTaskBoTorch"]
 
 
 class PALBoTorch(PALBase):
@@ -32,7 +34,7 @@ class PALBoTorch(PALBase):
 
         Args:
             X_design (np.array): Design space (feature matrix)
-            model_creators (list): Functions that when called with `x`, `y`, and optionally `old_state_dict` return a model and a likelihood. We need to this due to problems with re-training warm-started models in BOtorch (https://github.com/pytorch/botorch/issues/533).
+            model_functions (list): Functions that when called with `x`, `y`, and optionally `old_state_dict` return a model and a likelihood. We need to this due to problems with re-training warm-started models in BOtorch (https://github.com/pytorch/botorch/issues/533).
             ndim (int): Number of objectives
             epsilon (Union[list, float], optional): Epsilon hyperparameter.
                 Defaults to 0.01.
@@ -54,6 +56,8 @@ class PALBoTorch(PALBase):
                 the GPR models. Defaults to 1.
             power_transformer (bool): If True, use Yeo-Johnson transform on the inputs.
                 Defaults to True.
+            add_observation_noise (bool): If True, add observation noise to predicted
+                uncertainties. Defaults to False
         """
 
         # todo: not nice that we have to provide the model functions as keyword arguments
@@ -109,6 +113,7 @@ class PALBoTorch(PALBase):
 
     def _set_hyperparameters(self):
         # with concurrent.futures.ProcessPoolExecutor(max_workers=self.n_jobs) as executor:
+        # ToDo: parallelize
         for m in self.models:
             fit_gpytorch_model(m[1])
         # the fit function doesn't return anything, the state of the object is updated...
@@ -125,7 +130,7 @@ class PALMultiTaskBoTorch(PALBase):
 
         Args:
             X_design (np.array): Design space (feature matrix)
-            model_creators (list): Functions that when called with `x`, `y`, and optionally `old_state_dict` return a model and a likelihood. We need to this due to problems with re-training warm-started models in BOtorch (https://github.com/pytorch/botorch/issues/533).
+            model_functions (list): Function that when called with `x`, `y`, and optionally `old_state_dict` returns a model and a likelihood. We need to this due to problems with re-training warm-started models in BOtorch (https://github.com/pytorch/botorch/issues/533).
             ndim (int): Number of objectives
             epsilon (Union[list, float], optional): Epsilon hyperparameter.
                 Defaults to 0.01.
@@ -193,6 +198,7 @@ class PALMultiTaskBoTorch(PALBase):
         self.std = np.hstack(stds)
 
     def _set_hyperparameters(self):
+        # ToDo: parallelize
         # with concurrent.futures.ProcessPoolExecutor(max_workers=self.n_jobs) as executor:
         for m in self.models:
             fit_gpytorch_model(m[1])

@@ -70,6 +70,6 @@ Tricks
 ------
 
 - Gaussian processes typically assume stationarity and homoscedasticity. For real-life data this is often not the case.
-  
-  - Input warping 
+
+  - Input warping
   - Output warping

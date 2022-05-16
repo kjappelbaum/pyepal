@@ -13,26 +13,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from botorch.models import SingleTaskGP, MultiTaskGP
-from botorch.fit import fit_gpytorch_model
-from gpytorch.mlls import ExactMarginalLogLikelihood
-from botorch.models.transforms.input import Warp, Normalize, ChainedInputTransform
-from sklearn.preprocessing import PowerTransformer
-from botorch.fit import fit_gpytorch_model
-from typing import Tuple
+from typing import Callable, Optional, Tuple
+
 import numpy as np
 import torch
+from botorch.fit import fit_gpytorch_model
+from botorch.models import MultiTaskGP, SingleTaskGP
+from botorch.models.transforms.input import ChainedInputTransform, Normalize, Warp
+from gpytorch.mlls import ExactMarginalLogLikelihood
+from sklearn.preprocessing import PowerTransformer
+from torch.nn import Module
 
 
 def build_model(
-    X,
-    y,
+    X: np.ndarray,
+    y: np.ndarray,
     warped: bool = True,
     input_scaled: bool = True,
-    wrap_indices: Tuple[int] = None,
-    scaling_indices: Tuple[int] = None,
-    covar_module=None,
-):
+    wrap_indices: Optional[Tuple[int]] = None,
+    scaling_indices: Optional[Tuple[int]] = None,
+    covar_module: Optional[Module] = None,
+) -> Callable:
+    """Build a BoTorch model for a single output.
+
+    Args:
+        X (np.ndarray): features
+        y (np.ndarray): targets
+        warped (bool, optional): If true, apply Kumaraswamy warping. Defaults to True.
+        input_scaled (bool, optional): If true, scale features to unit cube. Defaults to True.
+        wrap_indices (Optional[Tuple[int]], optional): Indices to which warping is applied. Defaults to None.
+        scaling_indices (Optional[Tuple[int]], optional): Indices to which scaling is applied. Defaults to None.
+        covar_module (Optional[Module], optional): Coregionalization model. Defaults to None.
+
+    Returns:
+        Callable: Function that return model and likelihood when provided with x and y
+    """
     input_transformations = {}
 
     if input_scaled:
@@ -63,14 +78,28 @@ def build_model(
 
 
 def build_multioutput_model(
-    X,
-    y,
+    X: np.ndarray,
+    y: np.ndarray,
     warped: bool = True,
     input_scaled: bool = True,
-    wrap_indices: Tuple[int] = None,
-    scaling_indices: Tuple[int] = None,
-    covar_module=None,
-):
+    wrap_indices: Optional[Tuple[int]] = None,
+    scaling_indices: Optional[Tuple[int]] = None,
+    covar_module: Optional[Module] = None,
+) -> Callable:
+    """Build a BoTorch model for multiple outputs.
+
+    Args:
+        X (np.ndarray): features
+        y (np.ndarray): targets
+        warped (bool, optional): If true, apply Kumaraswamy warping. Defaults to True.
+        input_scaled (bool, optional): If true, scale features to unit cube. Defaults to True.
+        wrap_indices (Optional[Tuple[int]], optional): Indices to which warping is applied. Defaults to None.
+        scaling_indices (Optional[Tuple[int]], optional): Indices to which scaling is applied. Defaults to None.
+        covar_module (Optional[Module], optional): Coregionalization model. Defaults to None.
+
+    Returns:
+        Callable: Function that return model and likelihood when provided with x and y
+    """
     num_targets = y.shape[1]
     input_transformations = {}
 

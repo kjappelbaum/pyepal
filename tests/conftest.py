@@ -21,7 +21,7 @@ from sklearn.datasets import make_regression
 
 def binh_korn(x, y):  # pylint:disable=invalid-name
     """https://en.wikipedia.org/wiki/Test_functions_for_optimization"""
-    obj1 = 4 * x ** 2 + 4 * y ** 2
+    obj1 = 4 * x**2 + 4 * y**2
     obj2 = (x - 5) ** 2 + (y - 5) ** 2
     return -obj1, -obj2
 

@@ -16,8 +16,8 @@
 """Test the PALGBDT class"""
 import numpy as np
 
-from pyepal.pal.pal_botorch import PALBoTorch, PALMultiTaskBoTorch
 from pyepal.models.botorch_gp import build_model, build_multioutput_model
+from pyepal.pal.pal_botorch import PALBoTorch, PALMultiTaskBoTorch
 
 
 def test_pal_botorch(binh_korn_points):
