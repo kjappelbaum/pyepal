@@ -70,7 +70,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         coef_var_threshold: float = 3,
         ranges: Union[np.ndarray, None] = None,
     ):
-        """Initialize the PAL instance
+        r"""Initialize the PAL instance
 
         Args:
             X_design (np.array): Design space (feature matrix)
@@ -144,7 +144,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
 
     @property
     def uses_fixed_epsilon(self):
-        """True if it uses the fixed epsilon :math:`\epsilon \cdot ranges`"""
+        r"""True if it uses the fixed epsilon :math:`\epsilon \cdot ranges`"""
         return self._uses_fixed_epsilon()
 
     def _reset(self):

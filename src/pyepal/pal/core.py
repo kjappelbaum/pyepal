@@ -153,7 +153,7 @@ def _pareto_classify(  # pylint:disable=too-many-arguments, too-many-locals, too
     epsilon: np.array,
     is_fixed_epsilon: bool = False,
 ) -> Tuple[np.array, np.array, np.array]:
-    """Performs the classification of the algorithm
+    r"""Performs the classification of the algorithm
     (p. 4 of the PAL paper, see algorithm 1/2 of the epsilon-PAL paper)
 
     One core concept is that once a point is classified,
