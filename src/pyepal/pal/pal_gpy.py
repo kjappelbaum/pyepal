@@ -73,12 +73,12 @@ class PALGPy(PALBase):
         assert isinstance(self.restarts, int), "the restarts keyword must be of type int"
         super().__init__(*args, **kwargs)
 
-        self.power_transformer = (
-            [PowerTransformer() for _ in range(self.ndmin)] if power_transformer else None
-        )
-
         validate_number_models(self.models, self.ndim)
         validate_gpy_model(self.models)
+
+        self.power_transformer = (
+            [PowerTransformer() for _ in range(self.ndim)] if power_transformer else None
+        )
 
     def _set_data(self):
         for i, model in enumerate(self.models):
