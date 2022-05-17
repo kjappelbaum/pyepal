@@ -62,12 +62,12 @@ class PALGPy(PALBase):
             n_jobs (int): Number of parallel processes that are used to fit
                 the GPR models. Defaults to 1.
             power_transformer (bool): If True, use Yeo-Johnson transform on the inputs.
-                Defaults to True.
+                Defaults to False.
         """
         from .validate_inputs import validate_gpy_model  # pylint:disable=import-outside-toplevel
 
         self.restarts = kwargs.pop("restarts", 20)
-        power_transformer = kwargs.pop("power_transformer", True)
+        power_transformer = kwargs.pop("power_transformer", False)
         self.n_jobs = validate_njobs(kwargs.pop("n_jobs", 1))
 
         assert isinstance(self.restarts, int), "the restarts keyword must be of type int"

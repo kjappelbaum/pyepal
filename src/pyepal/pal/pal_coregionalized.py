@@ -56,7 +56,7 @@ class PALCoregionalized(PALBase):
             parallel (bool): If true, model hyperparameters are optimized in parallel,
                 using the GPy implementation. Defaults to False.
             power_transformer (bool): If True, use Yeo-Johnson transform on the inputs.
-                Defaults to True.
+                Defaults to False.
         """
         from .validate_inputs import (  # pylint:disable=import-outside-toplevel
             validate_coregionalized_gpy,
@@ -64,7 +64,7 @@ class PALCoregionalized(PALBase):
 
         self.restarts = kwargs.pop("restarts", 20)
         self.parallel = kwargs.pop("parallel", False)
-        power_transformer = kwargs.pop("power_transformer", True)
+        power_transformer = kwargs.pop("power_transformer", False)
         assert isinstance(self.parallel, bool), "the parallel keyword must be of type bool"
         assert isinstance(self.restarts, int), "the restarts keyword must be of type int"
         super().__init__(*args, **kwargs)
