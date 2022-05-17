@@ -1,7 +1,7 @@
 Tutorials
 ============
 
-To explore different use cases of PyePAL, we recommend checking out the `example notebooks <https://github.com/kjappelbaum/pyepal/tree/master/examples>`_.
+To explore different use cases of PyePAL, we recommend checking out the `example notebooks <https://github.com/kjappelbaum/pyepal/tree/main/examples>`_.
 All notebooks can be run without installation on MyBinder. In the folder you find the notebooks with pre-executed output cells. Rerunning them
 should take no more than a few minutes.
 

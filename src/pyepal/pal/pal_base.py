@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # pylint:disable=anomalous-backslash-in-string
-# Copyright 2020 PyePAL authors
+# Copyright 2022 PyePAL authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
