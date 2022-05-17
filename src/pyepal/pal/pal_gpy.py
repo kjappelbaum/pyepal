@@ -74,7 +74,7 @@ class PALGPy(PALBase):
         super().__init__(*args, **kwargs)
 
         self.power_transformer = (
-            [PowerTransformer() for _ in range(self.n_dmin)] if power_transformer else None
+            [PowerTransformer() for _ in range(self.ndmin)] if power_transformer else None
         )
 
         validate_number_models(self.models, self.ndim)
