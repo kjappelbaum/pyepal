@@ -82,7 +82,7 @@ class PALGPy(PALBase):
 
     def _set_data(self):
         for i, model in enumerate(self.models):
-            y = (self.y[self.sampled[:, i], i].reshape(-1, 1),)
+            y = self.y[self.sampled[:, i], i].reshape(-1, 1)
             if self.power_transformer is not None:
                 y = self.power_transformer[i].fit_transform(y)
             model.set_XY(self.design_space[self.sampled[:, i]], y)
