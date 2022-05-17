@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2012 - 2014 the GPy Austhors (see AUTHORS.txt)
+# Copyright (c) 2012 - 2014 the GPy Authors (see AUTHORS.txt)
 # Licensed under the BSD 3-clause license (see LICENSE.txt)
 """Custom version of GPCoregionalizedRegression with set_XY that works.
 Needs to be used until the upstream PR gets merged"""

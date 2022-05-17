@@ -105,6 +105,7 @@ def build_model(
         K = kernel
     else:
         K = get_matern_52_kernel(NFEAT)
+
     m = GPy.models.GPRegression(
         X_train, y_train[:, index].reshape(-1, 1), kernel=K, normalizer=True, **kwargs
     )

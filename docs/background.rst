@@ -47,7 +47,7 @@ How do the hyperparameters influence the algorithm?
 To test the influence of hyperparameter settings we provide an example where we ran one step of the algorithm
 on the `Binh-Korn test function <https://en.wikipedia.org/wiki/Test_functions_for_optimization#Test_functions_for_multi-objective_optimization>`_.
 
-We model every objective seperately with a Matérn-3/2 kernel, leave :math:`\delta=0.05` fixed
+We model every objective separately with a Matérn-3/2 kernel, leave :math:`\delta=0.05` fixed
 and vary :math:`\epsilon` and :math:`\beta_\mathrm{scale}`.
 
 We find that increasing :math:`\epsilon` speeds up the algorithm, but gives us a sparser Pareto frontier.
@@ -63,3 +63,13 @@ As shown in the figure below, :math:`\beta` depends on :math:`\delta` and scalin
 .. image:: _static/beta.png
     :width: 600
     :alt: Beta as function of hyperparameters
+
+
+
+Tricks
+------
+
+- Gaussian processes typically assume stationarity and homoscedasticity. For real-life data this is often not the case.
+
+  - Input warping
+  - Output warping

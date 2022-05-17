@@ -16,7 +16,10 @@
 
 """PAL for coregionalized GPR models"""
 
+from re import I
+
 import numpy as np
+from sklearn.preprocessing import PowerTransformer
 
 from .pal_base import PALBase
 from .schedules import linear
@@ -52,6 +55,8 @@ class PALCoregionalized(PALBase):
                 optimization. Defaults to 20.
             parallel (bool): If true, model hyperparameters are optimized in parallel,
                 using the GPy implementation. Defaults to False.
+            power_transformer (bool): If True, use Yeo-Johnson transform on the inputs.
+                Defaults to False.
         """
         from .validate_inputs import (  # pylint:disable=import-outside-toplevel
             validate_coregionalized_gpy,
@@ -59,18 +64,26 @@ class PALCoregionalized(PALBase):
 
         self.restarts = kwargs.pop("restarts", 20)
         self.parallel = kwargs.pop("parallel", False)
+        power_transformer = kwargs.pop("power_transformer", False)
         assert isinstance(self.parallel, bool), "the parallel keyword must be of type bool"
         assert isinstance(self.restarts, int), "the restarts keyword must be of type int"
         super().__init__(*args, **kwargs)
         validate_coregionalized_gpy(self.models)
 
+        self.power_transformer = PowerTransformer() if power_transformer else None
+
     def _set_data(self):
         from ..models.gpr import set_xy_coregionalized  # pylint:disable=import-outside-toplevel
+
+        y = self.y[self.sampled_indices]
+
+        if self.power_transformer is not None:
+            y = self.power_transformer.fit_transform(y)
 
         self.models[0] = set_xy_coregionalized(
             self.models[0],
             self.design_space[self.sampled_indices],
-            self.y[self.sampled_indices],
+            y,
             self.sampled[self.sampled_indices],
         )
 
@@ -83,11 +96,19 @@ class PALCoregionalized(PALBase):
         means, stds = [], []
         for i in range(self.ndim):
             mean, std = predict_coregionalized(self.models[0], self.design_space, i)
+
             means.append(mean.reshape(-1, 1))
             stds.append(std.reshape(-1, 1))
 
-        self._means = np.hstack(means)
-        self.std = np.hstack(stds)
+        _means = np.hstack(means)
+        _std = np.hstack(stds)
+
+        if self.power_transformer is not None:
+            _means = self.power_transformer.inverse_transform(_means)
+            _std = self.power_transformer.inverse_transform(_std)
+
+        self._means = _means
+        self.std = _std
 
     def _set_hyperparameters(self):
         self.models[0].optimize_restarts(self.restarts, parallel=self.parallel)

@@ -32,7 +32,11 @@ def binh_korn_points():
     x = np.linspace(0, 5, 100)  # pylint:disable=invalid-name
     y = np.linspace(0, 3, 100)  # pylint:disable=invalid-name
     array = np.array([binh_korn(xi, yi) for xi, yi in zip(x, y)])
-    return np.hstack([x.reshape(-1, 1), y.reshape(-1, 1)]), array
+    return np.hstack([x.reshape(-1, 1), y.reshape(-1, 1)]), array  # + np.random.normal(
+
+
+#      scale=0.2, size=array.shape
+# )
 
 
 @pytest.fixture()
