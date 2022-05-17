@@ -17,11 +17,9 @@ from typing import Callable, Optional, Tuple
 
 import numpy as np
 import torch
-from botorch.fit import fit_gpytorch_model
 from botorch.models import MultiTaskGP, SingleTaskGP
 from botorch.models.transforms.input import ChainedInputTransform, Normalize, Warp
 from gpytorch.mlls import ExactMarginalLogLikelihood
-from sklearn.preprocessing import PowerTransformer
 from torch.nn import Module
 
 
