@@ -20,7 +20,7 @@
 import logging
 import warnings
 from copy import deepcopy
-from typing import List, Union
+from typing import Iterable, List, Union
 
 import numpy as np
 from sklearn.metrics import mean_absolute_error
@@ -69,6 +69,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         goals: List[str] = None,
         coef_var_threshold: float = 3,
         ranges: Union[np.ndarray, None] = None,
+        pooling_method: str = "fro",
     ):
         r"""Initialize the PAL instance
 
@@ -95,6 +96,10 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
                 If this is provided, we will use :math:`\epsilon \cdot ranges`
                 to computer the uncertainties of the hyperrectangles instead
                 of the default behavior :math:`\epsilon \cdot |\mu|`
+            pooling_method (str): Method that is used to aggregate
+                the uncertainty in different objectives into one scalar.
+                Available options are:  "fro" (Frobenius/Euclidean norm), "mean",
+                "median". Defaults to "fro".
 
         """
         self.cross_val_points = 10  # maybe we make it an argument at some point
@@ -441,21 +446,21 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
     def run_one_step(  # pylint:disable=too-many-arguments
         self,
         batch_size: int = 1,
-        pooling_method: str = "fro",
         sample_discarded: bool = False,
         use_coef_var: bool = True,
         replace_mean: bool = True,
         replace_std: bool = True,
+        replacement_models: Iterable[any] = None,
     ) -> Union[np.array, None]:
-        """[summary]
+        """Run one iteration of the PAL algorithm. That is, train the models,
+        get the predictions for all the design points and then classify them.
+        After classification, return the samples. We do not update the "sampled"
+        attrobute here.
 
         Args:
             batch_size (int, optional): Number of indices that will be returned.
+                If >1 then we use a greedy approximation.
                 Defaults to 1.
-            pooling_method (str): Method that is used to aggregate
-                the uncertainty in different objectives into one scalar.
-                Available options are:  "fro" (Frobenius/Euclidean norm), "mean",
-                "median". Defaults to "fro".
             sample_discarded (bool): if true, it will sample from all points
                 and not only from the unclassified and Pareto optimal ones
             use_coef_var (bool): If True, uses the coefficient of variation instead of
@@ -463,6 +468,9 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
             replace_mean (bool): If true uses the measured _means for the sampled points
             replace_std (bool): If true uses the measured standard deviation for the
                 sampled points
+            replacement_models: A list of models that will be used to replace the models.
+                If the models are provide we skip the hyperparameter optimization and training. If is useful if, for some reason, the same model is trained somewhere else in parallel. Providing this takes precedence over hyperparameter and training schedules.
+                Defaults to None.
 
         Raises:
             ValueError: In case the PAL instance was not initialized with
@@ -482,10 +490,15 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         if self.should_cross_validate():
             self._compare_mae_variance()
 
-        if self._should_optimize_hyperparameters():
-            self._set_hyperparameters()
+        if replacement_models is None:
+            if self._should_optimize_hyperparameters():
+                self._set_hyperparameters()
 
-        self._train()
+            self._train()
+        else:
+            PAL_LOGGER.debug("Replacing models with provided ones.")
+            self.models = replacement_models
+
         self._predict()
 
         self._update_beta()
@@ -500,7 +513,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
             for _ in range(batch_size):
                 sampled_idx = self.sample(
                     exclude_idx=samples,
-                    pooling_method=pooling_method,
+                    pooling_method=self.pooling_method,
                     sample_discarded=sample_discarded,
                     use_coef_var=use_coef_var,
                 )
@@ -736,7 +749,7 @@ In the docs, you find hints on how to make models more robust.""".format(
                 sampled_mask += exclude_mask
 
         if sample_discarded:
-            sampled_idx = _get_max_wt_all(
+            sampled_idx, _uncertainty = _get_max_wt_all(
                 self.rectangle_lows,
                 self.rectangle_ups,
                 self._means,
@@ -745,7 +758,7 @@ In the docs, you find hints on how to make models more robust.""".format(
                 use_coef_var,
             )
         else:
-            sampled_idx = _get_max_wt(
+            sampled_idx, _uncertainty = _get_max_wt(
                 self.rectangle_lows,
                 self.rectangle_ups,
                 self._means,
