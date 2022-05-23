@@ -20,7 +20,7 @@
 import logging
 import warnings
 from copy import deepcopy
-from typing import Iterable, List, Union
+from typing import Iterable, List, Union, Tuple
 
 import numpy as np
 from sklearn.metrics import mean_absolute_error
@@ -135,6 +135,7 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
         # measurement_uncertainty is provided in update_train_set by the user
         self.measurement_uncertainty = np.zeros((design_space_size, self.ndim))
         self._has_train_set = False
+        self.pooling_method = pooling_method
 
     def __repr__(self):
         return f"pyepal at iteration {self.iteration}. \
@@ -513,7 +514,6 @@ class PALBase:  # pylint:disable=too-many-instance-attributes, too-many-public-m
             for _ in range(batch_size):
                 sampled_idx = self.sample(
                     exclude_idx=samples,
-                    pooling_method=self.pooling_method,
                     sample_discarded=sample_discarded,
                     use_coef_var=use_coef_var,
                 )
@@ -705,10 +705,9 @@ In the docs, you find hints on how to make models more robust.""".format(
     def sample(
         self,
         exclude_idx: Union[np.array, None] = None,
-        pooling_method: str = "fro",
         sample_discarded: bool = False,
         use_coef_var: bool = True,
-    ) -> int:
+    ) -> Tuple[int, float]:
         """Runs the sampling step based on the size of the hyperrectangle.
         I.e., favoring exploration.
 
@@ -716,10 +715,6 @@ In the docs, you find hints on how to make models more robust.""".format(
             exclude_idx (Union[np.array, None], optional):
                 Points in design space to exclude from sampling.
                 Defaults to None.
-            pooling_method (str): Method that is used to aggregate
-                the uncertainty in different objectives into one scalar.
-                Available options are:  "fro" (Frobenius/Euclidean norm), "mean",
-                "median". Defaults to "fro".
             sample_discarded (bool): if true, it will sample from all points
                 and not only from the unclassified and Pareto optimal ones
             use_coef_var (bool): If True, uses the coefficient of variation instead of
@@ -754,7 +749,7 @@ In the docs, you find hints on how to make models more robust.""".format(
                 self.rectangle_ups,
                 self._means,
                 sampled_mask,
-                pooling_method,
+                self.pooling_method,
                 use_coef_var,
             )
         else:
@@ -765,8 +760,8 @@ In the docs, you find hints on how to make models more robust.""".format(
                 self.pareto_optimal,
                 self.unclassified,
                 sampled_mask,
-                pooling_method,
+                self.pooling_method,
                 use_coef_var,
             )
 
-        return sampled_idx
+        return sampled_idx, _uncertainty

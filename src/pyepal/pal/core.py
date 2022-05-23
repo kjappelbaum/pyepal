@@ -300,7 +300,7 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
     """
     max_uncertainty = -np.inf
     maxid = 0
-
+    uncertainties = []
     pooling_method = pooling_method.lower()
 
     for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
@@ -316,11 +316,12 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
                 uncer = rectangle_ups[i, :] - rectangle_lows[i, :]
 
             uncertainty = _pool(uncer, pooling_method)
+            uncertainties.append(uncertainty)
             if uncertainty > max_uncertainty:
                 max_uncertainty = uncertainty
                 maxid = i
 
-    return maxid, max_uncertainty
+    return maxid, uncertainties
 
 
 @jit(nopython=True)
@@ -355,6 +356,7 @@ def _get_max_wt_all(  # pylint:disable=too-many-arguments
     """
     max_uncertainty = -np.inf
     maxid = 0
+    uncertainties = []
 
     pooling_method = pooling_method.lower()
 
@@ -370,6 +372,7 @@ def _get_max_wt_all(  # pylint:disable=too-many-arguments
             else:
                 uncer = rectangle_ups[i, :] - rectangle_lows[i, :]
             uncertainty = _pool(uncer, pooling_method)
+            uncertainties.append(uncertainty)
             if uncertainty > max_uncertainty:
                 max_uncertainty = uncertainty
                 maxid = i

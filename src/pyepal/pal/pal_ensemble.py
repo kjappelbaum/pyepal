@@ -2,19 +2,28 @@ import numpy as np
 
 
 class PALEnsemble:
-    def __init__(self, pal_list):
+    def __init__(self, pal_list, reuse_models=False):
         self.pal_list = pal_list
 
         # we just pick one class where we will update the models
         self.head_pal = pal_list[0]
+        self.reuse_models = reuse_models
 
     @classmethod
     def from_class_and_kwarg_lists(pal_class, **kwargs):
+
+        # Throw error if there are no kwargs
+        if not kwargs:
+            raise ValueError("No kwargs provided")
+
         pal_list = []
         iterable_keys = []
         for key, value in kwargs.items():
             if isinstance(value, list, tuple):
                 iterable_keys.append(key)
+
+        # the problem is here that we would still need to account for the fact that some arguments by themselves are
+        # iterable, but not the others. The coding will be much easier if we just, for every model, accept its kwargs
 
         if len(iterable_keys) == 0:
             raise ValueError(
@@ -42,7 +51,6 @@ class PALEnsemble:
     def run_one_step(
         self,
         batch_size: int = 1,
-        pooling_method: str = "fro",
         sample_discarded: bool = False,
         use_coef_var: bool = True,
         replace_mean: bool = True,
@@ -51,23 +59,34 @@ class PALEnsemble:
         samples = []
         uncertainties = []
         head_samples, head_uncertainties = self.head_pal.run_one_step(
-            batch_size, pooling_method, sample_discarded, use_coef_var, replace_mean, replace_std
+            batch_size, sample_discarded, use_coef_var, replace_mean, replace_std
         )
-        samples.extend(head_samples)
-        uncertainties.extend(head_uncertainties)
 
+        if isinstance(head_samples, int):
+            head_samples = [head_samples]
+        if isinstance(head_uncertainties, float):
+            head_uncertainties = [head_uncertainties]
+        uncertainties.extend(head_uncertainties)
         samples.extend(head_samples)
 
         for pal in self.pal_list[1:]:
             this_samples, this_uncertainties = pal.run_one_step(
                 batch_size,
-                pooling_method,
                 sample_discarded,
                 use_coef_var,
                 replace_mean,
                 replace_std,
-                replace_models=self.head_pal.models,
+                replacement_models=self.head_pal.models if self.reuse_models else None,
             )
+
+            this_uncertainties = np.array(this_uncertainties)
+            this_uncertainties = (
+                this_uncertainties - this_uncertainties.mean()
+            ) / this_uncertainties.std()
+            if isinstance(this_samples, int):
+                this_samples = [this_samples]
+            if isinstance(this_uncertainties, float):
+                this_uncertainties = [this_uncertainties]
             samples.extend(this_samples)
             uncertainties.extend(this_uncertainties)
 
