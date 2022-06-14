@@ -20,7 +20,7 @@
 import logging
 import warnings
 from copy import deepcopy
-from typing import Iterable, List, Union, Tuple
+from typing import Iterable, List, Tuple, Union
 
 import numpy as np
 from sklearn.metrics import mean_absolute_error

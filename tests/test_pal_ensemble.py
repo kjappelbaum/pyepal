@@ -1,11 +1,13 @@
-from pyepal.pal.pal_ensemble import PALEnsemble
-import pytest
+# -*- coding: utf-8 -*-
 import numpy as np
+import pytest
+
+from pyepal.pal.pal_ensemble import PALEnsemble
 
 
 def test_pal_ensemble_init(make_random_dataset):
-    from pyepal.pal.pal_gpy import PALGPy
     from pyepal.models.gpr import build_model
+    from pyepal.pal.pal_gpy import PALGPy
 
     X, y = make_random_dataset
     sample_idx = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
