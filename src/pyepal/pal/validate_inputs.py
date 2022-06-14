@@ -41,6 +41,7 @@ __all__ = [
     "validate_optimizers",
     "validate_positive_integer_list",
     "validate_sklearn_gpr_models",
+    "validate_catboost_models",
 ]
 
 
@@ -353,6 +354,29 @@ tuples with three LGBMRegressor instances.
 
             if counter != 1:
                 _validate_quantile_loss(model)
+
+    return models
+
+
+def validate_catboost_models(models: Any, ndim: int) -> List[Iterable]:
+    """Make sure that the number of models is equal to the number of objectives. Also make sure that the models are CatBoostRegressor instances with RSMEWithUncertainty loss function"""
+
+    validate_number_models(models, ndim)
+    from catboost import CatBoostRegressor  # pylint:disable=import-outside-toplevel
+
+    for model in models:
+        if not isinstance(model, CatBoostRegressor):
+            raise ValueError("""The models must be an instance of CatBoostRegressor""")
+
+        if model.get_param("loss_function") != "RMSEWithUncertainty":
+            raise ValueError(
+                """The models must be an instance of CatBoostRegressor with RMSEWithUncertainty loss function"""
+            )
+
+        if not model.get_param("posterior_sampling"):
+            raise ValueError(
+                """The models must be an instance of CatBoostRegressor with posterior_sampling set to True"""
+            )
 
     return models
 

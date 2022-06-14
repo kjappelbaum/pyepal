@@ -24,6 +24,7 @@ from functools import partial
 import numpy as np
 
 from .pal_base import PALBase
+from .validate_inputs import validate_catboost_models
 
 __all__ = ["PALCatBoost"]
 
@@ -45,9 +46,9 @@ class PALCatBoost(PALBase):
 
         Args:
             X_design (np.array): Design space (feature matrix)
-            models (List[Iterable[LGBMRegressor, LGBMRegressor, LGBMRegressor]]:
+            models (List[CatBoostRegressor]:
                 Machine learning models. You need to provide a list of
-                CatBoost regressors.
+                CatBoost regressors. The regressors need to use the `RMSEWithUncertainty`  loss.
             ndim (int): Number of objectives
             epsilon (Union[list, float], optional): Epsilon hyperparameter.
                 Defaults to 0.01.
@@ -63,12 +64,14 @@ class PALCatBoost(PALBase):
             coef_var_threshold (float, optional): Use only points with
                 a coefficient of variation below this threshold
                 in the classification step. Defaults to 3.
+            virtual_ensembles_count (int, optional): Number of virtual ensemble models.
+                Defaults to 10.
 
         """
-
+        self.virtual_ensembles_count = kwargs.pop("virtual_ensembles_count", 10)
         super().__init__(*args, **kwargs)
 
-        # self.models = validate_gbdt_models(self.models, self.ndim)
+        self.models = validate_catboost_models(self.models, self.ndim)
 
     def _set_data(self):
         pass
@@ -91,9 +94,11 @@ class PALCatBoost(PALBase):
     def _predict(self):
         means, stds = [], []
         for model in self.models:
-            pred = model.predict(self.design_space)
+            pred = model.virtual_ensembles_predict(
+                self.design_space, prediction_type="TotalUncertainty", virtual_ensembles_count=20
+            )
 
-            std = np.sqrt(pred[:, 1])
+            std = np.sqrt(pred[:, 1] + pred[:, 2])
             mean = pred[:, 0]
             means.append(mean.reshape(-1, 1))
             stds.append(std.reshape(-1, 1))
