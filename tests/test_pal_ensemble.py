@@ -17,10 +17,28 @@ def test_pal_ensemble_init(make_random_dataset):
     m1 = build_model(X, y, 1)  # pylint:disable=invalid-name
     m2 = build_model(X, y, 2)  # pylint:disable=invalid-name
 
-    palgpy_instance = PALGPy(X, models=[m0, m1, m2], ndim=3, delta=0.01, pooling_method="fro")
-    palgpy_instance_2 = PALGPy(X, models=[m0, m1, m2], ndim=3, delta=0.01, pooling_method="mean")
-
+    palgpy_instance = PALGPy(
+        X,
+        models=[m0, m1, m2],
+        ndim=3,
+        delta=0.01,
+        pooling_method="fro",
+        restarts=3,
+    )
+    palgpy_instance_2 = PALGPy(
+        X,
+        models=[m0, m1, m2],
+        ndim=3,
+        delta=0.01,
+        pooling_method="mean",
+        restarts=3,
+    )
+    palgpy_instance.cross_val_points = 0
+    palgpy_instance_2.cross_val_points = 0
     pal_ensemble = PALEnsemble([palgpy_instance, palgpy_instance_2])
     pal_ensemble.update_train_set(sample_idx, y[sample_idx])
     sample, _ = pal_ensemble.run_one_step(1)
     assert len(sample) == 1
+
+    sample, _ = pal_ensemble.run_one_step(20)
+    assert len(sample) == 20
