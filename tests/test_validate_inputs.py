@@ -27,6 +27,7 @@ from pyepal.pal.validate_inputs import (
     _validate_sklearn_gpr_model,
     base_validate_models,
     validate_beta_scale,
+    validate_catboost_models,
     validate_coef_var,
     validate_coregionalized_gpy,
     validate_delta,
@@ -318,3 +319,27 @@ def test_validate_ranges():
 
     assert validate_ranges(None, 3) is None
     assert (validate_ranges([1, 1, 1], 3) == np.array([1, 1, 1])).all()
+
+
+def test_validate_catboost_models():
+    """Test that we can validate the input of the CATBOOST class"""
+    from catboost import CatBoostRegressor  # pylint:disable=import-outside-toplevel
+
+    with pytest.raises(ValueError):
+        validate_catboost_models([CatBoostRegressor(), CatBoostRegressor()], 2)
+
+    with pytest.raises(ValueError):
+        validate_catboost_models([CatBoostRegressor()], 2)
+
+    with pytest.raises(ValueError):
+        validate_catboost_models(
+            [
+                CatBoostRegressor(
+                    loss_function="RMSEWithUncertainty",
+                ),
+                CatBoostRegressor(
+                    loss_function="RMSEWithUncertainty",
+                ),
+            ],
+            2,
+        )

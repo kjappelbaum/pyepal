@@ -76,6 +76,16 @@ For GPR with BoTorch
     :special-members:
 
 
+For GBDT with CatBoost
+.......................................
+
+.. automodule:: pyepal.pal.pal_catboost
+    :members:
+    :show-inheritance:
+    :special-members:
+
+
+
 Schedules for hyperparameter optimization
 ...........................................
 
