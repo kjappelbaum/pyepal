@@ -27,6 +27,7 @@ from pyepal.pal.validate_inputs import (
     _validate_sklearn_gpr_model,
     base_validate_models,
     validate_beta_scale,
+    validate_catboost_models,
     validate_coef_var,
     validate_coregionalized_gpy,
     validate_delta,
@@ -41,7 +42,6 @@ from pyepal.pal.validate_inputs import (
     validate_number_models,
     validate_optimizers,
     validate_positive_integer_list,
-    validate_catboost_models,
     validate_ranges,
 )
 

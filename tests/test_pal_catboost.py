@@ -15,9 +15,10 @@
 
 """Testing the CatBoost PAL class"""
 
-from catboost import CatBoostRegressor
-from pyepal.pal.pal_catboost import PALCatBoost
 import numpy as np
+from catboost import CatBoostRegressor
+
+from pyepal.pal.pal_catboost import PALCatBoost
 
 
 def test_pal_catboost(binh_korn_points):
