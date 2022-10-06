@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.8.0](https://www.github.com/kjappelbaum/pyepal/compare/v0.7.0...v0.8.0) (2022-10-06)
+
+
+### Features
+
+* basic catboost support ([#234](https://www.github.com/kjappelbaum/pyepal/issues/234)) ([766b946](https://www.github.com/kjappelbaum/pyepal/commit/766b9466605c21e8cd096deb53710835b0013da5))
+* Implement some of the GPR tricks from HEBO via BoTorch ([#221](https://www.github.com/kjappelbaum/pyepal/issues/221)) ([feef587](https://www.github.com/kjappelbaum/pyepal/commit/feef5872d999778211b20e03bf25a5d89beec84a))
+* introduce `means` property ([#186](https://www.github.com/kjappelbaum/pyepal/issues/186)) ([88aab4f](https://www.github.com/kjappelbaum/pyepal/commit/88aab4f9efb4a815a094a360639e9945c27dd844))
+
 ## [0.7.0](https://www.github.com/kjappelbaum/pyepal/compare/v0.6.2...v0.7.0) (2021-06-15)
 
 
