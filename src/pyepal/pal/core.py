@@ -275,7 +275,7 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
     sampled: np.array,
     pooling_method: str = "fro",
     use_coef_var: bool = True,
-) -> int:
+) -> Tuple[int, float]:
     """Returns the index in design space with the maximum size of the hyperrectangle
     (scaled by the mean predictions, i.e., effectively,
     we use the coefficient of variation).
@@ -300,7 +300,7 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
     """
     max_uncertainty = -np.inf
     maxid = 0
-
+    uncertainties = []
     pooling_method = pooling_method.lower()
 
     for i in range(0, len(unclassified_t)):  # pylint:disable=consider-using-enumerate
@@ -316,11 +316,12 @@ def _get_max_wt(  # pylint:disable=too-many-arguments
                 uncer = rectangle_ups[i, :] - rectangle_lows[i, :]
 
             uncertainty = _pool(uncer, pooling_method)
+            uncertainties.append(uncertainty)
             if uncertainty > max_uncertainty:
                 max_uncertainty = uncertainty
                 maxid = i
 
-    return maxid
+    return maxid, uncertainties
 
 
 @jit(nopython=True)
@@ -331,7 +332,7 @@ def _get_max_wt_all(  # pylint:disable=too-many-arguments
     sampled: np.array,
     pooling_method: str = "fro",
     use_coef_var: bool = True,
-) -> int:
+) -> Tuple[int, float]:
     """Returns the index in design space with the maximum size of the hyperrectangle
     (scaled by the mean predictions, i.e., effectively,
     we use the coefficient of variation).
@@ -351,10 +352,11 @@ def _get_max_wt_all(  # pylint:disable=too-many-arguments
             the unscaled rectangle sizes
 
     Returns:
-        int: index with maximum size of hyperrectangle
+        Tuple[int, List[float]]: index with maximum size of hyperrectangle, all uncertainties
     """
     max_uncertainty = -np.inf
     maxid = 0
+    uncertainties = []
 
     pooling_method = pooling_method.lower()
 
@@ -370,11 +372,12 @@ def _get_max_wt_all(  # pylint:disable=too-many-arguments
             else:
                 uncer = rectangle_ups[i, :] - rectangle_lows[i, :]
             uncertainty = _pool(uncer, pooling_method)
+            uncertainties.append(uncertainty)
             if uncertainty > max_uncertainty:
                 max_uncertainty = uncertainty
                 maxid = i
 
-    return maxid
+    return maxid, max_uncertainty
 
 
 @jit(nopython=True)
